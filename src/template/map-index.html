@@ -12,32 +12,64 @@
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
 	<title>首页</title>
-		
-	<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>	
+
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UvjqfTEqblSQuarwwxfObc5Zl6TK11HL"></script>
 	<style>
 	html{height:100%}    
     body{height:100%;margin:0px;padding:0px}    
-    #container{height:100%}    
+    #container{height:100%} 
+
+	/*信息窗口*/
+    .bubbleInfo {
+        display:inline-block;
+        line-height:26px;
+        background-color:rgba(0,0,0,0.4);
+        color:#fff;
+        border-radius:4px;
+        padding:0 6px;
+    }
+    .bubbleInfo .name:after{
+      content:'';
+      border-right:1px solid white;
+      padding:3px 0;
+      margin-left:5px;
+      transform: scaleY(0.5);
+    }
+    .bubbleInfo .num {
+      display: inline-block;
+      margin-left: 6px;
+      background-color:green;
+      padding:3px 6px;
+      line-height: 1em;
+      border-radius:5px;
+    }
+
 	</style>	
 </head>
 <body>
+
 	<div id="container"></div>	
 	
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <!-- <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script> -->
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="../js/map-index.min.js"></script>
 
 <script>
 	var map = new BMap.Map("container");          // 创建地图实例  
 	var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
 	map.centerAndZoom(point, 15); 	
-	// var tilelayer = new BMap.TileLayer();         // 创建地图层实例    
-	// tilelayer.getTilesUrl=function(){             // 设置图块路径     
- //          return "layer.png";      
-	// };     
-	// map.addTileLayer(tilelayer);                // 将图层添加到地图上
+
+	var testData = {
+		Longitude: 116.404,
+		Latitude: 39.915,
+		Type: 0,
+		QueryType: "3"
+	}
+
+	getData(testData);
+
 
 
 

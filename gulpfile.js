@@ -83,7 +83,7 @@ gulp.task('build:js',function(){
 
 //压缩css
 gulp.task('build:css',function(){
-	gulp.src(path.css+'**/*.css')
+	gulp.src(paths.css+'**/*.css')
 		.pipe(sourcemaps.init())
 		.pipe(postcss([autoprefixer({browsers:['last 2 versions']})]))
 		.pipe(minifyCSS())
@@ -101,13 +101,13 @@ gulp.task('build:css',function(){
                 prefix : prefix
               }
           }))
-        .pipe(gulp.dest(paths.build+'/css'))
-        .pipe(browserSync.reload({stream: true}));
+    .pipe(gulp.dest(paths.build+'/css'))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // 压缩图片
 gulp.task('build:images', function () {
-    gulp.src(paths.img+'**/*.?(png|jpg|gif)')
+    gulp.src(paths.img+'**/*.?(png|jpg|gif|svg)')
         .pipe(imagemin({
             progressive: true
         }))
@@ -119,9 +119,9 @@ gulp.task('build:images', function () {
 gulp.task('release',['build:js','build:css','build:images','build:html']);
 
 gulp.task('watch',['release'],function(){
-	gulp.watch(paths.css+'/**/*.css',['build:css']);
-	gulp.watch(paths.js+'/**/*.js',['build:js']);
-	gulp.watch(paths.img+'/**/*.?(png|jpg|gif)',['build:images']);
+	gulp.watch(paths.css+'**/*.css',['build:css']);
+	gulp.watch(paths.js+'**/*.js',['build:js']);
+	gulp.watch(paths.img+'**/*.?(png|jpg|gif|svg)',['build:images']);
 	gulp.watch(paths.src+'/**/*.html',['build:html']);
 });
 

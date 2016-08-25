@@ -221,6 +221,10 @@ var $productIds = $("#products").find(".class");
 
 ```
 
+## 压力测试工具
+
+[超实用压力测试工具－ab工具](http://www.jianshu.com/p/43d04d8baaf7)
+
 ##  学习资源
 
 ### vue
