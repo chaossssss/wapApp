@@ -221,6 +221,14 @@ var $productIds = $("#products").find(".class");
 
 ```
 
+### 4. 每次提交的时候，输入如下命令-清理文件夹
+
+```bash
+	gulp clean
+
+```
+
+
 ## 压力测试工具
 
 [超实用压力测试工具－ab工具](http://www.jianshu.com/p/43d04d8baaf7)
