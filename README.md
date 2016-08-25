@@ -167,3 +167,27 @@ var $productIds = $("#products").find(".class");
 
 ## 组件使用案例
 
+
+## 如何安装运行项目
+
+### 1. 依赖，请自行安装node、npm、git、gulp。如果不会请自行百度。
+
+### 2. 进入wapApp目录，输入如下命令
+
+```bash
+	npm install  
+
+```
+
+### 3. 进入wapApp目录，输入如下命令
+
+```bash
+	gulp -ws
+
+```
+
+##  学习资源
+
+### vue
+
+

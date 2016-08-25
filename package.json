@@ -1,0 +1,38 @@
+{
+  "name": "zhujiash",
+  "version": "0.1.0",
+  "description": "## 技术选型",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zhouxiaohao",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-postcss": "^6.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-str-replace": "0.0.4",
+    "gulp-uglify": "^2.0.0",
+    "yargs": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/archerU/wapApp.git"
+  },
+  "keywords": [
+    "助家生活"
+  ],
+  "bugs": {
+    "url": "https://github.com/archerU/wapApp/issues"
+  },
+  "homepage": "https://github.com/archerU/wapApp#readme"
+}
