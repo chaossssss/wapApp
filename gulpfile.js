@@ -119,10 +119,10 @@ gulp.task('build:images', function () {
 gulp.task('release',['build:js','build:css','build:images','build:html']);
 
 gulp.task('watch',['release'],function(){
-	gulp.watch(paths.css+'**/*.css',['build:css']);
-	gulp.watch(paths.js+'**/*.js',['build:js']);
-	gulp.watch(paths.img+'**/*.?(png|jpg|gif)',['build:images']);
-	gulp.watch(paths.src+'**/*.html',['build:html']);
+	gulp.watch(paths.css+'/**/*.css',['build:css']);
+	gulp.watch(paths.js+'/**/*.js',['build:js']);
+	gulp.watch(paths.img+'/**/*.?(png|jpg|gif)',['build:images']);
+	gulp.watch(paths.src+'/**/*.html',['build:html']);
 });
 
 //服务器配置

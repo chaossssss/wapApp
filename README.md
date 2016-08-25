@@ -9,7 +9,7 @@
 #### 3. [fastclick](https://github.com/ftlabs/fastclick)
 #### 4. swiper
 #### 5. 构建工具 gulp
-#### 6. 适配方案 flexilbe(本项目不适用)
+#### 6. 适配方案 flexible
 #### 7. 媒体查询 
 
 ## 开发规范
@@ -162,9 +162,43 @@ var $productIds = $("#products").find(".class");
 
 ```
 
-## 使用案例
+## 移动端适配方案
 
+[flexible适配方案](http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html)
 
+#### 1.引入文件 
+
+```
+<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+
+```
+##### 采用flexible适配方案的HEAD
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!--禁止电话，邮件识别-->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <meta name="author" content="zxh">
+	<title>模版测试</title>
+	
+	<!-- link和script的引用后缀要加上min -->
+	<link type="text/css" rel="stylesheet" href="css/test.min.css">
+	<link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+</head>
+
+```
+
+#### 2.根据设计稿px转换为rem
+
+* iphone 5 (640x1136) rem = px / 64
+* iphone 6 (750x1334) rem = px / 75
 
 ## 组件使用案例
 
