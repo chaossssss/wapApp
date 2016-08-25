@@ -1,12 +1,15 @@
 # wapApp
 
 ## 技术选型
-#### 1. vue
-#### 2. jquery
-#### 3. fastclick
+
+[BootCDN 静态资源库地址](http://www.bootcdn.cn)
+
+#### 1. [vue](http://cn.vuejs.org/) 
+#### 2. [jquery](http://www.bootcdn.cn/jquery/)
+#### 3. [fastclick](https://github.com/ftlabs/fastclick)
 #### 4. swiper
 #### 5. 构建工具 gulp
-#### 6. 适配方案 flexile
+#### 6. 适配方案 flexilbe(本项目不适用)
 
 ## 开发规范
 
@@ -126,6 +129,7 @@ var HTML_ENTITY = {};
 var $myDiv = $("#myDiv");
 
 $myDiv.click(function(){...});
+
 ```
 
 #### 选择器
@@ -141,9 +145,21 @@ var $productIds = $("#products .class");
 // Recommended
 
 var $productIds = $("#products").find(".class");
+
 ```
 
 
+## 静态资源
+
+```
+<link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.min.js"></script>
+
+
+```
 
 ## 使用案例
 
