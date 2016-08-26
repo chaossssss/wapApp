@@ -118,9 +118,26 @@ __常量, 使用全部字母大写，单词间下划线分隔的命名方式__
 
 var HTML_ENTITY = {};
 
+__类名驼峰，并且首字母要大写__
+
+var CamelName = {};
+
 ## jQuery 规范
 
-####jQuery 变量
+### 使用严格模式开发
+
+```
+ "use strict";
+```
+
+### 为提高代码执行效率，为二者兼容提供可能，在使用 jQuery / Zepto.js 时做以下约定：
+
+##### 1.存放 jQuery / Zepto 对象的变量以 $ 开头；
+##### 2.禁止使用 slideUp/Down() fadeIn/fadeOut() 等方法；
+##### 3.尽量不使用 animate() 方法；
+##### 4.使用和 Zepto.js 兼容的基本选择符，不使用效率较低且与 Zepto.js 不兼容的选择符。
+
+### jQuery 变量
 
 ##### 1.存放 jQuery 对象的变量以 $ 开头；
 ##### 2.将 jQuery 选择器返回的对象缓存到本地变量中复用；
@@ -133,7 +150,7 @@ $myDiv.click(function(){...});
 
 ```
 
-#### 选择器
+### 选择器
 
 ##### 1.尽可能的使用 ID 选择器，因为它会调用浏览器原生方法 document.getElementById 查找元素。当然直接使用原生 document.getElementById 方法性能会更好；
 ##### 2.在父元素中选择子元素使用 .find() 方法性能会更好, 因为 ID 选择器没有使用到 Sizzle 选择器引擎来查找元素；
@@ -228,6 +245,17 @@ var $productIds = $("#products").find(".class");
 
 ```
 
+### 5.安装异常处理
+
+```
+Error: Cannot find module 'autoprefixer'.....
+
+```
+请重新安装gulp-autoprefixer插件，解决方案如下
+
+```
+npm install gulp-autoprefixer --save-dev
+```
 
 ## 压力测试工具
 
