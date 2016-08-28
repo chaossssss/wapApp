@@ -175,6 +175,7 @@ var $productIds = $("#products").find(".class");
 <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="//cdn.bootcss.com/Swiper/3.3.1/js/swiper.min.js"></script>
+<script src="//cdn.bootcss.com/vue/2.0.0-rc.3/vue.min.js"></script>
 
 
 ```

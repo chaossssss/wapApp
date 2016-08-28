@@ -428,26 +428,44 @@ function foo(p1, p2, p3) {
 
 <p>var HTML_ENTITY = {};</p>
 
+<p><strong>类名驼峰，并且首字母要大写</strong></p>
+
+<p>var CamelName = {};</p>
+
 <h2 id="toc_15">jQuery 规范</h2>
 
-<h4 id="toc_16">jQuery 变量</h4>
+<h3 id="toc_16">使用严格模式开发</h3>
 
-<h5 id="toc_17">1.存放 jQuery 对象的变量以 $ 开头；</h5>
+<div><pre><code class="language-none"> &quot;use strict&quot;;</code></pre></div>
 
-<h5 id="toc_18">2.将 jQuery 选择器返回的对象缓存到本地变量中复用；</h5>
+<h3 id="toc_17">为提高代码执行效率，为二者兼容提供可能，在使用 jQuery / Zepto.js 时做以下约定：</h3>
 
-<h5 id="toc_19">3.使用驼峰命名变量；</h5>
+<h5 id="toc_18">1.存放 jQuery / Zepto 对象的变量以 $ 开头；</h5>
+
+<h5 id="toc_19">2.禁止使用 slideUp/Down() fadeIn/fadeOut() 等方法；</h5>
+
+<h5 id="toc_20">3.尽量不使用 animate() 方法；</h5>
+
+<h5 id="toc_21">4.使用和 Zepto.js 兼容的基本选择符，不使用效率较低且与 Zepto.js 不兼容的选择符。</h5>
+
+<h3 id="toc_22">jQuery 变量</h3>
+
+<h5 id="toc_23">1.存放 jQuery 对象的变量以 $ 开头；</h5>
+
+<h5 id="toc_24">2.将 jQuery 选择器返回的对象缓存到本地变量中复用；</h5>
+
+<h5 id="toc_25">3.使用驼峰命名变量；</h5>
 
 <div><pre><code class="language-none">var $myDiv = $(&quot;#myDiv&quot;);
 
 $myDiv.click(function(){...});
 </code></pre></div>
 
-<h4 id="toc_20">选择器</h4>
+<h3 id="toc_26">选择器</h3>
 
-<h5 id="toc_21">1.尽可能的使用 ID 选择器，因为它会调用浏览器原生方法 document.getElementById 查找元素。当然直接使用原生 document.getElementById 方法性能会更好；</h5>
+<h5 id="toc_27">1.尽可能的使用 ID 选择器，因为它会调用浏览器原生方法 document.getElementById 查找元素。当然直接使用原生 document.getElementById 方法性能会更好；</h5>
 
-<h5 id="toc_22">2.在父元素中选择子元素使用 .find() 方法性能会更好, 因为 ID 选择器没有使用到 Sizzle 选择器引擎来查找元素；</h5>
+<h5 id="toc_28">2.在父元素中选择子元素使用 .find() 方法性能会更好, 因为 ID 选择器没有使用到 Sizzle 选择器引擎来查找元素；</h5>
 
 <div><pre><code class="language-none">// Not recommended
 
@@ -458,26 +476,27 @@ var $productIds = $(&quot;#products .class&quot;);
 var $productIds = $(&quot;#products&quot;).find(&quot;.class&quot;);
 </code></pre></div>
 
-<h2 id="toc_23">静态资源</h2>
+<h2 id="toc_29">静态资源</h2>
 
 <div><pre><code class="language-none">&lt;link href=&quot;//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css&quot; rel=&quot;stylesheet&quot;&gt;
 &lt;script src=&quot;//cdn.bootcss.com/jquery/2.2.3/jquery.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;//cdn.bootcss.com/vue/1.0.24/vue.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;//cdn.bootcss.com/Swiper/3.3.1/js/swiper.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;//cdn.bootcss.com/vue/2.0.0-rc.3/vue.min.js&quot;&gt;&lt;/script&gt;
 
 </code></pre></div>
 
-<h2 id="toc_24">移动端适配方案</h2>
+<h2 id="toc_30">移动端适配方案</h2>
 
 <p><a href="http://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html">flexible适配方案</a></p>
 
-<h4 id="toc_25">1.引入文件</h4>
+<h4 id="toc_31">1.引入文件</h4>
 
 <div><pre><code class="language-none">&lt;script src=&quot;http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js&quot;&gt;&lt;/script&gt;
 </code></pre></div>
 
-<h5 id="toc_26">采用flexible适配方案的HEAD</h5>
+<h5 id="toc_32">采用flexible适配方案的HEAD</h5>
 
 <div><pre><code class="language-none">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -498,41 +517,50 @@ var $productIds = $(&quot;#products&quot;).find(&quot;.class&quot;);
 &lt;/head&gt;
 </code></pre></div>
 
-<h4 id="toc_27">2.根据设计稿px转换为rem</h4>
+<h4 id="toc_33">2.根据设计稿px转换为rem</h4>
 
 <ul>
 <li>iphone 5 (640x1136) rem = px / 64</li>
 <li>iphone 6 (750x1334) rem = px / 75</li>
 </ul>
 
-<h2 id="toc_28">组件使用案例</h2>
+<h2 id="toc_34">组件使用案例</h2>
 
-<h2 id="toc_29">如何安装运行项目</h2>
+<h2 id="toc_35">如何安装运行项目</h2>
 
-<h3 id="toc_30">1. 依赖，请自行安装node、npm、git、gulp。如果不会请自行百度。</h3>
+<h3 id="toc_36">1. 依赖，请自行安装node、npm、git、gulp。如果不会请自行百度。</h3>
 
-<h3 id="toc_31">2. 进入wapApp目录，输入如下命令</h3>
+<h3 id="toc_37">2. 进入wapApp目录，输入如下命令</h3>
 
 <div><pre><code class="language-bash">    npm install  
 </code></pre></div>
 
-<h3 id="toc_32">3. 进入wapApp目录，输入如下命令</h3>
+<h3 id="toc_38">3. 进入wapApp目录，输入如下命令</h3>
 
 <div><pre><code class="language-bash">    gulp -ws
 </code></pre></div>
 
-<h3 id="toc_33">4. 每次提交的时候，输入如下命令-清理文件夹</h3>
+<h3 id="toc_39">4. 每次提交的时候，输入如下命令-清理文件夹</h3>
 
 <div><pre><code class="language-bash">    gulp clean
 </code></pre></div>
 
-<h2 id="toc_34">压力测试工具</h2>
+<h3 id="toc_40">5.安装异常处理</h3>
+
+<div><pre><code class="language-none">Error: Cannot find module &#39;autoprefixer&#39;.....
+</code></pre></div>
+
+<p>请重新安装gulp-autoprefixer插件，解决方案如下</p>
+
+<div><pre><code class="language-none">npm install gulp-autoprefixer --save-dev</code></pre></div>
+
+<h2 id="toc_41">压力测试工具</h2>
 
 <p><a href="http://www.jianshu.com/p/43d04d8baaf7">超实用压力测试工具－ab工具</a></p>
 
-<h2 id="toc_35">学习资源</h2>
+<h2 id="toc_42">学习资源</h2>
 
-<h3 id="toc_36">vue</h3>
+<h3 id="toc_43">vue</h3>
 
 
 </body>
