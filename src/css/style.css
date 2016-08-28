@@ -1,15 +1,48 @@
 *{ margin: 0; padding: 0; }
-.login-box{ width: 580px; margin: 28px auto 0; height: 100px; }
-.login-box .login-phone{ width: 580px; height: 80px; border-bottom: 1px solid #a4a4a4; }
-.login-box .login-phone .login-phonenum{ border: 0; width: 447px; height: 80px; background: url(../images/loginicon.png) no-repeat; background-position: 18px 22px; padding-left: 84px; outline: 0;}
+.login-box{ width: 9.062rem; margin: 0.437rem auto 0; height: 1.562rem; }
+.login-box .login-phone{ width: 9.062rem; height: 1.25rem; border-bottom: 0.015rem solid #a4a4a4; }
+.login-box .login-phone .login-phonenum{ font-size: 0.312rem; border: 0; width: 6.984rem; height: 1.25rem; background: url(../images/loginicon.png) no-repeat; background-position: 0.281rem 0.343rem; padding-left: 1.312rem; outline: 0;}
+.login-box input::-webkit-input-placeholder{ color: #e4e4e4; font-size: 0.312rem; }
+.login-box input:-moz-placeholder{ color: #e4e4e4; font-size: 0.312rem; }
+.login-box input::-moz-placeholder{ color: #e4e4e4; font-size: 0.312rem; }
+.login-box input:-ms-input-placeholder{ color: #e4e4e4; font-size: 0.312rem; }
 .btnhidden{ display: none; }
-.login-box .login-phone .cleanbtn{ width: 24px; height: 24px; background: url(../images/clean.png); display: inline-block; }
-.login-box .login-pwd{ width: 580px; height: 80px; border-bottom: 1px solid #a4a4a4; }
-.login-box .login-pwd .login-pwdnum{ border: 0; width: 447px; height: 80px; background: url(../images/loginicon.png) no-repeat; background-position: 18px 22px; padding-left: 84px; outline: 0; }
-.login-box .login-pwd .pwdshow{ width: 24px; height: 16px; background: url(../images/view.png); display: inline-block; }
-.login-box .login-pwd .pwdhidden{ width: 24px; height: 16px; background: url(../images/hidden.png); display: inline-block; }
-.login-box .login-btn{ width: 580px; margin-top: 46px; height: 54px; }
-.login-box .login-btn .login-btnreg{ width: 286px; height: 54px; background: #6dd0fd; color: #fff; border: 0; font-size: 30px; outline: 0; }
-.login-box .login-btn .login-btnlog{ width: 286px; height: 54px; background: #1cb0fc; color: #fff; border: 0; font-size: 30px; outline: 0; }
-.login-box .login-reset .login-resetpwd{ float: right; display: block; margin-top: 31px; color: #b0b0b0; font-size: 20px; text-decoration: none; }
-.login-box .login-blur{ width: 580px; height: 80px; border-bottom: 1px solid #1baffc; }
+.login-box .login-phone .cleanbtn{ width: 0.375rem; height: 0.375rem; background: url(../images/clean.png); display: inline-block; }
+.login-box .login-pwd{ width: 9.062rem; height: 1.25rem; border-bottom: 0.015rem solid #a4a4a4; margin-top: 0.468rem; }
+.login-box .login-pwd .login-pwdnum{ font-size: 0.312rem; border: 0; width: 6.984rem; height: 1.25rem; background: url(../images/loginicon.png) no-repeat; background-position: 0.281rem 0.343rem; padding-left: 1.312rem; outline: 0; }
+.login-box .login-pwd .pwdshow{ width: 0.375rem; height: 0.25rem; background: url(../images/view.png); display: inline-block; }
+.login-box .login-pwd .pwdhidden{ width: 0.375rem; height: 0.171rem; background: url(../images/hidden.png); display: inline-block; }
+.login-box .login-btn{ width: 9.062rem; margin-top: 0.718rem; height: 0.843rem; }
+.login-box .login-btn .login-btnreg{ float: left; width: 4.468rem; height: 0.843rem; background: #6dd0fd; color: #fff; border: 0; font-size: 0.468rem; outline: 0; }
+.login-box .login-btn .login-btnlog{ float: right; width: 4.468rem; height: 0.843rem; background: #1cb0fc; color: #fff; border: 0; font-size: 0.468rem; outline: 0; }
+.login-box .login-reset .login-resetpwd{ float: right; display: block; margin-top: 0.484rem; color: #b0b0b0; font-size: 0.312rem; text-decoration: none; }
+.login-box .login-blur{ width: 9.062rem; height: 1.25rem; border-bottom: 0.015rem solid #1baffc; }
+.login-tip{ width: 10rem; height: 1.031rem; font-size: 0.312rem; background: #fff6f6; color: #fd686d; text-align: center; line-height: 1.031rem; margin: -1.031rem auto 0; animation:tip 5s; -webkit-animation:tip 5s; }
+@keyframes tip
+{
+  0% { margin-top: -1.031rem; }
+  50% { margin-top: 0px; }
+  100% { margin-top: -1.031rem; }
+}
+@-webkit-keyframes tip
+{
+  0% { margin-top: -1.031rem; }
+  50 { margin-top: 0px; }
+  100% { margin-top: -1.031rem; }
+}
+
+
+
+.worker-detail{ width: 640px; height: 500px; margin: 0 auto; }
+.worker-detail .worker-info{ width: 640px; height: 184px; border-bottom: 1px solid #e4e4e4; }
+.worker-detail .worker-info .info{ background: #f6bbbb; width: 580px; height: 154px; margin: 0 auto; position: relative; top: 30px; left: 0; }
+.worker-detail .worker-info .info .worker-photo{ width: 124px; height: 124px; border-radius: 6px; border: 1px solid #e4e4e4; }
+.worker-detail .worker-info .info .worker-name{ font-size: 28px; color: #3f3e48; position: relative; top: -90px; left: 16px; display: inline-block; }
+.worker-detail .worker-info .info .worker-gender{ position: relative; top: -92px; left: 23px; }
+.worker-detail .worker-info .info .worker-age{ top: -94px; left: 22px; }
+.worker-detail .worker-info .info .worker-craft{ top: -57px; left: -143px; }
+.worker-detail .worker-info .info .worker-birthplace{ top: -9px; left: -210px; }
+.worker-detail .worker-info .info .worker-wordyears{ background: url(../images/bar.png) no-repeat; padding-left: 15px; top: -9px; left: -151px; }
+.worker-detail .worker-info .info .worker-like{ background: url(../images/like.png) no-repeat; background-position: 0 2px; padding-left: 26px; top: -95px; right: 94px; }
+.worker-detail .worker-info .info .worker-star{ background: url(../images/star.png) no-repeat; background-position: 0 2px; padding-left: 26px; top: -118px; left: 511px; }
+.worker-age,.worker-craft,.worker-birthplace,.worker-wordyears,.worker-like,.worker-star{ line-height: 20px; font-size: 20px; color: #3f3e48; position: relative; display: inline-block; }
