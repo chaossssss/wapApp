@@ -76,6 +76,7 @@ Components 最少以两个单词命名，通过 - 分离，例如：
 * 点赞按钮 (.like-button)
 * 搜索框 (.search-form)
 * 文章卡片 (.article-card)
+* 与样式库一起开发的时候，自定义样式请带上前缀 zj-
 
 ## JS 函数/方法注释规范
 
