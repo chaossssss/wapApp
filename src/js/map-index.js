@@ -1,5 +1,5 @@
 var PATH = "http://wapapi.zhujiash.com/";
-var WORK_MAN = "../images/便民.png";
+var WORK_MAN = "../images/测试3.png";
 function createMarker(workers){
 
 	for(var i=0,len=workers.length;i<len;i++){

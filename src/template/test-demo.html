@@ -20,8 +20,23 @@
 	
 	<h1>这是除了主页面外，模块页面的测试23456</h1>
 		
-	<div>这是除了主页面外，模块页面的测试23456</div>
+	<div>这是除了</div>
 
+	<div id="example-1">
+		hello {{name}}
+	</div>
 
+<script src="//cdn.bootcss.com/vue/2.0.0-rc.3/vue.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script>
+	var exampleData = {
+		name : 'vues.js'
+	}
+
+	var exampleVM = new Vue({
+		el: '#example-1',
+		data: exampleData
+	})
+</script>
 </body> 
 </html>
