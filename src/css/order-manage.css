@@ -1,0 +1,38 @@
+*{ margin:0; padding:0; list-style:none;}
+body{ font-size:12px;}
+
+.my-order{ width: 750px; margin: 0 auto; }
+.my-order .tab-menu{ width:750px; overflow:hidden; border:1px solid #000;}
+.my-order .tab-menu .tab-nav { height: 50px; border-bottom: 1px solid #000; display:block;width:100%; padding:0; margin:0;list-style:none;}
+.my-order .tab-menu .tab-nav li { float:left;width:150px; height: 50px; }
+.my-order .tab-menu .tab-nav li a { display:block; line-height:47px; text-decoration:none;margin: 0 40px ; text-align:center; color:#333; }
+.my-order .tab-con{ width:750px; height:700px; border-top:none }
+.my-order .tag{ overflow:hidden; }
+.my-order .tab-menu .tab-nav .selected{ color:#86d2f4; border-bottom: 4px solid red; }
+.order-table{ width: 750px; height: 100px; border-spacing: 0px; border-collapse: collapse; }
+.order-table .table-firstline{ height: 40px; }
+.order-table .table-text{ text-align: right; padding-right: 50px; }
+.order-table .table-lefttd{ width: 50%; padding-left: 20px; }
+.order-table .table-line{ height: 40px; background: #b3b3b3; }
+.order-table .table-price{ border-bottom: 1px solid #000; height: 50px; }
+.order-table .table-operation{ border-bottom: 1px solid #000; height: 50px; }
+.order-table .table-operation .table-btn{ border: 1px solid #000; padding: 10px; }
+.order-table td{ width: 50%; }
+
+
+.order-detail{ width: 750px; margin: 0 auto; }
+.order-detail .order-staus{ width: 750px; height: 50px; }
+.order-detail .process{ width: 750px; height: 50px; display: flex; background: #b8b3b3; }
+.order-detail .process .process-status{ flex: 1; text-align: center; line-height: 50px; }
+.order-detail .spacing{ width: 750px; height: 10px;  background: #93a3ff; border-top: 1px solid #673ab7; border-bottom: 1px solid #673ab7; }
+.order-detail .order-table{ width: 750px; height: 100px; border-spacing: 0px; border-collapse: collapse; }
+.order-detail .table-firstline .contact-btn{ display: inline-block; text-align: center; width: 80px; padding: 5px; border: 1px solid #000; }
+.order-detail .delete-order{ width: 750px; height: 80px; }
+.order-detail .delete-order .delete-btn{ border: 1px #000 solid; width: 70px; height: 60px; line-height: 60px; text-align: center; display: inline-block; position: relative; left: 600px; top: 10px; }
+.order-detail .order-pay{ width: 750px; height: 100px; border-spacing: 0px; border-collapse: collapse; }
+.order-detail .order-pay .table-firstline{ height: 40px; }
+.order-detail .order-pay .table-text{ text-align: right; padding-right: 50px; }
+.order-detail .order-pay .table-lefttd{ width: 50%; padding-left: 20px; }
+.order-detail .order-pay .table-photos .photo-show{ width: 50px; height: 50px; display: inline-block; }
+
+.order-detail .order-redording{ width: 750px; height: 100px; border-spacing: 0px; border-collapse: collapse; }
