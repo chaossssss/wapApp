@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- 为移动设备添加 viewport -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"> -->
   <!--禁止电话，邮件识别-->
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="description" content="助家生活">
@@ -15,9 +15,10 @@
     <link type="text/css" rel="stylesheet" href="../css/style.min.css">
 </head>
 <body>
+  <div id="loginTip" class="btnhidden">检查到您的手机不是本机登录，请验证后登录</div>
   <div class="login-box">
     <div id="loginPhone" class="login-phone">
-      <input class="login-phonenum" type="text" name="LoginName" value="" placeholder="请输入你的手机帐号" />
+      <input class="login-phonenum" type="text" name="LoginName" value="" placeholder="请输入你的手机帐号" autocomplete="off" />
       <span id="clean-btn" class="btnhidden"></span>
     </div>
     <div id="loginPwd" class="login-pwd">
@@ -26,7 +27,7 @@
     </div>
     <div class="login-btn">
       <input class="login-btnreg" type="button" value="注册" />
-      <input class="login-btnlog" type="button" value="登录">
+      <input id="btnlog" class="login-btnlog" type="button" value="登录" />
     </div>
     <div class="login-reset">
       <a class="login-resetpwd" href="">忘记密码？点击重置</a>
@@ -34,5 +35,6 @@
   </div>
   <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
   <script type="text/javascript" src="../js/main.min.js"></script>
+  <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
 </body>
 </html>

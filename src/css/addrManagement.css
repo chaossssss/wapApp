@@ -14,22 +14,7 @@
 .addr-item .list-address{ position: relative; top: -48px; left: 47px; }
 .addr-item .list-edit{ position: relative; top: -94px; right: -650px; }
 .addr-item .weui_panel_bd .list-delete{ width: 50px; height: 112px; background: red; }*/
-.addr-item .swiper-slide
-{
-/* Center slide text vertically */
-display: -webkit-box;
-display: -ms-flexbox;
-display: -webkit-flex;
-display: flex;
--webkit-box-pack: center;
--ms-flex-pack: center;
--webkit-justify-content: center;
-justify-content: center;
--webkit-box-align: center;
--ms-flex-align: center;
--webkit-align-items: center;
-align-items: center;
-}
+
 .weui_dialog_confirm .weui_dialog .weui_dialog_ft .zj-blue{ color: blue; }
 .weui_dialog_alert .zj-cancel{ position: relative; left: 506px; top: 5px; }
 .weui_dialog_alert .zj-confirm{ position: relative; left: 570px; top: 5px; }
@@ -44,17 +29,15 @@ align-items: center;
 .addr-item .weui_panel_bd .list-delete{ width: 50px; height: 112px; background: red; }
 
 
-.line-wrapper { width: 100%; height: 144px; overflow: hidden; font-size: 28px; border-bottom: 1px solid #aaa; }
-.line-scroll-wrapper { white-space: nowrap; height: 144px; clear: both; }
-.line-btn-delete { float: left; width: 132px; height: 144px; }
-.line-btn-delete button { width: 100%; height: 100%; background: red; border: none; font-size: 24px; font-family: 'Microsoft Yahei'; color: #fff; }
-.line-normal-wrapper { display: inline-block; float: left; padding-top: 10px; padding-bottom: 10px; }
-.line-normal-icon-wrapper { float: right; width: 120px; height: 120px; margin-right: 12px; }
-.line-normal-icon-wrapper img { width: 120px; height: 120px; }
-.line-normal-avatar-wrapper { width: 100px; height: 124px; float: left; margin-left: 12px; }
-.line-normal-avatar-wrapper img { width: 92px; height: 92px; border-radius: 60px; }
-.line-normal-left-wrapper { overflow: hidden; }
-.line-normal-info-wrapper { float: left; margin-left: 10px; }
-.line-normal-user-name { height: 28px; line-height: 28px; color: #4e4e4e; margin-top: 7px; }
-.line-normal-msg { height: 28px; line-height: 28px; overflow:hidden; text-overflow:ellipsis; color: #4e4e4e; margin-top: 11px; }
-.line-normal-time { height: 28px; line-height: 28px; color: #999; margin-top: 11px; }
+.addr-item .line-wrapper { width: 100%; height: 144px; overflow: hidden; font-size: 28px; border-bottom: 1px solid #aaa; }
+.addr-item .line-scroll-wrapper { white-space: nowrap; height: 144px; clear: both; }
+.addr-item .line-btn-delete { float: left; width: 132px; height: 144px; }
+.addr-item .line-btn-delete button { width: 100%; height: 100%; background: red; border: none; font-size: 24px; font-family: 'Microsoft Yahei'; color: #fff; }
+.addr-item .line-normal-wrapper { display: inline-block; float: left; padding-top: 10px; padding-bottom: 10px; }
+.addr-item .line-normal-icon-wrapper { float: right; width: 120px; height: 120px; margin-right: 12px; }
+.addr-item .line-normal-avatar-wrapper { width: 100px; height: 124px; float: left; margin-left: 12px; }
+.addr-item .line-normal-left-wrapper { overflow: hidden; }
+.addr-item .line-normal-info-wrapper { margin-left: 10px; }
+.addr-item .line-normal-user-name { height: 28px; line-height: 28px; color: #4e4e4e; margin-top: 7px; }
+.addr-item .line-normal-msg { height: 28px; line-height: 28px; overflow:hidden; text-overflow:ellipsis; color: #4e4e4e; margin-top: 11px; }
+.addr-item .line-normal-time { height: 28px; line-height: 28px; color: #999; margin-top: 11px; }

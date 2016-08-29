@@ -1,5 +1,5 @@
 $(function(){
-  $("#showDialog2").click(function(){
+  $("#showDialog").click(function(){
     $('#dialogConfirm').show();
     $('.weui_btn_dialog').click(function(){
       $('#dialogConfirm').hide();
