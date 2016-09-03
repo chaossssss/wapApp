@@ -4,19 +4,23 @@
 
 [BootCDN 静态资源库地址](http://www.bootcdn.cn)
 
-#### 1. [vue](http://cn.vuejs.org/) 
+#### 1. [angularjs]() 
 #### 2. [jquery](http://www.bootcdn.cn/jquery/)
 #### 3. [fastclick](https://github.com/ftlabs/fastclick)
 #### 4. swiper
 #### 5. 构建工具 gulp
 #### 6. 适配方案 flexible
-#### 7. 媒体查询 
+#### 7. 媒体查询 @media screen and (max-wdith:xxx px)
 
 ## 开发规范
 
 __本项目只是罗列了其中一部分，详细请阅读以下开发规范__
 
 [前端开发规范手册](http://zhibimo.com/read/Ashu/front-end-style-guide/index.html)
+
+__无线web开发文档，值得学习__
+
+[支付宝移动Web解决方案](http://am-team.github.io/amg/dev-exp-doc.html)
 
 #### HEAD 模版
  

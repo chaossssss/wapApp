@@ -12,8 +12,8 @@ function createMarker(workers){
         var flag = workers[i].DisplayAttribute;
 
         var opts = {
-            position:point,
-            offset:new BMap.Size(-34,-30)
+            position:point
+            // offset:new BMap.Size(-40,-30)
         }              
 
         // marker.setLabel(label);
@@ -28,7 +28,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm1,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break;  
@@ -40,7 +42,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm2,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break;    
@@ -60,7 +64,9 @@ function createMarker(workers){
                 }
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break; 
@@ -72,7 +78,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm4,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break; 
@@ -84,7 +92,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm5,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break;  
@@ -96,7 +106,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm6,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);  
                 break;
@@ -108,7 +120,9 @@ function createMarker(workers){
                 var label = new BMap.Label(htm0,opts);
                 label.setStyle({
                     border:0,
-                    backgroundColor:"rgba(0,0,0,0)"
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
                 });
                 marker.setLabel(label);
                 break;  
