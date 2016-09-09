@@ -93,12 +93,16 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务时间</p>
 			</div>
-			<div class="weui_cell_ft pgreen">请选择服务时间</div>
+			<div ng-if="vm.serviceDay == undifined" class="weui_cell_ft pgreen" ng-click="dp.show = true">请选择服务时间</div>
+			<div ng-if="vm.serviceDay !== undifined" class="weui_cell_ft pgreen" ng-click="dp.show = true">
+				<span ng-bind="vm.serviceDay"></span>
+				<span ng-bind="vm.serviceTime"></span>
+			</div>
 		</a>
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
-				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea" ng-model="vm.serviceStartAt"></textarea>
+				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea" ng-model="vm.serviceStartAt" maxlength="200"></textarea>
 				<div class="weui_textarea_counter">
 					<span ng-bind="textarea_size"></span>
 					/200
@@ -114,9 +118,13 @@
 					</div>
 					<div class="weui_uploader_bd">
 						<ul class="weui_uploader_files">
-							<li class="weui_uploader_file"></li>
+							<li class="weui_uploader_file" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/);">
+								<i></i>
+							</li>
 						</ul>
-						<div class="weui_uploader_input_wrp"><input type="file" accept="image/*multiple" class="weui_uploader_input"></div>
+						<div class="weui_uploader_input_wrp">
+							<input id="file" type="file" accept="image/*multiple" class="weui_uploader_input" ng-click="vm.upload()">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -134,7 +142,7 @@
 		</div>
 		<div class="zj_foot_bd">
 			<span>¥</span>
-			<span ng-bind="vm.unitPrice*vm.serviceTimeCount"></span>
+			<span ng-bind="vm.unitPrice*vm.serviceTimeCount | number:1"></span>
 		</div>
 		<div class="zj_foot_ft">
 			<span class="btn">提交订单</span>
@@ -142,7 +150,31 @@
 	</div>
 </form>
 
-
+<div class="zj_date_picker" zh-date-picker id="zh_date_picker">
+	<div class="" ng-class="{true:'zj_mask_transition zj_fade_toggle',false:''}[dp.show]"></div>
+	<div class="zj_actionsheet" ng-class="{true:'zj_actionsheet_toggle',false:''}[dp.show]">
+		<div class="zj_navbar">
+			<ul class="zj_navbar_item zj_flex_1">
+				<li ng-repeat="item in vm.dayDate" ng-click="dp.getdpDay(item)">
+					<span>{{item}}</span>
+				</li>
+			</ul>
+			<ul class="zj_tab_bd zj_flex_1">
+				<li class="zj_li">
+					<span>立即服务</span>
+					<i class="weui_icon_success zj_icon show"></i>
+				</li>
+				<li class="zj_li"  ng-repeat="item in vm.timeDate" ng-click="dp.getdpTime(item)">
+					<span>{{item}}</span>
+					<i class="weui_icon_success zj_icon hide"></i>
+				</li>
+			</ul>
+		</div>
+		<div class="zj_ft" ng-click="dp.show = false">
+			取消
+		</div>
+	</div>
+</div>
 
 
 
@@ -156,6 +188,7 @@
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
+<script src="../../js/quick-order/zxxFile.min.js"></script>
 <script src="../../js/quick-order/quick-order.min.js"></script>
 </body>
 </html>
