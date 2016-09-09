@@ -39,6 +39,22 @@ ul,li {
 .fc8 {
 	color: #888;
 }
+.w30 {
+	width: 30px;
+}
+.col90 {
+	width: 90%;
+}
+/*Location*/
+/*块居中 block center*/
+.bc{margin-left: auto;margin-right: auto;}
+.container {
+	margin-left: auto;
+	margin-right: auto;
+}
+.h30 {
+	height: 30px;
+}
 .lh30 {
 	line-height: 30px;
 }
@@ -47,6 +63,9 @@ ul,li {
 }
 .ptb15 {
 	padding:15px 0; 	
+}
+.mr20 {
+	margin-right: 20px;
 }
 .hide {
 	opacity: 0;
@@ -317,10 +336,46 @@ ul,li {
 	background-color: #04be02;
 	text-align: center;
 }
-/*图片上传*/
-
-
-
+/*服务类型选择*/
+.zj_service .title {
+	display: -webkit-box-flex;
+	display: -webkit-flex;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 10px 0;
+}
+.zj_service .bd {
+	overflow:hidden;
+	text-align: center;
+	clear: left;
+	background-color: #fff;
+}
+.zj_service .cell {
+	float: left;
+	padding: 15px 0;
+	width: 33%;
+	position: relative;
+	/*border-right:1px solid #d9d9d9;*/
+}
+.zj_service .cell:active {
+	background-color: #ECECEC;
+}
+.blred {
+	border-left:3px solid rgb(233,75,20);
+}
+.blgreen {
+	border-left:3px solid rgb(17,184,123);
+}
+.blpurple {
+	border-left: 3px solid rgb(149,90,232);
+}
+.blorange {
+	border-left: 3px solid rgb(253,121,42);
+}
+.blpink {
+	border-left: 3px solid rgb(248,43,75);
+}
 
 
 
