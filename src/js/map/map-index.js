@@ -12,7 +12,6 @@ var Local_Img = "../images/map/ic_coordinate.svg";
  * @return {[type]}         [description]
  */
 function createMarker(workers){
-
     remove_overlay();
 
 	for(var i=0,len=workers.length;i<len;i++){
@@ -169,6 +168,53 @@ function createMarker(workers){
 	}
 }
 
+
+/**
+ * 叔叔良心改版
+ * @param  {[type]} workers [description]
+ * @param  {[type]} boss    [description]
+ * @return {[type]}         [description]
+ */
+// function createMarker(workers,boss){
+//     remove_overlay();
+
+//     for(var i=0,len=workers.length;i<len;i++){
+//         var point = new BMap.Point(workers[i].Longitude,workers[i].Latitude);
+//         var icon = new BMap.Icon(WORK_MAN,new BMap.Size(34,32));
+//         var marker = new BMap.Marker(point,{icon:icon});
+//         map.addOverlay(marker);
+
+//         var id = workers[i].Id;
+//         marker.addEventListener("click",function(){
+//             goDetail("worker",id);
+//         });
+
+//         var manOrwoman = workers[i].Gender;
+//         var flag = workers[i].DisplayAttribute;
+
+//         var opts = {
+//             position:point
+//             // offset:new BMap.Size(-40,-30)
+//         }              
+        
+//         var htm1 = "<div class='bubbleInfo'>"
+//         +   "<span class='name'>"+workers[i].DefaultService.Name+"</span>"
+//         +   "<span class='num mapBlue'>"+workers[i].DisplayAttribute+"</span>"
+//         +"</div>";
+//         var label = new BMap.Label(htm1,opts);
+//         label.setStyle({
+//             border:0,
+//             backgroundColor:"rgba(0,0,0,0)",
+//             marginLeft:"-50px",
+//             marginTop:"-30px"
+//         });
+//         marker.setLabel(label);  
+//         label.addEventListener("click",function(){
+//             goDetail("worker",id);
+//         });
+//     }
+// }
+
 /**
  * 跳转到详情页面
  * @return {[type]} [description]
@@ -176,7 +222,13 @@ function createMarker(workers){
 function goDetail(type,id){
     alert(type);
     alert(id);
-    // window.location.href = "";
+    if(type === "worker"){
+        // window.location.href = "/template/";
+    }
+    if(type === "boss"){
+
+    }
+    
 }
 
 /**
@@ -196,9 +248,11 @@ function getData(data){
 
 	$.ajax({
 		method: "POST",
-		url: PATH+"api/v1/Provider/IndexEx",
+		url: PATH+"api/v2/Provider/IndexEx",
 		data: data,
 	}).success(function(res){
+        console.log("标符号",$.cookie("Token"));
+
 		console.log("获取数据",res);
         var workers = res.Body.Workers;
         var length = res.Body.Workers.length;
@@ -206,11 +260,21 @@ function getData(data){
             var num =  parseInt(Math.random()*6);
             workers[i].DisplayAttribute = num;
         }
-
-
-		createMarker(workers);
-
+		createMarker(res.Body.Workers);
 	})
+}
+
+
+function getServiceList(data){
+
+    $.ajax({
+        method:"POST",
+        url: PATH+"api/v1/clientinfo/Index",
+        data:data
+    }).success(function(res){
+        console.log("个人信息",res);
+
+    })
 }
 
 /**
