@@ -1,0 +1,105 @@
+/*全局样式*/
+body{
+    margin:0;
+    font-size: 12px;
+    /*font-family: "PingFang SC Regular" , "苹方-简" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
+    font-family:"Times New Roman",Georgia,Serif;
+}
+ol,ul{
+    list-style:none
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.cle{
+    zoom: 1;
+}
+.cb{
+    clear: both;
+}
+a{
+    font-size: 12px;
+    font-family: "PingFang SC Regular" , "苹方-简" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
+    color: black;
+}
+/*工人信息*/
+/*.main{*/
+    /*padding-top: 20px;*/
+    /*padding-bottom: 60px;*/
+/*}*/
+.card {
+    background-color: #fff;
+    padding: 10px 0 10px 0;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+
+}
+.position{
+    clear: both;
+    overflow: hidden;
+}
+.position_infor .position p {
+    float: left;
+    /*margin-right: 14px;*/
+    font-size: 12px;
+    line-height: 12px;
+    color: #333;
+    font-weight: bold;
+
+}
+.position_infor .position span {
+    position: relative;
+    float: left;
+    display: inline-block;
+    line-height: 12px;
+    padding-left: 15px;
+    font-size: 12px;
+    vertical-align:middle;
+}
+.position_comment{
+    padding: 14px ;
+
+}
+.region{
+    padding-left: 15px;
+}
+.worder-experience{
+    padding-right: 60px;
+}
+.time{
+    padding-left: 7.5px;
+}
+.worder-interest{
+    padding-right: 70px;
+}
+.journey{
+    padding-left: 15px;
+}
+.worder-constellation{
+    padding-right: 60px;
+}
+.idiograph{
+    padding-top: 15px;
+}
+.idiograph_box{
+    overflow: hidden;
+   padding-left: 15px;
+    padding-bottom: 15px;
+}
+.position-place{
+    padding-left: 13px;
+}
+.font-content{
+    display: inline-block;
+    overflow: hidden;
+    width: 295px;
+   margin: 0 auto;
+    padding-left: 13px;
+}

@@ -9,6 +9,7 @@
   "author": "zhouxiaohao",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
     "bower": "^1.7.9",
     "browser-sync": "^2.14.0",
     "gulp": "^3.9.1",

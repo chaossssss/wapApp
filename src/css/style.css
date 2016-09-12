@@ -18,18 +18,18 @@
 .login-box .login-reset .login-resetpwd{ float: right; display: block; margin-top: 0.484rem; color: #b0b0b0; font-size: 0.312rem; text-decoration: none; }
 .login-box .login-blur{ width: 9.062rem; height: 1.25rem; border-bottom: 0.015rem solid #1baffc; }
 .login-tip{ width: 10rem; height: 1.031rem; font-size: 0.312rem; background: #fff6f6; color: #fd686d; text-align: center; line-height: 1.031rem; margin: -1.031rem auto 0; animation:tip 5s; -webkit-animation:tip 5s; }
-@keyframes tip
-{
-  0% { margin-top: -1.031rem; }
-  50% { margin-top: 0px; }
-  100% { margin-top: -1.031rem; }
-}
-@-webkit-keyframes tip
-{
-  0% { margin-top: -1.031rem; }
-  50 { margin-top: 0px; }
-  100% { margin-top: -1.031rem; }
-}
+/*@keyframes tip*/
+/*{*/
+  /*0% { margin-top: -1.031rem; }*/
+  /*50% { margin-top: 0px; }*/
+  /*100% { margin-top: -1.031rem; }*/
+/*}*/
+/*@-webkit-keyframes tip*/
+/*{*/
+  /*0% { margin-top: -1.031rem; }*/
+  /*50 { margin-top: 0px; }*/
+  /*100% { margin-top: -1.031rem; }*/
+/*}*/
 
 
 
