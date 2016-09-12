@@ -11,7 +11,7 @@ var Local_Img = "../images/map/ic_coordinate.svg";
  * @param  {[type]} workers [description]
  * @return {[type]}         [description]
  */
-function createMarker(workers){
+function createMarker(workers,boss){
     remove_overlay();
 
 	for(var i=0,len=workers.length;i<len;i++){
@@ -166,6 +166,157 @@ function createMarker(workers){
                 break;  
         }
 	}
+
+    for(var j=0,len=boss.length;j<len;j++){
+        var point = new BMap.Point(boss[j].Longitude,boss[j].Latitude);
+        var icon = new BMap.Icon(WORK_MAN,new BMap.Size(34,32));
+        var marker = new BMap.Marker(point,{icon:icon});
+        map.addOverlay(marker);
+
+        var id = boss[j].Id;
+        marker.addEventListener("click",function(){
+            goDetail("boss",id);
+        });
+
+        var flag = boss[j].DisplayAttribute;
+
+        var opts = {
+            position:point
+            // offset:new BMap.Size(-40,-30)
+        }              
+
+        // marker.setLabel(label);
+        // map.addOverlay(label);
+        
+        switch (flag) {
+            case 1:
+                var htm1 = "<div class='bubbleInfo'>"
+                +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num mapBlue'>5年</span>"
+                +"</div>";
+                var label = new BMap.Label(htm1,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label);  
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                });
+                break;  
+            case 2:
+                var htm2 = "<div class='bubbleInfo'>"
+                +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num mapPink'>2年</span>"
+                +"</div>"; 
+                var label = new BMap.Label(htm2,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label); 
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                }); 
+                break;    
+            case 3:
+                if(manOrwoman === "0"){
+                    var htm3_0 = "<div class='bubbleInfo'>"
+                    +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                    +"</div>"; 
+                    var label = new BMap.Label(htm3_0,opts);
+                }else{
+                    var htm3_1 = "<div class='bubbleInfo'>"
+                    +   "<span class='name'>开锁换锁</span>"
+                    +   "<span class='num mapRed'>杭州</span>"
+                    +"</div>"; 
+                    var label = new BMap.Label(htm3_1,opts);
+                }
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label);  
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                });
+                break; 
+            case 4:
+                var htm4 = "<div class='bubbleInfo'>"
+                +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num mapPurple'>10公里</span>"
+                +"</div>";
+                var label = new BMap.Label(htm4,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label);  
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                });
+                break; 
+            case 5:
+                var htm5 = "<div class='bubbleInfo'>"
+                +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num mapOrange'>已备案</span>"
+                +"</div>";  
+                var label = new BMap.Label(htm5,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label); 
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                }); 
+                break;  
+            case 6:
+                var htm6 = "<div class='bubbleInfo'>"
+                +   "<span class='name'>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num mapGreen'>"+boss[j].NativePlace+"</span>"
+                +"</div>"; 
+                var label = new BMap.Label(htm6,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label);  
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                });
+                break;
+            default :
+                var htm0 = "<div class='bubbleInfo'>"
+                +   "<span>"+boss[j].DefaultService.Name+"</span>"
+                +   "<span class='num'>杭州</span>"
+                +"</div>";
+                var label = new BMap.Label(htm0,opts);
+                label.setStyle({
+                    border:0,
+                    backgroundColor:"rgba(0,0,0,0)",
+                    marginLeft:"-50px",
+                    marginTop:"-30px"
+                });
+                marker.setLabel(label);
+                label.addEventListener("click",function(){
+                    goDetail("boss",id);
+                });
+                break;  
+        }
+    }
 }
 
 
@@ -220,15 +371,14 @@ function createMarker(workers){
  * @return {[type]} [description]
  */
 function goDetail(type,id){
-    alert(type);
-    alert(id);
+    // alert(type);
+    // alert(id);
     if(type === "worker"){
-        // window.location.href = "/template/";
+        window.location.href = "/template/worker/worker-detail.html?type=1&id="+id;
     }
     if(type === "boss"){
-
+        window.location.href = "/template/business-detail/business-detail.html?type=2&id="+id;
     }
-    
 }
 
 /**
@@ -260,7 +410,15 @@ function getData(data){
             var num =  parseInt(Math.random()*6);
             workers[i].DisplayAttribute = num;
         }
-		createMarker(res.Body.Workers);
+
+        var boss = res.Body.Business;
+        var length = res.Body.Business.length;
+        for(var j=0;j<length;j++){
+            var numb =  parseInt(Math.random()*6);
+            boss[j].DisplayAttribute = numb;
+        }
+
+		createMarker(res.Body.Workers,res.Body.Business);
 	})
 }
 
