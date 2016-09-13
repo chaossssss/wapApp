@@ -40,6 +40,9 @@ $(function(){
     // 电话框弹出效
     $('.call_phone').click(function(){
         $('.phone_dialog').show();
+    });
+     $('.xx-img').click(function(){
+        $('.phone_dialog').hide();
     })
 
 // jax--------------------------------------------------------
@@ -69,6 +72,7 @@ $(function(){
     		$(".PhoneRank").text(api.PhoneRank);
     		$(".Grade").text(api.Grade);
     		$(".GradeRank").text(api.GradeRank);
+            $(".PhoneNumber").text(api.PhoneNumber);
 
             // 认证集合
     		var RzImgs="";

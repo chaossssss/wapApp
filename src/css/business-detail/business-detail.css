@@ -200,7 +200,7 @@ textarea{resize: none;}
 .more{
 	float: right;
     color: #ccc;
-    margin-top: -4px;
+    margin-top: 8px;
     width: 10px;
     height: 10px;
 }
@@ -419,4 +419,32 @@ textarea{resize: none;}
 .weui_dialog_hd {
     color: #888;
     padding: 1.2em 0 .5em;
+    text-align: center;
+}
+
+.bh{
+	position: fixed;
+    text-align: center;
+    top: -20px;
+    left: 134px;
+}
+.bh-img {
+    width: 50px;
+    height: 50px;
+}
+.download{
+    width: 100px;
+    display: inline-block;
+    background-color:#32beff;
+    line-height: 45px;
+    margin-top: 10px;
+}
+.download-font{
+ color: #fff;
+}
+.xx-img{
+    width:10px;
+    height:10px;
+    padding-right: 10px;
+    padding-top: 10px;
 }

@@ -1,7 +1,8 @@
 /*È«¾ÖÑùÊ½*/
+
 body{
     margin:0;
-    font-size: 12px;
+    font-size: 17px;
     /*font-family: "PingFang SC Regular" , "Æ»·½-¼ò" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
     font-family:"Times New Roman",Georgia,Serif;
 }
@@ -14,12 +15,14 @@ p{
 }
 .fl{
     float: left;
+    width:50%;
 }
 .fr{
     float: right;
 }
 .cle{
     zoom: 1;
+    line-height: 1.6;
 }
 .cb{
     clear: both;
@@ -29,6 +32,7 @@ a{
     font-family: "PingFang SC Regular" , "Æ»·½-¼ò" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
     color: black;
 }
+.clear{clear: both;}
 /*¹¤ÈËÐÅÏ¢*/
 /*.main{*/
     /*padding-top: 20px;*/
@@ -36,9 +40,14 @@ a{
 /*}*/
 .card {
     background-color: #fff;
-    padding: 10px 0 10px 0;
+    padding:10px;
     border-bottom:1px solid #e4e4e4;
 
+}
+.Number{
+    float: left;
+    line-height: 22px;
+    height: 47px;
 }
 .position{
     clear: both;
@@ -53,58 +62,39 @@ a{
     font-weight: bold;
 
 }
-.position_infor .position span {
-    position: relative;
-    float: left;
-    display: inline-block;
-    line-height: 12px;
-    padding-left: 15px;
-    font-size: 12px;
-    vertical-align:middle;
-}
-.position_comment{
-    padding: 14px ;
 
-}
-.region{
-    padding-left: 15px;
-}
-.worder-experience{
-    padding-right: 60px;
+.worder-experience,.worder-interest{
+    width: 50%;
 }
 .time{
     padding-left: 7.5px;
 }
-.worder-interest{
-    padding-right: 70px;
-}
+
 .journey{
-    padding-left: 15px;
+    padding-left: 10px;
 }
 .worder-constellation{
     padding-right: 60px;
 }
-.idiograph{
-    padding-top: 15px;
-}
 .idiograph_box{
     overflow: hidden;
-    padding-left: 15px;
+    padding-left: 10px;
     padding-bottom: 15px;
 }
 .position-place{
-    padding-left: 13px;
+    padding-left: 10px;
 }
 .font-content{
     display: inline-block;
     overflow: hidden;
     width: 295px;
     margin: 0 auto;
-    padding-left: 13px;
+    padding-left: 10px;
 }
 .model2{
     border-top: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
+    padding:10px;
 }
 .line{
     height: 10px;
@@ -112,22 +102,61 @@ a{
 }
 .sys-rz{
     border-top: 1px solid #e4e4e4;
-    padding: 15px;
+    padding: 10px;
 }
 .title{
+    float: left;
     color:#8a889c;
+    width: 70px;
+    text-overflow: ellipsis;
 }
 .sys-img{
-    width: 15px;
+    float: left;
     height: 15px;
-    vertical-align: text-bottom;;
+    width:15px;
+    margin-top: 6px;
+
+}
+
+.right-cont{
+    width: 102px;
+    height:45px;
+    line-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    margin-left: 5px;
+}
+.Address,.ServiceScope,.Intro{
+    padding-left: 5px;
+    display: inline-block;
+    width: 275px;
+}
+.fuwu-fanwei{
+    margin-top: 20px;
+}
+.bus-itro{
+    padding:10px;
 }
 .items{
-    width:200px;
+    width:100%;
+    margin-top: 10px;
 }
 .items li{
-    display: inline-block;
-    text-align: center;
-    margin-left: 10px;
+    width:50%;
     margin-bottom: 10px;
+    display: inline-block;
+}
+.rz-name{
+    display: inline-block;
+    margin-left: 5px;
+    width: 120px;
+    height: 27px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Signature{
+    display: inline-block;
+    width: 277px;
+    padding-left: 5px;
 }

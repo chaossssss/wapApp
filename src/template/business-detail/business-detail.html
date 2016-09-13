@@ -27,10 +27,7 @@
 				   <span style="font-size: 16px;" onclick="CloseDiv('MyDiv','fade')">关闭</span>
 				</div> -->
 				<div class="swiper-container">
-			        <div class="swiper-wrapper">
-			            <!-- <div class="swiper-slide"><img src="http://aliimg.changba.com/cache/photo/159415743_640_640.jpg" class="swiper-img" alt=""></div>
-			            <div class="swiper-slide"><img src="http://i3.dpfile.com/pc/7909158bfe590cdc6c13e65d7f747ecc%28700x700%29/thumb.jpg" class="swiper-img" alt=""></div> -->
-			        </div>
+			        <div class="swiper-wrapper"></div>
 			    </div>
 		    </div>
 					 				
@@ -96,8 +93,9 @@
 	    <a href="javascript:;" id="showDialog2">
 			<div class="rz-info">
 				<span class="rz-title">认证信息</span>
-				<div class="bus-img"></div>
+				<div class="rz-imgs"></div>
 				<img src="/images/business-detail/jiantou.png" alt="" class="more">
+				<div class="clear"></div>
 			</div>
 		</a>
 		<div class="weui_dialog_confirm" id="dialog2" style="display: none;">
@@ -156,11 +154,24 @@
 	        </a>
 	        <a href="javascript:;" class="weui_tabbar_item">
 	            <div class="weui_tabbar_icon">
-	                <img src="../../images/worker/ic_phone_nor.svg" alt="">
+	                <img src="../../images/worker/ic_phone_nor.svg" class="call_phone" alt="">
 	            </div>
 	        </a>
    		</div>
    		<div class="clear"></div>
+   		<!--电话弹出框-->
+	    <div class="weui_dialog_alert phone_dialog">
+	        <div class="weui_mask"></div>
+	        <div class="weui_dialog">
+	            <div class="bh"><img src="../../images/worker/bohaom.png" class="bh-img"  alt=""/></div>
+	            <div style="text-align: right;"><img src="../../images/business-detail/ic_close.svg" class="xx-img" alt=""/></div>
+	            <div class="weui_dialog_hd"><strong class="weui_dialog_title">您拨打的号码为<span class="PhoneNumber" style="color:#32beff; "></span></strong></div>
+	            <div class="weui_dialog_bd">下载助家生活APP后方可拨打</div>
+	            <div class=" download">
+	                <a style="color:#fff;" href="javascript:void(0);" class="download-font">立即下载</a>
+	            </div>
+	        </div>
+	    </div>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 	<script src="../../js/business-detail/business-detail.min.js"></script>
