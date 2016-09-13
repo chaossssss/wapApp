@@ -1,8 +1,8 @@
-/*全局样式*/
+/*?????ù??*/
 body{
     margin:0;
     font-size: 12px;
-    /*font-family: "PingFang SC Regular" , "苹方-简" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
+    /*font-family: "PingFang SC Regular" , "??·?-?ò" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
     font-family:"Times New Roman",Georgia,Serif;
 }
 ol,ul{
@@ -26,19 +26,18 @@ p{
 }
 a{
     font-size: 12px;
-    font-family: "PingFang SC Regular" , "苹方-简" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
+    font-family: "PingFang SC Regular" , "??·?-?ò" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
     color: black;
 }
-/*工人信息*/
+/*?¤??????*/
 /*.main{*/
-    /*padding-top: 20px;*/
-    /*padding-bottom: 60px;*/
+/*padding-top: 20px;*/
+/*padding-bottom: 60px;*/
 /*}*/
 .card {
     background-color: #fff;
     padding: 10px 0 10px 0;
-    border-radius: 4px;
-    border: 1px solid #e5e5e5;
+    border-bottom:1px solid #e4e4e4;
 
 }
 .position{
@@ -90,7 +89,7 @@ a{
 }
 .idiograph_box{
     overflow: hidden;
-   padding-left: 15px;
+    padding-left: 15px;
     padding-bottom: 15px;
 }
 .position-place{
@@ -100,6 +99,35 @@ a{
     display: inline-block;
     overflow: hidden;
     width: 295px;
-   margin: 0 auto;
+    margin: 0 auto;
     padding-left: 13px;
+}
+.model2{
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+.line{
+    height: 10px;
+    background: #f7f6f6;
+}
+.sys-rz{
+    border-top: 1px solid #e4e4e4;
+    padding: 15px;
+}
+.title{
+    color:#8a889c;
+}
+.sys-img{
+    width: 15px;
+    height: 15px;
+    vertical-align: text-bottom;;
+}
+.items{
+    width:200px;
+}
+.items li{
+    display: inline-block;
+    text-align: center;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }

@@ -28,8 +28,8 @@ a{
 /*工人详情*/
 .xian{
     border-bottom: 1px solid #ccc;
-    margin-top: 15px;
-    height:70px;
+    /*margin-top: 15px;*/
+    height:50px;
 }
 .xian-bottom{
     border-bottom: 1px solid #ccc;
@@ -227,14 +227,7 @@ a{
     margin-top: 5px;
     font-size: 10px;
 }
-.address{
-    width: 180px;
-    height: 19px;
-    overflow: hidden;
-    float:left;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}
+
 .bus-jl{
     display: inline-block;
     margin-left: 20px;
@@ -242,7 +235,7 @@ a{
 .score{
     text-align: center;
     border-bottom:1px solid #e4e4e4;
-    padding-top:100px;
+    padding-top:90px;
     padding-left: 10px;
     padding-bottom:20px;
 }
@@ -412,4 +405,14 @@ a{
     margin-right: 15px;
     margin-top:3px ;
     vertical-align:middle;
+}
+.Gender{
+    width: 9px;
+    height: 9px;
+}
+.address{
+    width:50px;
+    height:16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
