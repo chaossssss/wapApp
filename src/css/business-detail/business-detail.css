@@ -177,7 +177,7 @@ textarea{resize: none;}
 }
 
 .rz-title{
-	display: inline-block;
+	float:left;
 	font-size: 14px;
 }
 .rz-close{
@@ -188,7 +188,7 @@ textarea{resize: none;}
 	display: inline-block;
     position: absolute;
     left: 78px;
-    top: 13px;
+    top: 7px;
 }
 .rz-img{
 	width: 17px;
@@ -200,7 +200,7 @@ textarea{resize: none;}
 .more{
 	float: right;
     color: #ccc;
-    margin-top: 9px;
+    margin-top: -4px;
     width: 10px;
     height: 10px;
 }
@@ -408,4 +408,15 @@ textarea{resize: none;}
 	width: 96%;
 }
 
-
+/*电话弹出层*/
+.phone_dialog{
+	display: none;
+	text-align: center;
+}
+.weui_dialog{
+    padding-bottom: 20px;
+}
+.weui_dialog_hd {
+    color: #888;
+    padding: 1.2em 0 .5em;
+}

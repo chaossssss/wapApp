@@ -1,15 +1,4 @@
 $(function(){
-    var swiper = new Swiper('.swiper-container', {
-        //pagination: '.swiper-pagination',
-        initialSlide:0,
-        slidesPerView: 3,
-        paginationClickable: true,
-        spaceBetween: 0,
-        touchRatio:1,
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper
-        observeParents:true//修改swiper的父元素时，自动初始化swiper
-    });
-
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");
@@ -23,14 +12,6 @@ $(function(){
 		$("#tab-fuwu").css("display","none");
 	})
 
-	// 轮播图弹出层
-	$('#container').on('click', '#showDialog1', function () {
-	    $('#dialog1').show().on('click', '.weui_btn_dialog', function () {
-	        $('#dialog1').off('click').hide();
-	    });
-	});
-
-
 	// 认证信息弹出层
 	$('#container').on('click', '#showDialog2', function () {
 	    $('#dialog2').show().on('click', '.weui_btn_dialog', function () {
@@ -39,7 +20,16 @@ $(function(){
 	});
 
 // 轮播图弹出效果---------------------------------------------
-	//弹出隐藏层
+    var swiper = new Swiper('.swiper-container', {
+            //pagination: '.swiper-pagination',
+            initialSlide:0,
+            slidesPerView: 3,
+            paginationClickable: true,
+            spaceBetween: 0,
+            touchRatio:1,
+            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true//修改swiper的父元素时，自动初始化swiper
+    });
 	$("#showSlide").click(function(){
 		ShowDiv('MyDiv','fade');
 	});
@@ -47,6 +37,10 @@ $(function(){
 		CloseDiv('MyDiv','fade');
 	});
 
+    // 电话框弹出效
+    $('.call_phone').click(function(){
+        $('.phone_dialog').show();
+    })
 
 // jax--------------------------------------------------------
 // 加载页面其他数据
