@@ -48,10 +48,10 @@
     <div class="weui_cells zj-cell-border">
       <div id="zjWorker" class="weui_cell zj-worker">
         <div class="weui_cell_bd weui_cell_primary">
-          <img id="workerHead" class="head-pic" src="" alt="">
+          <img id="providerHead" class="head-pic" src="" alt="">
           <p class="zj-fontsize worker-call"><span id="serviceProviderName"></span></p>
           <p class="zj-fontsize worker-call"><span id="workerGender"></span></p>
-          <p class="zj-fontsize zj-arrow"></p>
+          <p id="toProviderDetail" class="zj-fontsize zj-arrow"></p>
         </div>
         <div id="contactWorker" class="weui_cell_ft contact"></div>
       </div>
@@ -111,10 +111,15 @@
         </div>
         <div id="orderPrice" class="weui_media_desc zj-fontsize spacing">订单总价
         <p id="total" class="money">￥<span id="price"></span></p></div>
+        <div id="specialPrice" class="weui_media_desc zj-fontsize spacing">特价小时工
+        <p id="special" class="money">-￥<span id="price"></span></p></div>
+        <div id="waitOrder" class="weui_media_desc zj-fontsize spacing">
+        待支付
+        <p id="wait" class="money">￥<span id="price"></span></p></div>
         <div id="orderDiscount" class="weui_media_desc zj-fontsize spacing">优惠券
         <p class="money">-￥<span id="discountInfo"></span></p></div>
         <div id="orderActual" class="weui_media_desc zj-fontsize spacing">实付款
-        <p class="money actual">￥70.0</p></div>
+        <p class="money actual">￥70.0<span id=""></span></p></div>
       </div>
       <div id="filling1" class="filling"></div>
       <div id="refundRecord" class="weui_panel weui_panel_access zj-panel zj-cell-border">
@@ -122,8 +127,8 @@
         <div class="weui_panel_bd">
           <div class="weui_media_box weui_media_text">
             <div class="weui_media_desc zj-fontsize">
-              <p class="refund">2016-08-28 17:18</p>
-              <p class="refund refund-complete">退款完成</p>
+              <p class="refund"><span id="refundAt"></span>2016-08-28 17:18</p>
+              <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
               <p class="refund refund-money">￥70.0</p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
@@ -178,15 +183,26 @@
   </div>    
 </div>
 <div class="weui_dialog_confirm" id="workerPhone" style="display:none;">
-    <div class="weui_mask"></div>
-    <div class="weui_dialog">
-        <div class="weui_dialog_hd"><strong class="weui_dialog_title">联系师傅</strong></div>
-        <div class="weui_dialog_bd">111</div>
-        <div class="weui_dialog_ft">
-            <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
-            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
-        </div>
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">联系师傅</strong></div>
+    <div class="weui_dialog_bd">111</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
+      <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
     </div>
+  </div>
+</div>
+<div class="weui_dialog_confirm" id="userMemo" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">补充备注</strong></div>
+    <div class="weui_dialog_bd"><input id="memoText" class="memo-text" typ="text"/></div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
+      <a href="javascript:;" id="confirmBtn" class="weui_btn_dialog primary">确定</a>
+    </div>
+  </div>
 </div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>

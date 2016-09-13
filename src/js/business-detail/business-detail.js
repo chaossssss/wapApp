@@ -1,15 +1,4 @@
 $(function(){
-    var swiper = new Swiper('.swiper-container', {
-        //pagination: '.swiper-pagination',
-        initialSlide:0,
-        slidesPerView: 3,
-        paginationClickable: true,
-        spaceBetween: 0,
-        touchRatio:1,
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper
-        observeParents:true//修改swiper的父元素时，自动初始化swiper
-    });
-
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");
@@ -23,14 +12,6 @@ $(function(){
 		$("#tab-fuwu").css("display","none");
 	})
 
-	// 轮播图弹出层
-	$('#container').on('click', '#showDialog1', function () {
-	    $('#dialog1').show().on('click', '.weui_btn_dialog', function () {
-	        $('#dialog1').off('click').hide();
-	    });
-	});
-
-
 	// 认证信息弹出层
 	$('#container').on('click', '#showDialog2', function () {
 	    $('#dialog2').show().on('click', '.weui_btn_dialog', function () {
@@ -39,7 +20,16 @@ $(function(){
 	});
 
 // 轮播图弹出效果---------------------------------------------
-	//弹出隐藏层
+    var swiper = new Swiper('.swiper-container', {
+            //pagination: '.swiper-pagination',
+            initialSlide:0,
+            slidesPerView: 3,
+            paginationClickable: true,
+            spaceBetween: 0,
+            touchRatio:1,
+            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true//修改swiper的父元素时，自动初始化swiper
+    });
 	$("#showSlide").click(function(){
 		ShowDiv('MyDiv','fade');
 	});
@@ -75,23 +65,51 @@ $(function(){
     		$(".PhoneRank").text(api.PhoneRank);
     		$(".Grade").text(api.Grade);
     		$(".GradeRank").text(api.GradeRank);
+            $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
 
-    		// var RzImgs="";
-    		// for (var i = 0; i < data.Rzimgs.length; i++) {
-    		// 	RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
-    		// }
-    		// $(".rz-imgs").html(RzImgs);
+            // 认证集合
+    		var RzImgs="";
+    		for (var i = 0; i < api.SystemCertification.length; i++) {
+    			RzImgs+='<img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="">';
+    		}
+    		$(".rz-imgs").html(RzImgs);
 
-    		// var ModelRzImgs="";
-    		// for (var j = 0; j < data.Rzimgs.length; j++) {
-    		// 	ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
-    		// }
-    		// $(".dialog-imgs").html(ModelRzImgs);
+    		var ModelRzImgs="";
+    		for (var j = 0; j < api.SystemCertification.length; j++) {
+    			ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+    		}
+    		$(".dialog-imgs").html(ModelRzImgs);
 
 
     		
     	},
     	error: function(xhr, type){
+            alert('Ajax error!');
+            // 即使加载出错，也得重置
+            me.resetload();
+        }
+    });
+
+    // 加载商户头像列表
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/Provider/Avatar',
+        dataType: 'json',
+        data:{
+            Type:Type,
+            Id:Id
+        },
+        success:function(data){
+            var imgs_api=data.Body.Avatars;
+            var imgs_res="";
+            for (var i = 0; i <imgs_api.length; i++) {
+                imgs_res+='<div class="swiper-slide"><img src="'+imgs_api[i]+'" class="swiper-img" alt=""></div>';            
+            }
+            $(".swiper-wrapper").html(imgs_res);
+
+            
+        },
+        error: function(xhr, type){
             alert('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
@@ -120,7 +138,7 @@ $(function(){
                     pageStart = pageEnd - num;
 
                     for(var i = pageStart; i < pageEnd; i++){
-                        result  +=   '<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
+                        result  +='<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
                                 +' <div class="weui_media_hd"><img src="'+ser_api[i].PicPath+'" alt="" class="weui_media_appmsg_thumb"></div>'
                                 +'<div class="weui_media_bd"><h4 class="weui_media_title">'+ser_api[i].ServiceName+'</h4>'
                                 +'<p class="weui_media_desc">'+ser_api[i].ServiceTypeName+'</p>'
@@ -135,12 +153,9 @@ $(function(){
                             break;
                         }
                     }
-                    // 为了测试，延迟1秒加载
-                    setTimeout(function(){
-                        $('.lists').append(result);
-                        // 每次数据加载完，必须重置
-                        me.resetload();
-                    },1000);
+                    $('.lists').append(result);
+                    // 每次数据加载完，必须重置
+                    me.resetload();
                 },
                 error: function(xhr, type){
                     alert('Ajax error!');
@@ -167,49 +182,53 @@ $(function(){
                 },
                 
                 success: function(data){ 
-                    if(data.Body)
-                    var result = '';
-                    counter2++;
-                    pageEnd2 = num2 * counter2;
-                    pageStart2 = pageEnd2 - num2;
-                    
-                    for(var i = pageStart2; i < pageEnd2; i++){
-                        var res='';
-                        if(data.Pingjia[i].xin<5){
-                            for(var j = 1; j <= data.Pingjia[i].xin; j++){
-                                res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
-                            }
-                            var x=5-data.Pingjia[i].xin;
-                            for(var m = 1; m <= x; m++){
-                                res+='<img src="/images/business-detail/ic_xin_nor.svg" alt="" class="kehu-xin">'
-                             }
-                        }else{
-                            for(var k = 1; k <= 5; k++){
-                                res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
-                             }
-                        }   
+                    if(data.Body){
+                        // var result = '';
+                        // counter2++;
+                        // pageEnd2 = num2 * counter2;
+                        // pageStart2 = pageEnd2 - num2;
+                        
+                        // for(var i = pageStart2; i < pageEnd2; i++){
+                        //     var res='';
+                        //     if(data.Pingjia[i].xin<5){
+                        //         for(var j = 1; j <= data.Pingjia[i].xin; j++){
+                        //             res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
+                        //         }
+                        //         var x=5-data.Pingjia[i].xin;
+                        //         for(var m = 1; m <= x; m++){
+                        //             res+='<img src="/images/business-detail/ic_xin_nor.svg" alt="" class="kehu-xin">'
+                        //          }
+                        //     }else{
+                        //         for(var k = 1; k <= 5; k++){
+                        //             res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
+                        //          }
+                        //     }   
 
-                        result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/business-detail/bus-img.png" alt="" class="kehu-img">'
-                            +'<span class="kehu-name">'+data.Pingjia[i].name+'</span>'
-                            +'<span class="kehu-time">'+data.Pingjia[i].date+'</span>'
-                            +'<div class="kehu-heart">'+res
-                            +'<span class="kehu-pingfen">'+data.Pingjia[i].xin+'</span></div></div>'
-                            +'<div class="clear"></div><div class="kehu-cont">'+data.Pingjia[i].cont+'</div></div>';
+                        //     result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/business-detail/bus-img.png" alt="" class="kehu-img">'
+                        //         +'<span class="kehu-name">'+data.Pingjia[i].name+'</span>'
+                        //         +'<span class="kehu-time">'+data.Pingjia[i].date+'</span>'
+                        //         +'<div class="kehu-heart">'+res
+                        //         +'<span class="kehu-pingfen">'+data.Pingjia[i].xin+'</span></div></div>'
+                        //         +'<div class="clear"></div><div class="kehu-cont">'+data.Pingjia[i].cont+'</div></div>';
 
-                        if((i + 1) >= data.Pingjia.length){
-                            // 锁定
-                            me.lock();
-                            // 无数据
-                            me.noData();
-                            break;
-                        }
+                        //     if((i + 1) >= data.Pingjia.length){
+                        //         // 锁定
+                        //         me.lock();
+                        //         // 无数据
+                        //         me.noData();
+                        //         break;
+                        //     }
+                        // }
+                        // // 为了测试，延迟1秒加载
+                        // setTimeout(function(){
+                        //     $('.kehu-list').append(result);
+                        //     // 每次数据加载完，必须重置
+                        //     me.resetload();
+                        // },1000);               
+                    }else{
+                        $('#tab-kehu').find('.no-fuwu').show();
                     }
-                    // 为了测试，延迟1秒加载
-                    setTimeout(function(){
-                        $('.kehu-list').append(result);
-                        // 每次数据加载完，必须重置
-                        me.resetload();
-                    },1000);
+                    
                        
                     
                 },

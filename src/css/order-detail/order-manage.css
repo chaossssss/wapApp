@@ -51,6 +51,9 @@ body{ font-size:14px;}
 .order-detail .contacts{ margin-bottom: 10px; }
 .order-detail .order-time{ margin-bottom: 11px; }
 
+/*--弹窗输入样式--*/
+.order-detail .memo-text{ width: 100%; outline: none; }
+
 /*--正在进行的文字样式--*/
 .processing{ color: #3fbef9; }
 

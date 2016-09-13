@@ -32,8 +32,8 @@ textarea{resize: none;}
 	float:left;
 }
 .swiper-img{
-	width:80%;
-	height: 80%;
+	width:80px;
+	height: 80px;
 }
 .bus-name{
     float: left;
@@ -177,7 +177,7 @@ textarea{resize: none;}
 }
 
 .rz-title{
-	display: inline-block;
+	float:left;
 	font-size: 14px;
 }
 .rz-close{
@@ -188,7 +188,7 @@ textarea{resize: none;}
 	display: inline-block;
     position: absolute;
     left: 78px;
-    top: 13px;
+    top: 7px;
 }
 .rz-img{
 	width: 17px;
@@ -200,7 +200,7 @@ textarea{resize: none;}
 .more{
 	float: right;
     color: #ccc;
-    margin-top: 9px;
+    margin-top: 8px;
     width: 10px;
     height: 10px;
 }
@@ -407,5 +407,3 @@ textarea{resize: none;}
 .weui_media_box:before{
 	width: 96%;
 }
-
-
