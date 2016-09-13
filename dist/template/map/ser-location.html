@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 为移动设备添加 viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+	<!--禁止电话，邮件识别-->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <meta name="author" content="zxh">
+	<title>首页</title>
+
+	<link rel="stylesheet" href="../../css/weui.min.css">
+	<link rel="stylesheet" href="../../css/map/perfect-scrollbar.min.css">
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UvjqfTEqblSQuarwwxfObc5Zl6TK11HL"></script>
+
+  <style type="text/css">
+    body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:14px;}
+    #l-map{height:300px;width:100%;}
+    #r-result{width:100%;}
+  </style>
+  <style>
+  	html,body {
+  		height: 100%;
+  		overflow: hidden;
+  	}
+  	#l-map {
+  		height: 256px;
+  		transition:height 0.5s ease-in;
+  	}
+  	.result{
+  		position: relative;
+  		padding: 10px;
+  		/*content: " ";
+	    position: absolute;
+	    left: 0;
+	    bottom: 0;
+	    width: 100%;
+	    height: 1px;*/
+	    border-bottom: 1px solid #e5e5e5;
+	    /*color: #e5e5e5;
+	    -webkit-transform-origin: 0 100%;
+	    transform-origin: 0 100%;
+	    -webkit-transform: scaleY(.5);
+	    transform: scaleY(.5);
+	    left: 15px;*/
+  	}
+  	.result:active {
+  		background-color: #e5e5e5;
+  	}
+ 	.result .result-hd {
+		position: absolute;
+		padding: 1px;
+ 	}
+ 	.result .result-hd:after {
+		clear: both;
+ 	}
+ 	.result .result-bd {
+ 		padding-left: 30px;
+ 	}
+ 	.result .title {
+ 		font-size: 14px;
+ 	}
+	.result .content {
+ 		font-size: 12px;
+ 	}
+ 	.no-find {
+ 		margin-top: 40%;
+ 		text-align: center;
+ 		font-size: 14px;
+ 		display: none;
+ 		color:#e5e5e5;
+ 	}
+ 	.wapper {
+ 		/*overflow: hidden;*/
+ 	}
+ 	.local-color {
+ 		color: #43B9F6;
+ 	}
+  </style>
+</head>
+<body>
+	<div class="container" id="container">
+		<div class="searchbar">
+			<div class="bd">
+			    <div class="weui_search_bar" id="search_bar">
+			        <form class="weui_search_outer" action="javascript:return false;">
+			            <div class="weui_search_inner">
+			                <i class="weui_icon_search"></i>
+			                <input type="search" name="search" class="weui_search_input" id="search_input" placeholder="搜索地区" required="">
+			                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+			            </div>
+			            <label for="search_input" class="weui_search_text" id="search_text">
+			                <i class="weui_icon_search"></i>
+			                <span>搜索地区</span>
+			            </label>
+			        </form>
+			        <a href="javascript:;" class="weui_search_cancel" id="search_cancel">取消</a>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+	<div id="l-map"></div>
+
+	<div class="no-find">
+		<p>没有这个地址哦</p>
+		<p>请尝试只输入小区、写字楼或学校名，</p>
+		<p>详细地址（如门牌号）可稍后输入哦。</p>
+	</div>
+
+	<div class="wapper" id="wapper">
+		<!-- <div class="result">
+			<div class="result-hd">
+				<img src="../../images/map/local.svg" alt="">
+			</div>
+			<div class="result-bd">
+				<h4 class="title"></h4>
+				<p class="content"></p>
+			</div>
+		</div> -->
+	</div>
+	
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="../../js/map/perfect-scrollbar.jquery.min.js"></script>
+
+<script>
+$(function(){
+	var sessionStorage = window.sessionStorage;
+	$('#container').on('focus', '#search_input', function () {
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.addClass('weui_search_focusing');
+    }).on('blur', '#search_input', function () {
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.removeClass('weui_search_focusing');
+        if ($(this).val()) {
+            $('#search_text').hide();
+        } else {
+            $('#search_text').show();
+        }
+    }).on('input', '#search_input', function () {
+        // var $searchShow = $("#search_show");
+        // if ($(this).val()) {
+        //     $searchShow.show();
+        // } else {
+        //     $searchShow.hide();
+        // }
+        var keyword = $(this).val();
+		$("#l-map").height(0);
+		inputSearch(keyword);
+    }).on('touchend', '#search_cancel', function () {
+        // $("#search_show").hide();    
+        $('#search_input').val('');
+        $("#l-map").height(256);
+
+        var point = mk.getPosition();
+        geocoder.getLocation(point,function(r){
+			// console.log(r.address);
+			search(r.address);
+		})
+    }).on('touchend', '#search_clear', function () {
+        // $("#search_show").hide();
+        $('#search_input').val('');
+        $("#wapper").html("");
+        $(".no-find").html("");
+    });
+    $('#wapper').on('click','.result',function(e){
+    	var title = $(this).find('.title').text();
+    	var content = $(this).find('.content').text();
+    	sessionStorage.setItem("LocalTitle",title);
+    	sessionStorage.setItem("LocalContent",content);
+    	// alert(content);
+    	window.location.href = "/template/addLocation/add-location.html";
+    });
+
+    $("#wapper").perfectScrollbar();
+})            
+</script>
+
+<script>
+var map = new BMap.Map("l-map");         
+map.centerAndZoom(new BMap.Point(120.21937542, 30.25924446), 15);
+var mk;		//定位标注点
+var localImage = "../../images/map/location.png";		//定位图标
+
+map.addEventListener('moveend',function(){
+	var point = map.getCenter();
+	mk.setPosition(point);
+	geocoder.getLocation(point,function(r){
+		// console.log(r.address);
+		search(r.address);
+	})
+})
+
+/**
+ * [geolocation description]
+ * @type {BMap}
+ *  浏览器定位，用户的地址解析
+ */
+var geolocation = new BMap.Geolocation();
+var geocoder = new BMap.Geocoder();
+geolocation.getCurrentPosition(function(e){
+	if(this.getStatus() == BMAP_STATUS_SUCCESS){
+		mk = new BMap.Marker(e.point);
+		map.addOverlay(mk);
+		map.panTo(e.point); 
+
+		//地址解析
+		geocoder.getLocation(e.point,function(r){
+			// search(r.address);
+			// search("迪凯国际");
+		});
+	}else{
+		alert("您的浏览器不支持定位功能");
+	}
+},{enableHighAccuracy: true});
+
+/**
+ * 	手动定位
+ */
+function addLocationCity(){
+	var geolocationControl = new BMap.GeolocationControl({
+		anchor:BMAP_ANCHOR_BOTTOM_RIGHT,
+		offset: new BMap.Size(10,10),
+		showAddressBar:false,
+		locationIcon:new BMap.Icon(localImage, new BMap.Size(0,0))   //自定义定位中心点的icon
+	});
+	geolocationControl.addEventListener("locationSuccess", function(e){
+		map.panTo(e.point); 
+		mk.setPosition(e.point);
+	});
+	geolocationControl.addEventListener("locationError",function(e){
+    // 定位失败事件
+	    alert(e.message);
+	});
+	map.addControl(geolocationControl);
+}	
+addLocationCity();
+
+/**
+ * 地图搜索
+ * @param  {[type]} keyword [description]
+ * @return {[type]}         [description]
+ */
+function search(keyword){
+	if(keyword !== ""){
+		var local = new BMap.LocalSearch(map,{
+			renderOptions:{
+				// map:map,
+				// autoViewport:true,
+				// selectFirstResult:false
+			},
+			pageCapacity:10,
+			onSearchComplete:function(e){
+				// console.log(e);
+				
+				//显示结果列表				
+				var $wapper = $("#wapper");
+				$wapper.html("");
+				$wapper.height(367);
+				var wrArray = e.wr;
+				if(wrArray.length > 0){
+					for(var i=0,length=wrArray.length;i<length;i++){
+						if(i===0){
+							$wapper.append('<div class="result">'
+							+	'<div class="result-hd">'
+							+	'<img src="../../images/map/local.png" alt="">'
+							+	'</div>'
+							+	'<div class="result-bd">'
+							+	'<h4 class="title"><span class="local-color">[当前]</span>'+wrArray[0].title+'</h4>'
+							+	'<p class="content">'+wrArray[0].address+'</p>'
+							+	'</div>'
+							+'</div>');
+						}else{
+							$wapper.append('<div class="result">'
+							+	'<div class="result-hd">'
+							+	'<img src="../../images/map/local.png" alt="">'
+							+	'</div>'
+							+	'<div class="result-bd">'
+							+	'<h4 class="title">'+wrArray[i].title+'</h4>'
+							+	'<p class="content">'+wrArray[i].address+'</p>'
+							+	'</div>'
+							+'</div>');
+						}	
+					}
+				}
+			}
+		})
+		local.search(keyword);
+	}
+}
+
+/**
+ * 输入框搜索
+ * @param  {[type]} keyword [description]
+ * @return {[type]}         [description]
+ */
+function inputSearch(keyword){
+	if(keyword !== ""){
+		var local = new BMap.LocalSearch(map,{
+			pageCapacity:15,
+			onSearchComplete:function(e){
+				// console.log(e);
+				//显示结果列表
+				$("#wapper").html("");
+				var $wapper = $("#wapper");
+				$wapper.height(623);
+				var wrArray = e.wr;
+				if(wrArray.length > 0){
+					$(".no-find").hide();
+					for(var i=0,length=wrArray.length;i<length;i++){
+						$wapper.append('<div class="result">'
+						+	'<div class="result-hd">'
+						+	'<img src="../../images/map/local.png" alt="">'
+						+	'</div>'
+						+	'<div class="result-bd">'
+						+	'<h4 class="title">'+wrArray[i].title+'</h4>'
+						+	'<p class="content">'+wrArray[i].address+'</p>'
+						+	'</div>'
+						+'</div>');
+					}
+				}else{
+					$(".no-find").show();
+				}
+			}
+		})
+		local.search(keyword);
+	}
+}
+</script>	
+</body> 
+</html>

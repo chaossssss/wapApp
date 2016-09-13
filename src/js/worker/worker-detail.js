@@ -15,9 +15,9 @@ $('.xx-img').click(function(){
     $('.weui_dialog_alert').hide();
 })
 //var aj = $.ajax({
-//    url: 'http://www.xxxx.com/api/v2/Evaluation/GetWorkerEvaluationList',
+//    url: "http://192.168.1.191:3003/api/v1/Provider/Detail",
 //    data: {
-//       ID:'worker-Detail.Id',
+//        Id:"qqq"
 //    },
 //    type: 'post',
 //    cache: false,
@@ -34,3 +34,47 @@ $('.xx-img').click(function(){
 //        alert("失败");
 //    }
 //});
+
+
+$.ajax({
+
+    dataType:"json",
+    type:"POST",
+    url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
+    data:{
+        Type:"1",
+        Id:"3110"
+    },
+
+    success:function(data){
+        var api=data.Body.Worker;
+        $(".Name").text(api.Name);
+        $(".bus-img").text(api.Photo);
+        $(".Gender").text(api.Gender);
+        $(".Age").text(api.Age);
+        $(".jl-num").text(api.Distance);
+        $(".WorkingYears").text(api.WorkingYears);
+        $(".PraiseCount").text(api.PraiseCount);
+        $(".Grade").text(api.Grade);
+        $(".PhoneNumber").text(api.PhoneNumber);
+        $(".FavoriteCount").text(api.FavoriteCount);
+        $(".Wage").text(api.Wage);
+        $(".NativePlace").text(api.NativePlace);
+        $(".WorkingYears").text(api.WorkingYears);
+        $(".addresss").text(api.Address);
+        $(".Distance").text(api.Distance);
+        $(".OrderCount").text(api.OrderCount);
+        $(".OrderRank").text(api.OrderRank);
+        $(".PhoneCount").text(api.PhoneCount);
+        $(".PhoneRank").text(api.PhoneRank);
+        $(".GradeRank").text(api.GradeRank);
+
+
+
+
+
+    },
+    //error: function(xhr, type){
+    //    console("type");
+    //}
+})
