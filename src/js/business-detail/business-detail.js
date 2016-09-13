@@ -109,8 +109,12 @@ $(function(){
             Id:Id
         },
         success:function(data){
-
-
+            var imgs_api=data.Body.Avatars;
+            var imgs_res="";
+            for (var i = 0; i <imgs_api.length; i++) {
+                imgs_res+='<div class="swiper-slide"><img src="'+imgs_api[i]+'" class="swiper-img" alt=""></div>';            
+            }
+            $(".swiper-wrapper").html(imgs_res);
 
             
         },

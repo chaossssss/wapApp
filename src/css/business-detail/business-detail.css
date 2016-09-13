@@ -32,8 +32,8 @@ textarea{resize: none;}
 	float:left;
 }
 .swiper-img{
-	width:80%;
-	height: 80%;
+	width:80px;
+	height: 80px;
 }
 .bus-name{
     float: left;
