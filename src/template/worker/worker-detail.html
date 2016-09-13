@@ -1,181 +1,160 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="com.wapapp.app">
+<html lang="zh-cmn-Hans">
 <head>
-    <meta charset="UTF-8">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- 为移动设备添加 viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0;">
-    <!--禁止电话，邮件识别-->
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
-    <meta name="author" content="zxh">
     <title>工人详情</title>
     <link rel="stylesheet" href="../../css/weui.min.css">
     <link rel="stylesheet" href="../../css/worker/worker-detail.min.css">
+    <link rel="stylesheet" href="../../css/business-detail/dropload.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/css/swiper.min.css">
+
 </head>
 <style>
 
 </style>
 <body>
-<div class="top-info" >
-    <img src="" class="bus-img" alt="">
-    <div class="bus-name cle">
-        <div class="fl">
-        <h4 class="Name"></h4>
-        <span><img src="" class="Gender" alt=""/></span>
-        <span class="Age"></span>
-        </div>
-        <div class="top-ic fr">
-            <img src="../../images/worker/ic_dianzan.svg" alt="" class="dianzan IsPraise">
-            <span class="font-style"><span class="PraiseCount"></span></span>
-            <img src="../../images/worker/ic_shoucang.svg" alt="" class="dianzan IsFavorite">
-            <span class="font-style"><span class="FavoriteCount"></span></span>
-        </div>
-    </div>
-    <div class="bus-work cle">
-        <div class="fl">
-        <a href="worker-message.html">
-        <span >小时工</span>
-        <!--</div>-->
-
-        <div class="wk-list fr "><span class="Wage"></span>
-            <img style="width: 6px;height: 9px;" src="../../images/worker/jiantou.png" alt=""/>
-        </div>
+<div class="contain" id="container">
+    <div class="top-info">
+        <a href="javascript:;" id="showSlide">
+            <img src="" class="bus-img" alt="">
         </a>
+
+        <div id="fade" class="black_overlay"></div>
+        <div id="MyDiv" class="white_content">
+            <!-- <div style="text-align: right; cursor: default; height: 40px;">
+               <span style="font-size: 16px;" onclick="CloseDiv('MyDiv','fade')">关闭</span>
+            </div> -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="http://aliimg.changba.com/cache/photo/159415743_640_640.jpg" class="swiper-img" alt=""></div>
+                    <div class="swiper-slide"><img src="http://i3.dpfile.com/pc/7909158bfe590cdc6c13e65d7f747ecc%28700x700%29/thumb.jpg" class="swiper-img" alt=""></div>
+                    <div class="swiper-slide">
+                        <img src="http://i3.dpfile.com/pc/7909158bfe590cdc6c13e65d7f747ecc%28700x700%29/thumb.jpg" class="swiper-img" alt=""></div>
+                    <div class="swiper-slide"><img src="http://aliimg.changba.com/cache/photo/159415743_640_640.jpg" class="swiper-img" alt=""></div>
+                    <div class="swiper-slide"><img src="http://i3.dpfile.com/pc/7909158bfe590cdc6c13e65d7f747ecc%28700x700%29/thumb.jpg" class="swiper-img" alt=""></div>
+                    <div class="swiper-slide">
+                        <img src="http://i3.dpfile.com/pc/7909158bfe590cdc6c13e65d7f747ecc%28700x700%29/thumb.jpg" class="swiper-img" alt=""></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="name-info">
+
+            <div class="bus-name ">
+                <span class="Name"></span>
+                <span><img src="" class="Gender" value="" alt=""/></span>
+                <span class="Age"></span>
+            </div>
+
+            <div class="top-ic">
+                <img src="/images/worker/ic_dianzan.svg" alt="" class="dianzan">
+                <span class="font-style"><span class="PraiseCount"></span></span>
+                <img src="/images/worker/ic_shoucang.svg" alt="" class="dianzan">
+                <span class="font-style"><span class="FavoriteCount"></span></span>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <a href="worker-message.html">
+            <div class="yewu">
+                <div class="bus-work">
+                    <span style="font-size: 14px;" class="">小时工</span>
+                    <span class="Wage" style="padding-left: 165px; font-size: 14px; color:#ec4836;">1111111</span>
+                    <span class="wk-list"></span>
+                </div>
+
+                <span style="float: right;" ><img src="/images/business-detail/jiantou.png" alt="" class="more"></span>
+                <div class="clear"></div>
+            </div>
+        </a>
+        <div class="bus-add">
+            <div class="address">
+                <span class="NativePlace"></span>
+                <span style="padding-left: 37px;" class="WorkingYears"></span>
+            </div>
+            <div class="bus-jl">距离<span class="jl-num"></span></div>
+        </div>
+        <div class="clear"></div>
     </div>
-</div>
-    </div>
-    <<div class="bus-add">
-    <div class="NativePlace fl">
-    </div>
-    <div class="fl"><span class="WorkingYears"></span></div>
-    <div class="bus-jl"><span class="jl-num"></span></div>
-    <div class="clear"></div>
-</div>
-    <div class="clear"></div>
-<div class="xian">
     <div class="score">
         <ul>
             <li>
-                <img src="../../images/worker/ic_dingdan.svg" class="score-img" alt="">
-                <div class="score-one">
-                    <span class="data-top"><span class="OrderCount"></span></span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="OrderRank"></span>
+                <div class="li-center">
+                    <img src="/images/worker/ic_dingdan.svg" class="score-img" alt="">
+                    <div class="score-one">
+                        <span class="data-top"><span class="OrderCount"></span></span>
+                        <img src="/images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="OrderRank"></span>
+                    </div>
                 </div>
             </li>
             <li>
-                <img src="../../images/worker/ic_tonghua.svg" class="score-img" alt="">
-                <div class="score-one">
-                    <span class="data-top"><span class="PhoneCount"></span></span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="PhoneRank"></span>
+                <div class="li-center">
+                    <img src="/images/worker/ic_tonghua.svg" class="score-img" alt="">
+                    <div class="score-one">
+                        <span class="data-top"><span class="PhoneCount"></span></span>
+                        <span><img src="/images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="PhoneRank"></span></span>
+                    </div>
                 </div>
             </li>
             <li>
-                <img src="../../images/worker/ic_pingfen.svg" class="score-img" alt="">
-                <div class="score-one">
-                    <span class="data-top"><span class="Grade"></span></span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="PhoneRank"></span></span>
+                <div class="li-center">
+                    <img src="/images/worker/ic_pingfen.svg" class="score-img" alt="">
+                    <div class="score-one">
+                        <span class="data-top"><span class="Grade"></span></span>
+                        <span><img src="/images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="GradeRank"></span></span>
+                    </div>
                 </div>
             </li>
         </ul>
     </div>
-
-    <!--<div class="xian-bottom">-->
-        <!--<ul style="padding-left: 30px;" class=" cle fl">-->
-            <!--<li class="service-region fl ">周末不服务周末不服务</li>-->
-            <!--<li class="common-service fl"  >浙江杭州人</li>-->
-            <!--<li class="common-service fl">周末不服务</li>-->
-            <!--<li class="zh-service fl" >浙江杭州人</li>-->
-            <!--<li class="service fl" >烹饪各种菜系</li>-->
-            <!--<li class="zh-service fl">周末不服务</li>-->
-        <!--</ul>-->
-    <!--</div>-->
-<!--认证信息-->
-<div id="authenticate" class="weui_cells weui_cells_access">
-    <a class="weui_cell" href="javascript:;">
-        <div class="weui_cell_bd weui_cell_primary cle">
-
-            <ul  class="authenticate cle fl">
-                <li style="font-size: 14px; line-height: 14px;">认证信息</li>
-                <li class="fl"> <img src="../../images/worker/ic_huliyuan.svg" class="tb-img" alt=""/></li>
-                <li class="fl"> <img src="../../images/worker/ic_cuirushi.svg" class="tb-img" alt=""/></li>
-                <li> <img src="../../images/worker/ic_fapiao.svg"  class="tb-img" alt=""/></li>
-                <li> <img src="../../images/worker/ic_gomgrenduan.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_hushizige.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_weixiuzheng.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_jiankangzheng.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_shiji.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_maojing.svg" class="tb-img"  alt=""/></li>
-                <li> <img src="../../images/worker/ic_shiming.svg"  class="tb-img" alt=""/></li>
-                <li> <img style="width: 6px;height: 9px; padding-left: 74px;" src="../../images/worker/jiantou.png" alt=""/></li>
-            </ul>
+    <hr class="line">
+    <!-- 认证信息	 -->
+    <a href="javascript:;" id="showDialog2">
+        <div class="rz-info">
+            <span class="rz-title">认证信息</span>
+            <!--<div class="bus-img"></div>-->
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+            <img style="float: right; " src="/images/business-detail/jiantou.png" alt="" class="more">
         </div>
-        <!--<div class="weui_cell_ft">-->
-        <!--</div>-->
     </a>
-</div>
     <div class="weui_dialog_confirm" id="dialog2" style="display: none;">
         <div class="weui_mask"></div>
         <div class="weui_dialog">
-            <div class="weui_dialog_hd">认证详情<a href="javascript:;" class="weui_btn_dialog defaults">X</a></div>
+            <div class="weui_dialog_hd">认证详情
+                <a href="javascript:;" class="weui_btn_dialog default"><img src=/images/worker/ic_guanbi.svg" class="rz-close" alt=""></a>
+            </div>
             <div class="weui_dialog_bd">
-                <ul class="rz-img-left">
-                    <li><img src="../../images/worker/ic_yingye.svg" class="rz-dia-img" alt=""> <span class="rz-name">营业执照认证</span></li>
-                    <li><img src="../../images/worker/ic_shuiwu.svg" class="rz-dia-img" alt=""> 组织机构代码认证
-                    </li>
-                    <li><img src="../../images/worker/ic_qiyexingyong.svg" class="rz-dia-img" alt=""> 税务登记证认证</li>
-                    <li><img src="../../images/worker/ic_texuzheng.svg" class="rz-dia-img" alt=""> 特许经营认证</li>
-                    <li><img src="../../images/worker/ic_zizhi.svg" class="rz-dia-img" alt=""> 行业企业资质等级认证</li>
-                    <li><img src="../../images/worker/ic_fangyi.svg" class="rz-dia-img" alt=""> 防疫部门认证</li>
-                    <li><img src="../../images/worker/ic_qita.svg" class="rz-dia-img" alt=""> 其他荣誉证书</li>
-                </ul>
-                <ul class="rz-img-right">
-                    <li><img src="../../images/worker/ic_daimazheng.svg" class="rz-dia-img" alt=""> <span class="rz-name">组织机构代码证认证</span></li>
-                    <li><img src="../../images/worker/ic_xinyong.svg" class="rz-dia-img" alt=""> 统一社会信用代码认证
-                    </li>
-                    <li><img src="../../images/worker/ic_xukezheng.svg" class="rz-dia-img" alt=""> 经营许可认证</li>
-                    <li><img src="../../images/worker/ic_hangyexiehui.svg" class="rz-dia-img" alt=""> 行业协会成员单位</li>
-                    <li><img src="../../images/worker/ic_zhiliang.svg" class="rz-dia-img" alt=""> 质量体系认证</li>
-                    <li><img src="../../images/worker/ic_xiaofang.svg" class="rz-dia-img" alt=""> 消防安全许可证</li>
-                </ul>
+                <ul class="dialog-imgs"></ul>
             </div>
         </div>
     </div>
-<!--客户评价-->
-<div style="margin-top: 6px;" class="weui_cells">
-    <div class="weui_cell">
-        <div style="height: 30px;" class="weui_cell_bd weui_cell_primary ">
-            <p class="client-evaluation">客户评价</p>
+
+    <div class="clear"></div>
+    <hr class="line">
+
+    <div style="margin-top: 6px;" class="weui_cells">
+        <div class="weui_cell">
+            <div style="height: 30px;" class="weui_cell_bd weui_cell_primary ">
+                <p class="client-evaluation">客户评价</p>
+            </div>
+            <div class="weui_cell_ft"></div>
         </div>
-        <div class="weui_cell_ft"></div>
     </div>
-</div>
     <!--客户无评价-->
-<!--<div>-->
-    <!--<div class="shafa">-->
-        <!--<img src="../../images/worker/shafa.png" alt=""/>-->
-    <!--</div>-->
-    <!--<div class="shafa-font">沙发没人做,赶紧去抢吧</div>-->
-<!--</div>-->
-    <!--客户评价有评论的-->
-    <!--<div style="clear: both; overflow:hidden;" class="client-comment cle">-->
-        <!--<div class="comment_content fl"><img src="../../images/worker/touxiang.png" class="tx-img" alt=""><span style="padding-left: 5px;">糖瓜瓜</span><span style="padding-left: 5px; color: #CCC;">2015-12-12</span></div>-->
-        <!--<div class="xingx fr"><span></span>-->
-            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
-            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
-            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing"  alt=""></span>-->
-            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
-            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
-            <!--<span>2</span>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--<div style="width:346px; margin: 8px 23px 0 18px;">-->
-    <!--<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊擦啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>-->
-<!--</div>-->
-    <!--底部导航-->
+    <div style="margin-top: 30px;">
+        <div style="margin: 0 auto;" class="shafa">
+            <img src="../../images/worker/shafa.png" alt=""/>
+        </div>
+        <div class="shafa-font">沙发没人做,赶紧去抢吧</div>
+    </div>
+    <!-- 底部导航条 -->
     <div class="weui_tabbar">
         <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
@@ -187,28 +166,17 @@
                 <img src="../../images/worker/ic_order_nor.svg" alt="">
             </div>
         </a>
-        <a href="javascript:;" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon dianhua-img">
-                <img src="../../images/worker/ic_phone_nor.svg" alt="">
+        <a href="" class="weui_tabbar_item ">
+            <div class="weui_tabbar_icon">
+                <img src="../../images/worker/ic_phone_nor.svg"  class="dianhua-img" alt="">
             </div>
         </a>
     </div>
-    <!--电话弹出框-->
-    <div style="display: none;" class="weui_dialog_alert">
-        <div class="weui_mask"></div>
-        <div class="weui_dialog">
-            <div class="bh"><img src="../../images/worker/bohaom.png" class="bh-img"  alt=""/></div>
-            <div style="text-align: right;"><img src="../../images/worker/xx.png" class="xx-img" alt=""/></div>
-            <div class="weui_dialog_hd"><strong class="weui_dialog_title">您拨打的号码为<span class="PhoneNumber" style="color:#32beff; ">133....5584</span></strong></div>
-            <div class="weui_dialog_bd">下载助家生活APP后方可拨打</div>
-            <div class=" download">
-                <a style="color:#fff;" href="javascript:void(0);" class="download-font">立即下载</a>
-            </div>
-        </div>
-    </div>
-    <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-    <script src="../../js/worker/worker-detail.min.js"></script>
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="../../js/worker/worker-detail.min.js"></script>
+<script src="../../js/business-detail//dropload.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/js/swiper.min.js"></script>
 </body>
-<script>
-</script>
 </html>
+

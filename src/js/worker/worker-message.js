@@ -28,6 +28,7 @@ $.ajax({
         $(".ServiceScope").text(api.ServiceScope);
         $(".Intro").text(api.Intro);
         $(".Address").text(api.Address);
+
     },
     //error: function(xhr, type){
     //    console("type");
