@@ -15,7 +15,7 @@
 <body>
 	<div class="contain">
     	<div class="top-title">
-			<ul>
+			<ul id="tab">
 				<li class="active">全部</li>
 				<li>待接单</li>
 				<li>代付款</li>
@@ -81,7 +81,6 @@
 					</ul>
   				</div>
   				<div class="total-price">订单总价：<span class="price-num">￥60.0</span></div>
-  				<hr>
   				<div class="item-buttom">					
 					<a href="#" class="order-pay">支 付</a>
 					<a href="#" class="order-cancel">取消订单</a>
@@ -92,7 +91,7 @@
 			<!-- 待确认 -->
 			<div class="item">
 				<div class="item-top">
-					<div class="line-payment"></div>
+					<div class="line-unconfirm"></div>
 					<div class="item-top-name">小时工</div>
 					<div class="state-payment">待确认</div>
 				</div>
@@ -105,7 +104,6 @@
 					</ul>
   				</div>
   				<div class="total-price">订单总价：<span class="price-num">￥60.0</span></div>
-  				<hr>
   				<div class="item-buttom">					
 					<a href="#" class="order-cancel">确认服务完成</a>
 					<div class="clear"></div>
@@ -115,7 +113,7 @@
 			<!-- 待评价 -->
 			<div class="item">
 				<div class="item-top">
-					<div class="line-payment"></div>
+					<div class="line-evaluation"></div>
 					<div class="item-top-name">小时工</div>
 					<div class="state-payment">待评价</div>
 				</div>
@@ -128,7 +126,6 @@
 					</ul>
   				</div>
   				<div class="total-price">实付<span class="price-num">￥60.0</span></div>
-  				<hr>
   				<div class="item-buttom">					
 					<a href="#" class="order-pay2">支付</a>
 					<div class="clear"></div>
@@ -141,15 +138,6 @@
  			<div>您还没有相关的订单</div>
     	</div>
 	</div>
+  <script src="../../js/my-order/my-order.min.js"></script>
 </body>
 </html>
-<script>
-$(".top-title li").each(function(){
-	$(this).click(function(){
-		$(".top-title li").each(function(i,item){
-			$(item).removeClass("active");
-		})
-		$(this).addClass("active");
-	})
-})
-</script>

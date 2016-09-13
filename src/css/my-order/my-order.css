@@ -30,9 +30,9 @@ textarea{resize: none;}
 	text-align: center;
 	padding-left: 2px;
 }
-.item-list{
+/*.item-list{
 	display: none;
-}
+}*/
 .item{
 	margin-top:10.5px;
 }
@@ -43,7 +43,7 @@ textarea{resize: none;}
     border-top:1px solid #ccc;
 }
 
-.line-waiting,.line-canceled,.line-payment{
+.line-waiting,.line-canceled,.line-payment,.line-unconfirm,.line-evaluation{
 	position: absolute;
 	width: 5px;
 	height: 30px;
@@ -57,6 +57,12 @@ textarea{resize: none;}
 }
 .line-payment{
 	background: #ff7914;
+}
+.line-unconfirm{
+	background: #fb2646;
+}
+.line-evaluation{
+	background: #9654eb;
 }
 
 .item-top-name{
@@ -124,6 +130,7 @@ textarea{resize: none;}
 	background: #fff;
 	text-align: right;
 	padding-right: 5px;
+	border-bottom: 1px solid #ccc;
 }
 .price-num{
 	color:#ff7914;

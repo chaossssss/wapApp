@@ -18,39 +18,167 @@
   <link href="../../css/weui.min.css" rel="stylesheet">
   <link href="../../css/order-manage.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/my-order/my-order.min.css">
+  <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 </head>
 <body>
-<div class="my-order">
-  <div id="menu" class="tab-menu">
-    <ul id="nav" class="tab-nav">
-      <li><a href="#" class="selected">全部</a></li>
-      <li><a href="#" class="">待接单</a></li>
-      <li><a href="#" class="">待付款</a></li>
-      <li><a href="#" class="">待确认</a></li>
-      <li><a href="#" class="">待评价</a></li>
-    </ul>
-    <div id="menu_con" class="tab-con">
-      <div class="tag" style="display:block">
-
-      </div> 
-      <div class="tag" style="display:none">
-
-      </div> 
-      <div class="tag"  style="display:none">
-            333
+  <div class="contain">
+      <div class="top-title">
+      <ul id="tab">
+        <li class="active">全部</li>
+        <li>待接单</li>
+        <li>代付款</li>
+        <li>待确认</li>
+        <li>待评价</li>
+      </ul>
       </div>
-      <div class="tag"  style="display:none">
-            444
+      <div class="clear"></div>
+      <div id="content">
+        <ul class="item-list" style="">
+          <!-- 订单已取消 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-canceled"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-canceled">订单已取消</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><span>客服正在努力安排工人</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">面议</span></li>
+              </ul>
+              </div>
+              <div class="item-buttom">
+              <a href="#" class="order-cancel">删除订单</a>
+              </div>
+          </div>
+
+          <!-- 待付款 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-payment"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-payment">待付款</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><span>客服正在努力安排工人</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">￥30/小时　　X2</span></li>
+              </ul>
+              </div>
+              <div class="total-price">订单总价：<span class="price-num">￥60.0</span></div>
+              <div class="item-buttom">         
+              <a href="#" class="order-pay">支 付</a>
+              <a href="#" class="order-cancel">取消订单</a>
+              <div class="clear"></div>
+              </div>
+          </div>  
+
+          <!-- 没有订单时候的页面 -->
+          <div class="no-order">
+            <img src="../../images/my-order/no-order.png" alt="">
+            <div>您还没有相关的订单</div>
+          </div>
+        </ul>
+        <ul class="item-list" style="display:none;">
+          <!-- 等待工人接单 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-waiting"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-waiting">等待工人接单</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><span>客服正在努力安排工人</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">面议</span></li>
+              </ul>
+              </div>
+              <div class="item-buttom">
+               <a href="#" class="order-cancel">取消订单</a>
+              </div>
+          </div>
+        </ul>
+        <ul class="item-list" style="display:none;">
+          <!-- 待付款 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-payment"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-payment">待付款</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><span>客服正在努力安排工人</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">￥30/小时　　X2</span></li>
+              </ul>
+              </div>
+              <div class="total-price">订单总价：<span class="price-num">￥60.0</span></div>
+              <div class="item-buttom">         
+              <a href="#" class="order-pay">支 付</a>
+              <a href="#" class="order-cancel">取消订单</a>
+              <div class="clear"></div>
+              </div>
+          </div>
+        </ul>
+        <ul class="item-list" style="display:none;">
+          <!-- 待确认 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-payment"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-payment">待确认</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><img src="../../images/my-order/head.png" alt="" class="worker-img"></span>鲁大锤 阿姨</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">￥30/小时　　X2</span></li>
+              </ul>
+              </div>
+              <div class="total-price">订单总价：<span class="price-num">￥60.0</span></div>
+              <div class="item-buttom">         
+              <a href="#" class="order-cancel">确认服务完成</a>
+              <div class="clear"></div>
+              </div>
+          </div>
+        </ul>
+        <ul class="item-list" style="display:none;">
+          <!-- 待评价 -->
+          <div class="item">
+            <div class="item-top">
+              <div class="line-payment"></div>
+              <div class="item-top-name">小时工</div>
+              <div class="state-payment">待评价</div>
+            </div>
+              <div class="item-center">
+              <ul>
+                <li><img src="../../images/my-order/head.png" alt="" class="worker-img"><span>鲁大锤 阿姨</span></li>
+                <li><span>服务时间</span><span class="title-right">2018-05-09 18:90</span></li>
+                <li><span>服务地址</span><span class="title-right">北京市丰台区玄武门12号</span></li>
+                <li><span>服务价格</span><span class="title-right">￥30/小时　　X2</span></li>
+              </ul>
+              </div>
+              <div class="total-price">实付<span class="price-num">￥60.0</span></div>
+              <div class="item-buttom">         
+              <a href="#" class="order-pay2">支付</a>
+              <div class="clear"></div>
+              </div>
+          </div>  
+        </ul>
       </div>
-      <div class="tag"  style="display:none">
-            555
-      </div>       
-    </div>
   </div>
-</div>
-<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="../../js/my-order/my-order.min.js"></script>
 <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-<script src="../../js/my-order.min.js"></script>
 </body> 
 </html>
