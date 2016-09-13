@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" ng-app="com.wapapp.app">
 <head>
@@ -6,143 +7,191 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- 为移动设备添加 viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
     <!--禁止电话，邮件识别-->
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
     <title>工人信息</title>
+
     <link rel="stylesheet" href="../../css/weui.min.css">
-    <link rel="stylesheet" href="../../css/worker/worker-message.min.css">
+    <style>
+        /*基础样式*/
+        a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+        body {
+            background-color: rgb(238,238,238);
+        }
+        .mt10 {
+            margin-top: 10px;
+        }
+        .fl{
+            float: left;
+        }
+        .fr{
+            float: right;
+        }
+        /*自定义样式*/
+        .zj_cell {
+            display: -webkit-box-flex;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+        }
+        .zj_cell_primary {
+            -webkit-box-flex:1;
+            -webkit-flex:1;
+            flex:1;
+        }
+        .zj_cell_hd {
+            color: #888;
+        }
+        .zj_cell_bd {
+            text-align: left;
+        }
+        .pl10 {
+            padding-left: 10px;
+        }
+        .pd {
+            padding: 10px 10px;
+        }
+        .sys-rz{
+            border-top: 1px solid #e4e4e4;
+            padding: 10px;
+        }
+        .title{
+            color:#8a889c;
+        }
+        .sys-img{
+            width: 15px;
+            height: 15px;
+            vertical-align: text-bottom;;
+        }
+        .items{
+            width:200px;
+        }
+        .items li{
+            display: inline-block;
+            text-align: center;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .flex1 {-webkit-box-flex:1;-webkit-flex-grow: 1;-moz-flex-grow: 1; flex-grow: 1;}
+        .flex2 {-webkit-box-flex:2;-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
+        .flex3 {-webkit-box-flex:3;-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
+        .flexc {align-items:center;}
+    </style>
 </head>
+<body ng-controller="bossInfoCtrl"><script id="__bs_script__">//<![CDATA[
+document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'><\/script>".replace("HOST", location.hostname));
+//]]></script>
 
-<body>
-<section class="main">
-    <div class="card position_infor">
-        <div class="position cle">
-            <span >工号</span>
-            <span>GR003920</span>
-        </div>
-        <div class="position_comment cle">
-            <div class="fl">
-                <span class="jg">籍贯</span>
-                <span class="region">浙江省温州市</span>
-            </div>
-            <div class="worder-experience fr">
-                <span>从业年限</span>
-                <span class="time">5年</span>
-            </div>
-        </div>
-        <div class="position_comment cle">
-        <div class="fl">
-            <span class="jg">学历</span>
-            <span class="region">高中</span>
-        </div>
-        <div class="worder-interest fr">
-            <span>爱好</span>
-            <span class="journey">旅游</span>
-        </div>
-    </div>
-        <div class="position_comment cle">
-            <div class="fl">
-                <span class="jg">身高</span>
-                <span class="region">166cm</span>
-            </div>
-            <div class="worder-interest fr">
-                <span>体重</span>
-                <span class="journey">52kg</span>
-            </div>
-        </div>
-        <div class="position_comment cle">
-            <div class="fl">
-                <span class="jg">血型</span>
-                <span class="region">B型</span>
-            </div>
-            <div class="worder-constellation fr">
-                <span>星座</span>
-                <span class="journey">摩羯座</span>
-            </div>
-        </div>
-        <div class="idiograph cle">
-            <div class="position cle">
-                <span >个人签名</span>
-                <span>两只老虎两只老虎跑得快</span>
-            </div>
-    </div>
-        </div>
-    <div style="border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; margin-top: 7px; ">
-    <div class="idiograph_box">
-        <div class="idiograph cle">
-            <div class="position cle">
-                <span >服务时间</span>
-                <span class="position-place">每周一至每周六&nbsp;8:00-20：00</span>
-            </div>
-            <div class="idiograph cle">
-                <div class="position cle">
-                    <span >居住地址</span>
-                    <span class="position-place">浙江省杭州市江干区迪凯国际中心25B</span>
-                </div>
-                <div class="idiograph cle">
-                    <div class="position cle">
-                        <span >服务范围</span>
-                        <span class="position-place">5公里</span>
-                    </div>
-    </div>
-            </div>
-    </div>
 
-</div>
- </div>
-   <div  style="border-top: 1px solid #ccc; margin-top: 7px; ">
-       <div  class="idiograph_box">
-           <div class="idiograph cle">
-               <div class="position fl cle">
-                   <span >系统介绍</span>
-
-               </div>
-               <div class="fr"> <span class="font-content">阿姨特别认真负责,性格爽朗，做事干脆利索，非常负责。</span></div>
-       </div>
-   </div>
-       </div>
-    <div style="border: 1px solid #ccc;" class="xianx"></div>
-<div>
-    <div class="cle">
-        <div class="fl">
-            <span>系统认证</span>
+<div class="weui_cells">
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd">工号</div>
+        <div class="zj_cell_bd pl10 JobNumber"></div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">籍贯</div>
+            <div class="zj_cell_bd pl10 NativePlace"></div>
         </div>
-        <div class="fl cle" style="width:181px;height: 80px;">
-            <div class="fl">
-                <span ><img src="" alt=""/></span>
-                <span class="region">有工人端</span>
-            </div>
-            <div class="worder-experience fr">
-                <span><img src="" alt=""/></span>
-                <span >实名认证</span>
-            </div>
-            <div class="fl">
-                <span ><img src="" alt=""/></span>
-                <span class="region">配备工具</span>
-            </div>
-            <div class="worder-experience fr">
-                <span><img src="" alt=""/></span>
-                <span >持健康证</span>
-            </div>
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">从业年限</div>
+            <div class="zj_cell_bd pl10 WorkingYears"></div>
         </div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">学历</div>
+            <div class="zj_cell_bd pl10 Education"></div>
+        </div>
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">爱好</div>
+            <div class="zj_cell_bd pl10 Hobby"></div>
+        </div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">身高</div>
+            <div class="zj_cell_bd pl10 Stature"></div>
+        </div>
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">体重</div>
+            <div class="zj_cell_bd pl10 Weight"></div>
+        </div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">血型</div>
+            <div class="zj_cell_bd pl10 BloodType"></div>
+        </div>
+        <div class="zj_cell zj_cell_primary">
+            <div class="zj_cell_hd">星座</div>
+            <div class="zj_cell_bd pl10 Constellation"></div>
+        </div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd">个人签名</div>
+        <div class="zj_cell_bd pl10 Signature"></div>
     </div>
 </div>
 
+<div class="weui_cells mt10">
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd">服务时间</div>
+        <div class="zj_cell_bd pl10 ServiceTime"></div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd">居住地址</div>
+        <div class="zj_cell_bd pl10 Address"></div>
+    </div>
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd">服务范围</div>
+        <div class="zj_cell_bd pl10 ServiceScope"></div>
+    </div>
+</div>
+
+<div class="weui_cells mt10">
+    <div class="zj_cell zj_cell_primary pd">
+        <div class="zj_cell_hd zj_cell_primary">系统介绍</div>
+        <div class="zj_cell_bd flex3 Intro"></div>
+    </div>
+</div>
+
+    <div class="sys-rz">
+        <div class="cle">
+            <div class="fl">
+                <span class="title">系统认证</span>
+            </div>
+            <div class="fl cle">
+                <ul class="items">
+                    <li>
+                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
+                        <span>有工人端</span>
+                    </li>
+                    <li>
+                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
+                        <span>有工人端</span>
+                    </li>
+                    <li>
+                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
+                        <span>有工人端</span>
+                    </li>
+                    <li>
+                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
+                        <span>有工人端</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
 
-</section>
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="../../js/worker/worker-message.min.js"></script>
 
-
-
-
-    <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-    <script src="../../js/worker/worker-detail.min.js"></script>
 </body>
-<script>
-</script>
 </html>

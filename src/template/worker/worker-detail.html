@@ -21,69 +21,78 @@
 </style>
 <body>
 <div class="top-info" >
-    <img src="../../images/worker/head.png" class="bus-img" alt="">
-    <div class="bus-name">
-        <h4>胡佳乐</h4>
-        <div class="top-ic">
-            <img src="../../images/worker/ic_dianzan.svg" alt="" class="dianzan">
-            <span class="font-style">427</span>
-            <img src="../../images/worker/ic_shoucang.svg" alt="" class="dianzan">
-            <span class="font-style">321</span>
+    <img src="" class="bus-img" alt="">
+    <div class="bus-name cle">
+        <div class="fl">
+        <h4 class="Name"></h4>
+        <span><img src="" class="Gender" alt=""/></span>
+        <span class="Age"></span>
+        </div>
+        <div class="top-ic fr">
+            <img src="../../images/worker/ic_dianzan.svg" alt="" class="dianzan IsPraise">
+            <span class="font-style"><span class="PraiseCount"></span></span>
+            <img src="../../images/worker/ic_shoucang.svg" alt="" class="dianzan IsFavorite">
+            <span class="font-style"><span class="FavoriteCount"></span></span>
         </div>
     </div>
-    <div class="bus-work">
-        <a href="javascript:void(0);">
+    <div class="bus-work cle">
+        <div class="fl">
+        <a href="worker-message.html">
         <span >小时工</span>
-        <div class="wk-list ">50元/小时
+        <!--</div>-->
+
+        <div class="wk-list fr "><span class="Wage"></span>
             <img style="width: 6px;height: 9px;" src="../../images/worker/jiantou.png" alt=""/>
         </div>
         </a>
     </div>
-    <div class="bus-add">
-        <div class="address">浙江籍
-            <span style="padding-left: 70px;">从业5年</span>
-        </div>
-        <div class="bus-jl">距离2.2KM</div>
-        <div class="clear"></div>
+</div>
     </div>
+    <<div class="bus-add">
+    <div class="NativePlace fl">
+    </div>
+    <div class="fl"><span class="WorkingYears"></span></div>
+    <div class="bus-jl"><span class="jl-num"></span></div>
     <div class="clear"></div>
 </div>
+    <div class="clear"></div>
 <div class="xian">
     <div class="score">
         <ul>
             <li>
                 <img src="../../images/worker/ic_dingdan.svg" class="score-img" alt="">
                 <div class="score-one">
-                    <span class="data-top">已接45单</span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao">70%</span>
+                    <span class="data-top"><span class="OrderCount"></span></span>
+                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="OrderRank"></span>
                 </div>
             </li>
             <li>
                 <img src="../../images/worker/ic_tonghua.svg" class="score-img" alt="">
                 <div class="score-one">
-                    <span class="data-top">已接99通</span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao">40%</span>
+                    <span class="data-top"><span class="PhoneCount"></span></span>
+                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="PhoneRank"></span>
                 </div>
             </li>
             <li>
                 <img src="../../images/worker/ic_pingfen.svg" class="score-img" alt="">
                 <div class="score-one">
-                    <span class="data-top">已接4.5分</span>
-                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao">70%</span>
+                    <span class="data-top"><span class="Grade"></span></span>
+                    <span><img src="../../images/worker/ic_shuzhuangtiao.svg" alt="" class="shuzhuangtiao"><span class="PhoneRank"></span></span>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="xian-bottom">
-        <ul style="padding-left: 30px;" class=" cle fl">
-            <li class="service-region fl ">周末不服务周末不服务</li>
-            <li class="common-service fl"  >浙江杭州人</li>
-            <li class="common-service fl">周末不服务</li>
-            <li class="zh-service fl" >浙江杭州人</li>
-            <li class="service fl" >烹饪各种菜系</li>
-            <li class="zh-service fl">周末不服务</li>
-        </ul>
-    </div>
+
+    <!--<div class="xian-bottom">-->
+        <!--<ul style="padding-left: 30px;" class=" cle fl">-->
+            <!--<li class="service-region fl ">周末不服务周末不服务</li>-->
+            <!--<li class="common-service fl"  >浙江杭州人</li>-->
+            <!--<li class="common-service fl">周末不服务</li>-->
+            <!--<li class="zh-service fl" >浙江杭州人</li>-->
+            <!--<li class="service fl" >烹饪各种菜系</li>-->
+            <!--<li class="zh-service fl">周末不服务</li>-->
+        <!--</ul>-->
+    <!--</div>-->
 <!--认证信息-->
 <div id="authenticate" class="weui_cells weui_cells_access">
     <a class="weui_cell" href="javascript:;">
@@ -144,6 +153,7 @@
         <div class="weui_cell_ft"></div>
     </div>
 </div>
+    <!--客户无评价-->
 <!--<div>-->
     <!--<div class="shafa">-->
         <!--<img src="../../images/worker/shafa.png" alt=""/>-->
@@ -151,28 +161,21 @@
     <!--<div class="shafa-font">沙发没人做,赶紧去抢吧</div>-->
 <!--</div>-->
     <!--客户评价有评论的-->
-    <div style="clear: both; overflow:hidden;" class="client-comment cle">
-        <div class="comment_content fl"><img src="../../images/worker/touxiang.png" class="tx-img" alt=""><span style="padding-left: 5px;">糖瓜瓜</span><span style="padding-left: 5px; color: #CCC;">2015-12-12</span></div>
-        <div class="xingx fr"><span></span>
-            <span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>
-            <span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>
-            <span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing"  alt=""></span>
-            <span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>
-            <span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>
-            5.0
-        </div>
-    </div>
-<div style="width:346px; margin: 8px 23px 0 18px;">
-    <p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊擦啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
-</div>
-    <!--底部-->
-<!--<div class="bottom">-->
-    <!--<ul class="cle fl">-->
-        <!--<li class="fl"><a href="javascript:void(0);"><img src="../../images/worker/ic_zhijiezhifu_nor.svg" class="tp-img" alt=""/></a></li>-->
-        <!--<li class="fl order"><a href="javascript:void(0);"><img src="../../images/worker/ic_order_nor.svg" class="tp-img" alt=""/></a></li>-->
-        <!--<li class="fl phone"><a href="javascript:void(0);"><img src="../../images/worker/ic_phone_nor.svg" class="tp-img dianhua-img" alt=""/></a></li>-->
-    <!--</ul>-->
+    <!--<div style="clear: both; overflow:hidden;" class="client-comment cle">-->
+        <!--<div class="comment_content fl"><img src="../../images/worker/touxiang.png" class="tx-img" alt=""><span style="padding-left: 5px;">糖瓜瓜</span><span style="padding-left: 5px; color: #CCC;">2015-12-12</span></div>-->
+        <!--<div class="xingx fr"><span></span>-->
+            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
+            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
+            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing"  alt=""></span>-->
+            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
+            <!--<span><img src="../../images/worker/ic_xin_sel.svg" class="xingxing" alt=""></span>-->
+            <!--<span>2</span>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--<div style="width:346px; margin: 8px 23px 0 18px;">-->
+    <!--<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊擦啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>-->
 <!--</div>-->
+    <!--底部导航-->
     <div class="weui_tabbar">
         <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
@@ -190,13 +193,13 @@
             </div>
         </a>
     </div>
-
+    <!--电话弹出框-->
     <div style="display: none;" class="weui_dialog_alert">
         <div class="weui_mask"></div>
         <div class="weui_dialog">
             <div class="bh"><img src="../../images/worker/bohaom.png" class="bh-img"  alt=""/></div>
             <div style="text-align: right;"><img src="../../images/worker/xx.png" class="xx-img" alt=""/></div>
-            <div class="weui_dialog_hd"><strong class="weui_dialog_title">您拨打的号码为<span style="color:#32beff; ">133....5584</span></strong></div>
+            <div class="weui_dialog_hd"><strong class="weui_dialog_title">您拨打的号码为<span class="PhoneNumber" style="color:#32beff; ">133....5584</span></strong></div>
             <div class="weui_dialog_bd">下载助家生活APP后方可拨打</div>
             <div class=" download">
                 <a style="color:#fff;" href="javascript:void(0);" class="download-font">立即下载</a>
@@ -205,7 +208,6 @@
     </div>
     <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <script src="../../js/worker/worker-detail.min.js"></script>
-    </div>
 </body>
 <script>
 </script>
