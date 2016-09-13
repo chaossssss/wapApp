@@ -20,6 +20,12 @@ textarea{resize: none;}
 .top-info{
 	padding: 15px;
 }
+.name-info{
+	height: 20px;
+}
+.yewu{
+	height: 25px;
+}
 .bus-img{
 	width: 65px;
 	height: 65px;
@@ -93,22 +99,27 @@ textarea{resize: none;}
 	font-size: 12px;
 }
 .bus-add{
-	float:left;
 	margin-left: 12px;
     margin-top: 2px;
 	font-size: 14px;
 }
 .address{
+	float:left;
 	width: 180px;
 	height: 19px;
 	overflow: hidden;
-    float:left;
+    padding-left: 10px;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
 .bus-jl{
-	display: inline-block;
+	float: right;
 	margin-left: 10px;
+	width: 78px;
+    height: 19px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
 }
 .score{
 	border-top:1px solid #e4e4e4;
@@ -215,7 +226,7 @@ textarea{resize: none;}
 .no-active{
 	border-bottom: 1px solid #ccc;
 }
-.tab-price{
+.tab-price,.price{
 	color: #fda538;
 	font-size: 14px;
 }
