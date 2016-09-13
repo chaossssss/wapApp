@@ -183,7 +183,6 @@ $(function(){
                 
                 success: function(data){ 
                     if(data.Body){
-                        $()
                         // var result = '';
                         // counter2++;
                         // pageEnd2 = num2 * counter2;
