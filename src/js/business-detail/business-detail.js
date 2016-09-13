@@ -37,13 +37,6 @@ $(function(){
 		CloseDiv('MyDiv','fade');
 	});
 
-    // 电话框弹出效
-    $('.call_phone').click(function(){
-        $('.phone_dialog').show();
-    });
-     $('.xx-img').click(function(){
-        $('.phone_dialog').hide();
-    })
 
 // jax--------------------------------------------------------
 // 加载页面其他数据
@@ -72,7 +65,7 @@ $(function(){
     		$(".PhoneRank").text(api.PhoneRank);
     		$(".Grade").text(api.Grade);
     		$(".GradeRank").text(api.GradeRank);
-            $(".PhoneNumber").text(api.PhoneNumber);
+            $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
 
             // 认证集合
     		var RzImgs="";
