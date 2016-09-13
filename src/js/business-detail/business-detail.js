@@ -50,41 +50,43 @@ $(function(){
 
 // jax--------------------------------------------------------
 // 加载页面其他数据
+    var Type=getUrl('type');
+    var Id=getUrl('id');
     $.ajax({
     	type: 'POST',
-        url: 'http://192.168.1.191:3003/api/v2/Provider/Detail',
+        url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',
         dataType: 'json',
         data:{
-            Type:"1",
-            Id:"59"
+            Type:Type,
+            Id:Id
         },
     	success:function(data){
-    		
-    		$(".bus-img").attr("src",data.Photo);
-    		$(".bus-name").text(data.Name);
-    		$(".PraiseCount").text(data.PraiseCount);
-    		$(".FavoriteCount").text(data.FavoriteCount);
-    		$(".wk-list").text(data.ServiceScope);
-    		$(".address").text(data.Address);
-    		$(".jl-num").text(data.Distance);
-    		$(".OrderCount").text(data.OrderCount);
-    		$(".OrderRank").text(data.OrderRank);
-    		$(".PhoneCount").text(data.PhoneCount);
-    		$(".PhoneRank").text(data.PhoneRank);
-    		$(".Grade").text(data.Grade);
-    		$(".GradeRank").text(data.GradeRank);
+            var api=data.Body.Business;
+            $(".bus-img").attr("src",api.Photo);
+    		$(".bus-name").text(api.DefaultService.Name);
+    		$(".PraiseCount").text(api.PraiseCount);
+    		$(".FavoriteCount").text(api.FavoriteCount);
+    		$(".wk-list").text(api.Intro);
+    	    $(".address").text(api.Address);
+    		$(".jl-num").text(api.Distance);
+    		$(".OrderCount").text(api.OrderCount);
+    		$(".OrderRank").text(api.OrderRank);
+    		$(".PhoneCount").text(api.PhoneCount);
+    		$(".PhoneRank").text(api.PhoneRank);
+    		$(".Grade").text(api.Grade);
+    		$(".GradeRank").text(api.GradeRank);
 
-    		var RzImgs="";
-    		for (var i = 0; i < data.Rzimgs.length; i++) {
-    			RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
-    		}
-    		$(".rz-imgs").html(RzImgs);
+    		// var RzImgs="";
+    		// for (var i = 0; i < data.Rzimgs.length; i++) {
+    		// 	RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
+    		// }
+    		// $(".rz-imgs").html(RzImgs);
 
-    		var ModelRzImgs="";
-    		for (var j = 0; j < data.Rzimgs.length; j++) {
-    			ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
-    		}
-    		$(".dialog-imgs").html(ModelRzImgs);
+    		// var ModelRzImgs="";
+    		// for (var j = 0; j < data.Rzimgs.length; j++) {
+    		// 	ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
+    		// }
+    		// $(".dialog-imgs").html(ModelRzImgs);
 
 
     		
@@ -97,135 +99,151 @@ $(function(){
     });
 
     //上滑加载"服务内容"更多数据--------------------------------
-    // var counter = 0;  
-    // var num = 5;// 每页展示5个
-    // var pageStart = 0,pageEnd = 0;
-    // $('#tab-fuwu').dropload({
-    //     scrollArea : window,
-    //     loadDownFn : function(me){
-    //         $.ajax({
-    //             type: 'GET',
-    //             // url: 'http://192.168.1.191:7002/api/v2/OrderInfoController/GetOrderInfoEx',
-    //             url: '',
-    //             dataType: 'json',
+    var counter = 0;  
+    var num = 5;// 每页展示5个
+    var pageStart = 0,pageEnd = 0;
+    $('#tab-fuwu').dropload({
+        scrollArea : window,
+        loadDownFn : function(me){
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.191:3001/api/v2/ClientInfo/GetMerchantServiceListEx',
+                dataType: 'json',
+                data:{
+                    MerchantId:Id
+                },
+                success: function(data){ 
+                    var ser_api=data.Body.ServiceTypeList;        
+                    var result = '';
+                    counter++;
+                    pageEnd = num * counter;
+                    pageStart = pageEnd - num;
 
-    //             success: function(data){         
-    //                 var result = '';
-    //                 counter++;
-    //                 pageEnd = num * counter;
-    //                 pageStart = pageEnd - num;
+                    for(var i = pageStart; i < pageEnd; i++){
+                        result  +=   '<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
+                                +' <div class="weui_media_hd"><img src="'+ser_api[i].PicPath+'" alt="" class="weui_media_appmsg_thumb"></div>'
+                                +'<div class="weui_media_bd"><h4 class="weui_media_title">'+ser_api[i].ServiceName+'</h4>'
+                                +'<p class="weui_media_desc">'+ser_api[i].ServiceTypeName+'</p>'
+                                +'<span class="price">￥<span class="tab-price">'+ser_api[i].Price+'</span>/小时</span>'
+                                +'</div></a>';
 
-    //                 for(var i = pageStart; i < pageEnd; i++){
-    //                     result  +=   '<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
-    //                             +' <div class="weui_media_hd"><img src="'+data.Services[i].pic+'" alt="" class="weui_media_appmsg_thumb"></div>'
-    //                             +'<div class="weui_media_bd"><h4 class="weui_media_title">'+data.Services[i].title+'</h4>'
-    //                             +'<p class="weui_media_desc">'+data.Services[i].date+'</p>'
-    //                             +'<p class="tab-price">'+data.Services[i].link+'</p>'
-    //                             +'</div></a>';
-
-    //                     if((i + 1) >= data.Services.length){
-    //                         // 锁定
-    //                         me.lock();
-    //                         // 无数据
-    //                         me.noData();
-    //                         break;
-    //                     }
-    //                 }
-    //                 // 为了测试，延迟1秒加载
-    //                 setTimeout(function(){
-    //                     $('.lists').append(result);
-    //                     // 每次数据加载完，必须重置
-    //                     me.resetload();
-    //                 },1000);
-    //             },
-    //             error: function(xhr, type){
-    //                 alert('Ajax error!');
-    //                 // 即使加载出错，也得重置
-    //                 me.resetload();
-    //             }
-    //         });
-    //     }
-    // });
+                        if((i + 1) >=ser_api.length){
+                            // 锁定
+                            me.lock();
+                            // 无数据
+                            me.noData();
+                            break;
+                        }
+                    }
+                    // 为了测试，延迟1秒加载
+                    setTimeout(function(){
+                        $('.lists').append(result);
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },1000);
+                },
+                error: function(xhr, type){
+                    alert('Ajax error!');
+                    // 即使加载出错，也得重置
+                    me.resetload();
+                }
+            });
+        }
+    });
 
     //上滑加载"客户评价"更多数据--------------------------------
-    // var counter2 = 0;
-    // var num2 = 5;// 每页展示5个
-    // var pageStart2 = 0,pageEnd2 = 0;
-    // $('#tab-kehu').dropload({
-    //     scrollArea : window,
-    //     loadDownFn : function(me){
-    //         $.ajax({
-    //             type: 'GET',
-    //             // url: 'http://192.168.1.191:7002/api/v2/OrderInfoController/GetOrderInfoEx',
-    //             url: '',
-    //             dataType: 'json',
-
-    //             success: function(data){             
-    //                 var result = '';
-    //                 counter2++;
-    //                 pageEnd2 = num2 * counter2;
-    //                 pageStart2 = pageEnd2 - num2;
+    var counter2 = 0;
+    var num2 = 5;// 每页展示5个
+    var pageStart2 = 0,pageEnd2 = 0;
+    $('#tab-kehu').dropload({
+        scrollArea : window,
+        loadDownFn : function(me){
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetMerchantEvaluationList',
+                dataType: 'json',
+                data:{
+                    ID:Id
+                },
+                
+                success: function(data){ 
+                    if(data.Body)
+                    var result = '';
+                    counter2++;
+                    pageEnd2 = num2 * counter2;
+                    pageStart2 = pageEnd2 - num2;
                     
-    //                 for(var i = pageStart2; i < pageEnd2; i++){
-    //             		var	res='';
-    //             		if(data.Pingjia[i].xin<5){
-    //             			for(var j = 1; j <= data.Pingjia[i].xin; j++){
-    //             			 	res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
-    //             			}
-    //             			var x=5-data.Pingjia[i].xin;
-    //             			for(var m = 1; m <= x; m++){
-    //             			 	res+='<img src="/images/business-detail/ic_xin_nor.svg" alt="" class="kehu-xin">'
-    //             			 }
-    //             		}else{
-    //             			for(var k = 1; k <= 5; k++){
-    //             			 	res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
-    //             			 }
-    //             		}	
+                    for(var i = pageStart2; i < pageEnd2; i++){
+                        var res='';
+                        if(data.Pingjia[i].xin<5){
+                            for(var j = 1; j <= data.Pingjia[i].xin; j++){
+                                res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
+                            }
+                            var x=5-data.Pingjia[i].xin;
+                            for(var m = 1; m <= x; m++){
+                                res+='<img src="/images/business-detail/ic_xin_nor.svg" alt="" class="kehu-xin">'
+                             }
+                        }else{
+                            for(var k = 1; k <= 5; k++){
+                                res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
+                             }
+                        }   
 
-    // 					result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/business-detail/bus-img.png" alt="" class="kehu-img">'
-    // 						+'<span class="kehu-name">'+data.Pingjia[i].name+'</span>'
-    // 						+'<span class="kehu-time">'+data.Pingjia[i].date+'</span>'
-    // 						+'<div class="kehu-heart">'+res
-    // 						+'<span class="kehu-pingfen">'+data.Pingjia[i].xin+'</span></div></div>'
-    // 						+'<div class="clear"></div><div class="kehu-cont">'+data.Pingjia[i].cont+'</div></div>';
+                        result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/business-detail/bus-img.png" alt="" class="kehu-img">'
+                            +'<span class="kehu-name">'+data.Pingjia[i].name+'</span>'
+                            +'<span class="kehu-time">'+data.Pingjia[i].date+'</span>'
+                            +'<div class="kehu-heart">'+res
+                            +'<span class="kehu-pingfen">'+data.Pingjia[i].xin+'</span></div></div>'
+                            +'<div class="clear"></div><div class="kehu-cont">'+data.Pingjia[i].cont+'</div></div>';
 
-    //                     if((i + 1) >= data.Pingjia.length){
-    //                         // 锁定
-    //                         me.lock();
-    //                         // 无数据
-    //                         me.noData();
-    //                         break;
-    //                     }
-    //                 }
-    //                 // 为了测试，延迟1秒加载
-    //                 setTimeout(function(){
-    //                     $('.kehu-list').append(result);
-    //                     // 每次数据加载完，必须重置
-    //                     me.resetload();
-    //                 },1000);
-    //             },
-    //             error: function(xhr, type){
-    //                 alert('Ajax error!');
-    //                 // 即使加载出错，也得重置
-    //                 me.resetload();
-    //             }
-    //         });
-    //     }
-    // });
+                        if((i + 1) >= data.Pingjia.length){
+                            // 锁定
+                            me.lock();
+                            // 无数据
+                            me.noData();
+                            break;
+                        }
+                    }
+                    // 为了测试，延迟1秒加载
+                    setTimeout(function(){
+                        $('.kehu-list').append(result);
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },1000);
+                       
+                    
+                },
+                error: function(xhr, type){
+                    alert('Ajax error!');
+                    // 即使加载出错，也得重置
+                    me.resetload();
+                }
+            });
+        }
+    });
 
 });
 
 function ShowDiv(show_div,bg_div){
- document.getElementById(show_div).style.display='block';
- document.getElementById(bg_div).style.display='block' ;
- var bgdiv = document.getElementById(bg_div);
- bgdiv.style.width = document.body.scrollWidth; 
- // bgdiv.style.height = $(document).height();
- $("#"+bg_div).height($(document).height());
+    document.getElementById(show_div).style.display='block';
+    document.getElementById(bg_div).style.display='block' ;
+    var bgdiv = document.getElementById(bg_div);
+    bgdiv.style.width = document.body.scrollWidth; 
+    // bgdiv.style.height = $(document).height();
+    $("#"+bg_div).height($(document).height());
 };
+
 //关闭弹出层
 function CloseDiv(show_div,bg_div)
 {
- document.getElementById(show_div).style.display='none';
- document.getElementById(bg_div).style.display='none';
+    $('#'+show_div).hide();
+    $('#'+bg_div).hide();
 };
+
+// 获取地址传参
+function getUrl(name)
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
