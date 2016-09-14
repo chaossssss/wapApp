@@ -15,6 +15,12 @@ a {outline:none; star:expression_r(this.onFocus=this.blur());}
 button{outline: none;cursor: pointer;border:none;}
 .clear{clear:both;}
 textarea{resize: none;}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
 /*-------------------*/
 
 .top-info{
@@ -358,7 +364,11 @@ textarea{resize: none;}
     color:#807f84;
     margin-top:5px;
 }
-
+/*客户无评价*/
+.touxiang-img{
+    width: 20px;
+    height: 20px;
+}
 /*轮播图*/
 .swiper-container {
     width: 100%;

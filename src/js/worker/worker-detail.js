@@ -78,7 +78,7 @@ $(function(){
             $(".jl-num").text(api.Distance);
             $(".PraiseCount").text(api.PraiseCount);
             $(".Grade").text(api.Grade);
-            //$(".PhoneNumber").attr("href"+"tel:",api.PhoneNumber);
+            $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
             $(".FavoriteCount").text(api.FavoriteCount);
             $(".Wage").text(api.Wage);
             $(".NativePlace").text(api.NativePlace);
