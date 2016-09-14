@@ -1,34 +1,58 @@
 'use strict'
 angular.module('com.wapapp.app',[])
-.controller('addLocationCtrl',['$scope',function($scope){
+.run(['$rootScope',function($rootScope){
+	$rootScope.token = "34a125872c0e39f4a63266f54b5a45d6";
+}])
+.controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
 	var sessionStorage = window.sessionStorage;
-
+ 
 	var vm = $scope.vm = {};
 
-	vm.name = "小豪";
-	vm.phone = "18257561789";
+	vm.Contact = "小豪";
+	vm.PhoneNumber = "18257561789";
 	// vm.sex = "先生";
-	vm.title = "迪凯国际中心";
-	vm.location = "2502室";
-
+	vm.Address1 = "迪凯国际中心";
+	vm.Address2 = "2502室";
+ 
 	vm.error = "";
 	vm.isActive = false;
 
 	if(sessionStorage.LocalContent){
-		vm.location = sessionStorage.LocalContent;
+		vm.Address2 = sessionStorage.LocalContent;
 	}
 	if(sessionStorage.LocalTitle){
-		vm.title = sessionStorage.LocalTitle;
+		vm.Address1 = sessionStorage.LocalTitle;
 	}
 
+	addrService.tag()
+		.success(function(res){
+			console.log(res);
+			vm.tagList = res.Body;
+			$scope.$apply();
+		})
+
 	vm.save = function(name,address,addrDetail,phone){
-		console.log(name);
-		console.log(address);
-		console.log(addrDetail);
-		console.log(phone);
+		// console.log(name);
+		// console.log(address);
+		// console.log(addrDetail);
+		// console.log(phone);
 		if(name.$valid === true && address.$valid === true && phone.$valid === true){
-			window.location.href = "";
+			var formData = {
+				Contact: vm.Contact,
+				Gender: vm.Gender,
+				PhoneNumber: vm.PhoneNumber,
+				Tag: "",
+				Address1: vm.Address1,
+				Address2: vm.Address2
+			};
+			addrService.add($rootScope.token,formData)
+				.success(function(res){
+					console.log(res);
+					window.location.href = "/template/location/mag-location.html";
+				})
+
+
 		}
 		if(name.$dirty === true && name.$valid === false){
 			vm.error = "请输入联系人姓名";
@@ -56,35 +80,55 @@ angular.module('com.wapapp.app',[])
 	}
 
 }])
-.controller('editLocationCtrl',['$scope',function($scope){
+.controller('editLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 	var sessionStorage = window.sessionStorage;
 
 	var vm = $scope.vm = {};
 
-	vm.name = "小豪";
-	vm.phone = "18257561789";
+	vm.Contact = "小豪";
+	vm.PhoneNumber = "18257561789";
 	// vm.sex = "先生";
-	vm.title = "迪凯国际中心";
-	vm.location = "2502室";
+	vm.Address1 = "迪凯国际中心";
+	vm.Address2 = "2502室";
 
 	vm.error = "";
 	vm.isActive = false;
 	vm.isDialog = false;
 
 	if(sessionStorage.LocalContent){
-		vm.location = sessionStorage.LocalContent;
+		vm.Address2 = sessionStorage.LocalContent;
 	}
 	if(sessionStorage.LocalTitle){
-		vm.title = sessionStorage.LocalTitle;
+		vm.Address1 = sessionStorage.LocalTitle;
 	}
 
+	addrService.tag()
+		.success(function(res){
+			console.log(res);
+			vm.tagList = res.Body;
+			$scope.$apply();
+		})
+
 	vm.saveLocal = function(name,address,addrDetail,phone){
-		console.log(name);
-		console.log(address);
-		console.log(addrDetail);
-		console.log(phone);
+		// console.log(name);
+		// console.log(address);
+		// console.log(addrDetail);
+		// console.log(phone);
 		if(name.$valid === true && address.$valid === true && phone.$valid === true){
-			window.location.href = "";
+			var formData = {
+				Contact: vm.Contact,
+				Gender: vm.Gender,
+				PhoneNumber: vm.PhoneNumber,
+				Tag: "",
+				Address1: vm.Address1,
+				Address2: vm.Address2
+			};
+			addrService.edit($rootScope.token,formData)
+				.success(function(res){
+					console.log(res);
+					// window.location.href = "/template/location/mag-location.html";
+				})	
+
 		}
 		if(name.$dirty === true && name.$valid === false){
 			vm.error = "请输入联系人姓名";
@@ -102,49 +146,218 @@ angular.module('com.wapapp.app',[])
 			vm.error = "请补充详细地址";
 			vm.isActive = true;
 		}
-	}
-
+	};
+	//获取url参数
+	function getvl(name) {
+	    var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+	    if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+	    return "";
+	};
 	vm.searchLocal = function(address,addrDetail){
 		console.log(address);
 		console.log(addrDetail);
 		if(address === false && addrDetail === false){
 			window.location.href = '/template/map/ser-location.html';
 		}
-	}
-
+	};
 	vm.deleteLocal = function(){
-
+		var id = getvl("id");
+		addrService.delete($rootScope.token,id)
+			.success(function(res){
+				console.log(res);
+				window.location.href = "/template/location/mag-location.html";
+			})
 	}
 
 }])
-.controller('magLocationCtrl',['$scope',function($scope){
+.controller('magLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
 	var vm = $scope.vm = {};
 
-	vm.locationList = [
-		{ name : "李诗诗",sex : "女士",phone : "156477382490",tag : "公司",local : "上海市区" },
-		{ name : "李诗诗",sex : "女士",phone : "156477382490",tag : "公司",local : "上海市区" },
-		{ name : "李诗诗",sex : "女士",phone : "156477382490",tag : "公司",local : "上海市区" },
-		{ name : "李诗诗",sex : "女士",phone : "156477382490",tag : "公司",local : "上海市区" },
-		{ name : "李诗诗",sex : "女士",phone : "156477382490",tag : "公司",local : "上海市区" }
-	]
-
 	vm.editLocation = function(item){
-		window.location.href = '/template/location/edit-location.html';
+		window.location.href = '/template/location/edit-location.html?id='+item.Id;
 	}
 
+	addrService.get($rootScope.token)
+		.success(function(res){
+			console.log(res);
 
-
-
-
-
-
-
-
-
-
-
-
-
+			vm.locationList = res.Body;
+			$scope.$apply();
+		});
 
 }])
+.factory('addrService',['$http',function($http){
+	var PATH = "http://192.168.1.191:3003/";
+	var _getpath = PATH+"api/v2/ClientInfo/GetAddress";
+	var _addpath = PATH+"api/v2/ClientInfo/AddAddress";
+	var _editpath = PATH+"api/v2/ClientInfo/EditAddress";
+	var _deletepath = PATH+"api/v2/ClientInfo/DeleteAddress";
+	var _searchpath = "";
+	var _gettag = PATH+"api/v2/ClientInfo/GetAddressTags";
+
+	var getAddr = function(token){
+		return $.ajax({
+					method:"POST",
+					url: _getpath,
+					data:{
+						Token:token
+					},
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+
+	var addAddr = function(token,data){
+		var formData = {
+			Token: token,
+			Address: data
+		}
+		return $.ajax({
+					method:"POST",
+					url: _addpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+
+	var editAddr = function(token,data){
+		var formData = {
+			Token: token,
+			Address: data
+		}
+		return $.ajax({
+					method:"POST",
+					url: _editpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+
+	var searchAddr = function(token,id){
+		var formData = {
+			Token: token,
+			AddressId: id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _searchpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+
+	var deleteAddr = function(token,id){
+		var formData = {
+			Token: token,
+			AddressId: id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _deletepath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+	var getTag = function(){
+		return $.ajax({
+			method:"POST",
+			url: _gettag
+		}).success(function(res){
+			if(res.Meta.ErrorCode !== "0"){
+				alert(res.Meta.ErrorMsg)
+			}
+			if(res.Meta.ErrorCode === "2004"){
+				window.location.href = "/template/login/login.html";
+			}
+		}).error(function(res){
+			alert("服务器连接失败，请检查网络设置");
+		})
+	};
+
+	return {
+		get:function(token){
+			return getAddr(token);
+		},
+		add:function(token,data){
+			return addAddr(token,data);
+		},
+		edit:function(token,data){
+			return editAddr(token,data);
+		},
+		search:function(token,id){
+			return searchAddr(token,id);
+		},
+		delete:function(token,id){
+			return deleteAddr(token,id);
+		},
+		tag:function(){
+			return getTag();
+		}
+
+
+	};
+	
+}])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

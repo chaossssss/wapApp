@@ -1,163 +1,308 @@
 "use strict"
 angular.module('com.wapapp.app',[])
-.controller('orderCtrl',['$scope',function($scope){
+.run(['$rootScope',function($rootScope){
+	$rootScope.token = "a4e64dc954f50273fcdeffaae1aa0863";
+}])
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService',function($rootScope,$scope,priceService,orderService){
 	var vm = $scope.vm = {};
 
 	$scope.textarea_size = 0;
 
 	vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
-	vm.serviceTimeCount = 0;
+	vm.Total = 0;
 	vm.unitPrice = 30;
+	vm.datePickerShow = false;
+	vm.serviceShow = false;
 
 	vm.sub = function(){
-		if(vm.serviceTimeCount >0){
-			vm.serviceTimeCount -= 1;
+		if(vm.Total >0){
+			vm.Total -= 1;
 		}
 	}
 	vm.add = function(){
-		if(vm.serviceTimeCount < 9999){
-			vm.serviceTimeCount += 1;
+		if(vm.Total < 9999){
+			vm.Total += 1;
 		}
 	}
-
-	vm.serviceStartAt = "1234";
+ 
+	vm.ServiceContent = "1234";
 
 	//textarea长度
-	$scope.$watch('vm.serviceStartAt',function(){
-		var a = vm.serviceStartAt;
+	$scope.$watch('vm.ServiceContent',function(){
+		var a = vm.ServiceContent;
 		$scope.textarea_size = a.length;
 	})
 
-	// datePicker时间处理
-	var dp = $scope.dp = {};
-	dp.show = false;
-	
-	dp.getdpDay = function(item){
-		console.log(item);
-		vm.serviceDay = item;
+	$scope.$on('service-type-id',function(event,id){
+		vm.serviceShow = false;
+		vm.ServiceTypeId = id;
+		console.log("ParentCtrl",id);
+		priceService.get($rootScope.token,id,"2")
+			.success(function(res){
+				console.log(res);
+				vm.IsNegotiable = res.Body.IsNegotiable;
+				$scope.$apply();
+
+			})
+	})
+
+	$scope.$on('service-time-date',function(event,date){
+		console.log("父亲接收时间",date);
+		vm.ServiceStartAt = date;
+
+	})
+
+	vm.datePickerShow = function(){
+		$scope.$broadcast("service-time-show",vm.ServiceTypeId);
 	}
-	dp.getdpTime = function(item){
-		console.log(item);
-		vm.serviceTime = item;
+
+	vm.submitOrder = function(){
+		$scope.$broadcast("uploader-img-data");
 	}
 
-	vm.dayDate = [
-		"2016-08-24 今天",
-		"2016-08-25 明天",
-		"2016-08-25 周五",
-		"2016-08-25 周六",
-		"2016-08-25 周日"
-	]
-	vm.timeDate = [
-		"15:30",
-		"16:00",
-		"16:30",
-		"17:00",
-		"17:30"
-	]
+	$scope.$on("uploader-form",function(event,img){
+		console.log("img",img);
+		console.log("Token",$rootScope.token);
+		console.log("ServiceTypeId",vm.ServiceTypeId);
+		console.log("ServiceContent",vm.ServiceContent);
+		console.log("Total",vm.Total);
+		console.log("ServiceStartAt",vm.ServiceStartAt);
+		console.log("ServiceAddressId",vm.ServiceAddressId);
 
+		var Json_data = {
+            "Token":$rootScope.token,
+            "ServiceTypeId": vm.ServiceTypeId,
+            "ServiceContent": vm.ServiceContent,
+            "Total": vm.Total,
+            "OrderForm": "1",
+            "ServiceStartAt": vm.ServiceStartAt,
+            "ServiceAddressId": "123"
+        };
+        Json_data = JSON.stringify(Json_data);
 
-	// 图片上传
-    // var params = {
-    //     fileInput: $("#input").get(0),
-    //     upButton: $("#fileSubmit").get(0),
-    //     // url: $("#uploadForm").attr("action"),
-    //     filter: function(files) {
-    //         var arrFiles = [];
-    //         for (var i = 0, file; file = files[i]; i++) {
-    //             if (file.type.indexOf("image") == 0) {
-    //                 if (file.size >= 512000) {
-    //                     alert('您这张"'+ file.name +'"图片大小过大，应小于500k');    
-    //                 } else {
-    //                     arrFiles.push(file);    
-    //                 }           
-    //             } else {
-    //                 alert('文件"' + file.name + '"不是图片。');    
-    //             }
-    //         }
-    //         return arrFiles;
-    //     },
-    //     onSelect: function(files) {
-    //         var html = '', i = 0;
-    //         $("#preview").html('<div class="upload_loading"></div>');
-    //         var funAppendImage = function() {
-    //             file = files[i];
-    //             if (file) {
-    //                 var reader = new FileReader()
-    //                 reader.onload = function(e) {
-    //                     html = html + '<div id="uploadList_'+ i +'" class="upload_append_list"><p>'+ 
-    //                     '<a href="javascript:" class="upload_delete" title="删除" data-index="'+ i +'"><img class="deleteImg" src="img/ic_delete.svg" alt=""></a>' +
-    //                     '<img id="uploadImage_' + i + '" src="' + e.target.result + '" class="upload_image" /></p>'+ 
-    //                     '<span id="uploadProgress_' + i + '" class="upload_progress"></span>' +
-    //                 '</div>';
-    //                     i++;
-    //                     funAppendImage();
-    //                 }
-    //                 reader.readAsDataURL(file);
-    //             } else {
-    //                 $("#preview").html(html);
-    //                 if (html) {
-    //                     //删除方法
-    //                     $(".upload_delete").click(function() {
-    //                         ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
-    //                         return false;   
-    //                     });   
-    //                 }
-    //             }
-    //         };
-    //         funAppendImage();       
-    //     },
-    //     onDelete: function(file) {
-    //         $("#uploadList_" + file.index).fadeOut();
-    //     },
-    //     onProgress: function(file, loaded, total) {
-    //      var eleProgress = $("#uploadProgress_" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
-    //      eleProgress.show().html(percent);
-    //     },
-    //     // onSuccess: function(file, response) {
-    //     //     $("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
-    //     // },
-    //     // onFailure: function(file) {
-    //     //     $("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");  
-    //     //     $("#uploadImage_" + file.index).css("opacity", 0.2);
-    //     // },
-    //     onComplete: function() {
-    //         //file控件value置空
-    //         $("#input").val("");
-    //         // $("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
-    //     }
-    // };
-    // ZXXFILE = $.extend(ZXXFILE, params);
-    // ZXXFILE.init();
-	
+        var formdata = new FormData();
+        formdata.append("Token",$rootScope.token);   
+        formdata.append("ServiceTypeId", vm.ServiceTypeId);   
+        formdata.append("ServiceContent", vm.ServiceContent);   
+        formdata.append("Total", vm.Total);    
+        formdata.append("OrderForm", "1");   
+        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+        formdata.append("ServiceAddressId", "123"); 
 
+        for(var i=0,leng=img.length;i<leng;i++){
+            formdata.append("img"+i,img[i]);
+        }
+        formdata.append("JSON_Data",Json_data);
 
-
-
+		orderService.uploader(formdata)
+			.success(function(res){
+				console.log(res);
+			})
+	})
 
 }])
-// .directive('zhUploadImg',function(){
-// 	return {
-// 		restrict:'A',
-// 		link:function(scope,elem,attrs,ngModel){
-// 			var file = document.getElementById("file");
-// 			if(typeof FileReader == 'undefined'){
-// 				alert("你的浏览器不支持FileReader接口！");
-// 			}
+.controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
 
-// 			var reader = new FileReader();
-// 			//将文件以Data URL形式读入页面
-// 			reader.readAsDataURL(file.files[0]);
-// 			reader.onload = function(e){
-// 				console.log(e);
-// 				console.log(this.result);
-// 			}
-// 			// console.log(file.files);
-		
+	var dp = $scope.dp = {};
+	dp.show =false;
 
-// 		}
-// 	};
-// })
+	dp.getdpDay = function(item){
+		// console.log(item.TimeRange);
+		dp.timeItem = item.TimeRange;
+		dp.serviceDay = item.Date;
+	}
+	dp.getdpTime = function(item){
+		// console.log(item);
+		dp.serviceTime = item;
+		console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
+		//选中
+		var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
+		dp.show = false;
+		$scope.$emit("service-time-date",serviceStartAt);
+	}
+
+	// dp.dayDate = [
+	// 	"2016-08-24 今天",
+	// 	"2016-08-25 明天",
+	// 	"2016-08-25 周五",
+	// 	"2016-08-25 周六",
+	// 	"2016-08-25 周日"
+	// ]
+	// dp.timeDate = [
+	// 	"15:30",
+	// 	"16:00",
+	// 	"16:30",
+	// 	"17:00",
+	// 	"17:30"
+	// ]
+
+	$scope.$on("service-time-show",function(event,id){
+		dp.show = true;
+		console.log(id);
+		timeService.get("5")
+			.success(function(res){
+				console.log(res);
+				dp.timeList =  res.Body;
+
+				$scope.$apply();
+			})
+	})
+}])
+.controller('serviceTypeCtrl',['$scope','listService',function($scope,listService){
+
+	var st = $scope.st = {};
+
+	listService.get()
+		.success(function(res){
+			console.log(res);
+			st.serviceList = res.Body;
+			$scope.$apply();
+		})
+
+	st.getTypeName = function(typeId){
+		// console.log(typeId);
+		$scope.$emit('service-type-id',typeId);
+	}
+}])
+.controller('uploaderFileCtrl',['$scope',function($scope){
+	var uf = $scope.uf = {};
+
+	var fileFilter = [];
+
+	//选择文件组的过滤方法
+	function filter(files) {
+        var arrFiles = [];
+        for (var i = 0, file; file = files[i]; i++) {
+            if (file.type.indexOf("image") == 0) {
+                if (file.size >= 512000) {
+                    alert('您这张"'+ file.name +'"图片大小过大，应小于500k');    
+                } else {
+                    arrFiles.push(file);    
+                }           
+            } else {
+                alert('文件"' + file.name + '"不是图片。');    
+            }
+        }
+        return arrFiles;
+    };
+
+	//选中文件的处理与回调
+	function funDealFiles() {
+		for (var i = 0, file; file = fileFilter[i]; i++) {
+			//增加唯一索引值
+			file.index = i;
+		}
+		//执行选择回调
+		onSelect(fileFilter);
+	};
+
+	//获取选择文件，file控件或拖放
+	function funGetFiles(e) {
+		// 获取文件列表对象
+		var files = e.target.files || e.dataTransfer.files;
+		//继续添加文件
+		fileFilter = fileFilter.concat(filter(files));
+		funDealFiles();
+	};
+
+	function onSelect(files){
+		var html = '', i = 0;
+		var file;
+		var funAppendImage = function() {
+            file = files[i];
+            if(i <= 8){
+	            if (file) {
+	                var reader = new FileReader()
+	                reader.onload = function(e) {
+	                	console.log(e.target.result);
+	            	   	html = html + '<li id="uploadList_'+ i +'" class="weui_uploader_file" style="background-image:url('+e.target.result+');">'
+							+	'<div id="uploadProgress_'+i+'" class="weui_uploader_status_content"  data-index="'+ i +'"></div>'
+							+'</li>';
+						i++;	
+						funAppendImage();
+	                }
+	                reader.readAsDataURL(file);
+	            } else {
+	            	console.log(html);
+	            	$(".weui_uploader_files").html("");
+	            	$(".weui_uploader_files").append(html);
+	                if (html) {
+	                    //删除方法
+	                    // $(".upload_delete").click(function() {
+	                    //     funDeleteFile(files[parseInt($(this).attr("data-index"))]);
+	                    //     return false;   
+	                    // });   
+	                }
+	            }
+            }
+            if(i === 8){
+            	$(".weui_uploader_input_wrp").hide();
+            }
+        };
+        funAppendImage();    
+	};
+
+	//删除对应的文件
+	function funDeleteFile(fileDelete) {
+		var arrFile = [];
+		for (var i = 0, file; file = fileFilter[i]; i++) {
+			if (file != fileDelete) {
+				arrFile.push(file);
+			} else {
+				onDelete(fileDelete);	
+			}
+		}
+		fileFilter = arrFile;
+	};
+
+	//文件删除后
+	function onDelete(file){
+		$("#uploadList_"+ file.index).fadeOut();
+	}
+
+	//文件上传进度
+	function onProgress(file, loaded, total) {
+		var eleProgress = $("#uploadProgress_" + file.index);
+		var percent = (loaded / total * 100).toFixed(2) + '%';
+		eleProgress.show().text(percent);
+	};
+
+	//文件上传成功时
+	function onSuccess(file,response){
+		var eleSuccess = $("#uploadProgress_" + file.index);
+		eleSuccess.append('<i class="weui_icon_success"></i>');
+	}
+
+	//文件上传失败时
+	function onFailure(file){
+		var eleError = $("#uploadProgress_" + file.index);
+		eleError.append('<i class="weui_icon_warn"></i>');
+	}
+
+	//文件全部上传完毕时
+    function onComplete() {
+        //file控件value置空
+        $("#file").val("");
+    }    
+
+
+	var fileInput = document.getElementById("file"); 
+	fileInput.addEventListener("change",function(e){
+		console.log(e.target);
+		funGetFiles(e);
+	})
+
+	//文件上传
+	function funUploadFile(){
+		// console.log(fileFilter);
+		$scope.$emit("uploader-form",fileFilter)
+	}
+
+	$scope.$on("uploader-img-data",function(event,data){
+		funUploadFile();
+	})
+
+}])
 .directive('zhDatePicker',function(){
 	return {
 		restrict:'A',
@@ -181,17 +326,129 @@ angular.module('com.wapapp.app',[])
 		}
 	};
 })
-// .directive('zhTextareaSize',function(){
-// 	return {
-// 		restrict:'A',
-// 		link:function(scope,elem,attrs){
-// 			// console.log(element);
-// 			$("#textarea").val();
-			
-// 		}
-// 	};
-// })
+.factory('orderService',[function(){
+	// 获取服务类型列表
+	var PATH = "http://192.168.1.191:3001/";
+	var _postpath = PATH+"api/v2/OrderInfo/CreateOrderOneKey";
 
+	var uploaderService = function(formData){
+
+		return $.ajax({
+					method:"POST",
+					url: _postpath,
+					data: formData,
+					cache: false,  
+	                async: true,
+	                processData: false,  // 告诉jQuery不要去处理发送的数据
+	                contentType: false  // 告诉jQuery不要去设置Content-Type请求头
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						// window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+
+	return {
+		uploader: function(formData){
+			return uploaderService(formData);
+		}
+	}
+}])
+.factory('listService',[function(){
+	// 获取服务类型列表
+	var PATH = "http://192.168.1.191:3001/";
+	var _getpath = PATH+"api/v2/SystemService/InfoListEx";
+
+	var getService = function(){
+		return $.ajax({
+					method:"POST",
+					url: _getpath
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+
+	return {
+		get: function(){
+			return getService();
+		}
+	}
+}])
+.factory('priceService',[function(){
+	// 获取服务价格
+	var PATH = "http://192.168.1.191:3001/";
+	var _getpath = PATH+"api/v2/ClientInfo/GetServicePriceEx";
+
+	var getPrice = function(token,id,type){
+		var formData = {
+			Token: token,
+			ServiceTypeId: id,
+			ServiceProviderType: type
+		}
+		return $.ajax({
+					method:"POST",
+					url: _getpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		get: function(token,id,type){
+			return getPrice(token,id,type);
+		}
+	}
+}])
+.factory('timeService',[function(){
+	// 获取服务时间
+	var PATH = "http://192.168.1.191:3001/";
+	var _getpath = PATH+"api/v2/SystemService/ServiceTimeStartAt";
+
+	var getService = function(id){
+		var formData = {
+			ServieceTypeId: id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _getpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+
+	return {
+		get: function(id){
+			return getService(id);
+		}
+	}
+}])
 
 
 

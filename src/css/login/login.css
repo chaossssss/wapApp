@@ -1,0 +1,65 @@
+/*基础样式*/
+a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+body {
+	background-color: rgb(238,238,238);
+}
+/*浮动 左 右*/
+.fl{ float:left;}
+.fr{ float:right;}
+
+/*清除浮动 左 中 右*/
+.cb{ clear:both;}
+.cl{ clear:left;}
+.cr{ clear:right;}
+.mt10 {
+	margin-top: 10px;
+}
+.mt20 {
+	margin-top: 20px;
+}
+.w50 {
+	width: 50px;
+}
+.tc {
+	text-align: center;
+}
+.col90 {
+	width: 90%;
+}
+.container {
+	margin-left: auto;
+	margin-right: auto;
+}
+.weui_cell_ft {
+	position: relative;
+}
+.weui_cell_ft .qr_code {
+	position: absolute;
+	top: 50%;
+	right: 16px;
+	width:20px;
+	transform: translateY(-50%);
+}
+.weui_cell .weui_cell_hd .icon0{
+	background: url('/images/login/ic_account.svg') no-repeat;
+ 	width:30px;
+ 	height:30px;
+ 	margin-right: 20px;
+} 
+.weui_cell .weui_cell_hd .icon1 {
+	background: url('/images/login/ic_password.svg') no-repeat;
+ 	width:30px;
+ 	height:30px;
+ 	margin-right: 20px;
+}
+.foot {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	position: relative;
+}
+.footlink {
+	color: #04be02;
+	text-decoration: none;
+}

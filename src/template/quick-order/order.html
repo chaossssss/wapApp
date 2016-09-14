@@ -14,11 +14,12 @@
     <meta name="author" content="zxh">
 	<title>确认订单</title>
 
-	<link rel="stylesheet" href="../../css/weui.min.css">
-	<link rel="stylesheet" href="../../css/quick-order/quick-order.min.css">
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<link rel="stylesheet" href="/css/quick-order/quick-order.min.css">
+	<link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css">
 </head>
 <body ng-controller="orderCtrl">
-<form action="" name="form" novalidate="novalidate" style="overflow-x:hidden;">
+<form action="" name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
 	<div class="weui_cells">
 		<div class="weui_cell">
 			<p class="f14 fc8">可以联系客服直接电话下单哦
@@ -29,12 +30,12 @@
 	<div class="weui_cells weui_cells_access zj_local_image">
 		<a href="javascript:;" class="weui_cell pb2">
 			<div class="weui_cell_hd">
-				<img src="../../images/quick-order/local.png" alt="" style="width:20px;margin-right:10px;display:block">
+				<img src="/images/quick-order/local.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
-			<!-- <div class="weui_cell_bd weui_cell_primary">
+			<div class="weui_cell_bd weui_cell_primary" ng-if="!vm.ServiceAddressId">
 				<p class="pgreen">请选择服务地址</p>
-			</div> -->
-			<div class="weui_cell_bd weui_cell_primary">
+			</div>
+			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId">
 				<div class="zj_cell_hd">
 					<span class="f12">李诗诗</span>
 					<span>女士</span>
@@ -46,26 +47,30 @@
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a>
-		<img  class="pb2" src="../../images/quick-order/local-border.png" alt="">
+		<img  class="pb2" src="/images/quick-order/local-border.png" alt="">
 	</div>
 	<div class="weui_cells weui_cells_access">
-		<a href="javascript:;" class="weui_cell">
+		<a href="javascript:;" class="weui_cell" ng-click="vm.serviceShow = true">
 			<div class="weui_cell_hd">
 				<img src="../../images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">	
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
-			<div class="weui_cell_ft">
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable === false">
 				油漆
 				<span>¥</span>
 				<span ng-bind="vm.unitPrice"></span>
 				<span>/小时</span>
 			</div>
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable===true">
+				面议
+			</div>	
+			<div class="weui_cell_ft" ng-if="!vm.ServiceTypeId"></div>
 		</a>
 		<div class="weui_cell no_access">
 			<div class="weui_cell_hd">
-				<img src="../../images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
+				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务数量</p>
@@ -79,37 +84,36 @@
 				</div> -->
 				<div class="zj_select_plus">
 					<i class="zj_select_sub" ng-click="vm.sub()"></i>
-					<input class="zj_select_num" type="number" maxlength="4" ng-model="vm.serviceTimeCount">
+					<input class="zj_select_num" type="number" maxlength="4" ng-model="vm.Total">
 					<i class="zj_select_add" ng-click="vm.add()"></i>
 					
 				</div>
 			</div>
 			<div>/小时</div>
 		</div>
-		<a href="javascript:;" class="weui_cell">
+		<a href="javascript:;" class="weui_cell"  ng-click="vm.datePickerShow()">
 			<div class="weui_cell_hd">
-				<img src="../../images/quick-order/i-time.png" alt="" style="width:20px;margin-right:10px;display:block">
+				<img src="/images/quick-order/i-time.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务时间</p>
 			</div>
-			<div ng-if="vm.serviceDay == undifined" class="weui_cell_ft pgreen" ng-click="dp.show = true">请选择服务时间</div>
-			<div ng-if="vm.serviceDay !== undifined" class="weui_cell_ft pgreen" ng-click="dp.show = true">
-				<span ng-bind="vm.serviceDay"></span>
-				<span ng-bind="vm.serviceTime"></span>
+			<div ng-if="!vm.ServiceStartAt" class="weui_cell_ft pgreen" >请选择服务时间</div>
+			<div ng-if="vm.ServiceStartAt" class="weui_cell_ft pgreen">
+				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
-				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea" ng-model="vm.serviceStartAt" maxlength="200"></textarea>
+				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea" ng-model="vm.ServiceContent" maxlength="200"></textarea>
 				<div class="weui_textarea_counter">
 					<span ng-bind="textarea_size"></span>
 					/200
 				</div>
 			</div>
 		</div>
-		<div class="weui_cell weui_cells_form no_access">
+		<div class="weui_cell weui_cells_form no_access" ng-controller="uploaderFileCtrl">
 			<div class="weui_cell_bd weui_cell_primary no_access">
 				<div class="weui_uploader">
 					<div class="weui_uploader_hd weui_cell no_access">
@@ -123,11 +127,12 @@
 							</li>
 						</ul>
 						<div class="weui_uploader_input_wrp">
-							<input id="file" type="file" accept="image/*multiple" class="weui_uploader_input" ng-click="vm.upload()">
+							<input id="file" type="file" accept="image/*multiple" class="weui_uploader_input" ng-click="uf.upload()">
 						</div>
 					</div>
 				</div>
 			</div>
+			<div></div>
 		</div>
 	</div>
 	<div class="weui_cell bgf mb49 fc8 lh30">
@@ -140,22 +145,41 @@
 		<div class="zj_foot_hd">
 			订单总价
 		</div>
-		<div class="zj_foot_bd">
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable === false">
 			<span>¥</span>
-			<span ng-bind="vm.unitPrice*vm.serviceTimeCount | number:1"></span>
+			<span ng-bind="vm.unitPrice*vm.Total | number:1"></span>
 		</div>
-		<div class="zj_foot_ft">
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable === true">
+			<span>面议</span>
+		</div>
+		<div class="zj_foot_ft" ng-click="vm.submitOrder()">
 			<span class="btn">提交订单</span>
 		</div>
 	</div>
 </form>
 
-<div class="zj_date_picker" zh-date-picker id="zh_date_picker">
+
+<div class="zj_date_picker" zh-date-picker id="zh_date_picker" ng-controller="datePickerCtrl">
 	<div class="" ng-class="{true:'zj_mask_transition zj_fade_toggle',false:''}[dp.show]"></div>
 	<div class="zj_actionsheet" ng-class="{true:'zj_actionsheet_toggle',false:''}[dp.show]">
 		<div class="zj_navbar">
 			<ul class="zj_navbar_item zj_flex_1">
-				<li ng-repeat="item in vm.dayDate" ng-click="dp.getdpDay(item)">
+				<li ng-repeat="item in dp.timeList" ng-model="dp.timeItem" ng-click="dp.getdpDay(item)">
+					<span>{{item.Date}}</span>
+				</li>
+			</ul>
+			<ul class="zj_tab_bd zj_flex_1">
+				<li class="zj_li">
+					<span>立即服务</span>
+					<i class="weui_icon_success zj_icon show"></i>
+				</li>
+				<li class="zj_li"  ng-repeat="item in dp.timeItem" ng-click="dp.getdpTime(item)">
+					<span>{{item}}</span>
+					<i class="weui_icon_success zj_icon hide"></i>
+				</li>
+			</ul>
+			<!-- <ul class="zj_navbar_item zj_flex_1">
+				<li ng-repeat="item in dp.dayDate" ng-click="dp.getdpDay(item)">
 					<span>{{item}}</span>
 				</li>
 			</ul>
@@ -164,11 +188,11 @@
 					<span>立即服务</span>
 					<i class="weui_icon_success zj_icon show"></i>
 				</li>
-				<li class="zj_li"  ng-repeat="item in vm.timeDate" ng-click="dp.getdpTime(item)">
+				<li class="zj_li"  ng-repeat="item in dp.timeDate" ng-click="dp.getdpTime(item)">
 					<span>{{item}}</span>
 					<i class="weui_icon_success zj_icon hide"></i>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
 		<div class="zj_ft" ng-click="dp.show = false">
 			取消
@@ -176,58 +200,59 @@
 	</div>
 </div>
 
-<!-- <div class="zj_service">
+<div class="zj_service" ng-controller="serviceTypeCtrl" ng-if="vm.serviceShow === true">
 	<div class="zj_mask_transition zj_fade_toggle"></div>
-	<div class="zj_actionsheet zj_actionsheet_toggle">
-		<div class="col90 container style='overflow:auto' ">
+	<div class="zj_actionsheet zj_actionsheet_toggle"  style="overflow:auto;height:100%;">
+		<div class="col90 container style='overflow:auto'">
 			<div class="title">
-				<img class="mr20 w30 h30" src="../../images/quick-order/i-hot.png" alt="">
+				<img class="mr20 w30 h30" src="/images/quick-order/i-hot.png" alt="">
 				热门推荐
 			</div>
 			<div class="bd blred">
-				<div class="cell">
-					小时工
+				<div class="cell" ng-repeat="item in st.serviceList[5].Children" ng-click="st.getTypeName(item.TypeId)">
+					{{item.TypeName}}
 				</div>
 			</div>
 			<div class="title">
-				<img class="mr20 w30 h30" src="../../images/quick-order/i-broom.png" alt="">
+				<img class="mr20 w30 h30" src="/images/quick-order/i-broom.png" alt="">
 				家政
 			</div>
 			<div class="bd blgreen">
-				<div class="cell">
-					小时工
+				<div class="cell" ng-repeat="item in st.serviceList[2].Children" ng-click="st.getTypeName(item.TypeId)">
+					{{item.TypeName}}
 				</div>
 			</div>
 			<div class="title">
-				<img class="mr20 w30 h30" src="../../images/quick-order/i-fix.png" alt="">
+				<img class="mr20 w30 h30" src="/images/quick-order/i-fix.png" alt="">
 				维修
 			</div>
 			<div class="bd blpurple">
-				<div class="cell">
-					小时工
+				<div class="cell" ng-repeat="item in st.serviceList[3].Children" ng-click="st.getTypeName(item.TypeId)">
+					{{item.TypeName}}
 				</div>
 			</div>
 			<div class="title">
-				<img class="mr20 w30 h30" src="../../images/quick-order/i-install.png" alt="">
+				<img class="mr20 w30 h30" src="/images/quick-order/i-install.png" alt="">
 				安装
 			</div>
 			<div class="bd blorange">
-				<div class="cell">
-					小时工
+				<div class="cell" ng-repeat="item in st.serviceList[0].Children" ng-click="st.getTypeName(item.TypeId)">
+					{{item.TypeName}}
 				</div>
 			</div>
 			<div class="title">
-				<img class="mr20 w30 h30" src="../../images/quick-order/i-decoration.png" alt="">
-				维修
+				<img class="mr20 w30 h30" src="/images/quick-order/i-decoration.png" alt="">
+				装修
 			</div>
-			<div class="bd blpink">
-				<div class="cell">
-					小时工
+			<div class="bd blpink mb15">
+				<div class="cell" ng-repeat="item in st.serviceList[4].Children" ng-click="st.getTypeName(item.TypeId)">
+					{{item.TypeName}}
 				</div>
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>
+
 
 
 
@@ -239,7 +264,8 @@
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
-<script src="../../js/quick-order/zxxFile.min.js"></script>
-<script src="../../js/quick-order/quick-order.min.js"></script>
+<script src="/lib/jquery-scroll/prefect-scrollbar.jquery.min.js"></script>
+<script src="/js/quick-order/zxxFile.min.js"></script>
+<script src="/js/quick-order/quick-order.min.js"></script>
 </body>
 </html>

@@ -29,16 +29,16 @@
 				</div>
 				<div class="weui_cell_bd weui_cell_primary weui_cells_checkbox">
 					<div class="weui_cell weui_cell_primary weui_vmar weui_vpad">
-						<input type="text" name="name" placeholder="您的姓名" class="weui_input" ng-model="vm.name" ng-required="true"  ng-maxlength="15" maxlength="15">
+						<input type="text" name="name" placeholder="您的姓名" class="weui_input" ng-model="vm.Contact" ng-required="true"  ng-maxlength="15" maxlength="15">
 					</div>
 					<div class="weui_cell">
 						<label class="mr30 webkit_box">
-							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s10" ng-model="vm.sex" value="先生" ng-required="true">
+							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s10" ng-model="vm.Gender" value="先生" ng-required="true">
 							<i class="weui_icon_checked mr10"></i>
 							先生
 						</label>
 						<label class="weui_cell_hd webkit_box" for="s11">
-							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s11" ng-model="vm.sex" value="女士" ng-required="true">
+							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s11" ng-model="vm.Gender" value="女士" ng-required="true">
 							<i class="weui_icon_checked mr10"></i>
 							女士
 						</label>
@@ -50,7 +50,7 @@
 					<label class="weui_label">联系电话</label>
 				</div>
 				<div class="weui_cell_bd webkit_box pl10">
-					<input type="tel" name="phone" class="weui_input" placeholder="您的联系电话" ng-model="vm.phone" ng-maxlength="11" ng-minlength="11"  maxlength="11" ng-required="true">
+					<input type="tel" name="phone" class="weui_input" placeholder="您的联系电话" ng-model="vm.PhoneNumber" ng-maxlength="11" ng-minlength="11"  maxlength="11" ng-required="true">
 				</div>
 			</div>
 			<div class="weui_cell_two weui_cell_bord">
@@ -60,25 +60,40 @@
 				<div class="w100">
 					<a href="javascript:;" class="zj_clearA" ng-click="vm.searchLocal(form.address.$valid,form.addrDetail.$valid)">
 						<div class="weui_cell_bd pl10">
-							<input type="text" name="address" class="weui_input" ng-required="true" ng-model="vm.title" placeholder="小区/写字楼/大厦/学校等">
+							<input type="text" name="address" class="weui_input" ng-required="true" ng-model="vm.Address1" placeholder="小区/写字楼/大厦/学校等">
 						</div>
 						<div class="weui_cell_bd weui_cell_bord pl10 pt10">
-							<input type="text" name="addrDetail" class="weui_input" ng-required="true" ng-model="vm.location" placeholder="详细地址（如1单元203室...）">
+							<input type="text" name="addrDetail" class="weui_input" ng-required="true" ng-model="vm.Address2" placeholder="详细地址（如1单元203室...）">
 						</div>
 					</a>
 				</div>
 			</div>
 		</div>
-		<div class="weui_cells weui_cells_access mt10">
-			<a class="weui_cell" href="javascript:;">
+		<div class="weui_cells mt10 plt5">
+			<div class="weui_cell weui_cell_select weui_select_after">
+				<div class="weui_cell_hd">
+					<label for="" class="weui_label">
+						标签
+					</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<select name="select" id="select" class="weui_select" ng-options="item.Id as item.Name for item in vm.tagList" ng-model="vm.tag">
+						<option value="无"></option>
+					</select>
+				</div>
+			</div>
+			<!-- <a class="weui_cell" href="javascript:;">
 				<div class="weui_cell_bd weui_cell_primary">
 					<p>标签</p>
 				</div>
 				<div class="weui_cell_ft">
-					<span class="tag">公司</span>
+					<span class="tag" ng-model="vm.Tag" ng-if="vm.Tag"></span>
+					<select class="tr" ng-class="{true:'tag'}[vm.tag]" name="" id="" ng-options="item.Id as item.Name for item in vm.tagList" ng-model="vm.tag">
+					</select>
 				</div>
-			</a>
+			</a> -->
 		</div>
+
 		<div class="foot" ng-disabled="true">
 			<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.save(form.name,form.address,form.addrDetail,form.phone)">保存</a>
 		</div>

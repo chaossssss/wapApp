@@ -2,6 +2,22 @@
 body {
 	background-color: rgb(238,238,238);
 }
+/*文本 左 中 右*/
+.tl{ text-align:left;}
+.tc{ text-align:center;}
+.tr{ text-align:right;}
+/*布局相关 flexbox 
+＊“display:box;”或者“box-{*}”属性，那么你看的正是2009年版本的Flexbox。
+＊“display:flexbox;”或者“flex()”函数，那么你看的正是2011年版本的Flexbox。（在IE10中将运行Flexbox的中间版本（2011年版本）：display: flexbox;）
+＊“display:flex;”和“flex-{*}”属性，那么你查看的是当前的规范。
+*/
+.webkit_box{display: -webkit-flex;display: -moz-flex; display: flex; -webkit-box-orient: horizontal; }
+.flex1 {-webkit-flex-grow: 1;-moz-flex-grow: 1; flex-grow: 1;}
+.flex2 {-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
+.flex3 {-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
+.flexc {align-items:center;}
+.flexjc {justify-content: center;}
+
 .mt10 {
 	margin-top: 10px;
 }
@@ -30,6 +46,9 @@ body {
 .w100 {
 	width: 100%;
 }
+.plt5 {
+	padding: 5px 0;
+}
 .pl10 {
 	padding-left: 10px;
 }
@@ -41,6 +60,10 @@ body {
 }
 .fc8 {
 	color: #888;
+}
+/*配色*/
+.pgreen {
+	color:#04BE02;
 }
 /*display 块*/
 .none{ display:none;}
@@ -56,6 +79,13 @@ body {
 	color:#c9c9c9;
 	font-size: 23px;
 	display: inline-block;
+}
+.weui_msg {
+	position: absolute;
+	top:40%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 100%;
 }
 /*新的样式*/
 .weui_cell_two {
@@ -143,20 +173,13 @@ body {
 }
 .footer {
 	position: fixed;
-	bottom: 0;
-	left: 0;
-	background-color: #fff;
-	height: 44px;
 	width: 100%;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	box-sizing: border-box;
+	background-color: #fff;
 	color:#04BE02;
+	bottom: 0;
 }
-.footer a {
-	display: block;
-	position: relative;
-	text-align: center;
+#select {
+	direction:rtl;
 }
 
 
