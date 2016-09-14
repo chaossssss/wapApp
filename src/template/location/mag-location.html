@@ -18,31 +18,52 @@
 	<link rel="stylesheet" href="../../css/location/location.min.css">
 </head>
 <body ng-controller="magLocationCtrl">
+	
+	<div class="msg" ng-if="!vm.editLocation">
+		<div class="weui_msg">
+			<div class="weui_icon_area">
+				<img src="/images/location/img-local.png" alt="" style="width:130px;">
+			</div>
+			<div class="weui_text_area">
+				<p class="weui_msg_desc">
+					您还没有添加服务地址哦，快去 <a  href="/template/location/add-location.html" class="pgreen">新增&nbsp;</a>吧
+				</p>
+			</div>
+		</div>
+	</div>
+
 	<div class="weui_cells weui_cells_access">
 		<a href="javascript:;" class="weui_cell" ng-repeat="item in vm.locationList" ng-click="vm.editLocation(item)">
+
 			<div class="zj_cell_left">
 				<div class="weui_cell_hd">
-					<span ng-bind="item.name"></span>
-					<span class="pl10" ng-bind="item.sex"></span>
-					<span class="pl10" ng-bind="item.phone"></span>
+					<span ng-bind="item.Contact"></span>
+					<span class="pl10" ng-bind="item.Gender"></span>
+					<span class="pl10" ng-bind="item.PhoneNumber"></span>
 				</div>
 				<div class="weui_cell_bd">
-					<span class="tag" ng-bind="item.tag"></span>
-					<span class="f12 fc8" ng-bind="item.local"></span>
+					<span class="tag" ng-bind="item.Tag" ng-if="item.Tag"></span>
+					<span class="f12 fc8" ng-bind="item.Address1"></span>
 				</div>
 			</div>
 			<div class="zj_cell_right">
-				<p>图标</p>
+				<p><img src="/images/location/edit.png" alt="" style="width:22px;"></p>
 			</div>
 		</a>
 	</div>
 	
-	<div class="footer weui_cells weui_cells_access">
-		<a href="/template/location/add-location.html" class="weui_cell">
-			<span>新增地址</span>
-		</a>
+	<div class="footer">
+		<div class="weui_cells weui_cells_access">
+			<a href="/template/location/add-location.html" class="weui_cell flexjc" style="padding:10px">
+				<div class="weui_cell_hd">
+					<img src="/images/location/add.png" alt="" style="width:20px;display:block;margin-right:10px;">
+				</div>
+				<div class="weui_cell_bd">
+					<p>新增地址</p>
+				</div>
+			</a>
+		</div>
 	</div>
-
 
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
