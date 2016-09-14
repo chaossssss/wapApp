@@ -65,7 +65,8 @@
             <div class="yewu">
                 <div class="bus-work">
                     <span style="font-size: 14px;" class="">小时工</span>
-                    <span class="Wage" style="padding-left: 165px; font-size: 14px; color:#ec4836;">1111111</span>
+                    <span class="Wage" style="padding-left: 70%; font-size: 12px; color:#ec4836;"></span>
+                    <!--<span style="font-size: 12px; color:#ec4836;">元/小时</span>-->
                     <span class="wk-list"></span>
                 </div>
 
@@ -261,17 +262,17 @@
                     $(".Gender").attr("src","../../images/worker/ic_nan.svg");
                 }
 
-                // var RzImgs="";
-                // for (var i = 0; i < data.Rzimgs.length; i++) {
-                //  RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
-                // }
-                // $(".rz-imgs").html(RzImgs);
+                 var RzImgs="";
+                 for (var i = 0; i < data.Rzimgs.length; i++) {
+                  RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
+                 }
+                 $(".rz-imgs").html(RzImgs);
 
-                // var ModelRzImgs="";
-                // for (var j = 0; j < data.Rzimgs.length; j++) {
-                //  ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
-                // }
-                // $(".dialog-imgs").html(ModelRzImgs);
+                 var ModelRzImgs="";
+                 for (var j = 0; j < data.Rzimgs.length; j++) {
+                  ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
+                 }
+                 $(".dialog-imgs").html(ModelRzImgs);
 
             },
             error: function(xhr, type){
