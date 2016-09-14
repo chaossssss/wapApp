@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(function(){
 	FastClick.attach(document.body);
 })
-.controller('registCtrl',['$scope','$timeout','registService','captchaService',function($scope,$timeout,registService,captchaService){
+.controller('forgetCtrl',['$scope','$timeout','registService','captchaService',function($scope,$timeout,registService,captchaService){
 	var vm = $scope.vm = {};
 	
 	vm.submitRegist = function(){
@@ -95,7 +95,7 @@ angular.module('com.wapapp.app',[])
 					url: _sendcode,
 					data: {
 						Phone: phone,
-						Type: "1"
+						Type: "2"
 					}
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){

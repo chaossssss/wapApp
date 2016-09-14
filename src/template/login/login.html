@@ -19,7 +19,7 @@
 </head>
 <body ng-controller="loginCtrl">
 
-<form action="" novalidate="novalidate" name="form">
+<form novalidate="novalidate" name="form">
 	<div class="weui_cells">
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary tc">
@@ -53,10 +53,11 @@
 		</div>
 	</div>
 	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-class="{false:'weui_btn_disabled'}[form.$valid]" ng-click="vm.login()">登录</a>
+		<button class="weui_btn weui_btn_primary" ng-disabled="form.$invalid" ng-class="{false:'weui_btn_disabled'}[form.$valid]" ng-click="vm.login()">登录</button>
+		<!-- <a href="javascript:;" class="weui_btn weui_btn_primary" ng-class="{false:'weui_btn_disabled'}[form.$valid]" ng-click="vm.login()">登录</a> -->
 		<div class="mt10">
-			<a href="javascript:;" class="footlink">免费注册</a>
-			<a href="javascript:;" class="footlink fr">忘记密码</a>
+			<a href="/template/login/regist.html" class="footlink">免费注册</a>
+			<a href="/template/login/forget.html" class="footlink fr">忘记密码</a>
 		</div>
 	</div>
 </form>	
