@@ -28,7 +28,11 @@ $.ajax({
         $(".ServiceScope").text(api.ServiceScope);
         $(".Intro").text(api.Intro);
         $(".Address").text(api.Address);
-
+        var ModelRzImgs="";
+        for (var j = 0; j < api.SystemCertification.length; j++) {
+            ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+        }
+        $(".items").html(ModelRzImgs);
     },
     //error: function(xhr, type){
     //    console("type");

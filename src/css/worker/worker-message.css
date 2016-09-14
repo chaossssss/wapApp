@@ -131,3 +131,16 @@ a{
     margin-left: 10px;
     margin-bottom: 10px;
 }
+.rz-name{
+    display: inline-block;
+    margin-left: 5px;
+    width: 120px;
+    height: 27px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.Signature{
+    display: inline-block;
+    width: 277px;
+    padding-left: 5px;
+}

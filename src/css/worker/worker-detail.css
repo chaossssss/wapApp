@@ -76,7 +76,7 @@ textarea{resize: none;}
 .bus-work{
     float:left;
     margin-left:12px;
-    width: 250px;
+    width: 258px;
 }
 .work-ic{
     border:1px solid #7ed0fe;
@@ -430,7 +430,7 @@ textarea{resize: none;}
 /*手机弹出框*/
 .weui_mask{
     text-align: center;
-    margin-top:27px ;
+    /*margin-top:27px ;*/
 }
 .shafa-font{
     text-align: center;
@@ -470,4 +470,30 @@ textarea{resize: none;}
     line-height: 30px;;
     line-height: 30px;
     padding: 0px 0 0 4px;
+}
+
+/*客户评论*/
+.client-pl{
+    clear: both;
+    font-size:12px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.pl-item{
+    padding:10px;
+}
+.pl-date{
+    margin-left:10px;
+}
+.pl-cont{
+    text-align: left;
+    margin-top: 10px;
+}
+.fr{
+    padding-right: 20px;
+}
+
+.xingx-img{
+    margin-right:3px;
 }
