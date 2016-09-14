@@ -66,6 +66,7 @@ $(function(){
     		$(".Grade").text(api.Grade);
     		$(".GradeRank").text(api.GradeRank);
             $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
+            $(".business-mes").attr("href","business-message.html?type="+Type+"&id="+Id);
 
             // 认证集合
     		var RzImgs="";
