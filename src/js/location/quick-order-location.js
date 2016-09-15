@@ -1,15 +1,7 @@
 'use strict'
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "0e5e45873c4c3a37ce9ac97200e7a8cf";
-
-	//获取url参数
-    function getvl(name) {
-        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
-        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
-        return "";
-    }
-    $rootScope.channel = getvl("channel");
+	$rootScope.token = "56fa6fc02cf4c8983193312749bc615f";
 }])
 .controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
@@ -57,9 +49,7 @@ angular.module('com.wapapp.app',[])
 			addrService.add($rootScope.token,formData)
 				.success(function(res){
 					console.log(res);
-					if(res.ErrorCode !== "0"){
-						window.location.href = "/template/location/mag-location.html?channel="+$rootScope.channel;
-					}
+					window.location.href = "/template/location/quick-order-location/mag-location.html";
 				})
 
 
@@ -88,8 +78,6 @@ angular.module('com.wapapp.app',[])
 			window.location.href = '/template/map/ser-location.html';
 		}
 	}
-
-
 
 }])
 .controller('editLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
@@ -186,7 +174,7 @@ angular.module('com.wapapp.app',[])
 		addrService.delete($rootScope.token,id)
 			.success(function(res){
 				console.log("删除回调",res);
-				window.location.href = "/template/location/mag-location.html";
+				window.location.href = "/template/location/quick-order-location/mag-location.html";
 			})
 	}
 
@@ -196,26 +184,12 @@ angular.module('com.wapapp.app',[])
 	var vm = $scope.vm = {};
 
 	vm.editLocation = function(item){
-		switch ($rootScope.channel)
-		{
-			case "0" :
-				window.location.href = '/template/location/edit-location.html?channel=0&id='+item.Id;
-				break;
-			case "1" :
-				window.location.href = '/template/quick-order/quick-order.html?channel=1&id='+item.Id;
-				break;
-		}	
+		window.location.href = '/template/location/quick-order-location/edit-location.html?id='+item.Id;
 	}
-
-	vm.gotoAdd = function(){
-		window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
-	}
-
 
 	addrService.get($rootScope.token)
 		.success(function(res){
 			console.log(res);
-
 			vm.locationList = res.Body;
 			$scope.$apply();
 		});

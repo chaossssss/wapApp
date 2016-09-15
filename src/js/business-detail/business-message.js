@@ -30,10 +30,6 @@ $(function(){
     			ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
     		}
     		$(".items").html(ModelRzImgs);
-
-
-
-
 	        
 	    },
 	    error: function(xhr, type){

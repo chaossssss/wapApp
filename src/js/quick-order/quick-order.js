@@ -1,7 +1,8 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "a4e64dc954f50273fcdeffaae1aa0863";
+	$rootScope.token = "0e5e45873c4c3a37ce9ac97200e7a8cf";
+
 }])
 .controller('orderCtrl',['$rootScope','$scope','priceService','orderService',function($rootScope,$scope,priceService,orderService){
 	var vm = $scope.vm = {};
@@ -13,7 +14,7 @@ angular.module('com.wapapp.app',[])
 	vm.unitPrice = 30;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
-
+ 
 	vm.sub = function(){
 		if(vm.Total >0){
 			vm.Total -= 1;
@@ -26,6 +27,21 @@ angular.module('com.wapapp.app',[])
 	}
  
 	vm.ServiceContent = "1234";
+
+	//获取url参数
+    function getvl(name) {
+        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    };
+
+	//流程流向判断并跳转
+	vm.go = function(){
+		var channel = getvl("channel");
+		if(channel == 1){
+			window.location.href = "/template/location/mag-location.html?channel=1";
+		}
+	}
 
 	//textarea长度
 	$scope.$watch('vm.ServiceContent',function(){
@@ -69,25 +85,41 @@ angular.module('com.wapapp.app',[])
 		console.log("ServiceStartAt",vm.ServiceStartAt);
 		console.log("ServiceAddressId",vm.ServiceAddressId);
 
-		var Json_data = {
-            "Token":$rootScope.token,
-            "ServiceTypeId": vm.ServiceTypeId,
-            "ServiceContent": vm.ServiceContent,
-            "Total": vm.Total,
-            "OrderForm": "1",
-            "ServiceStartAt": vm.ServiceStartAt,
-            "ServiceAddressId": "123"
-        };
+		// var Json_data = {
+  //           "Token":$rootScope.token,
+  //           "ServiceTypeId": vm.ServiceTypeId,
+  //           "ServiceContent": vm.ServiceContent,
+  //           "Total": vm.Total,
+  //           "OrderForm": "1",
+  //           "ServiceStartAt": vm.ServiceStartAt,
+  //           "ServiceAddressId": "123"
+  //       };
+  	    var Json_data = {
+     		"Token":$rootScope.token,
+            "ServiceTypeId": "5",
+            "ServiceContent": "Content",
+            "Total": "1",
+            "OrderFrom": "0",
+            "ServiceStartAt": "2016/09/10",
+            "ServiceAddressId": "1"
+    	}; 
         Json_data = JSON.stringify(Json_data);
 
         var formdata = new FormData();
+        // formdata.append("Token",$rootScope.token);   
+        // formdata.append("ServiceTypeId", vm.ServiceTypeId);   
+        // formdata.append("ServiceContent", vm.ServiceContent);   
+        // formdata.append("Total", vm.Total);    
+        // formdata.append("OrderForm", "1");   
+        // formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+        // formdata.append("ServiceAddressId", "123"); 
         formdata.append("Token",$rootScope.token);   
-        formdata.append("ServiceTypeId", vm.ServiceTypeId);   
-        formdata.append("ServiceContent", vm.ServiceContent);   
-        formdata.append("Total", vm.Total);    
-        formdata.append("OrderForm", "1");   
-        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
-        formdata.append("ServiceAddressId", "123"); 
+        formdata.append("ServiceTypeId","5");   
+        formdata.append("ServiceContent", "Content");   
+        formdata.append("Total","1");    
+        formdata.append("OrderFrom", "0");   
+        formdata.append("ServiceStartAt", "2016/09/10");  
+        formdata.append("ServiceAddressId", "1"); 
 
         for(var i=0,leng=img.length;i<leng;i++){
             formdata.append("img"+i,img[i]);

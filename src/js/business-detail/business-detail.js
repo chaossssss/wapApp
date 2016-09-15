@@ -22,7 +22,7 @@ $(function(){
 // 轮播图弹出效果---------------------------------------------
     var swiper = new Swiper('.swiper-container', {
             //pagination: '.swiper-pagination',
-            initialSlide:0,
+            initialSlide :2,
             slidesPerView: 3,
             paginationClickable: true,
             spaceBetween: 0,
@@ -66,6 +66,7 @@ $(function(){
     		$(".Grade").text(api.Grade);
     		$(".GradeRank").text(api.GradeRank);
             $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
+            $(".business-mes").attr("href","business-message.html?type="+Type+"&id="+Id);
 
             // 认证集合
     		var RzImgs="";

@@ -132,8 +132,8 @@ a{
     display: inline-block;
     width: 275px;
 }
-.fuwu-fanwei{
-    margin-top: 20px;
+.fuwu-fanwei,.ser-time,.liveadd{
+    margin-top: 15px;
 }
 .bus-itro{
     padding:10px;
@@ -158,5 +158,8 @@ a{
 .Signature{
     display: inline-block;
     width: 277px;
+    padding-left: 5px;
+}
+.ServiceTime{
     padding-left: 5px;
 }

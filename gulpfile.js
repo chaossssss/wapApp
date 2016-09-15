@@ -16,10 +16,10 @@ var browserSync = require('browser-sync');
 
 /* 基础路径 */
 var paths = {
-  css       :  "src/css/",
+  css       :  "src/css",
   less      :  "src/less/",
-  js        :  "src/js/",
-  img       :  "src/images/",
+  js        :  "src/js",
+  img       :  "src/images",
   template  :  "src/template/", 
   build     :  "dist",
   src       :  "src" 
@@ -60,7 +60,7 @@ gulp.task('build:html',function(){
 
 //压缩js
 gulp.task('build:js',function(){
-	gulp.src(paths.js+'**/*.js')
+	gulp.src(paths.js+'/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(rename(function (path) {
@@ -83,7 +83,7 @@ gulp.task('build:js',function(){
 
 //压缩css
 gulp.task('build:css',function(){
-	gulp.src(paths.css+'**/*.css')
+	gulp.src(paths.css+'/**/*.css')
 		.pipe(sourcemaps.init())
 		.pipe(postcss([autoprefixer({browsers:['last 2 versions']})]))
 		.pipe(minifyCSS())
@@ -107,7 +107,7 @@ gulp.task('build:css',function(){
 
 // 压缩图片
 gulp.task('build:images', function () {
-    gulp.src(paths.img+'**/*.?(png|jpg|gif|svg)')
+    gulp.src(paths.img+'/**/*.?(png|jpg|gif|svg)')
         .pipe(imagemin({
             progressive: true
         }))
@@ -119,9 +119,9 @@ gulp.task('build:images', function () {
 gulp.task('release',['build:js','build:css','build:images','build:html']);
 
 gulp.task('watch',['release'],function(){
-	gulp.watch(paths.css+'**/*.css',['build:css']);
-	gulp.watch(paths.js+'**/*.js',['build:js']);
-	gulp.watch(paths.img+'**/*.?(png|jpg|gif|svg)',['build:images']);
+	gulp.watch(paths.css+'/**/*.css',['build:css']);
+	gulp.watch(paths.js+'/**/*.js',['build:js']);
+	gulp.watch(paths.img+'/**/*.?(png|jpg|gif|svg)',['build:images']);
 	gulp.watch(paths.src+'/**/*.html',['build:html']);
 });
 
