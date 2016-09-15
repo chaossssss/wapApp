@@ -20,15 +20,15 @@
 </head>
 <body ng-controller="orderCtrl">
 <form action="" name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
-	<div class="weui_cells">
+	<!-- <div class="weui_cells">
 		<div class="weui_cell">
 			<p class="f14 fc8">可以联系客服直接电话下单哦
 				<a class="pgreen" href="tel:4008-262-056">4008-262-056</a>
 			</p>
 		</div>
-	</div>
-	<div class="weui_cells weui_cells_access zj_local_image">
-		<a href="javascript:;" class="weui_cell pb2">
+	</div> -->
+	<div class="weui_cells weui_cells_access zj_local_image" >
+		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.go()">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/local.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -265,7 +265,6 @@
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
 <script src="/lib/jquery-scroll/prefect-scrollbar.jquery.min.js"></script>
-<script src="/js/quick-order/zxxFile.min.js"></script>
 <script src="/js/quick-order/quick-order.min.js"></script>
 </body>
 </html>
