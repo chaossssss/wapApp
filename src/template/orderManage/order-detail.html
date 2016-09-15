@@ -59,13 +59,13 @@
         <div class="weui_cell_bd weui_cell_primary">
           <p class="zj-fontsize zj-cell-left">服务类型</p>
         </div>
-        <div class="weui_cell_ft zj-fontsize zj-cell-right">小时工</div>
+        <div class="weui_cell_ft zj-fontsize zj-cell-right"><span id="serviceName"></span></div>
       </div>
       <div class="weui_cell zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
           <p class="zj-fontsize zj-font">服务时间</p>
         </div>
-        <div id="serviceTime" class="weui_cell_ft zj-fontsize zj-cell-right">2016-08-28 15：56</div>
+        <div id="serviceTime" class="weui_cell_ft zj-fontsize zj-cell-right"><span id="serviceAt"></span></div>
       </div>
       <div class="weui_cell zj-mark zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
@@ -74,12 +74,9 @@
         <div id="addRemark" class="weui_cell_ft zj-remark zj-fontsize">
           补充备注</div>
       </div>
-        <ul class="remark">
-          <li>3小时，工人要勤快</li>
-          <li>3小时，工人要勤快</li>
-          <!-- <li><input class="remark-box" type="text" /></li> -->
+        <ul id="remarkLists" class="remark">
         </ul>
-      <div class="weui_cells weui_cells_form zj-cells zj-cell-border">
+      <div id="pictureLine" class="weui_cells weui_cells_form zj-cells zj-cell-border">
         <div class="weui_cell zj-worker-pic">
           <div class="weui_cell_bd weui_cell_primary">
             <div class="weui_uploader">
@@ -105,8 +102,13 @@
         <div id="servicePrice" class="weui_media_desc zj-fontsize spacing">服务价格
         <p class="money">
           <span id="negotiable">面议</span>        
-          <span id="unitPrice">￥30/小时</span>
-          <span id="multiple" class="multiple">×2</span>
+          <span id="unitPrice">￥
+            <span id="single">30</span>
+            <span id="unit">/小时</span>
+          </span>
+          <span id="multiple" class="multiple">×
+            <span id="quantity">2</span>
+          </span>
         </p>
         </div>
         <div id="orderPrice" class="weui_media_desc zj-fontsize spacing">订单总价
@@ -119,7 +121,7 @@
         <div id="orderDiscount" class="weui_media_desc zj-fontsize spacing">优惠券
         <p class="money">-￥<span id="discountInfo"></span></p></div>
         <div id="orderActual" class="weui_media_desc zj-fontsize spacing">实付款
-        <p class="money actual">￥70.0<span id=""></span></p></div>
+        <p class="money actual">￥<span id="actualMoney"></span></p></div>
       </div>
       <div id="filling1" class="filling"></div>
       <div id="refundRecord" class="weui_panel weui_panel_access zj-panel zj-cell-border">
@@ -129,12 +131,12 @@
             <div class="weui_media_desc zj-fontsize">
               <p class="refund"><span id="refundAt"></span>2016-08-28 17:18</p>
               <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
-              <p class="refund refund-money">￥70.0</p>
+              <p class="refund refund-money">￥<span id="actualMoney"></span></p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
               <p class="refund refund-sum">应退￥90.0<span id="refundAmount"></span>，</p>
               <p class="refund">误工费￥0.<span id="lostIncome"></span>，</p>
-              <p class="refund">优惠券扣除￥20.0<span id="discountInfo"></span></p>
+              <p class="refund">优惠券扣除￥20.0<span id="refundDiscount"></span></p>
             </div>
           </div>
         </div>
@@ -146,6 +148,7 @@
           <div class="weui_media_box weui_media_text">
             <p class="weui_media_desc contacts zj-fontsize">
               联系人：<span id="clientName"></span>
+              <span id="clientGender"></span>
             </p>
             <p class="weui_media_desc contacts zj-fontsize">
               服务电话：<span id="clinetPhone"></span>
@@ -168,7 +171,7 @@
               取消时间：<span id=""></span>
             </p>
             <p id="payTime" class="weui_media_desc zj-fontsize order-time">
-              付款时间：<span id=""></span>
+              付款时间：<span id="payOffTime"></span>
             </p>
             <p id="finishTime" class="weui_media_desc zj-fontsize">
               完成时间：<span id="finishAt"></span>

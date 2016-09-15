@@ -9,66 +9,121 @@ $(function(){
   $cancelBtn.on('click',function(){
     $workerPhone.css('display','none');
   });
-
+/*--订单详情--*/
   $.ajax({
-    type:"GET",
-    url:"order-detail.json",
-    dataType:"json",
+    method:"POST",
+    url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
     async:false,
+    data:{
+    Token:"a81a27a193ff18a39e51b838e3e13496",
+    OrderId:"c546013a-9a79-e611-a80e-14dda950621b"
+    },
     success:function(data){
-      console.log(data.body[0].OrderService[0].Pictures.length);
-      console.log(data.body[0].ServiceProviderGender);
-      orderStatus = data.body[0].OrderStatus;
-      picData = data.body[0].OrderService[0].Pictures;
-      picLength = data.body[0].OrderService[0].Pictures.length;
+      console.log(data);
+      orderState = data.Body.OrderStatus;
+      serviceId = data.Body.ServiceId;
+      serviceProviderType = data.Body.ServiceProviderType;
+
+      // picData = data.Body.OrderService.Pictures;
+      // picLength = data.Body.OrderService.Pictures.length;
       // var gender = data.body[0].ServiceProviderGender;
-      orderIsGeted = data.body[0].ServiceProviderId;
+      // orderIsGeted = data.Body.ServiceProviderId;
+      data.Body.OrderId;
 
-      // data.body[0].OrderId;
-      $("#orderCode").text(data.body[0].OrderCode);
-      $("#createTime").text(data.body[0].CreateTime);
-      // data.body[0].OrderStatus;
-      $("#acceptAt").text(data.body[0].AcceptAt);
-      $("#finishAt").text(data.body[0].FinishAt);
-      // data.body[0].ConfirmAt;
-      // data.body[0].CancelAt;
-      // data.body[0].IsPauOff;
-      $("#price").text(data.body[0].price);
-      $("#discountInfo").text(data.body[0].DiscountInfo);
-      // data.body[0].PayLock;
-      // data.body[0].ServiceProviderId;
-      $("#serviceProviderName").text(data.body[0].ServiceProviderName);
-      // data.body[0].ServiceProviderGender;
-      // data.body[0].ServiceProviderPhone;
-      $("#clientName").text(data.body[0].ClientName);
-      $("#clinetPhone").text(data.body[0].ClinetPhone);
-      $("#serviceAddress").text(data.body[0].ServiceAddress);
-      $("#serviceTime").text(data.body[0].ServiceTime);
-      // data.body[0].CanCancel;
+      $("#orderCode").text(data.Body.OrderCode);
+      $("#createTime").text(data.Body.CreateTime);
+      $("#acceptAt").text(data.Body.AcceptTime);
+      $("#serviceAt").text(data.Body.ServiceStartAt);
+      $("#finishAt").text(data.Body.FinishTime);
+      $("#confirmAt").text(data.Body.ConfirmTime);
+      $("#cancalAt").text(data.Body.CancelTime);
+      $("#clientName").text(data.Body.AddressInfo.Contact);
+      
+      console.log(data.Body.Service.ServiceName);
+      $("#serviceName").text(data.Body.Service.ServiceName);
+      $("#clientName").text(data.Body.Service.ServiceProviderName);
+      $("#serviceAddress").text(data.Body.Service.AddressInfo.Address1);
+      $("#payOffTime").text(data.Body.PayOffTime);
+      $("#clinetPhone").text(data.Body.AddressInfo.PhoneNumber);
+      $("#quantity").text(data.Service.Total);
 
-      // var workHeadPic = data.body[0].WorkerHead;
-      // $("#workerHead").attr("src",workHeadPic);
+      // data.body[0].IsPayOff;
+      $("#price").text(data.Body.Price);
+      $("#discountInfo").text(data.Body.DiscountAmount);
+      var unitName = "/" + data.Body.UnitName;
+      $("#unit").text(unitName);
+      $("#single").text(data.Body.Price);
+      $("#refundAt").text(data.Body.Refunds.RefundTime);
+      $("#lostIncome").text(data.Body.Refunds.LostIncome);
 
-      for(i = 0; i < picLength; i++ ){
-        console.log(picData[i].SmallPic);
-        var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
-        + "</li>";
-        $("#showPics").append(html);
+      if(data.Body.AddressInfo.Gender == "0"){
+        $("#clientGender").text("先生");
+      }else if(data.Body.AddressInfo.Gender == "1"){
+        $("#clientGender").text("女士");
       }
 
-      // if(gender == "1"){
-      //   $("#workerGender").text('阿姨');
-      // }else if(gender == "0"){
-      //   $("#workerGender").text("师傅");
-      // }
-      // function getOrderStatus(orderStatus){
-      //   return orderStatus;
-      // }
+      var discountMoney = data.Body.DiscountAmount;
+      var actualMoney = Totalprice - discountMoney;
+      $("#actualMoney").text(data.Body.TotalPrice);
 
-    }
-  })
-console.log(orderStatus);
-  switch(orderStatus){
+      if(data.Body.ServiceProviderType == "2"){
+        console.log("工人");
+        var workHeadPic = data.Body.ServiceProviderPic;
+        var workName = data.Body.ServiceProviderName;
+        var gender = data.Body.ServiceProviderGender;
+        $("#serviceProviderName").text(workName);
+        $("#providerHead").attr("src",workHeadPic);
+        if(gender == "1"){
+          $("#workerGender").text('阿姨');
+        }else if(gender == "0"){
+          $("#workerGender").text("师傅");
+        }
+      }
+      if(data.Body.ServiceProviderType == "3"){
+        console.log("商户");
+        var busHeadPic = data.Body.Business.Photo;
+        $("#providerHead").attr("src",busHeadPic);
+      }
+
+      var notesNum = data.Notes.length;
+      for(i = 0; i < noteNum; i++){
+        var noteList = "<li>" + data.Notes[i].content + "</li>";
+        $("#remarkLists").append(noteList);
+      }
+      var picNum = data.Body.Service.Pictures.length;
+      console.log(picNum);
+      if(picNum == "0"){
+        $("#pictureLine").hide();
+      }else{
+        for(i = 0; i < picLength; i++ ){
+          console.log(picData[i].SmallPic);
+          var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
+          + "</li>";
+          $("#showPics").append(html);
+        }
+      }
+     }
+   });
+/*--获取指定服务的价格信息--*/
+  // $.ajax({
+  //   method:"POST",
+  //   url:"http://192.168.1.191:3003/api/v2/ClientInfo/GetServicePriceEx",
+  //   data:{
+  //     Token:"3b9433fdb953e2b2d97dfcd6d2fdaecd",
+  //     ServiceTypeId:"13",
+  //     ServiceProviderType:"2"
+  //   },
+  //   success:function(data){
+  //     console.log(data);
+  //     console.log(data.Body.Min);
+  //     console.log(data.Body.Max);
+  //     console.log(data.Body.unit);
+  //     console.log(data.Body.IsNegotaiable);
+  //   }
+  // });
+
+console.log(orderState);
+  switch(orderState){
     case "10":
     console.log("待接单");
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
@@ -104,6 +159,7 @@ console.log(orderStatus);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
+    $("#specialPrice").hide();
 
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
@@ -144,6 +200,7 @@ console.log(orderStatus);
     $("#filling2").hide();
     $("#negotiable").hide();
     $("#cancelTime").hide();
+    $("#specialPrice").hide();
 
     $("#orderPrice").css("marginBottom","0px");
     $("#btnRight").css("left","181px");
@@ -187,6 +244,7 @@ console.log(orderStatus);
     $("#payTime").hide();
     $("#finishTime").hide();
     $("#cancelTime").hide();
+    $("#specialPrice").hide();
 
     $("#acceptTime").css("marginBottom","4px");
 
@@ -218,6 +276,7 @@ console.log(orderStatus);
     $("#negotiable").hide();
     $("#btnLeft").hide();
     $("#cancelTime").hide();
+    $("#specialPrice").hide();
 
     // for(i = 0; i < picLength; i++ ){
     //   console.log(picData[i].SmallPic);
@@ -294,6 +353,7 @@ console.log(orderStatus);
     $("#filling2").hide();
     $("#negotiable").hide();
     $("#cancelTime").hide();
+    $("#specialPrice").hide();
 
     $("#waitOrder").css("marginBottom","0px");
     $("#btnRight").css("left","181px");
@@ -339,19 +399,19 @@ console.log(orderStatus);
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
     Date.prototype.Format = function (fmt) { //格式化时间
-        var o = {
-            "M+": this.getMonth() + 1, //月份 
-            "d+": this.getDate(), //日 
-            "h+": this.getHours(), //小时 
-            "m+": this.getMinutes(), //分 
-            "s+": this.getSeconds(), //秒 
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-            "S": this.getMilliseconds() //毫秒 
-        };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        return fmt;
+      var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      return fmt;
     }
 
     var now = new Date().Format("yyyy-MM-dd hh:mm:ss");
@@ -360,15 +420,15 @@ console.log(orderStatus);
     // var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
 
     function DateDiff(sDate1, sDate2){//sDate1和sDate2是yyyy-MM-dd格式  
-        var aDate, oDate1, oDate2, iDays, iHours, diffText;
-        aDate = sDate1.split("-");
-        oDate1 = new  Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
-        aDate = sDate2.split("-"); 
-        oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
-        iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //把相差的毫秒数转换为天数 
-        iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//计算相差的小时数
-        diffText = iDays + "天" + iHours + "时";
-        return  diffText; 
+      var aDate, oDate1, oDate2, iDays, iHours, diffText;
+      aDate = sDate1.split("-");
+      oDate1 = new  Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
+      aDate = sDate2.split("-"); 
+      oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
+      iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //把相差的毫秒数转换为天数 
+      iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//计算相差的小时数
+      diffText = iDays + "天" + iHours + "时";
+      return  diffText; 
     }
     var dateDiff = DateDiff(confirmTime,now);
     var dataDiffText = "请确认服务完成，还剩" + dateDiff + "自动确认";
@@ -403,6 +463,7 @@ console.log(orderStatus);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
+    $("#specialPrice").hide();
 
     break;
 
@@ -434,6 +495,7 @@ console.log(orderStatus);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
+    $("#specialPrice").hide();
 
     break;
 
@@ -472,6 +534,7 @@ console.log(orderStatus);
       $("#payTime").hide();
       $("#finishTime").hide();
       $("#btnLeft").hide();
+      $("#specialPrice").hide();
 
       $("#status").css("paddingTop","90px");
       // $("#orderTime").css("marginBottom","4px");
@@ -561,66 +624,59 @@ console.log(orderStatus);
     }
   }
 
-  $.ajax({
-    method:"POST",
-    url:"http://192.168.1.191:3001/api/v2/Provider/Detail",
-    data:{
-      Type:"1",
-      Id:"59"
-    },
-    success:function(data){
-      console.log(data.Body.Worker);
-      console.log(data.Body.Business);
-      if(data.Body.Worker != null){
-        console.log("工人");
-        var workHeadPic = data.Body.Worker.Photo;
-        var workName = data.Body.Worker.Name;
-        // var gender = data.Body.ServiceProviderGender;
-        var gender = data.Body.Worker.Gender;
-        console.log(gender);
-        $("#providerHead").attr("src",workHeadPic);
-        $("#serviceProviderName").text(workName);
-        if(gender == "1"){
-          $("#workerGender").text('阿姨');
-        }else if(gender == "0"){
-          $("#workerGender").text("师傅");
-        }
-      }
-      if(data.Body.Business != null){
-        console.log("商户");
-        var busHeadPic = data.Body.Business.Photo;
-        $("#providerHead").attr("src",busHeadPic);
-      }
-    }
-  });
-/*
-  $.ajax({
-     method:"POST",
-     url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
-     data:{
-      Token:"",
-      OrderId:""
-     },
-     success:function(data){
-       console.log('2222');
-     }
-   });*/
 
-/*
-  $.ajax({
-    method:"POST",
-    url:"http://192.168.1.191:3003/api/v2/SystemServiceController/GetServicePriceEx",
-    data:{
-      Token:"",
-      ServiceTypeId:"",
-      ServiceProviderType:""
-    },
-    success:function(data){
-      data.body[0].Min;
-      data.body[0].Max;
-      data.body[0].unit;
-    }
-  });*/
+  // $.ajax({
+  //   method:"POST",
+  //   url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
+  //   data:{
+  //   Token:"3b9433fdb953e2b2d97dfcd6d2fdaecd",
+  //   OrderId:"9798ddef-634a-e611-a79a-008cfae40c0c"
+  //   },
+  //   success:function(data){
+  //     // console.log(data.body.OrderService.Pictures.length);
+  //     // console.log(data.body[0].ServiceProviderGender);
+  //     console.log(data);
+  //     console.log(data.Body.OrderStatus);
+  //     orderStatus = data.Body.OrderStatus;
+  //     picData = data.Body.OrderService.Pictures;
+  //     picLength = data.Body.OrderService.Pictures.length;
+  //     // var gender = data.body[0].ServiceProviderGender;
+  //     orderIsGeted = data.Body.ServiceProviderId;
+
+  //     // data.body[0].OrderId;
+  //     $("#orderCode").text(data.Body.OrderCode);
+  //     $("#createTime").text(data.Body.CreateTime);
+  //     // data.body[0].OrderStatus;
+  //     $("#acceptAt").text(data.Body.AcceptAt);
+  //     $("#finishAt").text(data.Body.FinishAt);
+  //     // data.body[0].ConfirmAt;
+  //     // data.body[0].CancelAt;
+  //     // data.body[0].IsPauOff;
+  //     $("#price").text(data.Body.price);
+  //     $("#discountInfo").text(data.Body.DiscountInfo);
+  //     // data.body[0].PayLock;
+  //     // data.body[0].ServiceProviderId;
+  //     $("#serviceProviderName").text(data.body.ServiceProviderName);
+  //     // data.body[0].ServiceProviderGender;
+  //     // data.body[0].ServiceProviderPhone;
+  //     $("#clientName").text(data.body.ClientName);
+  //     $("#clinetPhone").text(data.body.ClinetPhone);
+  //     $("#serviceAddress").text(data.body.ServiceAddress);
+  //     $("#serviceTime").text(data.body.ServiceTime);
+  //     // data.body[0].CanCancel;
+
+  //     // var workHeadPic = data.body[0].WorkerHead;
+  //     // $("#workerHead").attr("src",workHeadPic);
+
+  //     for(i = 0; i < picLength; i++ ){
+  //       console.log(picData[i].SmallPic);
+  //       var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
+  //       + "</li>";
+  //       $("#showPics").append(html);
+  //     }
+  //    }
+  //  });
+
 
   function removeOrder(){
     console.log("删除订单");
@@ -629,7 +685,8 @@ console.log(orderStatus);
     })
   }
 
-  /*--添加备注--*/
+      /*--添加备注--*/
+/*--
   $("#addRemark").click(function(){
     console.log("显示弹窗");
     $("#userMemo").show();
@@ -656,6 +713,7 @@ console.log(orderStatus);
 
     })
   }
+  --*/
   function cancelOrder(){
     console.log("取消订单");
     $.ajax({
