@@ -142,14 +142,17 @@
     <div class="clear"></div>
     <hr class="line">
 
-    <div style="margin-top: 6px;" class="weui_cells">
-        <div class="weui_cell">
-            <div style="height: 30px;" class="weui_cell_bd weui_cell_primary ">
-                <p class="client-evaluation">客户评价</p>
-            </div>
-            <div class="weui_cell_ft"></div>
+    <a href="javascript:;" id="showDialog9">
+        <div class="rz-infof">
+            <span class="rz-titles">客户评价</span>
+            <!--<div class="bus-img"></div>-->
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+            <span><img src="" alt=""/></span>
+
         </div>
-    </div>
+    </a>
     <!--客户无评价-->
     <!--<div style="margin-top: 30px;">-->
     <!--<div style="margin: 0 auto;" class="shafa">-->
@@ -163,7 +166,7 @@
     </div>
 
     <!-- 底部导航条 -->
-    <div class="weui_tabbar">
+    <div class=" navigation">
         <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
                 <img src="../../images/worker/ic_zhijiezhifu_nor.svg" alt="">
@@ -186,7 +189,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/js/swiper.min.js"></script>
 <!-- <script src="/js/worker/worker-detail.min.js"></script> -->
 </body>
-</html>
+
 
 <script>
     $(function(){
@@ -256,23 +259,33 @@
                 $(".PhoneCount").text(api.PhoneCount);
                 $(".PhoneRank").text(api.PhoneRank);
                 $(".GradeRank").text(api.GradeRank);
-                if(api.Gender=="0"){
+                if(api.Gender=="1"){
                     $(".Gender").attr("src","../../images/worker/ic_nv.svg");
-                }else if(api.Gender=="1"){
+                }else{
                     $(".Gender").attr("src","../../images/worker/ic_nan.svg");
                 }
 
-                 var RzImgs="";
-                 for (var i = 0; i < data.Rzimgs.length; i++) {
-                  RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
-                 }
-                 $(".rz-imgs").html(RzImgs);
-
-                 var ModelRzImgs="";
-                 for (var j = 0; j < data.Rzimgs.length; j++) {
-                  ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
-                 }
-                 $(".dialog-imgs").html(ModelRzImgs);
+//                 var RzImgs="";
+//                 for (var i = 0; i < data.SystemCertification.length; i++) {
+//                  RzImgs+='<img src="'+data.SystemCertification[i].pic+'" class="rz-dia-img" alt="">';
+//                 }
+//                 $(".rz-imgs").html(RzImgs);
+//
+//                 var ModelRzImgs="";
+//                 for (var j = 0; j < data.SystemCertification.length; j++) {
+//                  ModelRzImgs+='<li><img src="'+data.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.SystemCertification[j].title+'</span></li>';
+//                 }
+//                 $(".dialog-imgs").html(ModelRzImgs);
+                var ModelRzImgs="";
+                for (var j = 0; j < api.SystemCertification.length; j++) {
+                    ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+                }
+                $(".rz-imgs").html(ModelRzImgs);
+                var RzImgs="";
+                for (var j = 0; j < api.SystemCertification.length; j++) {
+                    RzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+                }
+                $(".dialog-imgs").html(RzImgs);
 
             },
             error: function(xhr, type){

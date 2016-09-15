@@ -80,6 +80,13 @@
         .flex2 {-webkit-box-flex:2;-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
         .flex3 {-webkit-box-flex:3;-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
         .flexc {align-items:center;}
+        .sys-rz{
+            border-top:1px solid #fff;
+            border-bottom:1px solid #fff;
+            padding-bottom: 184px;
+            margin-top: 10px;
+            background-color: #fff;
+        }
     </style>
 </head>
 <body ng-controller="bossInfoCtrl"><script id="__bs_script__">//<![CDATA[
@@ -156,7 +163,25 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
 <div class="weui_cells mt10">
     <div class="zj_cell zj_cell_primary pd">
         <div class="zj_cell_hd zj_cell_primary">系统介绍</div>
-        <div class="zj_cell_bd flex3 Intro"></div>
+        <div class="zj_cell_bd flex3 Intro">
+            <ul class="items">
+                <!--<li>-->
+                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                    <!--<span>有工人端</span>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                    <!--<span>实名认证</span>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                    <!--<span>配备工具</span>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                    <!--<span>持健康证</span>-->
+                <!--</li>-->
+        </div>
     </div>
 </div>
 
@@ -165,39 +190,34 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
             <div class="fl">
                 <span class="title">系统认证</span>
             </div>
-            <div class="fl cle">
+            <div class="">
                 <ul class="items">
-                    <li>
-                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
-                        <span>有工人端</span>
-                    </li>
-                    <li>
-                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
-                        <span>实名认证</span>
-                    </li>
-                    <li>
-                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
-                        <span>配备工具</span>
-                    </li>
-                    <li>
-                        <img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">
-                        <span>持健康证</span>
-                    </li>
+                    <!--<li>-->
+                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                        <!--<span>有工人端</span>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                        <!--<span>实名认证</span>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                        <!--<span>配备工具</span>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
+                        <!--<span>持健康证</span>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>
     </div>
-
-
-
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="../../js/worker/worker-message.min.js"></script>
-
 </body>
 </html>
 <script>
     $.ajax({
-
         dataType:"json",
         type:"POST",
         url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
@@ -205,7 +225,6 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
             Type:"1",
             Id:"3110"
         },
-
         success:function(data){
             var api=data.Body.Worker;
             $(".JobNumber").text(api.JobNumber);
