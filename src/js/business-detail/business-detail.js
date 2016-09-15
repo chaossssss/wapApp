@@ -22,7 +22,7 @@ $(function(){
 // 轮播图弹出效果---------------------------------------------
     var swiper = new Swiper('.swiper-container', {
             //pagination: '.swiper-pagination',
-            initialSlide:0,
+            initialSlide :2,
             slidesPerView: 3,
             paginationClickable: true,
             spaceBetween: 0,
