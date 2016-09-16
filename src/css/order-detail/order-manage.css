@@ -1,6 +1,6 @@
 *{ margin:0; padding:0; list-style:none;}
 body{ font-size:14px;}
-
+.clear{ clear: both; height: 0; line-height: 0; font-size: 0; }
 /*---*/
 .order-detail{ width: 100%; margin: 0 auto; background: #f8f8f8; }
 .order-detail .order-status{ height: 148px; width: 100%; text-align: center; background: #eefaff no-repeat center 10px; background-size: 65% 50%; }
@@ -44,10 +44,13 @@ body{ font-size:14px;}
 .order-detail .zj-pay:before{ left: 10px; }
 
 .order-detail .refund{ display: inline-block; }
-.order-detail .refund-complete{ color: #ff5000; margin-left: 64px; }
-.order-detail .refund-money{ margin-left: 60px; color: #666; }
-.order-detail .refund-sum{ margin-left: 59px; }
+.order-detail .refund-complete{ color: #ff5000; float: right; }
+.order-detail .refund-money{ margin-left: 60px; color: #666; float: right; }
+.order-detail .refund-sum{ float: right; }
+.order-detail .refund-lost{ float: right; }
+.order-detail .refund-disc{ float: right; }
 .order-detail .refund-line{ margin-top: 12px; }
+.order-detail .refund-list{ float: right; }
 .order-detail .contacts{ margin-bottom: 10px; }
 .order-detail .order-time{ margin-bottom: 11px; }
 
@@ -70,3 +73,5 @@ body{ font-size:14px;}
 .order-detail .confirm-btn{ border: 1px #3fbef9 solid; color: #3fbef9; font-size: 13px; border-radius: 3px; }
 .order-detail .left-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 174px; top: 8.5px; }
 .order-detail .right-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 277px; top: 8.5px; }
+.order-detail .left-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 14px; }
+.order-detail .right-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 10px; }

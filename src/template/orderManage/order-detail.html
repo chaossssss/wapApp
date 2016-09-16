@@ -53,7 +53,7 @@
           <p class="zj-fontsize worker-call"><span id="workerGender"></span></p>
           <p id="toProviderDetail" class="zj-fontsize zj-arrow"></p>
         </div>
-        <div id="contactWorker" class="weui_cell_ft contact"></div>
+        <a id="serviceProviderPhone" href=""><div id="contactWorker" class="weui_cell_ft contact"></div></a>
       </div>
       <div class="weui_cell zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
@@ -100,14 +100,14 @@
       </div> -->
       <div class="weui_media_box weui_media_text zj-pay zj-cell-border">
         <div id="servicePrice" class="weui_media_desc zj-fontsize spacing">服务价格
-        <p class="money">
-          <span id="negotiable">面议</span>        
+        <p id="ifNegotiable" class="money">
+          <!-- <span id="negotiable">面议</span>  -->       
           <span id="unitPrice">￥
-            <span id="single">30</span>
-            <span id="unit">/小时</span>
+            <span id="single"></span>
+            <span id="unit"></span>
           </span>
           <span id="multiple" class="multiple">×
-            <span id="quantity">2</span>
+            <span id="quantity"></span>
           </span>
         </p>
         </div>
@@ -129,14 +129,15 @@
         <div class="weui_panel_bd">
           <div class="weui_media_box weui_media_text">
             <div class="weui_media_desc zj-fontsize">
-              <p class="refund"><span id="refundAt"></span>2016-08-28 17:18</p>
+              <p class="refund"><span id="refundAt">2016-05-12 12:45</span></p>
+              <p class="refund refund-money">￥99<span id="actualMoney"></span></p>
               <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
-              <p class="refund refund-money">￥<span id="actualMoney"></span></p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
-              <p class="refund refund-sum">应退￥90.0<span id="refundAmount"></span>，</p>
-              <p class="refund">误工费￥0.<span id="lostIncome"></span>，</p>
-              <p class="refund">优惠券扣除￥20.0<span id="refundDiscount"></span></p>
+              <p class="clear refund"></p>
+              <p class="refund refund-disc">优惠券扣除￥10<span id="refundDiscount"></span></p>
+              <p class="refund refund-lost">误工费￥10<span id="lostIncome"></span>，</p>
+              <p class="refund refund-sum">应退￥100<span id="refundAmount"></span>，</p>
             </div>
           </div>
         </div>
@@ -181,15 +182,15 @@
       </div>
   </div>
   <div id="optionFooter" class="delete-order">
-    <div id="btnLeft" class="left-btn"></div>
-    <div id="btnRight" class="right-btn"></div>
+    <div id="btnRight" class="right-btnfr pay-btn">支付</div>
+    <div id="btnLeft" class="left-btnfr delete-btn">取消订单</div>
   </div>    
 </div>
 <div class="weui_dialog_confirm" id="workerPhone" style="display:none;">
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd"><strong class="weui_dialog_title">联系师傅</strong></div>
-    <div class="weui_dialog_bd">111</div>
+    <div class="weui_dialog_bd">暂时不接受电话</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
       <a href="javascript:;" class="weui_btn_dialog primary">确定</a>

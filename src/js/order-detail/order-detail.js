@@ -2,10 +2,7 @@ $(function(){
   var $contactWorker = $("#contactWorker");
   var $workerPhone = $("#workerPhone");
   var $cancelBtn = $("#cancelBtn");
-  
-  $contactWorker.on('click',function(){
-    $workerPhone.css('display','block');
-  });
+
   $cancelBtn.on('click',function(){
     $workerPhone.css('display','none');
   });
@@ -47,7 +44,8 @@ $(function(){
       $("#clinetPhone").text(data.Body.AddressInfo.PhoneNumber);
       $("#quantity").text(data.Service.Total);
 
-      // data.body[0].IsPayOff;
+      isPayOff = data.Body.IsPayOff;
+      payLock = data.Body.PayLock;
       $("#price").text(data.Body.Price);
       $("#discountInfo").text(data.Body.DiscountAmount);
       var unitName = "/" + data.Body.UnitName;
@@ -55,15 +53,26 @@ $(function(){
       $("#single").text(data.Body.Price);
       $("#refundAt").text(data.Body.Refunds.RefundTime);
       $("#lostIncome").text(data.Body.Refunds.LostIncome);
-
+      $("#refundAmount").text(data.Body.TotalPrice);
+      if(data.Body.Price == "面议"){
+        $("ifNegotiable").text("面议");
+        $("#multiple").hide();
+      }
       if(data.Body.AddressInfo.Gender == "0"){
         $("#clientGender").text("先生");
       }else if(data.Body.AddressInfo.Gender == "1"){
         $("#clientGender").text("女士");
       }
-
-      var discountMoney = data.Body.DiscountAmount;
-      var actualMoney = Totalprice - discountMoney;
+      if(data.Body.DiscountAmount == ""){
+        $("#orderDiscount").hide();
+      }
+      var serviceProviderPhone = "tel:" + data.Body.ServiceProviderPhone;
+      $("#serviceProviderPhone").attr("href",serviceProviderPhone);
+      if(data.Body.ServiceProviderPhone == ""){
+        $contactWorker.on('click',function(){
+          $workerPhone.css('display','block');
+        });
+      }
       $("#actualMoney").text(data.Body.TotalPrice);
 
       if(data.Body.ServiceProviderType == "2"){
@@ -172,159 +181,218 @@ console.log(orderState);
 
     break;
     
-    case "11":
-    console.log("待付款");
-    $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
+    // case "11":
+    // console.log("待付款");
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    $("#status").text('工人已接单');
-    $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('待工人接单');
-    $("#tabThird").text('待付款');
-    $("#tabFourth").text('待服务');
-    $("#btnLeft").text('取消订单');
-    $("#btnRight").text('支付');
+    // $("#status").text('工人已接单');
+    // $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('待工人接单');
+    // $("#tabThird").text('待付款');
+    // $("#tabFourth").text('待服务');
+    // $("#btnLeft").text('取消订单');
+    // $("#btnRight").text('支付');
 
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#roundFourth").addClass("round-undone");
-    $("#total").addClass("actual");
-    $("#btnLeft").addClass("delete-btn")
-    $("#btnRight").addClass("pay-btn");
+    // $("#tabThird").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-processing");
+    // $("#roundFourth").addClass("round-undone");
+    // $("#total").addClass("actual");
+    // $("#btnLeft").addClass("delete-btn")
+    // $("#btnRight").addClass("pay-btn");
 
-    $("#orderDiscount").hide();
-    $("#orderActual").hide();
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#orderDiscount").hide();
+    // $("#orderActual").hide();
+    // $("#refundRecord").hide();
+    // $("#filling2").hide();
+    // $("#negotiable").hide();
+    // $("#cancelTime").hide();
+    // $("#specialPrice").hide();
 
-    $("#orderPrice").css("marginBottom","0px");
-    $("#btnRight").css("left","181px");
+    // $("#orderPrice").css("marginBottom","0px");
+    // $("#btnRight").css("left","181px");
 
-    $("#btnLeft").click(function(){
-      $.ajax({
+    // $("#btnLeft").click(function(){
+    //   $.ajax({
 
-      })
-    })
+    //   })
+    // })
 
-    $("#btnRight").click(function(){
-      $.ajax({
+    // $("#btnRight").click(function(){
+    //   $.ajax({
 
-      })
-    })
+    //   })
+    // })
 
-    break;
+    // break;
 
-    case "12":
-    console.log("付款中");
-    $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
+    // case "12":
+    // console.log("付款中");
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
 
-    $("#status").text('付款中');
-    $("#explanation").text('等待支付结果');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('工人已接单');
-    $("#tabThird").text('付款中');
-    $("#tabFourth").text('待服务');
+    // $("#status").text('付款中');
+    // $("#explanation").text('等待支付结果');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('工人已接单');
+    // $("#tabThird").text('付款中');
+    // $("#tabFourth").text('待服务');
 
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#roundFourth").addClass("round-undone");
-    $("#btnRight").addClass("confirm-btn"); 
+    // $("#tabThird").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-processing");
+    // $("#roundFourth").addClass("round-undone");
+    // $("#btnRight").addClass("confirm-btn"); 
 
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#optionFooter").hide();
-    $("#payTime").hide();
-    $("#finishTime").hide();
-    $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#refundRecord").hide();
+    // $("#filling2").hide();
+    // $("#negotiable").hide();
+    // $("#optionFooter").hide();
+    // $("#payTime").hide();
+    // $("#finishTime").hide();
+    // $("#cancelTime").hide();
+    // $("#specialPrice").hide();
 
-    $("#acceptTime").css("marginBottom","4px");
+    // $("#acceptTime").css("marginBottom","4px");
 
-    break;
+    // break;
 
-    case "13":
-    console.log("待确认");
-    $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
+    // case "13":
+    // console.log("待确认");
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
 
-    $("#status").text('上门服务');
-    $("#explanation").text('请耐心等待工人在约定时间上门服务哦');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('工人已接单');
-    $("#tabThird").text('待付款');
-    $("#tabFourth").text('待服务');
-    $("#btnRight").text('取消订单');
+    // $("#status").text('上门服务');
+    // $("#explanation").text('请耐心等待工人在约定时间上门服务哦');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('工人已接单');
+    // $("#tabThird").text('待付款');
+    // $("#tabFourth").text('待服务');
+    // $("#btnRight").text('取消订单');
 
-    $("#explanation").css("width","205px");
+    // $("#explanation").css("width","205px");
 
-    $("#tabFourth").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-complete");
-    $("#roundFourth").addClass("round-processing");
-    $("#btnRight").addClass("delete-btn");
+    // $("#tabFourth").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-complete");
+    // $("#roundFourth").addClass("round-processing");
+    // $("#btnRight").addClass("delete-btn");
 
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#btnLeft").hide();
-    $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#refundRecord").hide();
+    // $("#filling2").hide();
+    // $("#negotiable").hide();
+    // $("#btnLeft").hide();
+    // $("#cancelTime").hide();
+    // $("#specialPrice").hide();
 
-    // for(i = 0; i < picLength; i++ ){
-    //   console.log(picData[i].SmallPic);
-    //   var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
-    //   + "</li>";
-    //   $("#showPics").append(html);
-    // }
-    // console.log('xingbie=' + gender);
-    // if(gender == "1"){
-    //   $("#workerGender").text('阿姨');
-    // }else if(gender == "0"){
-    //   $("#workerGender").text("师傅");
-    // }
+    // break;
 
-    break;
+    // case "15":
+    // console.log("退款中");
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
 
-    case "15":
-    console.log("退款中");
-    $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
+    // $("#status").text('退款中');
+    // $("#explanation").text('系统将于72小时内退款');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('工人已接单');
+    // $("#tabThird").text('退款中');
+    // $("#tabFourth").text('退款成功');
 
-    $("#status").text('退款中');
-    $("#explanation").text('系统将于72小时内退款');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('工人已接单');
-    $("#tabThird").text('退款中');
-    $("#tabFourth").text('退款成功');
+    // $("#tabThird").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-processing");
+    // $("#roundFourth").addClass("round-undone");
 
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#roundFourth").addClass("round-undone");
+    // $("#optionFooter").hide();
+    // $("#negotiable").hide();
+    // $("#cancelTime").hide();
 
-    $("#optionFooter").hide();
-    $("#negotiable").hide();
-    $("#cancelTime").hide();
-
-    break;
+    // break;
 
     case "20":
     console.log("已接单");
 
-    // if(hasPaied == "0"){
-    //   console.log("订单状态：未付清");
-    // }
+    if(isPayOff == "0"){
+      console.log("订单状态：待付款");
+      $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
+
+      $("#status").text('工人已接单');
+      $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
+      $("#tabFirst").text('订单已提交');
+      $("#tabSecond").text('待工人接单');
+      $("#tabThird").text('待付款');
+      $("#tabFourth").text('待服务');
+      $("#btnLeft").text('取消订单');
+      $("#btnRight").text('支付');
+
+      $("#tabThird").addClass("processing");
+      $("#roundFirst").addClass("round-complete");
+      $("#roundSecond").addClass("round-complete");
+      $("#roundThird").addClass("round-processing");
+      $("#roundFourth").addClass("round-undone");
+      $("#total").addClass("actual");
+      $("#btnLeft").addClass("delete-btn")
+      $("#btnRight").addClass("pay-btn");
+
+      $("#orderDiscount").hide();
+      $("#orderActual").hide();
+      $("#refundRecord").hide();
+      $("#filling2").hide();
+      $("#negotiable").hide();
+      $("#cancelTime").hide();
+      $("#specialPrice").hide();
+
+      $("#orderPrice").css("marginBottom","0px");
+      // $("#btnRight").css("left","181px");
+
+      $("#btnLeft").click(function(){
+        $.ajax({
+
+        })
+      })
+
+      $("#btnRight").click(function(){
+        $.ajax({
+
+        })
+      })
+    }
     // if(hasPaied == "1"){
     //   console.log("订单状态：付清");
     // }
+    if(payLock == "1"){
+      console.log("付款中");
+      $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
+
+      $("#status").text('付款中');
+      $("#explanation").text('等待支付结果');
+      $("#tabFirst").text('订单已提交');
+      $("#tabSecond").text('工人已接单');
+      $("#tabThird").text('付款中');
+      $("#tabFourth").text('待服务');
+
+      $("#tabThird").addClass("processing");
+      $("#roundFirst").addClass("round-complete");
+      $("#roundSecond").addClass("round-complete");
+      $("#roundThird").addClass("round-processing");
+      $("#roundFourth").addClass("round-undone");
+      $("#btnRight").addClass("confirm-btn"); 
+
+      $("#refundRecord").hide();
+      $("#filling2").hide();
+      $("#negotiable").hide();
+      $("#optionFooter").hide();
+      $("#payTime").hide();
+      $("#finishTime").hide();
+      $("#cancelTime").hide();
+      $("#specialPrice").hide();
+
+      $("#acceptTime").css("marginBottom","4px");
+    }
+    
 
     $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
@@ -356,41 +424,13 @@ console.log(orderState);
     $("#specialPrice").hide();
 
     $("#waitOrder").css("marginBottom","0px");
-    $("#btnRight").css("left","181px");
+    // $("#btnRight").css("left","181px");
 
     $("#btnLeft").click(function(){
       $.ajax({
 
       })
     })
-
-    break;
-
-    case "21":
-    console.log("待评价");
-    $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
-
-    $("#status").text('服务已完成');
-    $("#explanation").text('评价一下这次服务吧~');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('工人已接单');
-    $("#tabThird").text('服务完成');
-    $("#btnRight").text('评价');
-
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#btnRight").addClass("confirm-btn");
-
-    $(".round").css("left","58px");  
-
-    $("#proFourth").hide();
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#btnLeft").hide();
-    $("#cancelTime").hide();
 
     break;
 
@@ -498,7 +538,33 @@ console.log(orderState);
     $("#specialPrice").hide();
 
     break;
+    // case "21":
+    // console.log("待评价");
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
+    // $("#status").text('服务已完成');
+    // $("#explanation").text('评价一下这次服务吧~');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('工人已接单');
+    // $("#tabThird").text('服务完成');
+    // $("#btnRight").text('评价');
+
+    // $("#tabThird").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-processing");
+    // $("#btnRight").addClass("confirm-btn");
+
+    // $(".round").css("left","58px");  
+
+    // $("#proFourth").hide();
+    // $("#refundRecord").hide();
+    // $("#filling2").hide();
+    // $("#negotiable").hide();
+    // $("#btnLeft").hide();
+    // $("#cancelTime").hide();
+
+    // break;
     case "50":
     console.log("已取消");
     if(orderIsGeted!=""){
@@ -624,58 +690,6 @@ console.log(orderState);
     }
   }
 
-
-  // $.ajax({
-  //   method:"POST",
-  //   url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
-  //   data:{
-  //   Token:"3b9433fdb953e2b2d97dfcd6d2fdaecd",
-  //   OrderId:"9798ddef-634a-e611-a79a-008cfae40c0c"
-  //   },
-  //   success:function(data){
-  //     // console.log(data.body.OrderService.Pictures.length);
-  //     // console.log(data.body[0].ServiceProviderGender);
-  //     console.log(data);
-  //     console.log(data.Body.OrderStatus);
-  //     orderStatus = data.Body.OrderStatus;
-  //     picData = data.Body.OrderService.Pictures;
-  //     picLength = data.Body.OrderService.Pictures.length;
-  //     // var gender = data.body[0].ServiceProviderGender;
-  //     orderIsGeted = data.Body.ServiceProviderId;
-
-  //     // data.body[0].OrderId;
-  //     $("#orderCode").text(data.Body.OrderCode);
-  //     $("#createTime").text(data.Body.CreateTime);
-  //     // data.body[0].OrderStatus;
-  //     $("#acceptAt").text(data.Body.AcceptAt);
-  //     $("#finishAt").text(data.Body.FinishAt);
-  //     // data.body[0].ConfirmAt;
-  //     // data.body[0].CancelAt;
-  //     // data.body[0].IsPauOff;
-  //     $("#price").text(data.Body.price);
-  //     $("#discountInfo").text(data.Body.DiscountInfo);
-  //     // data.body[0].PayLock;
-  //     // data.body[0].ServiceProviderId;
-  //     $("#serviceProviderName").text(data.body.ServiceProviderName);
-  //     // data.body[0].ServiceProviderGender;
-  //     // data.body[0].ServiceProviderPhone;
-  //     $("#clientName").text(data.body.ClientName);
-  //     $("#clinetPhone").text(data.body.ClinetPhone);
-  //     $("#serviceAddress").text(data.body.ServiceAddress);
-  //     $("#serviceTime").text(data.body.ServiceTime);
-  //     // data.body[0].CanCancel;
-
-  //     // var workHeadPic = data.body[0].WorkerHead;
-  //     // $("#workerHead").attr("src",workHeadPic);
-
-  //     for(i = 0; i < picLength; i++ ){
-  //       console.log(picData[i].SmallPic);
-  //       var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
-  //       + "</li>";
-  //       $("#showPics").append(html);
-  //     }
-  //    }
-  //  });
 
 
   function removeOrder(){
