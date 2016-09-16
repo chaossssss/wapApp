@@ -41,7 +41,7 @@ $(function(){
 // jax--------------------------------------------------------
 // 加载页面其他数据
     var Type=getUrl('type');
-    var Id=getUrl('id');
+    var Id=getUrl('markid');
     $.ajax({
     	type: 'POST',
         url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',

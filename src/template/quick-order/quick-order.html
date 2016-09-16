@@ -38,8 +38,8 @@
 			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId">
 				<div class="zj_cell_hd">
 					<span class="f12" ng-bind="addr.Contact"></span>
-					<span ng-bind="addr.Gender" ng-if="addr.Gender == 0">男士</span>
-					<span ng-bind="addr.Gender" ng-if="addr.Gender == 1">女士</span>
+					<span ng-if="addr.Gender == 0">男士</span>
+					<span ng-if="addr.Gender == 1">女士</span>
 					<span class="pl20" ng-bind="addr.PhoneNumber"></span>
 				</div>
 				<div class="zj_cell_bd">

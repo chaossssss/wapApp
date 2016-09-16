@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "99964e692408dec9ce3096ac8b2d6c1a";
+	$rootScope.token = "995ea025b8f50315b0ade11bbeff0d0f";
 
 	//获取url参数
     function getvl(name) {
@@ -43,9 +43,9 @@ angular.module('com.wapapp.app',[])
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log(res);
-			if(res.Meta.ErrorCode === "0"){
+			// if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
-			}
+			// }
 			$scope.$apply();
 		})
 

@@ -8,9 +8,9 @@
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
     <title>工人详情</title>
-    <link rel="stylesheet" href="../../css/weui.min.css">
-    <link rel="stylesheet" href="../../css/worker/worker-detail.min.css">
-    <link rel="stylesheet" href="../../css/business-detail/dropload.min.css">
+    <link rel="stylesheet" href="/css/weui.min.css">
+    <link rel="stylesheet" href="/css/worker/worker-detail.min.css">
+    <link rel="stylesheet" href="/css/business-detail/dropload.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/css/swiper.min.css">
 </head>
 <style>
@@ -167,30 +167,40 @@
 
     <!-- 底部导航条 -->
     <div class=" navigation">
-        <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
+        <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on" id="quick-order">
             <div class="weui_tabbar_icon">
-                <img src="../../images/worker/ic_zhijiezhifu_nor.svg" alt="">
+                <img src="/images/worker/ic_zhijiezhifu_nor.svg" alt="">
             </div>
         </a>
-        <a href="javascript:;" class="weui_tabbar_item">
+        <a href="javascript:;" class="weui_tabbar_item" id="point-order">
             <div class="weui_tabbar_icon">
-                <img src="../../images/worker/ic_order_nor.svg" alt="">
+                <img src="/images/worker/ic_order_nor.svg" alt="">
             </div>
         </a>
         <a href="" class="weui_tabbar_item phoneNo ">
             <div class="weui_tabbar_icon">
-                <img src="../../images/worker/ic_phone_nor.svg"  class="dianhua-img" alt="">
+                <img src="/images/worker/ic_phone_nor.svg"  class="dianhua-img" alt="">
             </div>
         </a>
     </div>
 </div>
 <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="../../js/business-detail//dropload.min.js"></script>
+<script src="/js/business-detail//dropload.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/js/swiper.min.js"></script>
 <!-- <script src="/js/worker/worker-detail.min.js"></script> -->
+<script>
+    $(function(){
+        var Type=getUrl('type');
+        var Id=getUrl('markid');
+        $("#quick-order").on("click",function(){
+            window.location.href = "/template/quick-order/quick-order.html?channel=1";
+        })
+        $("#point-order").on("click",function(){
+            window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+        })
+    })
+</script>
 </body>
-
-
 <script>
     $(function(){
         var swiper = new Swiper('.swiper-container', {
@@ -229,7 +239,7 @@
 
         // 加载页面其他数据
         var Type=getUrl('type');
-        var Id=getUrl('id');
+        var Id=getUrl('markid');
         $.ajax({
             type: 'POST',
             url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',

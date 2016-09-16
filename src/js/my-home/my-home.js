@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// FastClick.attach(document.body);
-	$rootScope.token = "d803769104f565854438336f131ca1d5";
+	$rootScope.token = "61517f53ac915b617b41a201c55d9ae3";
 }])
 .controller('myHomeCtrl',['$rootScope','$scope','getMyInfo','loginOut',function($rootScope,$scope,getMyInfo,loginOut){
 	var vm = $scope.vm = {};

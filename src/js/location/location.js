@@ -1,7 +1,7 @@
 'use strict'
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "2e4de8ef0aa0dfa5c380e962d09cb0ac";
+	$rootScope.token = "995ea025b8f50315b0ade11bbeff0d0f";
 
 	//获取url参数
     function getvl(name) {
@@ -10,6 +10,8 @@ angular.module('com.wapapp.app',[])
         return "";
     } 
     $rootScope.channel = getvl("channel");
+    $rootScope.type = getvl("type");
+    $rootScope.markid= getvl("markid");
     $rootScope.search = window.location.search;
 }])
 .controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
@@ -206,7 +208,7 @@ angular.module('com.wapapp.app',[])
 		switch ($rootScope.channel)
 		{
 			case "0" :
-				window.location.href = '/template/location/edit-location.html?channel=0&id='+item.Id;
+				window.location.href = '/template/point-order/point-order.html?channel=0&type='+$rootScope.type+'&markid='+$rootScope.markid+'&id='+item.Id;
 				break;
 			case "1" :
 				window.location.href = '/template/quick-order/quick-order.html?channel=1&id='+item.Id;

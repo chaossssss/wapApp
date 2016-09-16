@@ -374,10 +374,10 @@ function goDetail(type,id){
     // alert(type);
     // alert(id);
     if(type === "worker"){
-        window.location.href = "/template/worker/worker-detail.html?type=1&id="+id;
+        window.location.href = "/template/worker/worker-detail.html?type=1&markid="+id;
     }
     if(type === "boss"){
-        window.location.href = "/template/business-detail/business-detail.html?type=2&id="+id;
+        window.location.href = "/template/business-detail/business-detail.html?type=2&markid="+id;
     }
 }
 

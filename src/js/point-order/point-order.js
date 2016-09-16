@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "99964e692408dec9ce3096ac8b2d6c1a";
+	$rootScope.token = "8c03ea1b31cef926698d08c964f53302";
 
 	//获取url参数
     function getvl(name) {
@@ -45,9 +45,9 @@ angular.module('com.wapapp.app',[])
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log(res);
-			if(res.Meta.ErrorCode === "0"){
+			// if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
-			}
+			// }
 			$scope.$apply();
 		})
 
@@ -62,7 +62,7 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 
-	if($rootScope.ObjectType === "1"){
+	if($rootScope.ObjectType == "1"){
 		typeService.searchWorkList($rootScope.ObjectId)
 			.success(function(res){
 				console.log(res);
@@ -81,8 +81,6 @@ angular.module('com.wapapp.app',[])
 				$scope.$apply();
 			})
 	}
-	
-
 
 	//流程流向判断并跳转
 	vm.gotojudge = function(){
@@ -94,19 +92,6 @@ angular.module('com.wapapp.app',[])
 		var a = vm.ServiceContent;
 		$scope.textarea_size = a.length;
 	})
-
-	// $scope.$on('service-type-id',function(event,id){
-	// 	vm.serviceShow = false;
-	// 	vm.ServiceTypeId = id;
-	// 	console.log("ParentCtrl",id);
-	// 	priceService.get($rootScope.token,id,"2")
-	// 		.success(function(res){
-	// 			console.log(res);
-	// 			vm.IsNegotiable = res.Body.IsNegotiable;
-	// 			$scope.$apply();
-
-	// 		})
-	// })
 
 	$scope.$on('service-time-date',function(event,date){
 		console.log("父亲接收时间",date);
@@ -126,7 +111,10 @@ angular.module('com.wapapp.app',[])
 	$scope.$on("uploader-form",function(event,img){
 		console.log("img",img);
 		console.log("Token",$rootScope.token);
-		console.log("ServiceTypeId",vm.ServiceTypeId);
+		console.log("ObjectType",$rootScope.ObjectType);
+		console.log("ObjectId",$rootScope.ObjectId);
+		console.log("serviceTypeObj",vm.serviceTypeObj),
+		console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
 		console.log("ServiceContent",vm.ServiceContent);
 		console.log("Total",vm.Total);
 		console.log("ServiceStartAt",vm.ServiceStartAt);
@@ -134,7 +122,9 @@ angular.module('com.wapapp.app',[])
 
 		var Json_data = {
             "Token":$rootScope.token,
-            "ServiceTypeId": vm.ServiceTypeId,
+            "ObjectType":$rootScope.ObjectType,
+            "ObjectId":$rootScope.ObjectId,
+            "ServiceTypeId": vm.serviceTypeObj.ServiceTypeId,
             "ServiceContent": vm.ServiceContent,
             "Total": vm.Total,
             "OrderFrom": "1",
@@ -145,7 +135,9 @@ angular.module('com.wapapp.app',[])
 
         var formdata = new FormData();
         formdata.append("Token",$rootScope.token);   
-        formdata.append("ServiceTypeId", vm.ServiceTypeId);   
+        formdata.append("ObjectType",$rootScope.ObjectType);  
+        formdata.append("ObjectId",$rootScope.ObjectId);  
+        formdata.append("ServiceTypeId", vm.serviceTypeObj.ServiceTypeId);   
         formdata.append("ServiceContent", vm.ServiceContent);   
         formdata.append("Total", vm.Total);    
         formdata.append("OrderForm", "1");   
@@ -202,22 +194,6 @@ angular.module('com.wapapp.app',[])
 			})
 	})
 }])
-// .controller('serviceTypeCtrl',['$scope','listService',function($scope,listService){
-
-// 	var st = $scope.st = {};
-
-// 	listService.get()
-// 		.success(function(res){
-// 			console.log(res);
-// 			st.serviceList = res.Body;
-// 			$scope.$apply();
-// 		})
-
-// 	st.getTypeName = function(typeId){
-// 		// console.log(typeId);
-// 		$scope.$emit('service-type-id',typeId);
-// 	}
-// }])
 .controller('uploaderFileCtrl',['$scope',function($scope){
 	var uf = $scope.uf = {};
 
@@ -412,33 +388,6 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-// .factory('listService',[function(){
-// 	// 获取服务类型列表
-// 	var PATH = "http://192.168.1.191:3003/";
-// 	var _getpath = PATH+"api/v2/SystemService/InfoListEx";
-
-// 	var getService = function(){
-// 		return $.ajax({
-// 					method:"POST",
-// 					url: _getpath
-// 				}).success(function(res){
-// 					if(res.Meta.ErrorCode !== "0"){
-// 						alert(res.Meta.ErrorMsg)
-// 					}
-// 					if(res.Meta.ErrorCode === "2004"){
-// 						window.location.href = "/template/login/login.html";
-// 					}
-// 				}).error(function(res){
-// 					alert("服务器连接失败，请检查网络设置");
-// 				})
-// 	}
-
-// 	return {
-// 		get: function(){
-// 			return getService();
-// 		}
-// 	}
-// }])
 .factory('priceService',[function(){
 	// 获取服务价格
 	var PATH = "http://192.168.1.191:3003/";
@@ -605,7 +554,7 @@ angular.module('com.wapapp.app',[])
 		searchWorkList:function(id){
 			return searchWork(id);
 		},
-		searchBossList:function(){
+		searchBossList:function(id){
 			return bossWork(id);
 		}
 	};
