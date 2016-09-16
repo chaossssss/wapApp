@@ -33,12 +33,12 @@
 					</div>
 					<div class="weui_cell">
 						<label class="mr30 webkit_box">
-							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s10" ng-model="vm.Gender" value="先生" ng-required="true">
+							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s10" ng-model="vm.Gender" value="0" ng-required="true">
 							<i class="weui_icon_checked mr10"></i>
 							先生
 						</label>
 						<label class="weui_cell_hd webkit_box" for="s11">
-							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s11" ng-model="vm.Gender" value="女士" ng-required="true">
+							<input type="radio" name="radio" class="weui_check" name="checkbox0" id="s11" ng-model="vm.Gender" value="1" ng-required="true">
 							<i class="weui_icon_checked mr10"></i>
 							女士
 						</label>
@@ -82,18 +82,7 @@
 					</select>
 				</div>
 			</div>
-			<!-- <a class="weui_cell" href="javascript:;">
-				<div class="weui_cell_bd weui_cell_primary">
-					<p>标签</p>
-				</div>
-				<div class="weui_cell_ft">
-					<span class="tag" ng-model="vm.Tag" ng-if="vm.Tag"></span>
-					<select class="tr" ng-class="{true:'tag'}[vm.tag]" name="" id="" ng-options="item.Id as item.Name for item in vm.tagList" ng-model="vm.tag">
-					</select>
-				</div>
-			</a> -->
 		</div>
-
 		<div class="foot" ng-disabled="true">
 			<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.save(form.name,form.address,form.addrDetail,form.phone)">保存</a>
 		</div>

@@ -1,20 +1,31 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "0e5e45873c4c3a37ce9ac97200e7a8cf";
+	$rootScope.token = "99964e692408dec9ce3096ac8b2d6c1a";
 
+	//获取url参数
+    function getvl(name) {
+        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    } 
+    $rootScope.channel = getvl("channel");
+    $rootScope.addressId = getvl("id");
+    $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService',function($rootScope,$scope,priceService,orderService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService',function($rootScope,$scope,priceService,orderService,addrService){
 	var vm = $scope.vm = {};
+	var addr = $scope.addr = {};
 
 	$scope.textarea_size = 0;
+	$scope.loadingToast = false;
 
 	vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
 	vm.Total = 0;
 	vm.unitPrice = 30;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
- 
+
 	vm.sub = function(){
 		if(vm.Total >0){
 			vm.Total -= 1;
@@ -27,20 +38,20 @@ angular.module('com.wapapp.app',[])
 	}
  
 	vm.ServiceContent = "1234";
+	vm.ServiceAddressId = $rootScope.addressId;
 
-	//获取url参数
-    function getvl(name) {
-        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
-        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
-        return "";
-    };
+	addrService.search($rootScope.token,$rootScope.addressId)
+		.success(function(res){
+			console.log(res);
+			if(res.Meta.ErrorCode === "0"){
+				$scope.addr = res.Body[0];
+			}
+			$scope.$apply();
+		})
 
 	//流程流向判断并跳转
-	vm.go = function(){
-		var channel = getvl("channel");
-		if(channel == 1){
-			window.location.href = "/template/location/mag-location.html?channel=1";
-		}
+	vm.gotojudge = function(){
+		window.location.href = "/template/location/mag-location.html"+$rootScope.search;
 	}
 
 	//textarea长度
@@ -73,6 +84,7 @@ angular.module('com.wapapp.app',[])
 	}
 
 	vm.submitOrder = function(){
+		$scope.loadingToast = true;
 		$scope.$broadcast("uploader-img-data");
 	}
 
@@ -85,41 +97,25 @@ angular.module('com.wapapp.app',[])
 		console.log("ServiceStartAt",vm.ServiceStartAt);
 		console.log("ServiceAddressId",vm.ServiceAddressId);
 
-		// var Json_data = {
-  //           "Token":$rootScope.token,
-  //           "ServiceTypeId": vm.ServiceTypeId,
-  //           "ServiceContent": vm.ServiceContent,
-  //           "Total": vm.Total,
-  //           "OrderForm": "1",
-  //           "ServiceStartAt": vm.ServiceStartAt,
-  //           "ServiceAddressId": "123"
-  //       };
-  	    var Json_data = {
-     		"Token":$rootScope.token,
-            "ServiceTypeId": "5",
-            "ServiceContent": "Content",
-            "Total": "1",
-            "OrderFrom": "0",
-            "ServiceStartAt": "2016/09/10",
-            "ServiceAddressId": "1"
-    	}; 
+		var Json_data = {
+            "Token":$rootScope.token,
+            "ServiceTypeId": vm.ServiceTypeId,
+            "ServiceContent": vm.ServiceContent,
+            "Total": vm.Total,
+            "OrderFrom": "1",
+            "ServiceStartAt": vm.ServiceStartAt,
+            "ServiceAddressId": vm.ServiceAddressId
+        };
         Json_data = JSON.stringify(Json_data);
 
         var formdata = new FormData();
-        // formdata.append("Token",$rootScope.token);   
-        // formdata.append("ServiceTypeId", vm.ServiceTypeId);   
-        // formdata.append("ServiceContent", vm.ServiceContent);   
-        // formdata.append("Total", vm.Total);    
-        // formdata.append("OrderForm", "1");   
-        // formdata.append("ServiceStartAt", vm.ServiceStartAt);  
-        // formdata.append("ServiceAddressId", "123"); 
         formdata.append("Token",$rootScope.token);   
-        formdata.append("ServiceTypeId","5");   
-        formdata.append("ServiceContent", "Content");   
-        formdata.append("Total","1");    
-        formdata.append("OrderFrom", "0");   
-        formdata.append("ServiceStartAt", "2016/09/10");  
-        formdata.append("ServiceAddressId", "1"); 
+        formdata.append("ServiceTypeId", vm.ServiceTypeId);   
+        formdata.append("ServiceContent", vm.ServiceContent);   
+        formdata.append("Total", vm.Total);    
+        formdata.append("OrderForm", "1");   
+        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+        formdata.append("ServiceAddressId", vm.ServiceAddressId); 
 
         for(var i=0,leng=img.length;i<leng;i++){
             formdata.append("img"+i,img[i]);
@@ -129,9 +125,16 @@ angular.module('com.wapapp.app',[])
 		orderService.uploader(formdata)
 			.success(function(res){
 				console.log(res);
+				$scope.loadingToast = false;
+				if(res.Meta.ErrorCode === "0"){
+					// window.location.href = "";
+				}else{
+					vm.dialogshow = true;
+					vm.errorMsg = res.Meta.ErrorMsg;
+				}
+				$scope.$apply();
 			})
 	})
-
 }])
 .controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
 
@@ -360,11 +363,10 @@ angular.module('com.wapapp.app',[])
 })
 .factory('orderService',[function(){
 	// 获取服务类型列表
-	var PATH = "http://192.168.1.191:3001/";
+	var PATH = "http://192.168.1.191:3003/";
 	var _postpath = PATH+"api/v2/OrderInfo/CreateOrderOneKey";
 
 	var uploaderService = function(formData){
-
 		return $.ajax({
 					method:"POST",
 					url: _postpath,
@@ -375,7 +377,7 @@ angular.module('com.wapapp.app',[])
 	                contentType: false  // 告诉jQuery不要去设置Content-Type请求头
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
+						// alert(res.Meta.ErrorMsg);
 					}
 					if(res.Meta.ErrorCode === "2004"){
 						// window.location.href = "/template/login/login.html";
@@ -393,7 +395,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('listService',[function(){
 	// 获取服务类型列表
-	var PATH = "http://192.168.1.191:3001/";
+	var PATH = "http://192.168.1.191:3003/";
 	var _getpath = PATH+"api/v2/SystemService/InfoListEx";
 
 	var getService = function(){
@@ -420,7 +422,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('priceService',[function(){
 	// 获取服务价格
-	var PATH = "http://192.168.1.191:3001/";
+	var PATH = "http://192.168.1.191:3003/";
 	var _getpath = PATH+"api/v2/ClientInfo/GetServicePriceEx";
 
 	var getPrice = function(token,id,type){
@@ -435,7 +437,7 @@ angular.module('com.wapapp.app',[])
 					data: formData
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
+						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
@@ -452,7 +454,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('timeService',[function(){
 	// 获取服务时间
-	var PATH = "http://192.168.1.191:3001/";
+	var PATH = "http://192.168.1.191:3003/";
 	var _getpath = PATH+"api/v2/SystemService/ServiceTimeStartAt";
 
 	var getService = function(id){
@@ -481,7 +483,36 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
+.factory('addrService',[function(){
+	var _searchpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetAddress";
+	var searchAddr = function(token,id){
+		var formData = {
+			Token: token,
+			AddressId: id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _searchpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						// alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						// window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
 
+	return {
+		search:function(token,id){
+			return searchAddr(token,id);
+		}
+	};
+
+}])
 
 
 

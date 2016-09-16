@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css">
 </head>
 <body ng-controller="orderCtrl">
-<form action="" name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
+<form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
 	<!-- <div class="weui_cells">
 		<div class="weui_cell">
 			<p class="f14 fc8">可以联系客服直接电话下单哦
@@ -28,7 +28,7 @@
 		</div>
 	</div> -->
 	<div class="weui_cells weui_cells_access zj_local_image" >
-		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.go()">
+		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/local.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -37,12 +37,13 @@
 			</div>
 			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId">
 				<div class="zj_cell_hd">
-					<span class="f12">李诗诗</span>
-					<span>女士</span>
-					<span class="pl20">1453674536</span>
+					<span class="f12" ng-bind="addr.Contact"></span>
+					<span ng-bind="addr.Gender" ng-if="addr.Gender == 0">男士</span>
+					<span ng-bind="addr.Gender" ng-if="addr.Gender == 1">女士</span>
+					<span class="pl20" ng-bind="addr.PhoneNumber"></span>
 				</div>
 				<div class="zj_cell_bd">
-					<p class="f14 fc8">上海诗虹口</p>
+					<p class="f14 fc8" ng-bind="addr.Address1"></p>
 				</div>
 			</div>
 			<div class="weui_cell_ft"></div>
@@ -158,6 +159,42 @@
 	</div>
 </form>
 
+<!-- loadingToast -->
+<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">正在提交...</p>
+    </div>
+</div>
+
+<!-- dialog_alert -->
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogshow = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <div class="zj_date_picker" zh-date-picker id="zh_date_picker" ng-controller="datePickerCtrl">
 	<div class="" ng-class="{true:'zj_mask_transition zj_fade_toggle',false:''}[dp.show]"></div>
@@ -252,6 +289,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,10 +11,10 @@
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
-	<title>首页</title>
+	<title>查找地址</title>
 
-	<link rel="stylesheet" href="../../css/weui.min.css">
-	<link rel="stylesheet" href="../../css/map/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<link rel="stylesheet" href="/css/map/perfect-scrollbar.min.css">
 
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UvjqfTEqblSQuarwwxfObc5Zl6TK11HL"></script>
 
@@ -126,7 +126,7 @@
 	</div>
 	
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="../../js/map/perfect-scrollbar.jquery.min.js"></script>
+<script src="/js/map/perfect-scrollbar.jquery.min.js"></script>
 
 <script>
 $(function(){
@@ -174,7 +174,8 @@ $(function(){
     	sessionStorage.setItem("LocalTitle",title);
     	sessionStorage.setItem("LocalContent",content);
     	// alert(content);
-    	window.location.href = "/template/location/add-location.html";
+    	var search = window.location.search;
+    	window.location.href = "/template/location/add-location.html"+search;
     });
 
     $("#wapper").perfectScrollbar();

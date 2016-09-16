@@ -14,8 +14,8 @@
     <meta name="author" content="zxh">
 	<title>管理服务地址</title>
 
-	<link rel="stylesheet" href="../../css/weui.min.css">
-	<link rel="stylesheet" href="../../css/location/location.min.css">
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<link rel="stylesheet" href="/css/location/location.min.css">
 </head>
 <body ng-controller="magLocationCtrl">
 	
@@ -32,12 +32,13 @@
 		</div>
 	</div>
 
-	<div class="weui_cells weui_cells_access">
+	<div class="weui_cells weui_cells_access" style="margin-bottom:44px;">
 		<a href="javascript:;" class="weui_cell" ng-repeat="item in vm.locationList" ng-click="vm.editLocation(item)">
 			<div class="zj_cell_left">
 				<div class="weui_cell_hd">
 					<span ng-bind="item.Contact"></span>
-					<span class="pl10" ng-bind="item.Gender"></span>
+					<span class="pl10" ng-if="item.Gender === '0'">男</span>
+					<span class="pl10" ng-if="item.Gender === '1'">女</span>
 					<span class="pl10" ng-bind="item.PhoneNumber"></span>
 				</div>
 				<div class="weui_cell_bd">

@@ -1,15 +1,16 @@
 'use strict'
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "0e5e45873c4c3a37ce9ac97200e7a8cf";
+	$rootScope.token = "2e4de8ef0aa0dfa5c380e962d09cb0ac";
 
 	//获取url参数
     function getvl(name) {
         var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
         if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
-    }
+    } 
     $rootScope.channel = getvl("channel");
+    $rootScope.search = window.location.search;
 }])
 .controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
@@ -17,11 +18,11 @@ angular.module('com.wapapp.app',[])
  
 	var vm = $scope.vm = {};
 
-	vm.Contact = "小豪";
-	vm.PhoneNumber = "18257561789";
-	// vm.sex = "先生";
-	vm.Address1 = "迪凯国际中心";
-	vm.Address2 = "2502室";
+	// vm.Contact = "小豪";
+	// vm.PhoneNumber = "18257561789";
+	// // vm.sex = "先生";
+	// vm.Address1 = "迪凯国际中心";
+	// vm.Address2 = "2502室";
  
 	vm.error = "";
 	vm.isActive = false;
@@ -50,14 +51,14 @@ angular.module('com.wapapp.app',[])
 				Contact: vm.Contact,
 				Gender: vm.Gender,
 				PhoneNumber: vm.PhoneNumber,
-				Tag: "",
+				Tag: vm.tag,
 				Address1: vm.Address1,
 				Address2: vm.Address2
 			};
 			addrService.add($rootScope.token,formData)
 				.success(function(res){
 					console.log(res);
-					if(res.ErrorCode !== "0"){
+					if(res.ErrorCode === "0"){
 						window.location.href = "/template/location/mag-location.html?channel="+$rootScope.channel;
 					}
 				})
@@ -85,7 +86,8 @@ angular.module('com.wapapp.app',[])
 		console.log(address);
 		console.log(addrDetail);
 		if(address === false && addrDetail === false){
-			window.location.href = '/template/map/ser-location.html';
+			var search = window.location.search;
+			window.location.href = '/template/map/ser-location.html'+search;
 		}
 	}
 
@@ -97,11 +99,11 @@ angular.module('com.wapapp.app',[])
 
 	var vm = $scope.vm = {};
 
-	vm.Contact = "小豪";
-	vm.PhoneNumber = "18257561789";
-	// vm.sex = "先生";
-	vm.Address1 = "迪凯国际中心";
-	vm.Address2 = "2502室";
+	// vm.Contact = "小豪";
+	// vm.PhoneNumber = "18257561789";
+	// // vm.sex = "先生";
+	// vm.Address1 = "迪凯国际中心";
+	// vm.Address2 = "2502室";
 
 	vm.error = "";
 	vm.isActive = false;
@@ -115,12 +117,12 @@ angular.module('com.wapapp.app',[])
 	}
 
 	//获取url参数
-	function getvl(name) {
-	    var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
-	    if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
-	    return "";
-	};
-
+    function getvl(name) {
+        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    };
+    var addressId  = getvl("id");
 	addrService.tag()
 		.success(function(res){
 			console.log("标签回调",res);
@@ -128,10 +130,10 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 
-	var getid = getvl("id");	
-	addrService.search($rootScope.token,"7")
+	addrService.search($rootScope.token,addressId)
 		.success(function(res){
 			console.log("根据id查找地址",res);
+			$scope.vm = res.Body[0];
 			$scope.$apply();
 		})	
 
@@ -152,7 +154,9 @@ angular.module('com.wapapp.app',[])
 			addrService.edit($rootScope.token,formData)
 				.success(function(res){
 					console.log(res);
-					// window.location.href = "/template/location/mag-location.html";
+					if(res.ErrorCode !== "0"){
+						window.location.href = "/template/location/mag-location.html?channel="+$rootScope.channel;
+					}
 				})	
 
 		}
@@ -173,12 +177,12 @@ angular.module('com.wapapp.app',[])
 			vm.isActive = true;
 		}
 	};
-	
 	vm.searchLocal = function(address,addrDetail){
 		console.log(address);
 		console.log(addrDetail);
 		if(address === false && addrDetail === false){
-			window.location.href = '/template/map/ser-location.html';
+			var search = window.location.search;
+			window.location.href = '/template/map/ser-location.html'+search;
 		}
 	};
 	vm.deleteLocal = function(){
@@ -186,15 +190,18 @@ angular.module('com.wapapp.app',[])
 		addrService.delete($rootScope.token,id)
 			.success(function(res){
 				console.log("删除回调",res);
-				window.location.href = "/template/location/mag-location.html";
+				var search = window.location.search;
+				window.location.href = "/template/location/mag-location.html"+search;
 			})
 	}
-
 }])
 .controller('magLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
 	var vm = $scope.vm = {};
 
+	// 点击编辑信息跳转判断
+	// 0 ：指定下单
+	// 1 ：一键下单
 	vm.editLocation = function(item){
 		switch ($rootScope.channel)
 		{
@@ -207,22 +214,21 @@ angular.module('com.wapapp.app',[])
 		}	
 	}
 
+	//跳转到新增地址
 	vm.gotoAdd = function(){
 		window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
 	}
 
-
 	addrService.get($rootScope.token)
 		.success(function(res){
 			console.log(res);
-
 			vm.locationList = res.Body;
 			$scope.$apply();
 		});
 
 }])
-.factory('addrService',['$http',function($http){
-	var PATH = "http://192.168.1.191:3001/";
+.factory('addrService',[function(){
+	var PATH = "http://192.168.1.191:3003/";
 	var _getpath = PATH+"api/v2/ClientInfo/GetAddress";
 	var _addpath = PATH+"api/v2/ClientInfo/AddAddress";
 	var _editpath = PATH+"api/v2/ClientInfo/EditAddress";
@@ -239,10 +245,10 @@ angular.module('com.wapapp.app',[])
 					},
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
+						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						window.location.href = "/template/login/login.html";
+						// window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -260,10 +266,10 @@ angular.module('com.wapapp.app',[])
 					data: formData
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
+						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						window.location.href = "/template/login/login.html";
+						// window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -302,7 +308,7 @@ angular.module('com.wapapp.app',[])
 					data: formData
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
+						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";

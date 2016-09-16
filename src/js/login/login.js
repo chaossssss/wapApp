@@ -13,14 +13,14 @@ angular.module('com.wapapp.app',[])
 				if(res.Meta.ErrorCode !== "0"){
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
-				}
+				} 
 				$scope.$apply();
 			});
 	}
 
 }]) 
 .factory('loginService',[function(){
-	var _login = "http://192.168.1.191:3001/api/v1/Clientinfo/Login";
+	var _login = "http://192.168.1.191:3003/api/v1/Clientinfo/Login";
 	
 	var runlogin = function(loginName,password){
 
@@ -28,10 +28,10 @@ angular.module('com.wapapp.app',[])
 					method:"POST",
 					url: _login,
 					data: {
-						LoginName:"13805720368",
-						Password:"xcworld",
-						DeviceId:"9468E5F3090EFAA135A949C9E2BF8E32",
-						Captcha:""
+						LoginName: loginName,
+						Password: password,
+						// DeviceId:"9468E5F3090EFAA135A949C9E2BF8E32",
+						// Captcha:""
 					}
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
