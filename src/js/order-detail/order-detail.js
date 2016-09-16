@@ -6,7 +6,7 @@ $(function(){
   $cancelBtn.on('click',function(){
     $workerPhone.css('display','none');
   });
-/*--è®¢å•è¯¦æƒ…--*/
+/*--¶©µ¥ÏêÇé--*/
   $.ajax({
     method:"POST",
     url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
@@ -25,7 +25,7 @@ $(function(){
       // picLength = data.Body.OrderService.Pictures.length;
       // var gender = data.body[0].ServiceProviderGender;
       // orderIsGeted = data.Body.ServiceProviderId;
-      data.Body.OrderId;
+      var orderID = data.Body.OrderId;
 
       $("#orderCode").text(data.Body.OrderCode);
       $("#createTime").text(data.Body.CreateTime);
@@ -54,14 +54,20 @@ $(function(){
       $("#refundAt").text(data.Body.Refunds.RefundTime);
       $("#lostIncome").text(data.Body.Refunds.LostIncome);
       $("#refundAmount").text(data.Body.TotalPrice);
-      if(data.Body.Price == "é¢è®®"){
-        $("ifNegotiable").text("é¢è®®");
+      $("#hourly").text(data.Body.Activity);
+      var toBePaid = data.Body.TotalPrice - data.Body.Refunds.LostIncome - data.Body.Activity;
+      $("#toBePaid").text(toBePaid);
+      if(data.Body.Activity == ""){
+        $("#specialPrice").hide();
+      }
+      if(data.Body.Price == "ÃæÒé"){
+        $("ifNegotiable").text("ÃæÒé");
         $("#multiple").hide();
       }
       if(data.Body.AddressInfo.Gender == "0"){
-        $("#clientGender").text("å…ˆç”Ÿ");
+        $("#clientGender").text("ÏÈÉú");
       }else if(data.Body.AddressInfo.Gender == "1"){
-        $("#clientGender").text("å¥³å£«");
+        $("#clientGender").text("Å®Ê¿");
       }
       if(data.Body.DiscountAmount == ""){
         $("#orderDiscount").hide();
@@ -76,20 +82,20 @@ $(function(){
       $("#actualMoney").text(data.Body.TotalPrice);
 
       if(data.Body.ServiceProviderType == "2"){
-        console.log("å·¥äºº");
+        console.log("¹¤ÈË");
         var workHeadPic = data.Body.ServiceProviderPic;
         var workName = data.Body.ServiceProviderName;
         var gender = data.Body.ServiceProviderGender;
         $("#serviceProviderName").text(workName);
         $("#providerHead").attr("src",workHeadPic);
         if(gender == "1"){
-          $("#workerGender").text('é˜¿å§¨');
+          $("#workerGender").text('°¢ÒÌ');
         }else if(gender == "0"){
-          $("#workerGender").text("å¸ˆå‚…");
+          $("#workerGender").text("Ê¦¸µ");
         }
       }
       if(data.Body.ServiceProviderType == "3"){
-        console.log("å•†æˆ·");
+        console.log("ÉÌ»§");
         var busHeadPic = data.Body.Business.Photo;
         $("#providerHead").attr("src",busHeadPic);
       }
@@ -113,7 +119,7 @@ $(function(){
       }
      }
    });
-/*--è·å–æŒ‡å®šæœåŠ¡çš„ä»·æ ¼ä¿¡æ¯--*/
+/*--»ñÈ¡Ö¸¶¨·şÎñµÄ¼Û¸ñĞÅÏ¢--*/
   // $.ajax({
   //   method:"POST",
   //   url:"http://192.168.1.191:3003/api/v2/ClientInfo/GetServicePriceEx",
@@ -134,16 +140,16 @@ $(function(){
 console.log(orderState);
   switch(orderState){
     case "10":
-    console.log("å¾…æ¥å•");
+    console.log("´ı½Óµ¥");
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
 
-    $("#status").text('è®¢å•æäº¤æˆåŠŸ');
-    $("#explanation").text('è¯·è€å¿ƒç­‰å¾…å®¢æœä¸ºæ‚¨å®‰æ’å·¥äººï¼Œå¹¶ç¡®å®šæœåŠ¡ä»·æ ¼');
-    $("#tabFirst").text('è®¢å•å·²æäº¤');
-    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
-    $("#tabThird").text('å¾…ä»˜æ¬¾');
-    $("#tabFourth").text('å¾…æœåŠ¡');
-    $("#btnRight").text('å–æ¶ˆè®¢å•');
+    $("#status").text('¶©µ¥Ìá½»³É¹¦');
+    $("#explanation").text('ÇëÄÍĞÄµÈ´ı¿Í·şÎªÄú°²ÅÅ¹¤ÈË£¬²¢È·¶¨·şÎñ¼Û¸ñ');
+    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
+    $("#tabThird").text('´ı¸¶¿î');
+    $("#tabFourth").text('´ı·şÎñ');
+    $("#btnRight").text('È¡Ïû¶©µ¥');
 
     $("#explanation").css("width","256px");
 
@@ -168,31 +174,31 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
-    $("#specialPrice").hide();
 
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
 
     $("#btnRight").click(function(){
-      $.ajax({
-
-      });
+      $("#cancelOrderBtn").click(function(){
+        cancelOrder();
+        updateOrder();    
+      })
     });
 
     break;
     
     // case "11":
-    // console.log("å¾…ä»˜æ¬¾");
+    // console.log("´ı¸¶¿î");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    // $("#status").text('å·¥äººå·²æ¥å•');
-    // $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
-    // $("#tabFirst").text('è®¢å•å·²æäº¤');
-    // $("#tabSecond").text('å¾…å·¥äººæ¥å•');
-    // $("#tabThird").text('å¾…ä»˜æ¬¾');
-    // $("#tabFourth").text('å¾…æœåŠ¡');
-    // $("#btnLeft").text('å–æ¶ˆè®¢å•');
-    // $("#btnRight").text('æ”¯ä»˜');
+    // $("#status").text('¹¤ÈËÒÑ½Óµ¥');
+    // $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
+    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    // $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
+    // $("#tabThird").text('´ı¸¶¿î');
+    // $("#tabFourth").text('´ı·şÎñ');
+    // $("#btnLeft").text('È¡Ïû¶©µ¥');
+    // $("#btnRight").text('Ö§¸¶');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -229,15 +235,15 @@ console.log(orderState);
     // break;
 
     // case "12":
-    // console.log("ä»˜æ¬¾ä¸­");
+    // console.log("¸¶¿îÖĞ");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
 
-    // $("#status").text('ä»˜æ¬¾ä¸­');
-    // $("#explanation").text('ç­‰å¾…æ”¯ä»˜ç»“æœ');
-    // $("#tabFirst").text('è®¢å•å·²æäº¤');
-    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
-    // $("#tabThird").text('ä»˜æ¬¾ä¸­');
-    // $("#tabFourth").text('å¾…æœåŠ¡');
+    // $("#status").text('¸¶¿îÖĞ');
+    // $("#explanation").text('µÈ´ıÖ§¸¶½á¹û');
+    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+    // $("#tabThird").text('¸¶¿îÖĞ');
+    // $("#tabFourth").text('´ı·şÎñ');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -260,16 +266,16 @@ console.log(orderState);
     // break;
 
     // case "13":
-    // console.log("å¾…ç¡®è®¤");
+    // console.log("´ıÈ·ÈÏ");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
 
-    // $("#status").text('ä¸Šé—¨æœåŠ¡');
-    // $("#explanation").text('è¯·è€å¿ƒç­‰å¾…å·¥äººåœ¨çº¦å®šæ—¶é—´ä¸Šé—¨æœåŠ¡å“¦');
-    // $("#tabFirst").text('è®¢å•å·²æäº¤');
-    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
-    // $("#tabThird").text('å¾…ä»˜æ¬¾');
-    // $("#tabFourth").text('å¾…æœåŠ¡');
-    // $("#btnRight").text('å–æ¶ˆè®¢å•');
+    // $("#status").text('ÉÏÃÅ·şÎñ');
+    // $("#explanation").text('ÇëÄÍĞÄµÈ´ı¹¤ÈËÔÚÔ¼¶¨Ê±¼äÉÏÃÅ·şÎñÅ¶');
+    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+    // $("#tabThird").text('´ı¸¶¿î');
+    // $("#tabFourth").text('´ı·şÎñ');
+    // $("#btnRight").text('È¡Ïû¶©µ¥');
 
     // $("#explanation").css("width","205px");
 
@@ -290,15 +296,15 @@ console.log(orderState);
     // break;
 
     // case "15":
-    // console.log("é€€æ¬¾ä¸­");
+    // console.log("ÍË¿îÖĞ");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
 
-    // $("#status").text('é€€æ¬¾ä¸­');
-    // $("#explanation").text('ç³»ç»Ÿå°†äº72å°æ—¶å†…é€€æ¬¾');
-    // $("#tabFirst").text('è®¢å•å·²æäº¤');
-    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
-    // $("#tabThird").text('é€€æ¬¾ä¸­');
-    // $("#tabFourth").text('é€€æ¬¾æˆåŠŸ');
+    // $("#status").text('ÍË¿îÖĞ');
+    // $("#explanation").text('ÏµÍ³½«ÓÚ72Ğ¡Ê±ÄÚÍË¿î');
+    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+    // $("#tabThird").text('ÍË¿îÖĞ');
+    // $("#tabFourth").text('ÍË¿î³É¹¦');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -313,20 +319,20 @@ console.log(orderState);
     // break;
 
     case "20":
-    console.log("å·²æ¥å•");
+    console.log("ÒÑ½Óµ¥");
 
     if(isPayOff == "0"){
-      console.log("è®¢å•çŠ¶æ€ï¼šå¾…ä»˜æ¬¾");
+      console.log("¶©µ¥×´Ì¬£º´ı¸¶¿î");
       $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-      $("#status").text('å·¥äººå·²æ¥å•');
-      $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
-      $("#tabFirst").text('è®¢å•å·²æäº¤');
-      $("#tabSecond").text('å¾…å·¥äººæ¥å•');
-      $("#tabThird").text('å¾…ä»˜æ¬¾');
-      $("#tabFourth").text('å¾…æœåŠ¡');
-      $("#btnLeft").text('å–æ¶ˆè®¢å•');
-      $("#btnRight").text('æ”¯ä»˜');
+      $("#status").text('¹¤ÈËÒÑ½Óµ¥');
+      $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
+      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+      $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
+      $("#tabThird").text('´ı¸¶¿î');
+      $("#tabFourth").text('´ı·şÎñ');
+      $("#btnLeft").text('È¡Ïû¶©µ¥');
+      $("#btnRight").text('Ö§¸¶');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
@@ -343,44 +349,44 @@ console.log(orderState);
       $("#filling2").hide();
       $("#negotiable").hide();
       $("#cancelTime").hide();
-      $("#specialPrice").hide();
+      // $("#specialPrice").hide();
 
       $("#orderPrice").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").click(function(){
-        $.ajax({
-
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").click(function(){
+          cancelOrder(Token,OrderId);
+          UpdataOrder(Token,OrderId);
         })
       })
 
       $("#btnRight").click(function(){
-        $.ajax({
 
-        })
       })
     }
     // if(hasPaied == "1"){
-    //   console.log("è®¢å•çŠ¶æ€ï¼šä»˜æ¸…");
+    //   console.log("¶©µ¥×´Ì¬£º¸¶Çå");
     // }
     if(payLock == "1"){
-      console.log("ä»˜æ¬¾ä¸­");
+      console.log("¸¶¿îÖĞ");
       $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
 
-      $("#status").text('ä»˜æ¬¾ä¸­');
-      $("#explanation").text('ç­‰å¾…æ”¯ä»˜ç»“æœ');
-      $("#tabFirst").text('è®¢å•å·²æäº¤');
-      $("#tabSecond").text('å·¥äººå·²æ¥å•');
-      $("#tabThird").text('ä»˜æ¬¾ä¸­');
-      $("#tabFourth").text('å¾…æœåŠ¡');
+      $("#status").text('¸¶¿îÖĞ');
+      $("#explanation").text('µÈ´ıÖ§¸¶½á¹û');
+      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+      $("#tabThird").text('¸¶¿îÖĞ');
+      $("#tabFourth").text('´ı·şÎñ');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
       $("#roundSecond").addClass("round-complete");
       $("#roundThird").addClass("round-processing");
       $("#roundFourth").addClass("round-undone");
-      $("#btnRight").addClass("confirm-btn"); 
 
+      $("#btnRight").hide(); 
       $("#refundRecord").hide();
       $("#filling2").hide();
       $("#negotiable").hide();
@@ -391,19 +397,20 @@ console.log(orderState);
       $("#specialPrice").hide();
 
       $("#acceptTime").css("marginBottom","4px");
+
     }
     
 
     $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    $("#status").text('å·¥äººå·²æ¥å•');
-    $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
-    $("#tabFirst").text('è®¢å•å·²æäº¤');
-    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
-    $("#tabThird").text('å¾…ä»˜æ¬¾');
-    $("#tabFourth").text('å¾…æœåŠ¡');
-    $("#btnLeft").text('å–æ¶ˆè®¢å•');
-    $("#btnRight").text('æ”¯ä»˜');
+    $("#status").text('¹¤ÈËÒÑ½Óµ¥');
+    $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
+    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
+    $("#tabThird").text('´ı¸¶¿î');
+    $("#tabFourth").text('´ı·şÎñ');
+    $("#btnLeft").text('È¡Ïû¶©µ¥');
+    $("#btnRight").text('Ö§¸¶');
 
     $("#tabThird").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -427,26 +434,28 @@ console.log(orderState);
     // $("#btnRight").css("left","181px");
 
     $("#btnLeft").click(function(){
-      $.ajax({
-
+      $("#cancelOrder1").css("display","block");
+      $("#cancelOrderBtn").click(function(){
+        cancelOrder(Token,OrderId);
+        UpdataOrder(Token,OrderId);
       })
     })
 
     break;
 
     case "30":
-    console.log("å·²å®Œæˆ");
+    console.log("ÒÑÍê³É");
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    Date.prototype.Format = function (fmt) { //æ ¼å¼åŒ–æ—¶é—´
+    Date.prototype.Format = function (fmt) { //¸ñÊ½»¯Ê±¼ä
       var o = {
-        "M+": this.getMonth() + 1, //æœˆä»½ 
-        "d+": this.getDate(), //æ—¥ 
-        "h+": this.getHours(), //å°æ—¶ 
-        "m+": this.getMinutes(), //åˆ† 
-        "s+": this.getSeconds(), //ç§’ 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //å­£åº¦ 
-        "S": this.getMilliseconds() //æ¯«ç§’ 
+        "M+": this.getMonth() + 1, //ÔÂ·İ 
+        "d+": this.getDate(), //ÈÕ 
+        "h+": this.getHours(), //Ğ¡Ê± 
+        "m+": this.getMinutes(), //·Ö 
+        "s+": this.getSeconds(), //Ãë 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //¼¾¶È 
+        "S": this.getMilliseconds() //ºÁÃë 
       };
       if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
       for (var k in o)
@@ -459,31 +468,31 @@ console.log(orderState);
     // var time = "2016/09/12 11:16:30";
     // var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
 
-    function DateDiff(sDate1, sDate2){//sDate1å’ŒsDate2æ˜¯yyyy-MM-ddæ ¼å¼  
+    function DateDiff(sDate1, sDate2){//sDate1ºÍsDate2ÊÇyyyy-MM-dd¸ñÊ½  
       var aDate, oDate1, oDate2, iDays, iHours, diffText;
       aDate = sDate1.split("-");
       oDate1 = new  Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
       aDate = sDate2.split("-"); 
       oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
-      iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //æŠŠç›¸å·®çš„æ¯«ç§’æ•°è½¬æ¢ä¸ºå¤©æ•° 
-      iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//è®¡ç®—ç›¸å·®çš„å°æ—¶æ•°
-      diffText = iDays + "å¤©" + iHours + "æ—¶";
+      iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //°ÑÏà²îµÄºÁÃëÊı×ª»»ÎªÌìÊı 
+      iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//¼ÆËãÏà²îµÄĞ¡Ê±Êı
+      diffText = iDays + "Ìì" + iHours + "Ê±";
       return  diffText; 
     }
     var dateDiff = DateDiff(confirmTime,now);
-    var dataDiffText = "è¯·ç¡®è®¤æœåŠ¡å®Œæˆï¼Œè¿˜å‰©" + dateDiff + "è‡ªåŠ¨ç¡®è®¤";
+    var dataDiffText = "ÇëÈ·ÈÏ·şÎñÍê³É£¬»¹Ê£" + dateDiff + "×Ô¶¯È·ÈÏ";
     console.log(dataDiffText);
     console.log(now);
     console.log(confirmTime);
     // console.log(ftime);
 
-    $("#status").text('å·¥äººå·²å®ŒæˆæœåŠ¡');
+    $("#status").text('¹¤ÈËÒÑÍê³É·şÎñ');
     $("#explanation").text(dataDiffText);
-    $("#tabFirst").text('è®¢å•å·²æäº¤');
-    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
-    $("#tabThird").text('å·²ä»˜æ¬¾');
-    $("#tabFourth").text('ç¡®è®¤æœåŠ¡å®Œæˆ');
-    $("#btnRight").text('ç¡®è®¤æœåŠ¡å®Œæˆ');
+    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
+    $("#tabThird").text('ÒÑ¸¶¿î');
+    $("#tabFourth").text('È·ÈÏ·şÎñÍê³É');
+    $("#btnRight").text('È·ÈÏ·şÎñÍê³É');
 
     $("#explanation").css("width","237px");
 
@@ -503,21 +512,23 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
-    $("#specialPrice").hide();
+    $("#btnRight").click(function(Token,OrderId,Memo){
+      confirmOrder(Token,OrderId,Memo);
+    })
 
     break;
 
     case "40":
-    console.log("å®¢æˆ·ç¡®è®¤å®Œæˆï¼Œå¾…è¯„ä»·");
+    console.log("¿Í»§È·ÈÏÍê³É£¬´ıÆÀ¼Û");
 
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    $("#status").text('æœåŠ¡å·²å®Œæˆ');
-    $("#explanation").text('è¯„ä»·ä¸€ä¸‹è¿™æ¬¡æœåŠ¡å§~');
-    $("#tabFirst").text('è®¢å•å·²æäº¤');
-    $("#tabSecond").text('å·¥äººå·²æ¥å•');
-    $("#tabThird").text('æœåŠ¡å®Œæˆ');
-    $("#btnRight").text('è¯„ä»·');
+    $("#status").text('·şÎñÒÑÍê³É');
+    $("#explanation").text('ÆÀ¼ÛÒ»ÏÂÕâ´Î·şÎñ°É~');
+    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+    $("#tabThird").text('·şÎñÍê³É');
+    $("#btnRight").text('ÆÀ¼Û');
 
     $("#tabThird").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -535,19 +546,22 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
-    $("#specialPrice").hide();
+
+    $("#btnRight").click(function(Token,OrderId,Memo){
+      confirmOrder(Token,OrderId,Memo);
+    })
 
     break;
     // case "21":
-    // console.log("å¾…è¯„ä»·");
+    // console.log("´ıÆÀ¼Û");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    // $("#status").text('æœåŠ¡å·²å®Œæˆ');
-    // $("#explanation").text('è¯„ä»·ä¸€ä¸‹è¿™æ¬¡æœåŠ¡å§~');
-    // $("#tabFirst").text('è®¢å•å·²æäº¤');
-    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
-    // $("#tabThird").text('æœåŠ¡å®Œæˆ');
-    // $("#btnRight").text('è¯„ä»·');
+    // $("#status").text('·şÎñÒÑÍê³É');
+    // $("#explanation").text('ÆÀ¼ÛÒ»ÏÂÕâ´Î·şÎñ°É~');
+    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+    // $("#tabThird").text('·şÎñÍê³É');
+    // $("#btnRight").text('ÆÀ¼Û');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -566,17 +580,17 @@ console.log(orderState);
 
     // break;
     case "50":
-    console.log("å·²å–æ¶ˆ");
+    console.log("ÒÑÈ¡Ïû");
     if(orderIsGeted!=""){
-      console.log('å–æ¶ˆè®¢å•ï¼Œå·¥äººå·²ç»æ¥å•');
+      console.log('È¡Ïû¶©µ¥£¬¹¤ÈËÒÑ¾­½Óµ¥');
       $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
 
-      $("#status").text('è®¢å•å·²å–æ¶ˆ');
-      $("#explanation").text('å·¥äººå·²ç»æ¥å•å•¦ï¼Œä¸‹æ¬¡ä½“è°…ä¸‹å·¥äººå“¦');
-      $("#tabFirst").text('è®¢å•å·²æäº¤');
-      $("#tabSecond").text('å·¥äººå·²æ¥å•');
-      $("#tabThird").text('è®¢å•å·²å–æ¶ˆ');
-      $("#btnRight").text('åˆ é™¤è®¢å•');
+      $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
+      $("#explanation").text('¹¤ÈËÒÑ¾­½Óµ¥À²£¬ÏÂ´ÎÌåÁÂÏÂ¹¤ÈËÅ¶');
+      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+      $("#tabThird").text('¶©µ¥ÒÑÈ¡Ïû');
+      $("#btnRight").text('É¾³ı¶©µ¥');
 
       $("#roundFirst").addClass("round-undone");
       $("#roundSecond").addClass("round-undone");
@@ -604,17 +618,18 @@ console.log(orderState);
 
       $("#status").css("paddingTop","90px");
       // $("#orderTime").css("marginBottom","4px");
-      $("#servicePrice").css("marginBottom","4px");     
+      $("#servicePrice").css("marginBottom","4px"); 
+
     };
     if(orderIsGeted == ""){
-      console.log("å–æ¶ˆè®¢å•ï¼Œå·¥äººæ²¡æ¥å•");
+      console.log("È¡Ïû¶©µ¥£¬¹¤ÈËÃ»½Óµ¥");
      $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
 
-     $("#status").text('è®¢å•å·²å–æ¶ˆ');
+     $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
      $("#explanation").text('');
-     $("#tabFirst").text('è®¢å•å·²æäº¤');
-     $("#tabSecond").text('è®¢å•å·²å–æ¶ˆ');
-     $("#btnRight").text('åˆ é™¤è®¢å•');
+     $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+     $("#tabSecond").text('¶©µ¥ÒÑÈ¡Ïû');
+     $("#btnRight").text('É¾³ı¶©µ¥');
 
      $("#roundFirst").addClass("round-undone");
      $("#roundSecond").addClass("round-undone");
@@ -642,22 +657,27 @@ console.log(orderState);
      $("#status").css("paddingTop","90px");
      $("#orderTime").css("marginBottom","4px");
      $("#servicePrice").css("marginBottom","4px"); 
+
+    $("#btnRight").click(function(){
+      $("#deleteOrder").css("display","block");
+      removeOrder();
+    })
     }
     
     break;
 
-    /*--é€€æ¬¾çŠ¶æ€--*/
+    /*--ÍË¿î×´Ì¬--*/
     if(refundIsFinshed == "1"){
-      console.log("é€€æ¬¾ä¸­");
+      console.log("ÍË¿îÖĞ");
       $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
 
-      $("#status").text('é€€æ¬¾ä¸­');
-      $("#explanation").text('ç³»ç»Ÿå°†äº72å°æ—¶å†…é€€æ¬¾');
-      $("#tabFirst").text('è®¢å•å·²æäº¤');
-      $("#tabSecond").text('å·¥äººå·²æ¥å•');
-      $("#tabThird").text('é€€æ¬¾ä¸­');
-      $("#tabFourth").text('é€€æ¬¾æˆåŠŸ');
-      $("#refundStatus").text('é€€æ¬¾ä¸­');
+      $("#status").text('ÍË¿îÖĞ');
+      $("#explanation").text('ÏµÍ³½«ÓÚ72Ğ¡Ê±ÄÚÍË¿î');
+      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+      $("#tabThird").text('ÍË¿îÖĞ');
+      $("#tabFourth").text('ÍË¿î³É¹¦');
+      $("#refundStatus").text('ÍË¿îÖĞ');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
@@ -672,37 +692,50 @@ console.log(orderState);
 
     }
     if(refundIsFinshed == "2"){
-      console.log("é€€æ¬¾å®Œæˆ");
+      console.log("ÍË¿îÍê³É");
 
-      $("#status").text('è®¢å•å·²å–æ¶ˆ');
+      $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
       $("#explanation").text('');
-      $("#tabFirst").text('è®¢å•å·²æäº¤');
-      $("#tabSecond").text('å·¥äººå·²æ¥å•');
-      $("#tabThird").text('é€€æ¬¾æˆåŠŸ');
-      $("#tabFourth").text('è®¢å•å·²å–æ¶ˆ');
-      $("#refundStatus").text('é€€æ¬¾å®Œæˆ');
+      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
+      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
+      $("#tabThird").text('ÍË¿î³É¹¦');
+      $("#tabFourth").text('¶©µ¥ÒÑÈ¡Ïû');
+      $("#refundStatus").text('ÍË¿îÍê³É');
 
       // $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-undone");
       $("#roundSecond").addClass("round-undone");
       $("#roundThird").addClass("round-undone");
       $("#roundFourth").addClass("round-undone");
+      $("#btnRight").addClass("delete-btn");
+      $("#btnRight").click(function(){
+        $("#deleteOrder").css("display","block");
+        removeOrder();
+      })
     }
   }
 
 
 
   function removeOrder(){
-    console.log("åˆ é™¤è®¢å•");
+    console.log("É¾³ı¶©µ¥");
     $.ajax({
+      type:"POST",
+      url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+      data:{
+        Token:"",
+        OrderId:""
+      },
+      success:function(data){
 
+      } 
     })
   }
 
-      /*--æ·»åŠ å¤‡æ³¨--*/
+      /*--Ìí¼Ó±¸×¢--*/
 /*--
   $("#addRemark").click(function(){
-    console.log("æ˜¾ç¤ºå¼¹çª—");
+    console.log("ÏÔÊ¾µ¯´°");
     $("#userMemo").show();
   });
   $("#confirmBtn").click(function(){
@@ -711,43 +744,82 @@ console.log(orderState);
     if(memoText != ""){
       memo();
     }else{
-      console.log("ä¸æäº¤");
+      console.log("²»Ìá½»");
     }
   })
   $("#cancelBtn,#confirmBtn").click(function(){
     $("#userMemo").hide();
   });
   // $("#addRemark").on("click",function(){
-  //   console.log("æ˜¾ç¤ºå¼¹çª—");
+  //   console.log("ÏÔÊ¾µ¯´°");
   //   $("#userMemo").show();
   // })
   function memo(){
-    console.log("è¡¥å……å¤‡æ³¨");
+    console.log("²¹³ä±¸×¢");
     $.ajax({
 
     })
   }
   --*/
-  function cancelOrder(){
-    console.log("å–æ¶ˆè®¢å•");
+  function updateOrder(Token,OrderId){
+    console.log("¸üĞÂ¶©µ¥");
     $.ajax({
+        type:"POST",
+        url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+        data:{
+          Token:"",
+          OrderId:""
+        },
+        success:function(data){
 
+        }     
     })
   }
-  function confirmOrder(){
-    console.log("ç¡®è®¤è®¢å•");
+  function cancelOrder(Token,OrderId){
+    console.log("È¡Ïû¶©µ¥");
     $.ajax({
+        type:"POST",
+        url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+        data:{
+          Token:"",
+          OrderId:""
+        },
+        success:function(data){
 
+        }     
+    })
+  }
+  function confirmOrder(Token,OrderId,Memo){
+    console.log("È·ÈÏ¶©µ¥");
+    $.ajax({
+      type:"POST",
+      url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      data:{
+        Token:"",
+        OrderId:"",
+        Memo:""
+      },
+      success:function(data){
+
+      }
     })
   } 
   function completeOrder(){
-    console.log("å®Œæˆè®¢å•");
+    console.log("Íê³É¶©µ¥");
     $.ajax({
+      type:"POST",
+      url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      data:{
+        Token:"",
+        OrderId:""
+      },
+      success:function(data){
 
+      }
     })
   }
   $("#toProviderDetail").on("click",function(){
-    console.log('è·³è½¬åˆ°å¯¹åº”é¡µé¢');
+    console.log('Ìø×ªµ½¶ÔÓ¦Ò³Ãæ');
     // window.location.href="";
   });
 

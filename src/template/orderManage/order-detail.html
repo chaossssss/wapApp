@@ -114,10 +114,10 @@
         <div id="orderPrice" class="weui_media_desc zj-fontsize spacing">订单总价
         <p id="total" class="money">￥<span id="price"></span></p></div>
         <div id="specialPrice" class="weui_media_desc zj-fontsize spacing">特价小时工
-        <p id="special" class="money">-￥<span id="price"></span></p></div>
+        <p id="special" class="money">-￥<span id="hourly"></span></p></div>
         <div id="waitOrder" class="weui_media_desc zj-fontsize spacing">
         待支付
-        <p id="wait" class="money">￥<span id="price"></span></p></div>
+        <p id="wait" class="money">￥<span id="toBePaid"></span></p></div>
         <div id="orderDiscount" class="weui_media_desc zj-fontsize spacing">优惠券
         <p class="money">-￥<span id="discountInfo"></span></p></div>
         <div id="orderActual" class="weui_media_desc zj-fontsize spacing">实付款
@@ -130,14 +130,14 @@
           <div class="weui_media_box weui_media_text">
             <div class="weui_media_desc zj-fontsize">
               <p class="refund"><span id="refundAt">2016-05-12 12:45</span></p>
-              <p class="refund refund-money">￥99<span id="actualMoney"></span></p>
+              <p class="refund refund-money">￥99.0<span id="actualMoney"></span></p>
               <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
               <p class="clear refund"></p>
-              <p class="refund refund-disc">优惠券扣除￥10<span id="refundDiscount"></span></p>
-              <p class="refund refund-lost">误工费￥10<span id="lostIncome"></span>，</p>
-              <p class="refund refund-sum">应退￥100<span id="refundAmount"></span>，</p>
+              <p class="refund refund-disc">优惠券扣除￥10.0<span id="refundDiscount"></span></p>
+              <p class="refund refund-lost">误工费￥110.0<span id="lostIncome"></span>，</p>
+              <p class="refund refund-sum">应退￥100.0<span id="refundAmount"></span>，</p>
             </div>
           </div>
         </div>
@@ -205,6 +205,42 @@
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
       <a href="javascript:;" id="confirmBtn" class="weui_btn_dialog primary">确定</a>
+    </div>
+  </div>
+</div>
+<!--删除订单-->
+<div class="weui_dialog_confirm" id="deleteOrder" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">删除订单</strong></div>
+    <div class="weui_dialog_bd">确定删除订单吗？删除后不可恢复哦</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
+      <a href="javascript:;" id="confirmBtn" class="weui_btn_dialog primary">删除</a>
+    </div>
+  </div>
+</div>
+<!--客户成功下单，取消订单-->
+<div class="weui_dialog_confirm" id="cancelOrder1" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">取消订单</strong></div>
+    <div class="weui_dialog_bd">确定取消订单吗？</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">先不取消</a>
+      <a href="javascript:;" id="cancelOrderBtn" class="weui_btn_dialog primary">确定</a>
+    </div>
+  </div>
+</div>
+<!--客户已付款，工人还未确认取消订单-->
+<div class="weui_dialog_confirm" id="cancelOrder2" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">您已付款，请联系客服取消订单并退款</strong></div>
+    <div class="weui_dialog_bd">客服电话：4008-262-056</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">先不取消</a>
+      <a href="tel:4008-262-056;" id="confirmBtn" class="weui_btn_dialog primary">联系客服</a>
     </div>
   </div>
 </div>

@@ -1,10 +1,96 @@
   $(function(){
     var $li = $("#tab li");
     // var $ul = $("#content .item-list");
-    console.log($("#tab li").length);
+
+      $li.eq(0).addClass("active");
+      $.ajax({
+        type:"POST",
+        url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderListEx",
+        // url:"order.json",
+        data:{
+          Token:'a81a2de3d59b6a964b510044a8966921',
+          PageIndex:"1",
+          PageSize:"5",
+          Type:0
+        },
+        // dataType:"json",
+        success:function(data){
+          console.log(data);
+          var listData = data.Body.OrderList;
+          var listLength = data.Body.OrderList.length;
+          for(i = 0; i < listLength; i++){
+            var orderId = listData[i].OrderId;
+            var orderCode = listData[i].OrderCode;
+            var createAt = listData[i].CreateTime;
+            var orderStatus = listData[i].OrderStatus;
+            var isPayOff = listData[i].IsPayOff;
+            var price = listData[i].Price;
+            var totalPrice = listData[i].TotalPrice;
+            var total = listData[i].Total;
+            var unitName = listData[i].UnitName;
+            var discountInfo = listData[i].DiscountInfo;
+            var serviceProviderType = listData[i].ServiceProviderType;
+            var serviceProviderPic = listData[i].ServiceProviderPic;
+            var serviceProviderName = listData[i].ServiceProviderName;
+            var serviceProviderGender = listData[i].ServiceProviderGender;
+            var serviceAddress = listData[i].ServiceAddress;
+            var serviceName = listData[i].ServiceName;
+            var servicePrice = listData[i].ServicePrice;
+            var refundStatus = listData[i].RefundStatus;
+            var activity = listData[i].Activity;
+            function getLocalTime(nS) {     
+              var time = new Date(parseInt(nS) * 1000);
+              return time;
+            }
+            Date.prototype.Format = function (fmt) { //格式化时间
+              var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+              };
+              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+              for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+              return fmt;
+            }
+            var formatTime = getLocalTime(createAt);
+            var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
+            console.log(orderStatus);
+            if(orderStatus == "10"){
+              var orderContent = stateWaiting(serviceName,serviceTime,serviceAddress,price);
+             // console.log(orderContent);
+             $("#itemList").append(orderContent);
+            }
+            if( isPayOff == "0" && orderStatus == "20" ){
+              var orderContent = payment(serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,totalPrice);
+              $("#itemList").append(orderContent);
+            }
+            if( orderStatus == "30"){
+              unconfirm(serviceName,serviceProviderPic,serviceProviderName,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+              $("#itemList").append(orderContent);
+            }
+            if( orderStatus == "40"){
+              evaluation(serviceName,serviceProviderPic,serviceProviderName,gender,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+              $("#itemList").append(orderContent);
+            }
+            if( orderStatus == "50"){
+              canceled(serviceName,serviceTime,serviceAddress,totalPrice);
+              $("#itemList").append(orderContent);
+            }
+          }
+        }
+      });
+
+
+
+
     // $li(0).trigger("click");
 
-    $li.click(function(){
+    $li.bind("click",function(){
       var $this = $(this);
       var $num = $this.index();
       $li.removeClass();
@@ -13,10 +99,10 @@
 
       $.ajax({
         type:"POST",
-        url:"http://192.168.1.191:3001/api/v2/OrderInfo/GetOrderListEx",
+        url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderListEx",
         // url:"order.json",
         data:{
-          Token:'a81a27a193ff18a39e51b838e3e13496',
+          Token:'7fc358149d33d646c3f86b7300ba8603',
           PageIndex:"1",
           PageSize:"5",
           Type:$num
@@ -84,12 +170,15 @@
               }
               if( orderStatus == "30"){
                 unconfirm(serviceName,serviceProviderPic,serviceProviderName,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+                $("#itemList").append(orderContent);
               }
               if( orderStatus == "40"){
                 evaluation(serviceName,serviceProviderPic,serviceProviderName,gender,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+                $("#itemList").append(orderContent);
               }
               if( orderStatus == "50"){
                 canceled(serviceName,serviceTime,serviceAddress,totalPrice);
+                $("#itemList").append(orderContent);
               }
             }
             break;
@@ -205,58 +294,62 @@
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
               if( orderStatus == "30"){
                 unconfirm(serviceProviderPic,serviceProviderName,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+                $("#itemList").append(orderContent);
               }
             }
             break;
             case 4:
             console.log("待评价，订单状态40");
-            var orderId = listData[i].OrderId;
-            var orderCode = listData[i].OrderCode;
-            var createAt = listData[i].CreateTime;
-            var orderStatus = listData[i].OrderStatus;
-            var isPayOff = listData[i].IsPayOff;
-            var price = listData[i].Price;
-            var totalPrice = listData[i].TotalPrice;
-            var total = listData[i].Total;
-            var unitName = listData[i].UnitName;
-            var discountInfo = listData[i].DiscountInfo;
-            var serviceProviderType = listData[i].ServiceProviderType;
-            var serviceProviderPic = listData[i].ServiceProviderPic;
-            var serviceProviderName = listData[i].ServiceProviderName;
-            var serviceProviderGender = listData[i].ServiceProviderGender;
-            var serviceAddress = listData[i].ServiceAddress;
-            var serviceName = listData[i].ServiceName;
-            var servicePrice = listData[i].ServicePrice;
-            var refundStatus = listData[i].RefundStatus;
-            var activity = listData[i].Activity;
-            function getLocalTime(nS) {     
-              var time = new Date(parseInt(nS) * 1000);
-              return time;
-            }
-            Date.prototype.Format = function (fmt) { //格式化时间
-              var o = {
-                "M+": this.getMonth() + 1, //月份 
-                "d+": this.getDate(), //日 
-                "h+": this.getHours(), //小时 
-                "m+": this.getMinutes(), //分 
-                "s+": this.getSeconds(), //秒 
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-                "S": this.getMilliseconds() //毫秒 
-              };
-              if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-              for (var k in o)
-              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-              return fmt;
-            }
-            var formatTime = getLocalTime(createAt);
-            var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
-            if(serviceProviderGender == "0"){
-              var gender = "男";
-            }else if(serviceProviderGender == "1"){
-              var gender = "女";
-            }
-            if( orderStatus == "40"){
-              evaluation(serviceProviderPic,serviceProviderName,gender,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+            for(i = 0; i < listLength; i++){
+              var orderId = listData[i].OrderId;
+              var orderCode = listData[i].OrderCode;
+              var createAt = listData[i].CreateTime;
+              var orderStatus = listData[i].OrderStatus;
+              var isPayOff = listData[i].IsPayOff;
+              var price = listData[i].Price;
+              var totalPrice = listData[i].TotalPrice;
+              var total = listData[i].Total;
+              var unitName = listData[i].UnitName;
+              var discountInfo = listData[i].DiscountInfo;
+              var serviceProviderType = listData[i].ServiceProviderType;
+              var serviceProviderPic = listData[i].ServiceProviderPic;
+              var serviceProviderName = listData[i].ServiceProviderName;
+              var serviceProviderGender = listData[i].ServiceProviderGender;
+              var serviceAddress = listData[i].ServiceAddress;
+              var serviceName = listData[i].ServiceName;
+              var servicePrice = listData[i].ServicePrice;
+              var refundStatus = listData[i].RefundStatus;
+              var activity = listData[i].Activity;
+              function getLocalTime(nS) {     
+                var time = new Date(parseInt(nS) * 1000);
+                return time;
+              }
+              Date.prototype.Format = function (fmt) { //格式化时间
+                var o = {
+                  "M+": this.getMonth() + 1, //月份 
+                  "d+": this.getDate(), //日 
+                  "h+": this.getHours(), //小时 
+                  "m+": this.getMinutes(), //分 
+                  "s+": this.getSeconds(), //秒 
+                  "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                  "S": this.getMilliseconds() //毫秒 
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+              }
+              var formatTime = getLocalTime(createAt);
+              var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
+              if(serviceProviderGender == "0"){
+                var gender = "男";
+              }else if(serviceProviderGender == "1"){
+                var gender = "女";
+              }
+              if( orderStatus == "40"){
+                evaluation(serviceProviderPic,serviceProviderName,gender,serviceTime,serviceAddress,price,unitName,total,totalPrice);
+                $("#itemList").append(orderContent);
+              }
             }
             break;
           }
