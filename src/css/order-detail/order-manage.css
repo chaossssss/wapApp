@@ -75,3 +75,7 @@ body{ font-size:14px;}
 .order-detail .right-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 277px; top: 8.5px; }
 .order-detail .left-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 14px; }
 .order-detail .right-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 10px; }
+
+/*--弹出框样式--*/
+.order-detail .weui_dialog_confirm .zj-align{ text-align: center; }
+.order-detail .zj-bulecol{ color: #3fbef9; }

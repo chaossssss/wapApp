@@ -3,9 +3,49 @@ $(function(){
   var $workerPhone = $("#workerPhone");
   var $cancelBtn = $("#cancelBtn");
 
+  function getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+          return unescape(r[2]);
+      }
+      return null;
+  }
+  var thisOrderId = getQueryString("orderId");
   $cancelBtn.on('click',function(){
-    $workerPhone.css('display','none');
+    $workerPhone.hide();
   });
+  $("#cancelBtn2").click(function(){
+    $("#cancelOrder2").hide();
+  })
+  $("#cancelBtn1").click(function(){
+    $("#cancelOrder1").hide();
+  })
+  $("#deleteCancel").click(function(){
+    $("#deleteOrder").hide();
+  })
+  $("#orderCancel").live("click",function(){
+    $("#cancelOrder1").css("display","block");
+    $("#cancelOrderBtn").click(function(){
+      cancelOrder(token,orderId);
+      $("#cancelOrder1").hide();
+      location.reload();
+    })
+  })
+  $("#orderDelete").live("click",function(){
+    $("#deleteOrder").css("display","block");
+    $("#deleteBtn").click(function(){
+      deleteOrder(token,orderId);
+      $("#deleteOrder").hide();
+      location.reload();
+    })
+  })
+  $("#contactWorkerBtn").live("click",function(){
+    $("#cancelOrder2").css("display","block");
+    $("#contactWorkerBtn").click(function(){
+      $("#cancelOrder2").hide();
+    })
+  })
 /*--订单详情--*/
   $.ajax({
     method:"POST",
@@ -25,7 +65,7 @@ $(function(){
       // picLength = data.Body.OrderService.Pictures.length;
       // var gender = data.body[0].ServiceProviderGender;
       // orderIsGeted = data.Body.ServiceProviderId;
-      var orderID = data.Body.OrderId;
+      var orderId = data.Body.OrderId;
 
       $("#orderCode").text(data.Body.OrderCode);
       $("#createTime").text(data.Body.CreateTime);
@@ -60,10 +100,10 @@ $(function(){
       if(data.Body.Activity == ""){
         $("#specialPrice").hide();
       }
-      if(data.Body.Price == "面议"){
-        $("ifNegotiable").text("面议");
-        $("#multiple").hide();
-      }
+      // if(data.Body.Price == "面议"){
+      //   $("ifNegotiable").text("面议");
+      //   $("#multiple").hide();
+      // }
       if(data.Body.AddressInfo.Gender == "0"){
         $("#clientGender").text("先生");
       }else if(data.Body.AddressInfo.Gender == "1"){
@@ -119,23 +159,6 @@ $(function(){
       }
      }
    });
-/*--获取指定服务的价格信息--*/
-  // $.ajax({
-  //   method:"POST",
-  //   url:"http://192.168.1.191:3003/api/v2/ClientInfo/GetServicePriceEx",
-  //   data:{
-  //     Token:"3b9433fdb953e2b2d97dfcd6d2fdaecd",
-  //     ServiceTypeId:"13",
-  //     ServiceProviderType:"2"
-  //   },
-  //   success:function(data){
-  //     console.log(data);
-  //     console.log(data.Body.Min);
-  //     console.log(data.Body.Max);
-  //     console.log(data.Body.unit);
-  //     console.log(data.Body.IsNegotaiable);
-  //   }
-  // });
 
 console.log(orderState);
   switch(orderState){
@@ -179,9 +202,11 @@ console.log(orderState);
     $("#servicePrice").css("marginBottom","4px");
 
     $("#btnRight").click(function(){
+      $("#cancelOrder1").css("display","block");
       $("#cancelOrderBtn").click(function(){
-        cancelOrder();
-        updateOrder();    
+        cancelOrder(token,orderId);
+        $("#cancelOrder1").hide();
+        location.reload();
       })
     });
 
@@ -355,15 +380,14 @@ console.log(orderState);
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").click(function(){
-        $("#cancelOrder1").css("display","block");
-        $("#cancelOrderBtn").click(function(){
-          cancelOrder(Token,OrderId);
-          UpdataOrder(Token,OrderId);
+        $("#cancelOrder2").css("display","block");
+        $("#contactWorkerBtn").click(function(){
+          $("#cancelOrder2").hide();
         })
       })
 
       $("#btnRight").click(function(){
-
+        window.location.href="";
       })
     }
     // if(hasPaied == "1"){
@@ -386,6 +410,7 @@ console.log(orderState);
       $("#roundThird").addClass("round-processing");
       $("#roundFourth").addClass("round-undone");
 
+      $("#btnLeft").hdie();
       $("#btnRight").hide(); 
       $("#refundRecord").hide();
       $("#filling2").hide();
@@ -440,7 +465,9 @@ console.log(orderState);
         UpdataOrder(Token,OrderId);
       })
     })
-
+    $("#btnRight").click(function(){
+      window.location.href="";
+    })
     break;
 
     case "30":
@@ -479,8 +506,10 @@ console.log(orderState);
       diffText = iDays + "天" + iHours + "时";
       return  diffText; 
     }
+    if(confirmTime > now){
     var dateDiff = DateDiff(confirmTime,now);
     var dataDiffText = "请确认服务完成，还剩" + dateDiff + "自动确认";
+    }
     console.log(dataDiffText);
     console.log(now);
     console.log(confirmTime);
@@ -512,7 +541,7 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
-    $("#btnRight").click(function(Token,OrderId,Memo){
+    $("#btnRight").click(function(){
       confirmOrder(Token,OrderId,Memo);
     })
 
@@ -547,8 +576,8 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
 
-    $("#btnRight").click(function(Token,OrderId,Memo){
-      confirmOrder(Token,OrderId,Memo);
+    $("#btnRight").click(function(){
+      window.location.href="";
     })
 
     break;
@@ -658,9 +687,13 @@ console.log(orderState);
      $("#orderTime").css("marginBottom","4px");
      $("#servicePrice").css("marginBottom","4px"); 
 
-    $("#btnRight").click(function(){
+    $("#btnRight").click(function(token,orderId){
       $("#deleteOrder").css("display","block");
-      removeOrder();
+      $("#deleteBtn").click(function(){
+        removeOrder(token,orderId);
+        location.reload();
+        $("#deleteOrder").hide();
+      })
     })
     }
     
@@ -701,6 +734,7 @@ console.log(orderState);
       $("#tabThird").text('退款成功');
       $("#tabFourth").text('订单已取消');
       $("#refundStatus").text('退款完成');
+      $("#btnRight").text('删除订单');
 
       // $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-undone");
@@ -710,25 +744,29 @@ console.log(orderState);
       $("#btnRight").addClass("delete-btn");
       $("#btnRight").click(function(){
         $("#deleteOrder").css("display","block");
-        removeOrder();
+        $("#deleteBtn").click(function(){
+          removeOrder(token,orderId);
+          location.reload();
+          $("#deleteOrder").hide();
+        })
       })
     }
   }
 
 
 
-  function removeOrder(){
+  function removeOrder(token,orderId){
     console.log("删除订单");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
       data:{
-        Token:"",
-        OrderId:""
+        Token:token,
+        OrderId:orderId
       },
       success:function(data){
-
-      } 
+        console.log("删除订单成功");
+      }
     })
   }
 
@@ -761,60 +799,60 @@ console.log(orderState);
     })
   }
   --*/
-  function updateOrder(Token,OrderId){
+  function updateOrder(token,orderId){
     console.log("更新订单");
     $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
         data:{
-          Token:"",
-          OrderId:""
+          Token:token,
+          OrderId:orderId
         },
         success:function(data){
-
+          console.log("更新订单成功");
         }     
     })
   }
-  function cancelOrder(Token,OrderId){
+  function cancelOrder(token,orderId){
     console.log("取消订单");
     $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
         data:{
-          Token:"",
-          OrderId:""
+          Token:token,
+          OrderId:orderId
         },
         success:function(data){
-
+          console.log("取消订单成功");
         }     
     })
   }
-  function confirmOrder(Token,OrderId,Memo){
+  function confirmOrder(token,orderId,memo){
     console.log("确认订单");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
       data:{
-        Token:"",
-        OrderId:"",
-        Memo:""
+        Token:token,
+        OrderId:orderId,
+        Memo:memo
       },
       success:function(data){
-
+        console.log("确认订单成功");
       }
     })
   } 
-  function completeOrder(){
+  function completeOrder(token,orderId){
     console.log("完成订单");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
       data:{
-        Token:"",
-        OrderId:""
+        Token:token,
+        OrderId:orderId
       },
       success:function(data){
-
+        console.log("完成订单成功");
       }
     })
   }

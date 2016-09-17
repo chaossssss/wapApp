@@ -133,11 +133,36 @@
 			</div>			
     	</div> -->
     	<!-- 没有订单时候的页面 -->
-<!--     	<div class="no-order">
+  	<div id="noOrder" class="no-order" style="display:none;">
  			<img src="../../images/my-order/no-order.png" alt="">
  			<div>您还没有相关的订单</div>
-    	</div> -->
+  	</div>
 	</div>
+
+  <!--删除订单-->
+  <div class="weui_dialog_confirm" id="deleteOrder" style="display:none">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+      <div class="weui_dialog_hd"><strong class="weui_dialog_title">删除订单</strong></div>
+      <div class="weui_dialog_bd zj-align">确定删除订单吗？删除后不可恢复哦</div>
+      <div class="weui_dialog_ft">
+        <a href="javascript:;" id="deleteCancel" class="weui_btn_dialog default">取消</a>
+        <a href="javascript:;" id="deleteBtn" class="weui_btn_dialog primary zj-bulecol">删除</a>
+      </div>
+    </div>
+  </div>
+  <!--客户成功下单，取消订单-->
+  <div class="weui_dialog_confirm" id="cancelOrder1" style="display:none">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+      <div class="weui_dialog_hd"><strong class="weui_dialog_title">取消订单</strong></div>
+      <div class="weui_dialog_bd zj-align">确定取消订单吗？</div>
+      <div class="weui_dialog_ft">
+        <a href="javascript:;" id="cancelBtn1" class="weui_btn_dialog default">先不取消</a>
+        <a href="javascript:;" id="cancelOrderBtn" class="weui_btn_dialog primary zj-bulecol">确定</a>
+      </div>
+    </div>
+  </div>
   <!-- <script src="/js/common/jquery.cookie.min.js"></script> -->
   <script src="../../js/common/jquery.cookie.min.js"></script>
   <script src="../../js/my-order/my-order.min.js"></script>
