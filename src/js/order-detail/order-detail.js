@@ -12,6 +12,7 @@ $(function(){
       return null;
   }
   var thisOrderId = getQueryString("orderId");
+  var token = $.cookie("Token");
   $cancelBtn.on('click',function(){
     $workerPhone.hide();
   });
@@ -24,7 +25,7 @@ $(function(){
   $("#deleteCancel").click(function(){
     $("#deleteOrder").hide();
   })
-  $("#orderCancel").live("click",function(){
+  $("#orderCancel").on("click",function(){
     $("#cancelOrder1").css("display","block");
     $("#cancelOrderBtn").click(function(){
       cancelOrder(token,orderId);
@@ -32,7 +33,7 @@ $(function(){
       location.reload();
     })
   })
-  $("#orderDelete").live("click",function(){
+  $("#orderDelete").on("click",function(){
     $("#deleteOrder").css("display","block");
     $("#deleteBtn").click(function(){
       deleteOrder(token,orderId);
@@ -40,20 +41,20 @@ $(function(){
       location.reload();
     })
   })
-  $("#contactWorkerBtn").live("click",function(){
+  $("#contactWorkerBtn").on("click",function(){
     $("#cancelOrder2").css("display","block");
     $("#contactWorkerBtn").click(function(){
       $("#cancelOrder2").hide();
     })
   })
-/*--¶©µ¥ÏêÇé--*/
+/*--è®¢å•è¯¦æƒ…--*/
   $.ajax({
     method:"POST",
     url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
     async:false,
     data:{
-    Token:"a81a27a193ff18a39e51b838e3e13496",
-    OrderId:"c546013a-9a79-e611-a80e-14dda950621b"
+    Token:'865077b7deb3082261d22bfc2765c5e0',
+    OrderId:"2433d1cf-d665-e611-a80e-14dda950621b"
     },
     success:function(data){
       console.log(data);
@@ -64,8 +65,10 @@ $(function(){
       // picData = data.Body.OrderService.Pictures;
       // picLength = data.Body.OrderService.Pictures.length;
       // var gender = data.body[0].ServiceProviderGender;
-      // orderIsGeted = data.Body.ServiceProviderId;
+      orderIsGeted = data.Body.ServiceProviderId;
+
       var orderId = data.Body.OrderId;
+      isEvaluated = data.Body.IsEvaluated;
 
       $("#orderCode").text(data.Body.OrderCode);
       $("#createTime").text(data.Body.CreateTime);
@@ -74,7 +77,7 @@ $(function(){
       $("#finishAt").text(data.Body.FinishTime);
       $("#confirmAt").text(data.Body.ConfirmTime);
       $("#cancalAt").text(data.Body.CancelTime);
-      $("#clientName").text(data.Body.AddressInfo.Contact);
+      // $("#clientName").text(data.Body.AddressInfo.Contact);
       
       console.log(data.Body.Service.ServiceName);
       $("#serviceName").text(data.Body.Service.ServiceName);
@@ -100,14 +103,14 @@ $(function(){
       if(data.Body.Activity == ""){
         $("#specialPrice").hide();
       }
-      // if(data.Body.Price == "ÃæÒé"){
-      //   $("ifNegotiable").text("ÃæÒé");
+      // if(data.Body.Price == "é¢è®®"){
+      //   $("ifNegotiable").text("é¢è®®");
       //   $("#multiple").hide();
       // }
       if(data.Body.AddressInfo.Gender == "0"){
-        $("#clientGender").text("ÏÈÉú");
+        $("#clientGender").text("å…ˆç”Ÿ");
       }else if(data.Body.AddressInfo.Gender == "1"){
-        $("#clientGender").text("Å®Ê¿");
+        $("#clientGender").text("å¥³å£«");
       }
       if(data.Body.DiscountAmount == ""){
         $("#orderDiscount").hide();
@@ -122,20 +125,20 @@ $(function(){
       $("#actualMoney").text(data.Body.TotalPrice);
 
       if(data.Body.ServiceProviderType == "2"){
-        console.log("¹¤ÈË");
+        console.log("å·¥äºº");
         var workHeadPic = data.Body.ServiceProviderPic;
         var workName = data.Body.ServiceProviderName;
         var gender = data.Body.ServiceProviderGender;
         $("#serviceProviderName").text(workName);
         $("#providerHead").attr("src",workHeadPic);
         if(gender == "1"){
-          $("#workerGender").text('°¢ÒÌ');
+          $("#workerGender").text('é˜¿å§¨');
         }else if(gender == "0"){
-          $("#workerGender").text("Ê¦¸µ");
+          $("#workerGender").text("å¸ˆå‚…");
         }
       }
       if(data.Body.ServiceProviderType == "3"){
-        console.log("ÉÌ»§");
+        console.log("å•†æˆ·");
         var busHeadPic = data.Body.Business.Photo;
         $("#providerHead").attr("src",busHeadPic);
       }
@@ -162,17 +165,65 @@ $(function(){
 
 console.log(orderState);
   switch(orderState){
-    case "10":
-    console.log("´ı½Óµ¥");
+    case "1":
+    console.log("å¾…æ¥å•");
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
 
-    $("#status").text('¶©µ¥Ìá½»³É¹¦');
-    $("#explanation").text('ÇëÄÍĞÄµÈ´ı¿Í·şÎªÄú°²ÅÅ¹¤ÈË£¬²¢È·¶¨·şÎñ¼Û¸ñ');
-    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
-    $("#tabThird").text('´ı¸¶¿î');
-    $("#tabFourth").text('´ı·şÎñ');
-    $("#btnRight").text('È¡Ïû¶©µ¥');
+    $("#status").text('è®¢å•æäº¤æˆåŠŸ');
+    $("#explanation").text('è¯·è€å¿ƒç­‰å¾…å®¢æœä¸ºæ‚¨å®‰æ’å·¥äººï¼Œå¹¶ç¡®å®šæœåŠ¡ä»·æ ¼');
+    $("#tabFirst").text('è®¢å•å·²æäº¤');
+    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+    $("#tabThird").text('å¾…ä»˜æ¬¾');
+    $("#tabFourth").text('å¾…æœåŠ¡');
+    $("#btnRight").text('å–æ¶ˆè®¢å•');
+
+    $("#explanation").css("width","256px");
+
+    $("#tabSecond").addClass("processing");
+    $("#roundFirst").addClass("round-complete");
+    $("#roundSecond").addClass("round-processing");
+    $("#roundThird").addClass("round-undone");
+    $("#roundFourth").addClass("round-undone");
+    $("#btnRight").addClass("delete-btn");
+
+    $("#zjWorker").hide();
+    $("#orderPrice").hide();
+    $("#orderDiscount").hide();
+    $("#orderActual").hide();
+    $("#unitPrice").hide();
+    $("#multiple").hide();
+    $("#refundRecord").hide();
+    $("#filling2").hide();
+    $("#acceptTime").hide();
+    $("#payTime").hide();
+    $("#btnLeft").hide();
+    $("#cancelTime").hide();
+    $("#specialPrice").hide();
+    $("#waitOrder").hide();
+
+    $("#orderTime").css("marginBottom","4px");
+    $("#servicePrice").css("marginBottom","4px");
+
+    $("#btnRight").click(function(){
+      $("#cancelOrder1").css("display","block");
+      $("#cancelOrderBtn").click(function(){
+        cancelOrder(token,orderId);
+        $("#cancelOrder1").hide();
+        location.reload();
+      })
+    });
+    break;
+    case "10":
+    console.log("å¾…æ¥å•");
+    $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
+
+    $("#status").text('è®¢å•æäº¤æˆåŠŸ');
+    $("#explanation").text('è¯·è€å¿ƒç­‰å¾…å®¢æœä¸ºæ‚¨å®‰æ’å·¥äººï¼Œå¹¶ç¡®å®šæœåŠ¡ä»·æ ¼');
+    $("#tabFirst").text('è®¢å•å·²æäº¤');
+    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+    $("#tabThird").text('å¾…ä»˜æ¬¾');
+    $("#tabFourth").text('å¾…æœåŠ¡');
+    $("#btnRight").text('å–æ¶ˆè®¢å•');
 
     $("#explanation").css("width","256px");
 
@@ -210,20 +261,66 @@ console.log(orderState);
       })
     });
 
+    if(orderIsGeted == ""){
+      console.log("å–æ¶ˆè®¢å•ï¼Œå·¥äººæ²¡æ¥å•");
+     $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
+
+     $("#status").text('è®¢å•å·²å–æ¶ˆ');
+     $("#explanation").text('');
+     $("#tabFirst").text('è®¢å•å·²æäº¤');
+     $("#tabSecond").text('è®¢å•å·²å–æ¶ˆ');
+     $("#btnRight").text('åˆ é™¤è®¢å•');
+
+     $("#roundFirst").addClass("round-undone");
+     $("#roundSecond").addClass("round-undone");
+     $("#btnRight").addClass("delete-btn");
+
+     $(".round").css("left","89px");
+
+     $("#proThird").hide();
+     $("#proFourth").hide();
+     $("#zjWorker").hide();
+     $("#addRemark").hide();
+     $("#refundRecord").hide();
+     $("#filling2").hide();
+     $("#unitPrice").hide();
+     $("#multiple").hide();
+     $("#orderPrice").hide();
+     $("#orderDiscount").hide();
+     $("#orderActual").hide();
+     $("#acceptTime").hide();
+     $("#payTime").hide();
+     $("#finishTime").hide();
+     $("#btnLeft").hide();
+     $("#cancelTime").hide();
+
+     $("#status").css("paddingTop","90px");
+     $("#orderTime").css("marginBottom","4px");
+     $("#servicePrice").css("marginBottom","4px"); 
+
+    $("#btnRight").click(function(token,orderId){
+      $("#deleteOrder").css("display","block");
+      $("#deleteBtn").click(function(){
+        $("#deleteOrder").hide();
+        removeOrder(token,orderId);
+        location.reload();
+      })
+    })
+    }
     break;
     
     // case "11":
-    // console.log("´ı¸¶¿î");
+    // console.log("å¾…ä»˜æ¬¾");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    // $("#status").text('¹¤ÈËÒÑ½Óµ¥');
-    // $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
-    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    // $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
-    // $("#tabThird").text('´ı¸¶¿î');
-    // $("#tabFourth").text('´ı·şÎñ');
-    // $("#btnLeft").text('È¡Ïû¶©µ¥');
-    // $("#btnRight").text('Ö§¸¶');
+    // $("#status").text('å·¥äººå·²æ¥å•');
+    // $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
+    // $("#tabFirst").text('è®¢å•å·²æäº¤');
+    // $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+    // $("#tabThird").text('å¾…ä»˜æ¬¾');
+    // $("#tabFourth").text('å¾…æœåŠ¡');
+    // $("#btnLeft").text('å–æ¶ˆè®¢å•');
+    // $("#btnRight").text('æ”¯ä»˜');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -260,15 +357,15 @@ console.log(orderState);
     // break;
 
     // case "12":
-    // console.log("¸¶¿îÖĞ");
+    // console.log("ä»˜æ¬¾ä¸­");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
 
-    // $("#status").text('¸¶¿îÖĞ');
-    // $("#explanation").text('µÈ´ıÖ§¸¶½á¹û');
-    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-    // $("#tabThird").text('¸¶¿îÖĞ');
-    // $("#tabFourth").text('´ı·şÎñ');
+    // $("#status").text('ä»˜æ¬¾ä¸­');
+    // $("#explanation").text('ç­‰å¾…æ”¯ä»˜ç»“æœ');
+    // $("#tabFirst").text('è®¢å•å·²æäº¤');
+    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
+    // $("#tabThird").text('ä»˜æ¬¾ä¸­');
+    // $("#tabFourth").text('å¾…æœåŠ¡');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -291,16 +388,16 @@ console.log(orderState);
     // break;
 
     // case "13":
-    // console.log("´ıÈ·ÈÏ");
+    // console.log("å¾…ç¡®è®¤");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
 
-    // $("#status").text('ÉÏÃÅ·şÎñ');
-    // $("#explanation").text('ÇëÄÍĞÄµÈ´ı¹¤ÈËÔÚÔ¼¶¨Ê±¼äÉÏÃÅ·şÎñÅ¶');
-    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-    // $("#tabThird").text('´ı¸¶¿î');
-    // $("#tabFourth").text('´ı·şÎñ');
-    // $("#btnRight").text('È¡Ïû¶©µ¥');
+    // $("#status").text('ä¸Šé—¨æœåŠ¡');
+    // $("#explanation").text('è¯·è€å¿ƒç­‰å¾…å·¥äººåœ¨çº¦å®šæ—¶é—´ä¸Šé—¨æœåŠ¡å“¦');
+    // $("#tabFirst").text('è®¢å•å·²æäº¤');
+    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
+    // $("#tabThird").text('å¾…ä»˜æ¬¾');
+    // $("#tabFourth").text('å¾…æœåŠ¡');
+    // $("#btnRight").text('å–æ¶ˆè®¢å•');
 
     // $("#explanation").css("width","205px");
 
@@ -321,15 +418,15 @@ console.log(orderState);
     // break;
 
     // case "15":
-    // console.log("ÍË¿îÖĞ");
+    // console.log("é€€æ¬¾ä¸­");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
 
-    // $("#status").text('ÍË¿îÖĞ');
-    // $("#explanation").text('ÏµÍ³½«ÓÚ72Ğ¡Ê±ÄÚÍË¿î');
-    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-    // $("#tabThird").text('ÍË¿îÖĞ');
-    // $("#tabFourth").text('ÍË¿î³É¹¦');
+    // $("#status").text('é€€æ¬¾ä¸­');
+    // $("#explanation").text('ç³»ç»Ÿå°†äº72å°æ—¶å†…é€€æ¬¾');
+    // $("#tabFirst").text('è®¢å•å·²æäº¤');
+    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
+    // $("#tabThird").text('é€€æ¬¾ä¸­');
+    // $("#tabFourth").text('é€€æ¬¾æˆåŠŸ');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -344,20 +441,20 @@ console.log(orderState);
     // break;
 
     case "20":
-    console.log("ÒÑ½Óµ¥");
-
+    console.log("å·²æ¥å•");
+    console.log(isPayOff);
     if(isPayOff == "0"){
-      console.log("¶©µ¥×´Ì¬£º´ı¸¶¿î");
+      console.log("è®¢å•çŠ¶æ€ï¼šå¾…ä»˜æ¬¾");
       $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-      $("#status").text('¹¤ÈËÒÑ½Óµ¥');
-      $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
-      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-      $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
-      $("#tabThird").text('´ı¸¶¿î');
-      $("#tabFourth").text('´ı·şÎñ');
-      $("#btnLeft").text('È¡Ïû¶©µ¥');
-      $("#btnRight").text('Ö§¸¶');
+      $("#status").text('å·¥äººå·²æ¥å•');
+      $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+      $("#tabThird").text('å¾…ä»˜æ¬¾');
+      $("#tabFourth").text('å¾…æœåŠ¡');
+      $("#btnLeft").text('å–æ¶ˆè®¢å•');
+      $("#btnRight").text('æ”¯ä»˜');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
@@ -380,29 +477,31 @@ console.log(orderState);
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").click(function(){
-        $("#cancelOrder2").css("display","block");
-        $("#contactWorkerBtn").click(function(){
-          $("#cancelOrder2").hide();
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").click(function(){
+          cancelOrder(Token,OrderId);
+          $("#cancelOrder1").hide();
+          // UpdataOrder(Token,OrderId);
+          location.reload();
         })
       })
-
       $("#btnRight").click(function(){
-        window.location.href="";
+        window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
       })
     }
     // if(hasPaied == "1"){
-    //   console.log("¶©µ¥×´Ì¬£º¸¶Çå");
+    //   console.log("è®¢å•çŠ¶æ€ï¼šä»˜æ¸…");
     // }
     if(payLock == "1"){
-      console.log("¸¶¿îÖĞ");
+      console.log("ä»˜æ¬¾ä¸­");
       $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
 
-      $("#status").text('¸¶¿îÖĞ');
-      $("#explanation").text('µÈ´ıÖ§¸¶½á¹û');
-      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-      $("#tabThird").text('¸¶¿îÖĞ');
-      $("#tabFourth").text('´ı·şÎñ');
+      $("#status").text('ä»˜æ¬¾ä¸­');
+      $("#explanation").text('ç­‰å¾…æ”¯ä»˜ç»“æœ');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('ä»˜æ¬¾ä¸­');
+      $("#tabFourth").text('å¾…æœåŠ¡');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
@@ -428,14 +527,14 @@ console.log(orderState);
 
     $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    $("#status").text('¹¤ÈËÒÑ½Óµ¥');
-    $("#explanation").text('ÇëÖ§¸¶·şÎñ·ÑÓÃ²¢µÈ´ı¹¤ÈËÉÏÃÅ·şÎñÄúÒ²¿ÉÒÔÔÚ¹¤ÈË·şÎñÍê³ÉºóÔÙ¸¶¿îÅ¶');
-    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
-    $("#tabThird").text('´ı¸¶¿î');
-    $("#tabFourth").text('´ı·şÎñ');
-    $("#btnLeft").text('È¡Ïû¶©µ¥');
-    $("#btnRight").text('Ö§¸¶');
+    $("#status").text('å·¥äººå·²æ¥å•');
+    $("#explanation").text('è¯·æ”¯ä»˜æœåŠ¡è´¹ç”¨å¹¶ç­‰å¾…å·¥äººä¸Šé—¨æœåŠ¡æ‚¨ä¹Ÿå¯ä»¥åœ¨å·¥äººæœåŠ¡å®Œæˆåå†ä»˜æ¬¾å“¦');
+    $("#tabFirst").text('è®¢å•å·²æäº¤');
+    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+    $("#tabThird").text('å¾…ä»˜æ¬¾');
+    $("#tabFourth").text('å¾…æœåŠ¡');
+    $("#btnLeft").text('å–æ¶ˆè®¢å•');
+    $("#btnRight").text('æ”¯ä»˜');
 
     $("#tabThird").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -462,27 +561,29 @@ console.log(orderState);
       $("#cancelOrder1").css("display","block");
       $("#cancelOrderBtn").click(function(){
         cancelOrder(Token,OrderId);
-        UpdataOrder(Token,OrderId);
+        $("#cancelOrder1").hide();
+        // UpdataOrder(Token,OrderId);
+        location.reload();
       })
     })
     $("#btnRight").click(function(){
-      window.location.href="";
+      window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
     })
     break;
 
     case "30":
-    console.log("ÒÑÍê³É");
+    console.log("å·²å®Œæˆ");
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    Date.prototype.Format = function (fmt) { //¸ñÊ½»¯Ê±¼ä
+    Date.prototype.Format = function (fmt) { //æ ¼å¼åŒ–æ—¶é—´
       var o = {
-        "M+": this.getMonth() + 1, //ÔÂ·İ 
-        "d+": this.getDate(), //ÈÕ 
-        "h+": this.getHours(), //Ğ¡Ê± 
-        "m+": this.getMinutes(), //·Ö 
-        "s+": this.getSeconds(), //Ãë 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //¼¾¶È 
-        "S": this.getMilliseconds() //ºÁÃë 
+        "M+": this.getMonth() + 1, //æœˆä»½ 
+        "d+": this.getDate(), //æ—¥ 
+        "h+": this.getHours(), //å°æ—¶ 
+        "m+": this.getMinutes(), //åˆ† 
+        "s+": this.getSeconds(), //ç§’ 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //å­£åº¦ 
+        "S": this.getMilliseconds() //æ¯«ç§’ 
       };
       if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
       for (var k in o)
@@ -495,33 +596,33 @@ console.log(orderState);
     // var time = "2016/09/12 11:16:30";
     // var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
 
-    function DateDiff(sDate1, sDate2){//sDate1ºÍsDate2ÊÇyyyy-MM-dd¸ñÊ½  
+    function DateDiff(sDate1, sDate2){//sDate1å’ŒsDate2æ˜¯yyyy-MM-ddæ ¼å¼  
       var aDate, oDate1, oDate2, iDays, iHours, diffText;
       aDate = sDate1.split("-");
       oDate1 = new  Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
       aDate = sDate2.split("-"); 
       oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); 
-      iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //°ÑÏà²îµÄºÁÃëÊı×ª»»ÎªÌìÊı 
-      iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//¼ÆËãÏà²îµÄĞ¡Ê±Êı
-      diffText = iDays + "Ìì" + iHours + "Ê±";
+      iDays = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60/24);   //æŠŠç›¸å·®çš„æ¯«ç§’æ•°è½¬æ¢ä¸ºå¤©æ•° 
+      iHours = parseInt(Math.abs(oDate1 - oDate2)/1000/60/60%24);//è®¡ç®—ç›¸å·®çš„å°æ—¶æ•°
+      diffText = iDays + "å¤©" + iHours + "æ—¶";
       return  diffText; 
     }
     if(confirmTime > now){
     var dateDiff = DateDiff(confirmTime,now);
-    var dataDiffText = "ÇëÈ·ÈÏ·şÎñÍê³É£¬»¹Ê£" + dateDiff + "×Ô¶¯È·ÈÏ";
+    var dataDiffText = "è¯·ç¡®è®¤æœåŠ¡å®Œæˆï¼Œè¿˜å‰©" + dateDiff + "è‡ªåŠ¨ç¡®è®¤";
     }
     console.log(dataDiffText);
     console.log(now);
     console.log(confirmTime);
     // console.log(ftime);
 
-    $("#status").text('¹¤ÈËÒÑÍê³É·şÎñ');
+    $("#status").text('å·¥äººå·²å®ŒæˆæœåŠ¡');
     $("#explanation").text(dataDiffText);
-    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    $("#tabSecond").text('´ı¹¤ÈË½Óµ¥');
-    $("#tabThird").text('ÒÑ¸¶¿î');
-    $("#tabFourth").text('È·ÈÏ·şÎñÍê³É');
-    $("#btnRight").text('È·ÈÏ·şÎñÍê³É');
+    $("#tabFirst").text('è®¢å•å·²æäº¤');
+    $("#tabSecond").text('å¾…å·¥äººæ¥å•');
+    $("#tabThird").text('å·²ä»˜æ¬¾');
+    $("#tabFourth").text('ç¡®è®¤æœåŠ¡å®Œæˆ');
+    $("#btnRight").text('ç¡®è®¤æœåŠ¡å®Œæˆ');
 
     $("#explanation").css("width","237px");
 
@@ -543,54 +644,96 @@ console.log(orderState);
     $("#waitOrder").hide();
     $("#btnRight").click(function(){
       confirmOrder(Token,OrderId,Memo);
+      location.reload();
+
     })
 
     break;
 
     case "40":
-    console.log("¿Í»§È·ÈÏÍê³É£¬´ıÆÀ¼Û");
+    console.log("å®¢æˆ·ç¡®è®¤å®Œæˆï¼Œå¾…è¯„ä»·");
 
-    $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
+    if(isEvaluated == null){
 
-    $("#status").text('·şÎñÒÑÍê³É');
-    $("#explanation").text('ÆÀ¼ÛÒ»ÏÂÕâ´Î·şÎñ°É~');
-    $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-    $("#tabThird").text('·şÎñÍê³É');
-    $("#btnRight").text('ÆÀ¼Û');
+      $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#btnRight").addClass("confirm-btn");
+      $("#status").text('æœåŠ¡å·²å®Œæˆ');
+      $("#explanation").text('è¯„ä»·ä¸€ä¸‹è¿™æ¬¡æœåŠ¡å§~');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('æœåŠ¡å®Œæˆ');
+      $("#btnRight").text('è¯„ä»·');
 
-    $(".round").css("left","58px");  
+      $("#tabThird").addClass("processing");
+      $("#roundFirst").addClass("round-complete");
+      $("#roundSecond").addClass("round-complete");
+      $("#roundThird").addClass("round-processing");
+      $("#btnRight").addClass("confirm-btn");
 
-    $("#proFourth").hide();
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#btnLeft").hide();
-    $("#cancelTime").hide();
-    $("#specialPrice").hide();
-    $("#waitOrder").hide();
+      $(".round").css("left","58px");  
 
-    $("#btnRight").click(function(){
-      window.location.href="";
-    })
+      $("#proFourth").hide();
+      $("#refundRecord").hide();
+      $("#filling2").hide();
+      $("#negotiable").hide();
+      $("#btnLeft").hide();
+      $("#cancelTime").hide();
+      $("#specialPrice").hide();
+      $("#waitOrder").hide();
+
+      $("#btnRight").click(function(){
+        window.location.href="";
+      })
+    }
+
+    if(isEvaluated != null){
+      $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
+
+      $("#status").text('æœåŠ¡å·²å®Œæˆ');
+      $("#explanation").text('');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('æœåŠ¡å®Œæˆ');
+      $("#btnRight").text('åˆ é™¤è®¢å•');
+
+      $("#tabThird").addClass("processing");
+      $("#roundFirst").addClass("round-complete");
+      $("#roundSecond").addClass("round-complete");
+      $("#roundThird").addClass("round-processing");
+      $("#btnRight").addClass("confirm-btn");
+
+      $(".round").css("left","58px");  
+
+      $("#proFourth").hide();
+      $("#refundRecord").hide();
+      $("#filling2").hide();
+      $("#negotiable").hide();
+      $("#btnLeft").hide();
+      $("#cancelTime").hide();
+      $("#specialPrice").hide();
+      $("#waitOrder").hide();
+
+      $("#btnRight").click(function(){
+        $("#deleteOrder").css("display","block");
+        $("#deleteBtn").click(function(){
+          $("#deleteOrder").hide();
+          removeOrder(token,orderId);
+          location.reload();
+        })
+      })
+    }
 
     break;
     // case "21":
-    // console.log("´ıÆÀ¼Û");
+    // console.log("å¾…è¯„ä»·");
     // $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
-    // $("#status").text('·şÎñÒÑÍê³É');
-    // $("#explanation").text('ÆÀ¼ÛÒ»ÏÂÕâ´Î·şÎñ°É~');
-    // $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-    // $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-    // $("#tabThird").text('·şÎñÍê³É');
-    // $("#btnRight").text('ÆÀ¼Û');
+    // $("#status").text('æœåŠ¡å·²å®Œæˆ');
+    // $("#explanation").text('è¯„ä»·ä¸€ä¸‹è¿™æ¬¡æœåŠ¡å§~');
+    // $("#tabFirst").text('è®¢å•å·²æäº¤');
+    // $("#tabSecond").text('å·¥äººå·²æ¥å•');
+    // $("#tabThird").text('æœåŠ¡å®Œæˆ');
+    // $("#btnRight").text('è¯„ä»·');
 
     // $("#tabThird").addClass("processing");
     // $("#roundFirst").addClass("round-complete");
@@ -609,17 +752,17 @@ console.log(orderState);
 
     // break;
     case "50":
-    console.log("ÒÑÈ¡Ïû");
+    console.log("å·²å–æ¶ˆ");
     if(orderIsGeted!=""){
-      console.log('È¡Ïû¶©µ¥£¬¹¤ÈËÒÑ¾­½Óµ¥');
+      console.log('å–æ¶ˆè®¢å•ï¼Œå·¥äººå·²ç»æ¥å•');
       $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
 
-      $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
-      $("#explanation").text('¹¤ÈËÒÑ¾­½Óµ¥À²£¬ÏÂ´ÎÌåÁÂÏÂ¹¤ÈËÅ¶');
-      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-      $("#tabThird").text('¶©µ¥ÒÑÈ¡Ïû');
-      $("#btnRight").text('É¾³ı¶©µ¥');
+      $("#status").text('è®¢å•å·²å–æ¶ˆ');
+      $("#explanation").text('å·¥äººå·²ç»æ¥å•å•¦ï¼Œä¸‹æ¬¡ä½“è°…ä¸‹å·¥äººå“¦');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('è®¢å•å·²å–æ¶ˆ');
+      $("#btnRight").text('åˆ é™¤è®¢å•');
 
       $("#roundFirst").addClass("round-undone");
       $("#roundSecond").addClass("round-undone");
@@ -649,68 +792,31 @@ console.log(orderState);
       // $("#orderTime").css("marginBottom","4px");
       $("#servicePrice").css("marginBottom","4px"); 
 
-    };
-    if(orderIsGeted == ""){
-      console.log("È¡Ïû¶©µ¥£¬¹¤ÈËÃ»½Óµ¥");
-     $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
-
-     $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
-     $("#explanation").text('');
-     $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-     $("#tabSecond").text('¶©µ¥ÒÑÈ¡Ïû');
-     $("#btnRight").text('É¾³ı¶©µ¥');
-
-     $("#roundFirst").addClass("round-undone");
-     $("#roundSecond").addClass("round-undone");
-     $("#btnRight").addClass("delete-btn");
-
-     $(".round").css("left","89px");
-
-     $("#proThird").hide();
-     $("#proFourth").hide();
-     $("#zjWorker").hide();
-     $("#addRemark").hide();
-     $("#refundRecord").hide();
-     $("#filling2").hide();
-     $("#unitPrice").hide();
-     $("#multiple").hide();
-     $("#orderPrice").hide();
-     $("#orderDiscount").hide();
-     $("#orderActual").hide();
-     $("#acceptTime").hide();
-     $("#payTime").hide();
-     $("#finishTime").hide();
-     $("#btnLeft").hide();
-     $("#cancelTime").hide();
-
-     $("#status").css("paddingTop","90px");
-     $("#orderTime").css("marginBottom","4px");
-     $("#servicePrice").css("marginBottom","4px"); 
-
-    $("#btnRight").click(function(token,orderId){
-      $("#deleteOrder").css("display","block");
-      $("#deleteBtn").click(function(){
-        removeOrder(token,orderId);
-        location.reload();
-        $("#deleteOrder").hide();
+      $("#btnRight").click(function(){
+        $("#deleteOrder").css("display","block");
+        $("#deleteBtn").click(function(){
+          removeOrder(token,orderId);
+          location.reload();
+          $("#deleteOrder").hide();
+        })
       })
-    })
-    }
+    };
+
     
     break;
 
-    /*--ÍË¿î×´Ì¬--*/
+    /*--é€€æ¬¾çŠ¶æ€--*/
     if(refundIsFinshed == "1"){
-      console.log("ÍË¿îÖĞ");
+      console.log("é€€æ¬¾ä¸­");
       $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
 
-      $("#status").text('ÍË¿îÖĞ');
-      $("#explanation").text('ÏµÍ³½«ÓÚ72Ğ¡Ê±ÄÚÍË¿î');
-      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-      $("#tabThird").text('ÍË¿îÖĞ');
-      $("#tabFourth").text('ÍË¿î³É¹¦');
-      $("#refundStatus").text('ÍË¿îÖĞ');
+      $("#status").text('é€€æ¬¾ä¸­');
+      $("#explanation").text('ç³»ç»Ÿå°†äº72å°æ—¶å†…é€€æ¬¾');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('é€€æ¬¾ä¸­');
+      $("#tabFourth").text('é€€æ¬¾æˆåŠŸ');
+      $("#refundStatus").text('é€€æ¬¾ä¸­');
 
       $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-complete");
@@ -725,16 +831,16 @@ console.log(orderState);
 
     }
     if(refundIsFinshed == "2"){
-      console.log("ÍË¿îÍê³É");
+      console.log("é€€æ¬¾å®Œæˆ");
 
-      $("#status").text('¶©µ¥ÒÑÈ¡Ïû');
+      $("#status").text('è®¢å•å·²å–æ¶ˆ');
       $("#explanation").text('');
-      $("#tabFirst").text('¶©µ¥ÒÑÌá½»');
-      $("#tabSecond").text('¹¤ÈËÒÑ½Óµ¥');
-      $("#tabThird").text('ÍË¿î³É¹¦');
-      $("#tabFourth").text('¶©µ¥ÒÑÈ¡Ïû');
-      $("#refundStatus").text('ÍË¿îÍê³É');
-      $("#btnRight").text('É¾³ı¶©µ¥');
+      $("#tabFirst").text('è®¢å•å·²æäº¤');
+      $("#tabSecond").text('å·¥äººå·²æ¥å•');
+      $("#tabThird").text('é€€æ¬¾æˆåŠŸ');
+      $("#tabFourth").text('è®¢å•å·²å–æ¶ˆ');
+      $("#refundStatus").text('é€€æ¬¾å®Œæˆ');
+      $("#btnRight").text('åˆ é™¤è®¢å•');
 
       // $("#tabThird").addClass("processing");
       $("#roundFirst").addClass("round-undone");
@@ -756,7 +862,7 @@ console.log(orderState);
 
 
   function removeOrder(token,orderId){
-    console.log("É¾³ı¶©µ¥");
+    console.log("åˆ é™¤è®¢å•");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
@@ -765,15 +871,15 @@ console.log(orderState);
         OrderId:orderId
       },
       success:function(data){
-        console.log("É¾³ı¶©µ¥³É¹¦");
+        console.log("åˆ é™¤è®¢å•æˆåŠŸ");
       }
     })
   }
 
-      /*--Ìí¼Ó±¸×¢--*/
+      /*--æ·»åŠ å¤‡æ³¨--*/
 /*--
   $("#addRemark").click(function(){
-    console.log("ÏÔÊ¾µ¯´°");
+    console.log("æ˜¾ç¤ºå¼¹çª—");
     $("#userMemo").show();
   });
   $("#confirmBtn").click(function(){
@@ -782,25 +888,25 @@ console.log(orderState);
     if(memoText != ""){
       memo();
     }else{
-      console.log("²»Ìá½»");
+      console.log("ä¸æäº¤");
     }
   })
   $("#cancelBtn,#confirmBtn").click(function(){
     $("#userMemo").hide();
   });
   // $("#addRemark").on("click",function(){
-  //   console.log("ÏÔÊ¾µ¯´°");
+  //   console.log("æ˜¾ç¤ºå¼¹çª—");
   //   $("#userMemo").show();
   // })
   function memo(){
-    console.log("²¹³ä±¸×¢");
+    console.log("è¡¥å……å¤‡æ³¨");
     $.ajax({
 
     })
   }
   --*/
   function updateOrder(token,orderId){
-    console.log("¸üĞÂ¶©µ¥");
+    console.log("æ›´æ–°è®¢å•");
     $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
@@ -809,12 +915,12 @@ console.log(orderState);
           OrderId:orderId
         },
         success:function(data){
-          console.log("¸üĞÂ¶©µ¥³É¹¦");
+          console.log("æ›´æ–°è®¢å•æˆåŠŸ");
         }     
     })
   }
   function cancelOrder(token,orderId){
-    console.log("È¡Ïû¶©µ¥");
+    console.log("å–æ¶ˆè®¢å•");
     $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
@@ -823,12 +929,12 @@ console.log(orderState);
           OrderId:orderId
         },
         success:function(data){
-          console.log("È¡Ïû¶©µ¥³É¹¦");
+          console.log("å–æ¶ˆè®¢å•æˆåŠŸ");
         }     
     })
   }
   function confirmOrder(token,orderId,memo){
-    console.log("È·ÈÏ¶©µ¥");
+    console.log("ç¡®è®¤è®¢å•");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
@@ -838,12 +944,12 @@ console.log(orderState);
         Memo:memo
       },
       success:function(data){
-        console.log("È·ÈÏ¶©µ¥³É¹¦");
+        console.log("ç¡®è®¤è®¢å•æˆåŠŸ");
       }
     })
   } 
   function completeOrder(token,orderId){
-    console.log("Íê³É¶©µ¥");
+    console.log("å®Œæˆè®¢å•");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
@@ -852,13 +958,13 @@ console.log(orderState);
         OrderId:orderId
       },
       success:function(data){
-        console.log("Íê³É¶©µ¥³É¹¦");
+        console.log("å®Œæˆè®¢å•æˆåŠŸ");
       }
     })
   }
   $("#toProviderDetail").on("click",function(){
-    console.log('Ìø×ªµ½¶ÔÓ¦Ò³Ãæ');
-    // window.location.href="";
+    console.log('è·³è½¬åˆ°å¯¹åº”é¡µé¢');
+    window.location.href="";
   });
 
 });

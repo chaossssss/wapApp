@@ -129,15 +129,15 @@
         <div class="weui_panel_bd">
           <div class="weui_media_box weui_media_text">
             <div class="weui_media_desc zj-fontsize">
-              <p class="refund"><span id="refundAt">2016-05-12 12:45</span></p>
-              <p class="refund refund-money">￥99.0<span id="actualMoney"></span></p>
-              <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
+              <p class="refund"><span id="refundAt"></span></p>
+              <p class="refund refund-money">￥<span id="actualMoney"></span></p>
+              <p class="refund refund-complete"><span id="refundStatus"></span></p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
               <p class="clear refund"></p>
-              <p class="refund refund-disc">优惠券扣除￥10.0<span id="refundDiscount"></span></p>
-              <p class="refund refund-lost">误工费￥110.0<span id="lostIncome"></span>，</p>
-              <p class="refund refund-sum">应退￥100.0<span id="refundAmount"></span>，</p>
+              <p class="refund refund-disc">优惠券扣除￥<span id="refundDiscount"></span></p>
+              <p class="refund refund-lost">误工费￥<span id="lostIncome"></span>，</p>
+              <p class="refund refund-sum">应退￥<span id="refundAmount"></span>，</p>
             </div>
           </div>
         </div>
@@ -246,6 +246,7 @@
   </div>
 </div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="/js/common/jquery.cookie.min.js"></script>
 <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="../../js/order-detail/order-detail.min.js"></script>
