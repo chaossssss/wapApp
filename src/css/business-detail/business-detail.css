@@ -40,7 +40,7 @@ textarea{resize: none;}
     padding-left: 12px;
     margin-top: -5px;
     font-weight: 400;
-    width: 180px;
+    width: 40%;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -56,7 +56,7 @@ textarea{resize: none;}
 	display:inline-block;
 	color:#3f3e48;
 	width:27px;
-	height:16px;
+	height:17px;
 	overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap; 
@@ -68,7 +68,7 @@ textarea{resize: none;}
 .bus-work{
 	float:left;
 	margin-left:12px;
-	width: 250px;
+	width: 60%;
 }
 .work-ic{
 	border:1px solid #7ed0fe;
@@ -81,11 +81,11 @@ textarea{resize: none;}
 	border-radius: 5px;
 }
 .wk-list{
-    width: 203px;
+    width: 74%;
     height: 20px;
     overflow: hidden;
     display: inline-block;
-    vertical-align: text-bottom;
+    text-overflow: ellipsis;
 }
 .bus-work ul{
 	display: inline-block;
@@ -100,7 +100,7 @@ textarea{resize: none;}
 }
 .address{
 	float:left;
-	width: 180px;
+	width: 42%;
 	height: 19px;
 	overflow: hidden;
     padding-left: 10px;
@@ -390,4 +390,62 @@ textarea{resize: none;}
 }
 .weui_media_box .weui_media_title{
 	font-size: 14px;
+}
+
+/*工人标签*/
+.worker-tag{
+    border-bottom: 1px solid #e4e4e4;
+    color:#3cbffd;
+}
+.worker-tag-box{
+    margin: 15px;
+    width: 95%;
+    margin-bottom: 8px;
+}
+.Tag{
+    height: 18px;
+    line-height: 18px;
+    border: 1px solid #3cbffd;
+    padding: 5px 12px;
+    border-radius: 5px;
+    margin-left: 10px;
+    display: inline-block;
+    margin-bottom: 9px;
+}
+
+/*活动内容*/
+.ac_cont{
+	padding: 0px 10px 0px 10px;
+}
+.exercise{
+    width: 60px;
+}
+.exercise-one{
+    width: 65px;
+    height: 40px;
+}
+.pitch{
+    padding: 5px 10px;
+}
+.exercise-two{
+    width: 60px;
+    padding-left: 10px;  
+}
+.ac_detail{
+	display: inline-block;
+    position: relative;
+    color: #fff;
+    font-size: 12px;
+    height: 40px;
+    line-height: 53px;
+    margin-left: 5px;
+}
+.youhui_info{
+    position: absolute;
+    top:-3px;
+    left:0;
+    margin-left: 3px;
+}
+.ac_right{
+	float:right;
 }

@@ -242,6 +242,31 @@ $(function(){
         }
     });
 
+    //获取工人标签
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/Business/GetMerchantTags',
+        dataType: 'json',
+        data:{
+            BusinessId:Id
+        },
+        success:function(data){
+            var api=data.Body.TagList;
+            var res="";
+            for (var i = 0; i < api.length; i++) {
+                res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
+            }
+
+            $(".worker-tag-box").html(res);
+
+        },
+        error: function(xhr, type){
+           alert('Ajax error!');
+           // 即使加载出错，也得重置
+           me.resetload();
+        }
+    });
+
 });
 
 function ShowDiv(show_div,bg_div){
