@@ -8,8 +8,8 @@ $.ajax({
     type:"POST",
     url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
     data:{
-        Type:"1",
-        Id:"3110"
+        Type:"Type",
+        Id:"Id"
     },
 
     success:function(data){

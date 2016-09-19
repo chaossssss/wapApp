@@ -77,7 +77,8 @@
         <div class="bus-add">
             <div class="address">
                 <span class="NativePlace"></span>
-                <span style="padding-left: 37px;" class="WorkingYears"></span>
+                <span style="padding-left: 6px;" class="WorkingYears"></span>
+                <!--<span class="bus-jl"><span class="jl-num"></span></span>-->
             </div>
             <div class="bus-jl">距离<span class="jl-num"></span></div>
         </div>
@@ -128,9 +129,7 @@
             <span class="rz-title">认证信息</span>
             <!--<div class="bus-img"></div>-->
             <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
+
             <img style="float: right; " src="/images/business-detail/jiantou.png" alt="" class="more">
         </div>
     </a>
@@ -147,16 +146,25 @@
     </div>
 
     <div class="clear"></div>
+    <!-- 活动内容 -->
+    <div class="ac_cont">
 
-    <div class="weui_cells">
-        <div class="weui_cell pitch">
-            <div class="weui_cell_hd"><img src="../../images/worker/service2@2x.png" class="exercise" alt=""/></div>
-            <div class="weui_cell_bd weui_cell_primary">
-                <p><img src="../../images/worker/service@2x.png" class="exercise-two" alt=""/></p>
-            </div>
-            <div class="weui_cell_ft"><a href="javascript:;"><img src="../../images/worker/button@2x.png" class="exercise-one" alt=""/></a></div>
+        <div class="ac_detail">
+            <img src="../../images/worker/ac_bg.png" class="exercise" alt=""/>
+            <span class="youhui_info">满90减10</span>
         </div>
+        <div class="ac_detail">
+            <img src="../../images/worker/ac_bg.png" class="exercise" alt=""/>
+            <span class="youhui_info">满90减10</span>
+        </div>
+        <a href="javascript:;">
+            <div class="ac_right">
+                <img src="../../images/worker/button@2x.png" class="exercise-one" alt=""/>
+            </div>
+        </a>
+        <div class="clear"></div>
     </div>
+
     <hr class="line">
     <a href="javascript:;" id="showDialog9">
         <div class="rz-infof">
@@ -166,7 +174,6 @@
             <span><img src="" alt=""/></span>
             <span><img src="" alt=""/></span>
             <span><img src="" alt=""/></span>
-
         </div>
     </a>
     <!--客户无评价-->
@@ -265,7 +272,8 @@
                 Id:Id
             },
             success:function(data){
-                var api=data.Body.Worker;
+                var api = data.Body.Worker;
+                var ser = data.SystemCertification
                 $(".bus-img").attr("src",api.Photo);
                 $(".Gender").attr("src",api.Gender);
                 $(".Name").text(api.Name);
@@ -292,14 +300,14 @@
                 }
 
                  var RzImgs="";
-                 for (var i = 0; i < data.SystemCertification.length; i++) {
-                  RzImgs+='<img src="'+data.SystemCertification[i].pic+'" class="rz-dia-img" alt="">';
+                 for (var i = 0; i < ser.length; i++) {
+                  RzImgs+='<img src="'+ser[i].pic+'" class="rz-dia-img" alt="">';
                  }
                  $(".rz-imgs").html(RzImgs);
 
                  var ModelRzImgs="";
-                 for (var j = 0; j < data.SystemCertification.length; j++) {
-                  ModelRzImgs+='<li><img src="'+data.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.SystemCertification[j].title+'</span></li>';
+                 for (var j = 0; j < ser.length; j++) {
+                  ModelRzImgs+='<li><img src="'+ser[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+ser[j].title+'</span></li>';
                  }
                  $(".dialog-imgs").html(ModelRzImgs);
 //                var ModelRzImgs="";
@@ -345,31 +353,6 @@
                 me.resetload();
             }
         });
-        //获取工人标签
-//        $.ajax({
-//            type: 'POST',
-//            url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
-//            dataType: 'json',
-//            data:{
-//                GetWorkerTags:"GetWorkerTags",
-//                WorkerId:'1474'
-//            },
-//            success:function(data){
-//                var api=data.Body.TagList;
-//                var res="";
-//                for(var i=0;i<=api.length;i++){
-//                    res+="<span class="+api[i].TagName+"></span>";
-//                }
-//                $(".worker-tag-box").html(res);
-//
-//
-//            },
-//            error: function(xhr, type){
-////                alert('Ajax error!');
-////                // 即使加载出错，也得重置
-////                me.resetload();
-//            }
-//        });
         //获取工人标签
         $.ajax({
             type: 'POST',
