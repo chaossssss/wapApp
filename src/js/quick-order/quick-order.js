@@ -1,7 +1,8 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "995ea025b8f50315b0ade11bbeff0d0f";
+	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
+	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {
@@ -16,6 +17,7 @@ angular.module('com.wapapp.app',[])
 .controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService',function($rootScope,$scope,priceService,orderService,addrService){
 	var vm = $scope.vm = {};
 	var addr = $scope.addr = {};
+	var sv = $scope.sv = {};
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
@@ -60,16 +62,19 @@ angular.module('com.wapapp.app',[])
 		$scope.textarea_size = a.length;
 	})
 
-	$scope.$on('service-type-id',function(event,id){
+	$scope.$on('service-type-id',function(event,id,name){
 		vm.serviceShow = false;
 		vm.ServiceTypeId = id;
-		console.log("ParentCtrl",id);
+		sv.name = name;
+		console.log("ParentCtrl",id,name);
 		priceService.get($rootScope.token,id,"2")
 			.success(function(res){
 				console.log(res);
 				vm.IsNegotiable = res.Body.IsNegotiable;
+				sv.Unit = res.Body.Unit;
+				sv.Min = res.Body.Min;
+				sv.Max = res.Body.Max;
 				$scope.$apply();
-
 			})
 	})
 
@@ -127,7 +132,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -174,11 +179,10 @@ angular.module('com.wapapp.app',[])
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;
 		console.log(id);
-		timeService.get("5")
+		timeService.get(id)
 			.success(function(res){
 				console.log(res);
 				dp.timeList =  res.Body;
-
 				$scope.$apply();
 			})
 	})
@@ -189,14 +193,14 @@ angular.module('com.wapapp.app',[])
 
 	listService.get()
 		.success(function(res){
-			console.log(res);
+			console.log("服务类型",res);
 			st.serviceList = res.Body;
 			$scope.$apply();
 		})
 
-	st.getTypeName = function(typeId){
+	st.getTypeName = function(typeId,typeName){
 		// console.log(typeId);
-		$scope.$emit('service-type-id',typeId);
+		$scope.$emit('service-type-id',typeId,typeName);
 	}
 }])
 .controller('uploaderFileCtrl',['$scope',function($scope){
@@ -459,7 +463,7 @@ angular.module('com.wapapp.app',[])
 
 	var getService = function(id){
 		var formData = {
-			ServieceTypeId: id
+			ServiceTypeId: id
 		}
 		return $.ajax({
 					method:"POST",
@@ -478,8 +482,8 @@ angular.module('com.wapapp.app',[])
 	}
 
 	return {
-		get: function(id){
-			return getService(id);
+		get: function(token,id){
+			return getService(token,id);
 		}
 	}
 }])

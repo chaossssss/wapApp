@@ -105,6 +105,42 @@
 				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
+		<!-- 活动 beginning -->
+		<div class="weui_cells weui_cells_access" ng-if="vm.serviceTypeObj.ServiceTypeId != 5">	
+			<!-- 活动 不满足条件 beginning-->
+			<div class="weui_cell">
+				<div class="weui_cell_bd weui_cell_primary">
+					<span class="pro_box">满80返20</span>
+					<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:middle;padding-left:10px;">
+				</div>
+			</div>
+			<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box">
+				<span class="flex1 pred">小时工服务现有特价活动： 满90立减10元！</span>
+				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;">
+			</div>
+		</div>
+		<!-- 活动 不满足条件 ending -->
+		<div class="weui_cells weui_cells_access" ng-if="vm.serviceTypeObj.ServiceTypeId == 5">
+			<!-- 活动 满足条件 beginning -->
+			<div class="weui_cell no_access">
+				<div class="weui_cell_hd">
+					<img src="/images/quick-order/i-gift.png" alt="" style="width:22px;margin-right:10px;display:block;">
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<span class="pred">特价小时工</span>
+					<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:5px;">
+				</div>
+				<div class="zj_cell_ft">
+					<p ng-if="vm.serviceTypeObj.Price*vm.Total >= 80">-¥10.0</p>
+				</div>
+			</div>
+			<div style="padding:5px 1px 15px 10px;font-size:16px;" class="pred">
+				<span class="pro_box">满80返20</span>
+			 	<span>已享优惠：满80返20</span>
+				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:10px;">
+			</div>
+		</div>	
+		<!-- 活动 endind -->
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
@@ -147,9 +183,13 @@
 		<div class="zj_foot_hd">
 			订单总价
 		</div>
+		<div class="zj_foot_bd" ng-show="!vm.serviceTypeObj.Price">
+			<span>--</span>
+		</div>
 		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price">
 			<span>¥</span>
-			<span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total < 90" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total >= 90" ng-bind="vm.serviceTypeObj.Price*vm.Total-10 | number:1"></span>
 		</div>
 		<!-- <div class="zj_foot_bd" ng-show="vm.IsNegotiable === true">
 			<span>面议</span>

@@ -1,7 +1,10 @@
 'use strict'
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "995ea025b8f50315b0ade11bbeff0d0f";
+	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
+	// $rootScope.token = $.cookie("Token");
+	
+	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {
@@ -247,10 +250,10 @@ angular.module('com.wapapp.app',[])
 					},
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
+						alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -268,10 +271,10 @@ angular.module('com.wapapp.app',[])
 					data: formData
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
+						alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -310,7 +313,7 @@ angular.module('com.wapapp.app',[])
 					data: formData
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
+						alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";

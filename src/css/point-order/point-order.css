@@ -8,8 +8,16 @@ ul,li {
 	padding: 0;
 	list-style: none;
 }
+/*配色方案*/
 .pgreen {
 	color:#04BE02;
+}
+.pred {
+	color: #f43530;
+}
+/*活动配色 promotion*/
+.p-orange {
+	color: #ff5000;
 }
 .pl20 {
 	padding-left: 20px;
@@ -413,7 +421,15 @@ ul,li {
 .blpink {
 	border-left: 3px solid rgb(248,43,75);
 }
-
+/*活动样式 promotion*/
+.pro_box {
+	display: inline-block;
+	color: #fff;
+	background-color: #f43530;
+	font-size: 14px;
+	line-height: 20px;
+	padding:0 6px;
+}
 
 
 

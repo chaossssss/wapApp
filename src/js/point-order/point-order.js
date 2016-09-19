@@ -1,7 +1,8 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "8c03ea1b31cef926698d08c964f53302";
+	// $rootScope.token = "8c03ea1b31cef926698d08c964f53302";
+	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {
@@ -154,7 +155,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -427,7 +428,7 @@ angular.module('com.wapapp.app',[])
 
 	var getService = function(id){
 		var formData = {
-			ServieceTypeId: id
+			ServiceTypeId: id
 		}
 		return $.ajax({
 					method:"POST",
