@@ -16,6 +16,9 @@
 </head>
 <body>
 	<div class="contain">
+        <div id="close">
+            <img src="/images/activity/close.png" alt="">
+        </div>
 		<div class="logo"><img src="/images/activity/logo.png" alt=""></div>
 		<div class="top_title"><img src="/images/activity/top_title.png" alt=""></div>
         <div class="item_list">
@@ -41,7 +44,7 @@
             </div>
             <div class="item">
                 <img src="/images/activity/img6.png" alt="">
-                <a href="javascript:;"><img src="/images/activity/shou.png" alt="" class="shou"></a>
+                <a href="javascript:;" typeid="" typename=""><img src="/images/activity/shou.png" alt="" class="shou"></a>
             </div>
             <div class="item">
                 <img src="/images/activity/rule.png" alt="">
@@ -80,14 +83,37 @@
                         var TypeId=$(this).attr("typeid");
                         var TypeName=$(this).attr("typename");
 
-                        bridge.callHandler('iosGoToCreateOrder',{"TypeId":TypeId,"TypeName":TypeName},
+                        var resultData = {
+                            "Meta": {
+                                "ErrorCode": "0",
+                                "ErrorMsg": "跳转到对应服务类型"
+                            },
+                            "Body": {
+                                "TypeId":TypeId,
+                                "TypeName":TypeName
+                            }
+                        };
+
+                        bridge.callHandler('iosGoToCreateOrder',resultData,
                             function(response){
                                 log("跳转到对应服务类型");
                             }
                         );
                     })
                 })
-
+                // ISO关闭
+                $("#close").click(function(){
+                    var resultData = {
+                        "Meta": {
+                            "ErrorCode": "0",
+                            "ErrorMsg": "关闭ios webview"
+                        },
+                        "Body": {}
+                    };
+                    bridge.callHandler('closeIosWebView',resultData,
+                        function(response){
+                    });
+                })
             })
         }); 
     }
@@ -101,10 +127,26 @@ $(function(){
                 var TypeId=$(this).attr("typeid");
                 var TypeName=$(this).attr("typename");
 
-                var resultData={"ServiceTypeId":TypeId,"ServiceTypeName":TypeName};
+                var resultData={
+                    "TypeId":TypeId,
+                    "TypeName":TypeName
+                };
                 var data = JSON.stringify(resultData);
                 javascript:android.androidGoToCreateOrder(data);
             })
+        })
+
+        //Andorid关闭webview
+        $("#close").click(function(){
+            var resultData = {
+                "status": {
+                    "code": "200",
+                    "msg": "关闭安卓webView"
+                },
+                "data": {}
+            };
+            var data = JSON.stringify(resultData);
+            javascript:android.closeAndroidWebView(data);
         })
     }
 

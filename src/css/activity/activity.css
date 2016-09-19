@@ -92,7 +92,13 @@ button{outline: none;cursor: pointer;border:none;}
 	text-align: center;
 	font-size: 0.37rem;
 }
-
+#close{
+	position: absolute;
+	top: 0.3333rem;
+	right: 0.3333rem;
+	width: 0.7406rem;
+	overflow: auto;
+}
 /*下载页*/
 .btn_down{
 	position: absolute;
