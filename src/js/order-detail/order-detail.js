@@ -110,7 +110,7 @@ $(function(){
       $("#finishAt").text(data.Body.FinishTime);
       $("#confirmAt").text(data.Body.ConfirmTime);
       $("#cancalAt").text(data.Body.CancelTime);
-      // $("#clientName").text(data.Body.AddressInfo.Contact);
+      $("#clientName").text(data.Body.Service.AddressInfo.Contact);
       
       // payOffTime = unix_to_datetime(data.Body.PayOffTime).Format("yyyy/MM/dd hh:mm");
       // console.log(data.Body.Service.ServiceName);
@@ -118,7 +118,7 @@ $(function(){
       $("#clientName").text(data.Body.Service.ServiceProviderName);
       $("#serviceAddress").text(data.Body.Service.AddressInfo.Address1);
       $("#payOffTime").text(data.Body.payOffTime);
-      // $("#clinetPhone").text(data.Body.AddressInfo.PhoneNumber);
+      $("#clinetPhone").text(data.Body.Service.AddressInfo.PhoneNumber);
       $("#quantity").text(data.Service.Total);
       finishedTime = data.Body.FinishTime;
       console.log(finishedTime);
