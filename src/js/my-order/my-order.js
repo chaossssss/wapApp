@@ -499,10 +499,10 @@
               if(unit != "无"){
                 var unitName = "/" + unit;
               }
-              // if(orderStatus == "10"){
+              if(orderStatus == "10"){
                 var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
                 $("#itemList").append(orderContent);
-              // }
+              }
             }
             break;
             case 2:
@@ -607,8 +607,10 @@
               }
               var formatTime = getLocalTime(createAt);
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
-              var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
-              $("#itemList").append(orderContent);
+              if( orderStatus == "30"){
+                var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
+                $("#itemList").append(orderContent);
+              }
             }
             break;
             case 4:
