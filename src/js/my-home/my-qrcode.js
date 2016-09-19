@@ -1,7 +1,10 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = "d803769104f565854438336f131ca1d5";
+	// $rootScope.token = "d803769104f565854438336f131ca1d5";
+	// $rootScope.token = $.cookie("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
+	
 }])
 .controller('qrCodeCtrl',['$rootScope','$scope','getMyInfo',function($rootScope,$scope,getMyInfo){
 	var vm = $scope.vm = {};
@@ -26,7 +29,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg);
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");

@@ -53,16 +53,19 @@
 	<div class="weui_cells weui_cells_access">
 		<a href="javascript:;" class="weui_cell" ng-click="vm.serviceShow = true">
 			<div class="weui_cell_hd">
-				<img src="../../images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">	
+				<img src="/images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">	
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
 			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable === false">
-				油漆
+				<span ng-bind="sv.name"></span>
 				<span>¥</span>
-				<span ng-bind="vm.unitPrice"></span>
-				<span>/小时</span>
+				<span ng-bind="sv.Min" ng-if="sv.Min !== sv.Max"></span>
+				<span ng-if="sv.Min !== sv.Max">~</span>
+				<span ng-bind="sv.Max"></span>
+				<span>/</span>
+				<span ng-bind="sv.Unit"></span>
 			</div>
 			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable===true">
 				面议
@@ -104,6 +107,70 @@
 				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
+	</div>
+	<!-- 活动 beginning -->
+	<div class="weui_cells weui_cells_access" ng-show="vm.ServiceTypeId != 5">	
+		<!-- 活动 不满足条件 beginning-->
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<span class="pro_box">满80返20</span>
+				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:middle;padding-left:10px;">
+			</div>
+		</div>
+		<!-- <div class="weui_cell no_access">
+			<div class="weui_cell_bd flex2">
+				<p>订单总价&nbsp;¥&nbsp;<span ng-bind="sv.Min*vm.Total"></span></p>
+			</div>
+			<div class="zj_cell_right">
+				<span>待支付</span>
+				<span class="pred f20 pl5">¥
+					<span ng-bind="sv.Min*vm.Total | number:1"></span>
+					<span>~</span>
+					<span ng-bind="sv.Max*vm.Total | number:1"></span>
+				</span>
+			</div>
+		</div> -->
+		<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box">
+			<span class="flex1 pred">小时工服务现有特价活动： 满90立减10元！</span>
+			<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;">
+		</div>
+	</div>
+	<!-- 活动 不满足条件 ending -->
+	<div class="weui_cells weui_cells_access" ng-show="vm.ServiceTypeId == 5">
+		<!-- 活动 满足条件 beginning -->
+		<div class="weui_cell no_access">
+			<div class="weui_cell_hd">
+				<img src="/images/quick-order/i-gift.png" alt="" style="width:22px;margin-right:10px;display:block;">
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<span class="pred">特价小时工</span>
+				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:5px;">
+			</div>
+			<div class="zj_cell_ft">
+				<p ng-if="sv.Max*vm.Total >= 80">-¥10.0</p>
+			</div>
+		</div>
+		<div style="padding:5px 1px 15px 10px;font-size:16px;" class="pred">
+			<span class="pro_box">满80返20</span>
+		 	<span>已享优惠：满80返20</span>
+			<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:10px;">
+		</div>
+		<!-- <div class="weui_cell no_access">
+			<div class="weui_cell_bd flex2">
+				<p>订单总价&nbsp;¥&nbsp;
+					<span ng-bind="vm.unitPrice*vm.Total"></span>
+					<span class="pl10">优惠&nbsp;¥&nbsp;10</span>
+				</p>
+			</div>
+			<div class="zj_cell_right">
+				<span>待支付</span>
+				<span class="pred f20 pl5">¥&nbsp;<span ng-bind="vm.unitPrice*vm.Total | number:1"></span></span>
+			</div>
+		</div> -->
+		<!-- 活动 满足条件 ending -->
+	</div>	
+	<!-- 活动 endind -->
+	<div class="weui_cells weui_cells_access">
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
@@ -146,9 +213,13 @@
 		<div class="zj_foot_hd">
 			订单总价
 		</div>
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable === undefined">
+			<span>--</span>
+		</div>
 		<div class="zj_foot_bd" ng-show="vm.IsNegotiable === false">
 			<span>¥</span>
-			<span ng-bind="vm.unitPrice*vm.Total | number:1"></span>
+			<span ng-if="sv.Max*vm.Total < 90" ng-bind="sv.Max*vm.Total | number:1"></span>
+			<span ng-if="sv.Max*vm.Total >= 90" ng-bind="sv.Max*vm.Total-10 | number:1"></span>
 		</div>
 		<div class="zj_foot_bd" ng-show="vm.IsNegotiable === true">
 			<span>面议</span>
@@ -195,7 +266,7 @@
 	</div>
 </div>
 
-
+<!-- date_picker -->
 <div class="zj_date_picker" zh-date-picker id="zh_date_picker" ng-controller="datePickerCtrl">
 	<div class="" ng-class="{true:'zj_mask_transition zj_fade_toggle',false:''}[dp.show]"></div>
 	<div class="zj_actionsheet" ng-class="{true:'zj_actionsheet_toggle',false:''}[dp.show]">
@@ -237,6 +308,7 @@
 	</div>
 </div>
 
+<!-- 服务类型 -->
 <div class="zj_service" ng-controller="serviceTypeCtrl" ng-if="vm.serviceShow === true">
 	<div class="zj_mask_transition zj_fade_toggle"></div>
 	<div class="zj_actionsheet zj_actionsheet_toggle"  style="overflow:auto;height:100%;">
@@ -246,8 +318,7 @@
 				热门推荐
 			</div>
 			<div class="bd blred">
-				<div class="cell" ng-repeat="item in st.serviceList[5].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
+				<div class="cell" ng-repeat="item in st.serviceList[5].Children" ng-click="st.getTypeName(item.TypeId,item.TypeName)" ng-bind="item.TypeName">
 				</div>
 			</div>
 			<div class="title">
@@ -255,8 +326,7 @@
 				家政
 			</div>
 			<div class="bd blgreen">
-				<div class="cell" ng-repeat="item in st.serviceList[2].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
+				<div class="cell" ng-repeat="item in st.serviceList[2].Children" ng-click="st.getTypeName(item.TypeId,item.TypeName)" ng-bind="item.TypeName">
 				</div>
 			</div>
 			<div class="title">
@@ -264,8 +334,7 @@
 				维修
 			</div>
 			<div class="bd blpurple">
-				<div class="cell" ng-repeat="item in st.serviceList[3].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
+				<div class="cell" ng-repeat="item in st.serviceList[3].Children" ng-click="st.getTypeName(item.TypeId,item.TypeName)" ng-bind="item.TypeName">
 				</div>
 			</div>
 			<div class="title">
@@ -273,8 +342,7 @@
 				安装
 			</div>
 			<div class="bd blorange">
-				<div class="cell" ng-repeat="item in st.serviceList[0].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
+				<div class="cell" ng-repeat="item in st.serviceList[0].Children" ng-click="st.getTypeName(item.TypeId,item.TypeName)" ng-bind="item.TypeName">
 				</div>
 			</div>
 			<div class="title">
@@ -282,8 +350,7 @@
 				装修
 			</div>
 			<div class="bd blpink mb15">
-				<div class="cell" ng-repeat="item in st.serviceList[4].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
+				<div class="cell" ng-repeat="item in st.serviceList[4].Children" ng-click="st.getTypeName(item.TypeId,item.TypeName)" ng-bind="item.TypeName">
 				</div>
 			</div>
 		</div>

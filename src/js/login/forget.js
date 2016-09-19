@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(function(){
-	FastClick.attach(document.body);
+	// FastClick.attach(document.body);
 })
 .controller('forgetCtrl',['$scope','$timeout','registService','captchaService',function($scope,$timeout,registService,captchaService){
 	var vm = $scope.vm = {};

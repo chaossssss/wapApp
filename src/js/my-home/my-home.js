@@ -2,7 +2,10 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// FastClick.attach(document.body);
-	$rootScope.token = "61517f53ac915b617b41a201c55d9ae3";
+	// $rootScope.token = "61517f53ac915b617b41a201c55d9ae3";
+	// $rootScope.token = $.cookie("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
+	
 }])
 .controller('myHomeCtrl',['$rootScope','$scope','getMyInfo','loginOut',function($rootScope,$scope,getMyInfo,loginOut){
 	var vm = $scope.vm = {};
@@ -37,7 +40,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg);
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -60,7 +63,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg);
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");

@@ -1,8 +1,7 @@
 "use strict"
 var PATH = "http://192.168.1.191:7002/";
-var WORK_MAN = "../images/map/test1.png";
-var Local_Img = "../images/map/ic_coordinate.svg";
-
+var WORK_MAN = "/images/map/test1.png";
+var Local_Img = "/images/map/ic_coordinate.svg";
 
 
 
@@ -446,20 +445,22 @@ function bossControl(){
 bossControl.prototype = new BMap.Control();
 bossControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "../../images/map/btn_boss.svg";
+    img.src = "/images/map/btn_boss.svg";
     img.style.width = "30px";
     img.id = "boss";
+    img.active = "active";
+
     // 绑定事件
     img.onclick = function(e){    
         var boss = document.getElementById("boss");
-        var yesorno = boss.getAttribute("active");    
+        var yesorno = boss.getAttribute("active");  
         // console.log(yesorno);
         if(yesorno === "active"){
             boss.removeAttribute("active");
-            img.src = "../../images/map/btn_boss.svg";
+            img.src = "/images/map/btn_boss.svg";
         }else{
             boss.setAttribute("active","active");
-            img.src = "../../images/map/btn_boss_active.svg";     
+            img.src = "/images/map/btn_boss_active.svg";     
         }              
     }
     // 添加DOM元素到地图中
@@ -479,9 +480,10 @@ function workManControl(){
 workManControl.prototype = new BMap.Control();    
 workManControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "../../images/map/btn_worker.svg";
+    img.src = "/images/map/btn_worker.svg";
     img.style.width = "30px";
     img.id = "worker";
+    img.active = "active";
 
     img.onclick = function(e){    
         var worker = document.getElementById("worker");
@@ -489,10 +491,10 @@ workManControl.prototype.initialize = function(map){
         // console.log(yesorno);
         if(yesorno === "active"){
             worker.removeAttribute("active");
-            img.src = "../../images/map/btn_worker.svg";
+            img.src = "/images/map/btn_worker.svg";
         }else{
             worker.setAttribute("active","active");
-            img.src = "../../images/map/btn_worker_active.svg";     
+            img.src = "/images/map/btn_worker_active.svg";     
         }              
     }
     map.getContainer().appendChild(img);
