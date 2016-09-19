@@ -114,6 +114,18 @@
             </li>
         </ul>
     </div>
+    <!--工人标签-->
+    <div class="worker-tag">
+        <div class="worker-tag-box">
+            <span class="Tag TagName"></span>
+            <!--<span class="Tag"></span>-->
+        </div>
+        <!--<div>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+            <!--<span></span>-->
+        <!--</div>-->
+    </div>
     <hr class="line">
     <!-- 认证信息	 -->
     <a href="javascript:;" id="showDialog2">
@@ -131,7 +143,7 @@
         <div class="weui_mask"></div>
         <div class="weui_dialog">
             <div class="weui_dialog_hd">认证详情
-                <a href="javascript:;" class="weui_btn_dialog default"><img src=/images/worker/ic_guanbi.svg" class="rz-close" alt=""></a>
+                <a href="javascript:;" class="weui_btn_dialog default"><img src="/images/worker/ic_guanbi.svg" class="rz-close" alt=""></a>
             </div>
             <div class="weui_dialog_bd">
                 <ul class="dialog-imgs"></ul>
@@ -140,8 +152,17 @@
     </div>
 
     <div class="clear"></div>
-    <hr class="line">
 
+    <div class="weui_cells">
+        <div class="weui_cell pitch">
+            <div class="weui_cell_hd"><img src="../../images/worker/service2@2x.png" class="exercise" alt=""/></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <p><img src="../../images/worker/service@2x.png" class="exercise-two" alt=""/></p>
+            </div>
+            <div class="weui_cell_ft"><a href="javascript:;"><img src="../../images/worker/button@2x.png" class="exercise-one" alt=""/></a></div>
+        </div>
+    </div>
+    <hr class="line">
     <a href="javascript:;" id="showDialog9">
         <div class="rz-infof">
             <span class="rz-titles">客户评价</span>
@@ -317,6 +338,27 @@
                 alert('Ajax error!');
                 // 即使加载出错，也得重置
                 me.resetload();
+            }
+        });
+        //获取工人标签
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+            dataType: 'json',
+            data:{
+//                GetWorkerTags:GetWorkerTags,
+                WorkerId:'1474'
+            },
+            success:function(data){
+                var api=data.Body.TagList;
+//                $(".TagName").text(api.TagName);
+
+
+            },
+            error: function(xhr, type){
+//                alert('Ajax error!');
+//                // 即使加载出错，也得重置
+//                me.resetload();
             }
         });
 
