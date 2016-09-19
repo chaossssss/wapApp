@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="com.wapapp.app">
-<head>
+<head> 
 	<meta charset="UTF-8">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,19 +14,20 @@
     <meta name="author" content="zxh">
 	<title>支付</title>
 
-	<link rel="stylesheet" href="../../css/weui.min.css">
-	<link rel="stylesheet" href="../../css/pay/pay.min.css">
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<link rel="stylesheet" href="/css/pay/pay.min.css">
 </head> 
 <body ng-controller="payCtrl">
-	
+<form novalidate="novalidate" name="form">
 	<div class="weui_cells">
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<img src="../../images/emt.jpg" alt="" style="width:30px;margin-right:5px;display:block;border-radius:15px;">
+				<img src="/images/emt.jpg" alt="" style="width:30px;margin-right:5px;display:block;border-radius:15px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<span>张小丽</span>
-				<span>阿姨</span>
+				<span ng-bind="vm.ServiceProviderName"></span>
+				<span ng-if="vm.ServiceProviderGender === '0'">师傅</span>
+				<span ng-if="vm.ServiceProviderGender === '1'">阿姨</span>
 			</div>
 		</div>
 	</div>
@@ -36,15 +37,15 @@
 				<p>服务价格</p>
 			</div>
 			<div class="weui_cell_ft">
-				<span>x2</span>
+				<span ng-bind="vm.Service.ServiceName">x2</span>
 				¥30.0/小时
 			</div>
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>订单总价</p>
+				<p>待支付</p>
 			</div>
-			<div class="weui_cell_ft">¥60.0</div>
+			<div class="weui_cell_ft" ng-bind="vm.Price">¥60.0</div>
 		</div>
 	</div>
 	<div class="weui_cells weui_cells_access mt10">
@@ -59,60 +60,104 @@
 		<div class="weui_cell">请选择支付方式</div>
 		<label class="weui_cell weui_check_label for='s11' ">
 			<div class="weui_cell_hd">
-				<img src="../../images/pay/yue.png" alt="" style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/yue.png" alt="" style="width:20px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>账户余额支付 余额0.00元</p>
+				<p>账户余额支付 余额<span ng-bind="vm.Balance"></span>元</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s11" checked="checked" class="weui_check">
+				<input type="radio" name="checkbox1" id="s11" value="account" class="weui_check" ng-model="vm.radioBox" ng-required="true">
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
 		<label for="s12" class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
-				<img src="../../images/pay/zhifubao.png" alt=""  style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/zhifubao.png" alt=""  style="width:20px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>支付宝支付</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s12" class="weui_check"></input>
+				<input type="radio" name="checkbox1" id="s12" value="zhifubao" class="weui_check" ng-model="vm.radioBox" ng-required="true"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
 		<label for="s13" class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
-				<img src="../../images/pay/weixin.png" alt="" style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/weixin.png" alt="" style="width:20px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>微信支付</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s13" class="weui_check"></input>
+				<input type="radio" name="checkbox1" id="s13" value="weixin" class="weui_check" ng-model="vm.radioBox" ng-required="true"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
 	</div>
 	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_primary">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()">
 			确认支付
 		</a>
-		<a href="javascript:;" class="weui_btn weui_btn_plain_primary">
+		<a href="javascript:;" class="weui_btn weui_btn_plain_primary" ng-click="vm.hasPayOrder()">
 			我已现金支付
 		</a>
 	</div>
+</form>
 
+<!-- loadingToast -->
+<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">正在提交...</p>
+    </div>
+</div>
 
+<!-- dialog_alert -->
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogshow = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-
-
-
+<!-- dialog_alert -->
+<div class="weui_dialog_confirm" ng-show="vm.dialogConfirm == true">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">确认信息</strong></div>
+        <div class="weui_dialog_bd">请确认已将费用以现金方式支付给工人</div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" ng-click="vm.dialogConfirm = false">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
 
 
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
-<script src="../../js/pay/pay.min.js"></script>
+<script src="/js/pay/pay.min.js"></script>
 </body>
 </html>

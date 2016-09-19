@@ -55,7 +55,7 @@ angular.module('com.wapapp.app',[])
 
 }])
 .factory('registService',[function(){
-	var PATH = "http://192.168.1.191:3001/";
+	var PATH = "http://192.168.1.191:3003/";
 	var _regist = PATH+"api/v1/clientinfo/Register";
 	
 	var runlogin = function(loginName,password,captcha){

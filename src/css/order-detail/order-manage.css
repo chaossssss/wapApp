@@ -1,11 +1,11 @@
 *{ margin:0; padding:0; list-style:none;}
 body{ font-size:14px;}
-
+.clear{ clear: both; height: 0; line-height: 0; font-size: 0; }
 /*---*/
-.order-detail{ width: 375px; margin: 0 auto; background: #f8f8f8; }
-.order-detail .order-status{ height: 148px; width: 375px; text-align: center; background: #eefaff no-repeat center 10px; background-size: 65% 50%; }
+.order-detail{ width: 100%; margin: 0 auto; background: #f8f8f8; }
+.order-detail .order-status{ height: 148px; width: 100%; text-align: center; background: #eefaff no-repeat center 10px; background-size: 65% 50%; }
 .order-detail .order-status .status{ color: #3fbef9; font-size: 18px; padding-top: 78px; }
-.order-detail .process{ width: 375px; height: 42.5px; display: flex; display: -webkit-flex; display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox; background: #fff; border-top: 1px solid #3fbef9; margin-bottom: 13px; border-bottom: 1px #ccc solid; }
+.order-detail .process{ width: 100%; height: 42.5px; display: flex; display: -webkit-flex; display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox; background: #fff; border-top: 1px solid #3fbef9; margin-bottom: 13px; border-bottom: 1px #ccc solid; }
 .order-detail .process .process-status{ flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; -moz-box-flex: 1; -ms-flex: 1; text-align: center; line-height: 20px; font-size: 14px; }
 .order-detail .explanation{ color: #666; font-size: 12px; margin: 0 auto; width: 200px; }
 
@@ -21,7 +21,7 @@ body{ font-size:14px;}
 .order-detail .zj-cell-border:after{ border-bottom: 1px solid #ccc; transform: scaleY(1); }
 .order-detail .zj-cells:before{ left: 10px; }
 .order-detail .zj-cells:after{ border-bottom: 0; }
-.order-detail .filling{ height: 12.5px; width: 375px; background: #f8f8f8;}
+.order-detail .filling{ height: 12.5px; width: 100%; background: #f8f8f8;}
 .order-detail .zj-panel{ margin-top: 0px; font-size: 13px; }
 .order-detail .zj-titlewords{ font-size: 15px; color: #333; }
 .order-detail .zj-fontsize{ font-size: 14px; }
@@ -44,10 +44,13 @@ body{ font-size:14px;}
 .order-detail .zj-pay:before{ left: 10px; }
 
 .order-detail .refund{ display: inline-block; }
-.order-detail .refund-complete{ color: #ff5000; margin-left: 64px; }
-.order-detail .refund-money{ margin-left: 60px; color: #666; }
-.order-detail .refund-sum{ margin-left: 59px; }
+.order-detail .refund-complete{ color: #ff5000; float: right; }
+.order-detail .refund-money{ margin-left: 60px; color: #666; float: right; }
+.order-detail .refund-sum{ float: right; }
+.order-detail .refund-lost{ float: right; }
+.order-detail .refund-disc{ float: right; }
 .order-detail .refund-line{ margin-top: 12px; }
+.order-detail .refund-list{ float: right; }
 .order-detail .contacts{ margin-bottom: 10px; }
 .order-detail .order-time{ margin-bottom: 11px; }
 
@@ -64,9 +67,15 @@ body{ font-size:14px;}
 .round-undone{ background: #fff; width: 9px; height: 9px; border: 1px solid #88d7fc; }
 
 /*--最下面按钮状态--*/
-.order-detail .delete-order{ width: 375px; height: 48.5px; border-top: 1px solid #ccc; background: #fff; margin-top: 8.5px; }
+.order-detail .delete-order{ width: 100%; height: 48.5px; border-top: 1px solid #ccc; background: #fff; margin-top: 8.5px; }
 .order-detail .delete-btn{ color: #333; border: 1px #999 solid; font-size: 13px; border-radius: 3px; }
 .order-detail .pay-btn{ border: 1px #ff5000 solid; color: #ff5000; font-size: 13px; border-radius: 3px; }
 .order-detail .confirm-btn{ border: 1px #3fbef9 solid; color: #3fbef9; font-size: 13px; border-radius: 3px; }
 .order-detail .left-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 174px; top: 8.5px; }
 .order-detail .right-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 277px; top: 8.5px; }
+.order-detail .left-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 14px; }
+.order-detail .right-btnfr{ width: 85px; height: 29px; line-height: 30px; text-align: center; float: right; margin-top: 8.5px; margin-right: 10px; }
+
+/*--弹出框样式--*/
+.order-detail .weui_dialog_confirm .zj-align{ text-align: center; }
+.order-detail .zj-bulecol{ color: #3fbef9; }

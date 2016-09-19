@@ -1,8 +1,10 @@
 "use strict"
 angular.module('com.wapapp.app',[])
-.run(function(){
-	FastClick.attach(document.body);
-})
+.run(['$rootScope',function($rootScope){
+	// FastClick.attach(document.body);
+	$rootScope.url = "http://192.168.1.191:3003";
+
+}])
 .controller('loginCtrl',['$scope','loginService',function($scope,loginService){
 	var vm = $scope.vm = {};
 
@@ -10,28 +12,27 @@ angular.module('com.wapapp.app',[])
 		loginService.event(vm.phone,vm.password)
 			.success(function(res){
 				console.log(res);
-				if(res.Meta.ErrorCode !== "0"){
+				if(res.Meta.ErrorCode === "0"){
+					$.cookie("Token",res.Body.Token);
+					window.location.href = "/template/map-index.html";
+				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
-				}
+				} 
 				$scope.$apply();
 			});
 	}
-
 }]) 
-.factory('loginService',[function(){
-	var _login = "http://192.168.1.191:3001/api/v1/Clientinfo/Login";
+.factory('loginService',['$rootScope',function($rootScope){
+	var _login = $rootScope.url+"/api/v1/Clientinfo/Login";
 	
 	var runlogin = function(loginName,password){
-
 		return $.ajax({
 					method:"POST",
 					url: _login,
 					data: {
-						LoginName:"13805720368",
-						Password:"xcworld",
-						DeviceId:"9468E5F3090EFAA135A949C9E2BF8E32",
-						Captcha:""
+						LoginName: loginName,
+						Password: password
 					}
 				}).success(function(res){
 					if(res.Meta.ErrorCode !== "0"){

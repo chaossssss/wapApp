@@ -53,19 +53,19 @@
           <p class="zj-fontsize worker-call"><span id="workerGender"></span></p>
           <p id="toProviderDetail" class="zj-fontsize zj-arrow"></p>
         </div>
-        <div id="contactWorker" class="weui_cell_ft contact"></div>
+        <a id="serviceProviderPhone" href=""><div id="contactWorker" class="weui_cell_ft contact"></div></a>
       </div>
       <div class="weui_cell zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
           <p class="zj-fontsize zj-cell-left">服务类型</p>
         </div>
-        <div class="weui_cell_ft zj-fontsize zj-cell-right">小时工</div>
+        <div class="weui_cell_ft zj-fontsize zj-cell-right"><span id="serviceName"></span></div>
       </div>
       <div class="weui_cell zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
           <p class="zj-fontsize zj-font">服务时间</p>
         </div>
-        <div id="serviceTime" class="weui_cell_ft zj-fontsize zj-cell-right">2016-08-28 15：56</div>
+        <div id="serviceTime" class="weui_cell_ft zj-fontsize zj-cell-right"><span id="serviceAt"></span></div>
       </div>
       <div class="weui_cell zj-mark zj-cell-border">
         <div class="weui_cell_bd weui_cell_primary">
@@ -74,12 +74,9 @@
         <div id="addRemark" class="weui_cell_ft zj-remark zj-fontsize">
           补充备注</div>
       </div>
-        <ul class="remark">
-          <li>3小时，工人要勤快</li>
-          <li>3小时，工人要勤快</li>
-          <!-- <li><input class="remark-box" type="text" /></li> -->
+        <ul id="remarkLists" class="remark">
         </ul>
-      <div class="weui_cells weui_cells_form zj-cells zj-cell-border">
+      <div id="pictureLine" class="weui_cells weui_cells_form zj-cells zj-cell-border">
         <div class="weui_cell zj-worker-pic">
           <div class="weui_cell_bd weui_cell_primary">
             <div class="weui_uploader">
@@ -103,23 +100,28 @@
       </div> -->
       <div class="weui_media_box weui_media_text zj-pay zj-cell-border">
         <div id="servicePrice" class="weui_media_desc zj-fontsize spacing">服务价格
-        <p class="money">
-          <span id="negotiable">面议</span>        
-          <span id="unitPrice">￥30/小时</span>
-          <span id="multiple" class="multiple">×2</span>
+        <p id="ifNegotiable" class="money">
+          <!-- <span id="negotiable">面议</span>  -->       
+          <span id="unitPrice">￥
+            <span id="single"></span>
+            <span id="unit"></span>
+          </span>
+          <span id="multiple" class="multiple">×
+            <span id="quantity"></span>
+          </span>
         </p>
         </div>
         <div id="orderPrice" class="weui_media_desc zj-fontsize spacing">订单总价
         <p id="total" class="money">￥<span id="price"></span></p></div>
         <div id="specialPrice" class="weui_media_desc zj-fontsize spacing">特价小时工
-        <p id="special" class="money">-￥<span id="price"></span></p></div>
+        <p id="special" class="money">-￥<span id="hourly"></span></p></div>
         <div id="waitOrder" class="weui_media_desc zj-fontsize spacing">
         待支付
-        <p id="wait" class="money">￥<span id="price"></span></p></div>
+        <p id="wait" class="money">￥<span id="toBePaid"></span></p></div>
         <div id="orderDiscount" class="weui_media_desc zj-fontsize spacing">优惠券
         <p class="money">-￥<span id="discountInfo"></span></p></div>
         <div id="orderActual" class="weui_media_desc zj-fontsize spacing">实付款
-        <p class="money actual">￥70.0<span id=""></span></p></div>
+        <p class="money actual">￥<span id="actualMoney"></span></p></div>
       </div>
       <div id="filling1" class="filling"></div>
       <div id="refundRecord" class="weui_panel weui_panel_access zj-panel zj-cell-border">
@@ -127,14 +129,15 @@
         <div class="weui_panel_bd">
           <div class="weui_media_box weui_media_text">
             <div class="weui_media_desc zj-fontsize">
-              <p class="refund"><span id="refundAt"></span>2016-08-28 17:18</p>
-              <p class="refund refund-complete"><span id="refundStatus"></span>退款完成</p>
-              <p class="refund refund-money">￥70.0</p>
+              <p class="refund"><span id="refundAt"></span></p>
+              <p class="refund refund-money">￥<span id="actualMoney"></span></p>
+              <p class="refund refund-complete"><span id="refundStatus"></span></p>
             </div>
             <div class="weui_media_desc zj-fontsize refund-line">
-              <p class="refund refund-sum">应退￥90.0<span id="refundAmount"></span>，</p>
-              <p class="refund">误工费￥0.<span id="lostIncome"></span>，</p>
-              <p class="refund">优惠券扣除￥20.0<span id="discountInfo"></span></p>
+              <p class="clear refund"></p>
+              <p class="refund refund-disc">优惠券扣除￥<span id="refundDiscount"></span></p>
+              <p class="refund refund-lost">误工费￥<span id="lostIncome"></span>，</p>
+              <p class="refund refund-sum">应退￥<span id="refundAmount"></span>，</p>
             </div>
           </div>
         </div>
@@ -146,6 +149,7 @@
           <div class="weui_media_box weui_media_text">
             <p class="weui_media_desc contacts zj-fontsize">
               联系人：<span id="clientName"></span>
+              <span id="clientGender"></span>
             </p>
             <p class="weui_media_desc contacts zj-fontsize">
               服务电话：<span id="clinetPhone"></span>
@@ -168,7 +172,7 @@
               取消时间：<span id=""></span>
             </p>
             <p id="payTime" class="weui_media_desc zj-fontsize order-time">
-              付款时间：<span id=""></span>
+              付款时间：<span id="payOffTime"></span>
             </p>
             <p id="finishTime" class="weui_media_desc zj-fontsize">
               完成时间：<span id="finishAt"></span>
@@ -178,21 +182,22 @@
       </div>
   </div>
   <div id="optionFooter" class="delete-order">
-    <div id="btnLeft" class="left-btn"></div>
-    <div id="btnRight" class="right-btn"></div>
+    <div id="btnRight" class="right-btnfr pay-btn">支付</div>
+    <div id="btnLeft" class="left-btnfr delete-btn">取消订单</div>
   </div>    
 </div>
 <div class="weui_dialog_confirm" id="workerPhone" style="display:none;">
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd"><strong class="weui_dialog_title">联系师傅</strong></div>
-    <div class="weui_dialog_bd">111</div>
+    <div class="weui_dialog_bd zj-align">暂时不接受电话</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
-      <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+      <a href="javascript:;" class="weui_btn_dialog primary zj-bulecol">确定</a>
     </div>
   </div>
 </div>
+<!--备注-->
 <div class="weui_dialog_confirm" id="userMemo" style="display:none">
   <div class="weui_mask"></div>
   <div class="weui_dialog">
@@ -204,7 +209,44 @@
     </div>
   </div>
 </div>
+<!--删除订单-->
+<div class="weui_dialog_confirm" id="deleteOrder" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">删除订单</strong></div>
+    <div class="weui_dialog_bd zj-align">确定删除订单吗？删除后不可恢复哦</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="deleteCancel" class="weui_btn_dialog default">取消</a>
+      <a href="javascript:;" id="deleteBtn" class="weui_btn_dialog primary zj-bulecol">删除</a>
+    </div>
+  </div>
+</div>
+<!--客户成功下单，取消订单-->
+<div class="weui_dialog_confirm" id="cancelOrder1" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title">取消订单</strong></div>
+    <div class="weui_dialog_bd zj-align">确定取消订单吗？</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn1" class="weui_btn_dialog default">先不取消</a>
+      <a href="javascript:;" id="cancelOrderBtn" class="weui_btn_dialog primary zj-bulecol">确定</a>
+    </div>
+  </div>
+</div>
+<!--客户已付款，工人还未确认取消订单-->
+<div class="weui_dialog_confirm" id="cancelOrder2" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd">您已付款，请联系客服取消订单并退款</div>
+    <div class="weui_dialog_bd zj-align">客服电话：4008-262-056</div>
+    <div class="weui_dialog_ft">
+      <a href="javascript:;" id="cancelBtn2" class="weui_btn_dialog default">先不取消</a>
+      <a href="tel:4008-262-056;" id="contactWorkerBtn" class="weui_btn_dialog primary zj-bulecol">联系客服</a>
+    </div>
+  </div>
+</div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="/js/common/jquery.cookie.min.js"></script>
 <script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="../../js/order-detail/order-detail.min.js"></script>
