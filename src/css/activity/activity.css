@@ -1,0 +1,103 @@
+@charset "utf-8";
+/*公共样式*/
+* {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
+	-webkit-tap-highlight-color: transparent;}
+html{background:#51d5df !important;background-image: url(../images/bg.png);}
+body {font-family:"Microsoft YaHei";}
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
+input, select {vertical-align:middle;}
+textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
+li {list-style-type:none;}
+img {border:0 none;width:100%;}
+a {color:#000; text-decoration:none;-webkit-tap-highlight-color: rgba(0,0,0,0); 
+	-webkit-tap-highlight-color: transparent;}
+a:hover {color:#628828;}
+a {outline:none; star:expression_r(this.onFocus=this.blur());}
+button{outline: none;cursor: pointer;border:none;}
+.clear{clear:both;}
+/*-------------------*/
+.contain{
+	position: relative;
+	background-image: url(/images/activity/bg_light.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.logo{
+	float: left;
+	width: 2.25rem;
+	height: 0.64rem;
+	margin:0.27rem;
+}
+.logo img{
+	width:2.53rem;
+}
+.top_title{
+	padding:0.7rem;
+	padding-bottom: 0;
+}
+.ad{
+	text-align: center;
+	padding:0.3rem;
+}
+.btn_detail{
+	text-align: center;
+}
+.btn_detail img{
+	width: 4.0rem;
+	height: 1.24rem;
+}
+
+
+/*服务列表页*/
+.item_list{
+	margin-top: 0.6rem;
+}
+.item{
+	position: relative;
+	text-align: center;
+	padding:0 0.4rem 0 0.4rem;
+}
+.item img{
+	display: block;
+}
+.btn_order{
+	position: absolute;
+	width: 1.67rem;
+	height: 1.81rem;
+	right:1.17rem;
+	bottom: 1rem
+}
+.shou{
+    position: absolute;
+    right: 15%;
+    bottom: 11%;
+    width: 5.44rem;
+    height: 2.2rem;
+}
+.rule_list{
+    position: absolute;
+    font-size: 0.37rem;
+    text-align: left;
+    bottom: 0;
+    left: 1.25rem;
+    width: 77%;
+    line-height: 1.4;
+    height: 78%;
+}
+.pink_font{
+	color: #ff6b81;
+}
+.phone{
+	padding:0.6rem;
+	text-align: center;
+	font-size: 0.37rem;
+}
+
+/*下载页*/
+.btn_down{
+	position: absolute;
+	width:2.2rem;
+	height: 2.39rem;
+	top: 50%;
+    left: 38%;
+}

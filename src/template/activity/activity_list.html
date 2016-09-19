@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <title>活动列表</title>
+    <link rel="stylesheet" href="/css/activity/activity.min.css">
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/activity/flexible.min.js"></script>
+	<script type="text/javascript" src="/js/activity/flexible_css.min.js"></script>
+    <script type="text/javascript" src="/js/activity/activity.min.js"></script>
+    <script type="text/javascript" src="/js/activity/browser.min.js"></script>
+</head>
+<body>
+	<div class="contain">
+		<div class="logo"><img src="/images/activity/logo.png" alt=""></div>
+		<div class="top_title"><img src="/images/activity/top_title.png" alt=""></div>
+        <div class="item_list">
+            <div class="item">
+                <img src="/images/activity/img1.png" alt="">
+                <a href="javascript:;" typeid="5" typename="小时工"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/img2.png" alt="">
+                <a href="javascript:;" typeid="160" typename="新房开荒"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/img3.png" alt="">
+                <a href="javascript:;" typeid="163" typename="油烟机清洗"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/img4.png" alt="">
+                <a href="javascript:;" typeid="24" typename="搬家公司"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/img5.png" alt="">
+                <a href="javascript:;" typeid="168" typename="安装"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/img6.png" alt="">
+                <a href="javascript:;"><img src="/images/activity/shou.png" alt="" class="shou"></a>
+            </div>
+            <div class="item">
+                <img src="/images/activity/rule.png" alt="">
+                <div class="rule_list">
+                    <p>1.<span class="pink_font">特价</span>小时工，每个账户仅享1单此优惠。</p>
+                    <p>2.<span class="pink_font">满返</span>实付满80元返20元,每个账户仅享1单此优惠。</p>
+                    <p>3.活动优惠仅限使用下单功能<span class="pink_font">一键下单，指定下单</span></p>
+                    <p>4.返充金额会在服务确认完成后自动打入您的账户余额。</p>
+                    <p>5.该活动解释权归杭州芸瑾网络科技有限公司所有。</p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="phone">客服热线：4008-262-056</div>
+	</div>
+</body>
+</html>
+<script>
+    /*这段代码是固定的，必须要放到js中*/
+    if (browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) { 
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        }
+        setupWebViewJavascriptBridge(function(bridge) { 
+            $(function(){           
+                //IOS一键下单按钮跳到对应服务类型
+                $(".item a").each(function(){
+                    $(this).click(function(){
+                        var TypeId=$(this).attr("typeid");
+                        var TypeName=$(this).attr("typename");
+
+                        bridge.callHandler('iosGoToCreateOrder',{"TypeId":TypeId,"TypeName":TypeName},
+                            function(response){
+                                log("跳转到对应服务类型");
+                            }
+                        );
+                    })
+                })
+
+            })
+        }); 
+    }
+</script>
+<script>
+$(function(){           
+    //Android一键下单按钮跳到对应服务类型
+    if (browser.versions.android) { 
+        $(".item a").each(function(){
+            $(this).click(function(){
+                var TypeId=$(this).attr("typeid");
+                var TypeName=$(this).attr("typename");
+
+                var resultData={"ServiceTypeId":TypeId,"ServiceTypeName":TypeName};
+                var data = JSON.stringify(resultData);
+                javascript:android.androidGoToCreateOrder(data);
+            })
+        })
+    }
+
+    //点击次数统计
+    $(".item a").each(function(){
+        $(this).click(function(){
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.191:3001/api/v2/SystemService/ClickCount',
+                dataType: 'json',
+                data:{
+                    Target:"7",
+                    DeviceType:"2"
+                }
+            });
+        })
+    })
+})
+</script>
