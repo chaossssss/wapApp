@@ -1,8 +1,96 @@
   $(function(){
     var $li = $("#tab li");
     // var $ul = $("#content .item-list");
-      var tooken = $.cookie("Token");
+      var token = localStorage.getItem("Token");
+      console.log(token);
       $li.eq(0).addClass("active");
+/*--按钮操作--*/
+      function removeOrder(token,orderId){
+        console.log("删除订单");
+        $.ajax({
+          type:"POST",
+          url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+          data:{
+            Token:token,
+            OrderId:orderId
+          },
+          success:function(data){
+            console.log("删除订单成功");
+          }
+        })
+      }
+      function updateOrder(token,orderId){
+        console.log("更新订单");
+        $.ajax({
+            type:"POST",
+            url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+            data:{
+              Token:token,
+              OrderId:orderId
+            },
+            success:function(data){
+              console.log("更新订单成功");
+            }     
+        })
+      }
+      function cancelOrder(token,orderId){
+        console.log("取消订单");
+        $.ajax({
+            type:"POST",
+            url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+            data:{
+              Token:token,
+              OrderId:orderId
+            },
+            success:function(data){
+              console.log("取消订单成功");
+            }     
+        })
+      }
+      function confirmOrder(token,orderId,memo){
+        console.log("确认订单");
+        $.ajax({
+          type:"POST",
+          url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+          data:{
+            Token:token,
+            OrderId:orderId,
+            Memo:memo
+          },
+          success:function(data){
+            console.log("确认订单成功");
+          }
+        })
+      } 
+      function completeOrder(token,orderId){
+        console.log("完成订单");
+        $.ajax({
+          type:"POST",
+          url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+          data:{
+            Token:token,
+            OrderId:orderId
+          },
+          success:function(data){
+            console.log("完成订单成功");
+          }
+        })
+      }
+      function deleteOrder(token,orderId){
+        console.log("完成订单");
+        $.ajax({
+          type:"POST",
+          url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+          data:{
+            Token:token,
+            OrderId:orderId
+          },
+          success:function(data){
+            console.log("完成订单成功");
+          }
+        })
+      }
+/*--动态生成列表--*/      
       function stateWaiting(orderId,serName,time,addr,serPrice){
         var htmlList = "";
         var html = 
@@ -17,7 +105,7 @@
               "<li><span>客服正在努力安排工人</span></li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time +
               "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" +
-              "<li><span>服务价格</span><span class='title-right'>" + serPrice + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>￥" + serPrice + "</span></li>" +
             "</ul>" +
           "</div>" +
           "<div class='item-buttom'>" +
@@ -25,6 +113,17 @@
           "</div>" +
         "</div>";
         htmlList += html;
+        $("#itemList #orderCancel").on("click",function(){
+          $("#cancelOrder1").css("display","block");
+          $("#cancelOrderBtn").on("click",function(){
+            cancelOrder(token,orderId);
+            $("#cancelOrder1").hide();
+            location.reload();
+          })
+          $("#cancelBtn1").on("click",function(){
+            $("#cancelOrder1").hide();
+          })
+        })
         return htmlList;
       }
       function payment(orderId,serName,picSrc,name,gender,time,addr,price,unit,total,totalPrice){
@@ -41,17 +140,28 @@
             "<li><img src='" + picSrc + "' alt='' class='worker-img'><span>" + name + " " + gender +"</span></li>" +
             "<li><span>服务时间</span><span class='title-right'>" + time + "</span></li>" +
             "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" +
-            "<li><span>服务价格</span><span class='title-right'>￥" + price + "/" + unit + " ×" + total + "</span></li>" +
+            "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
           "</ul>" +
           "</div>" +
           "<div class='total-price'>订单总价：<span class='price-num'>￥" + totalPrice + "</span></div>" +
           "<div class='item-buttom'>" +
-          "<a href='#' class='order-pay'>支 付</a>" +
-          "<a href='#' class='order-cancel'>取消订单</a>" +
+          "<a id='orderPay' href='../pay/pay.html?orderId=" + orderId + "' class='order-pay'>支 付</a>" +
+          "<a id='orderCancel' href='#' class='order-cancel'>取消订单</a>" +
           "<div class='clear'></div>" +
           "</div>" +
         "</div>";
         htmlList += html;
+        $("#itemList #orderCancel").on("click",function(){
+          $("#cancelOrder1").css("display","block");
+          $("#cancelOrderBtn").on("click",function(){
+            cancelOrder(token,orderId);
+            $("#cancelOrder1").hide();
+            location.reload();
+          })
+        })
+        $("#orderPay").on("click",function(){
+          window.location.href="";
+        })
         return htmlList;
       }
       function unconfirm(orderId,serName,picSrc,name,gender,time,addr,price,unit,total,totalPrice){
@@ -68,16 +178,20 @@
               "<li><img src='" + picSrc + "' alt='' class='worker-img'>" + name + " " + gender + "</li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time + "</span></li>" +
               "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" + 
-              "<li><span>服务价格</span><span class='title-right'>￥" + price + "/" + unit + " ×" + total + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
             "</ul>" +
           "</div>" +
           "<div class='total-price'>订单总价：<span class='price-num'>￥" + totalPrice + "</span></div>" +
           "<div class='item-buttom'>" +         
-            "<a href='#' class='order-cancel'>确认服务完成</a>" +
+            "<a id='confirmOrder' href='#' class='order-cancel'>确认服务完成</a>" +
             "<div class='clear'></div>" +
           "</div>" +
         "</div>";
         htmlList += html;
+        $("#confirmOrder").on("click",function(){
+          completeOrder(token,orderId);
+          location.reload();
+        })
         return htmlList;
       }
       function evaluation(orderId,serName,picSrc,name,gender,time,addr,price,unit,total,totalPrice){
@@ -91,19 +205,22 @@
           "</div></a>" +
           "<div class='item-center'>" +
             "<ul>" +
-              "<li><img src='" + picSrc +"' alt='' class='worker-img'><span>" + name + " " + gender + "</span></li>" +
+              "<li><img src='" + picSrc + "' alt='' class='worker-img'><span>" + name + " " + gender + "</span></li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time +"</span></li>" +
               "<li><span>服务地址</span><span class='title-right'>" + addr +"</span></li>" +
-              "<li><span>服务价格</span><span class='title-right'>￥" + price + "/" + unit + " ×" + total + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
             "</ul>" +
           "</div>" +
           "<div class='total-price'>实付<span class='price-num'>￥" + totalPrice + "</span></div>" +
             "<div class='item-buttom'>" +         
-            "<a href='#' class='order-pay2'>支付</a>" +
+            "<a id='orderEval' href='#' class='order-pay2'>评价</a>" +
             "<div class='clear'></div>" +
             "</div>" +
           "</div>";
           htmlList += html;
+          $("#orderEval").on("click",function(){
+            window.location.href="";
+          })
           return htmlList;
       }
       function canceled(orderId,serName,time,addr,totalPrice){
@@ -124,19 +241,29 @@
             "</ul>" +
           "</div>" +
           "<div class='item-buttom'>" +
-            "<a id='orderDelete' href='#'' class='order-cancel'>删除订单</a>" +
+            "<a id='orderDelete' class='order-cancel'>删除订单</a>" +
           "</div>" +
         "</div>";
         htmlList += html;
+        $("#orderDelete").on("click",function(){
+          $("#deleteOrder").css("display","block");
+          $("#deleteBtn").on("click",function(){
+            deleteOrder(token,orderId);
+            $("#deleteOrder").hide();
+            location.reload();
+          })
+          $("#deleteCancel").on("click",function(){
+            $("#deleteOrder").hide();
+          })
+        })
         return htmlList;
       }
-
       $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderListEx",
         // url:"order.json",
         data:{
-          Token:"865077b7deb3082261d22bfc2765c5e0",
+          Token:token,
           PageIndex:"1",
           PageSize:"15",
           Type:0
@@ -159,7 +286,7 @@
             var price = listData[i].Price;
             var totalPrice = listData[i].TotalPrice;
             var total = listData[i].Total;
-            var unitName = listData[i].UnitName;
+            var unit = listData[i].UnitName;
             var discountInfo = listData[i].DiscountInfo;
             var serviceProviderType = listData[i].ServiceProviderType;
             var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -175,6 +302,12 @@
               var gender = "师傅";
             }else if(serviceProviderGender == "1"){
               var gender = "阿姨";
+            }
+            if(unit == "无"){
+              var unitName = "";
+            }
+            if(unit != "无"){
+              var unitName = "/" + unit;
             }
             function getLocalTime(nS) {     
               var time = new Date(parseInt(nS) * 1000);
@@ -199,7 +332,7 @@
             var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
             console.log(orderStatus);
             if(orderStatus == "10"){
-              var orderContent = stateWaiting(orderId,serviceName,serviceTime,serviceAddress,price);
+              var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
              // console.log(orderContent);
              $("#itemList").append(orderContent);
             }
@@ -216,7 +349,7 @@
               $("#itemList").append(orderContent);
             }
             if( orderStatus == "50"){
-              var orderContent = canceled(orderId,serviceName,serviceTime,serviceAddress,totalPrice);
+              var orderContent = canceled(orderId,serviceName,createAt,serviceAddress,totalPrice);
               $("#itemList").append(orderContent);
             }
           }
@@ -236,7 +369,7 @@
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderListEx",
         // url:"order.json",
         data:{
-          Token:'fde40e469eea5089eb0f3e2f030d821f',
+          Token:token,
           PageIndex:"1",
           PageSize:"15",
           Type:"0"
@@ -264,7 +397,7 @@
               var price = listData[i].Price;
               var totalPrice = listData[i].TotalPrice;
               var total = listData[i].Total;
-              var unitName = listData[i].UnitName;
+              var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -281,6 +414,12 @@
                 var gender = "师傅";
               }else if(serviceProviderGender == "1"){
                 var gender = "阿姨";
+              }
+              if(unit == "无"){
+                var unitName = "";
+              }
+              if(unit != "无"){
+                var unitName = "/" + unit;
               }
               function getLocalTime(nS) {     
                 var time = new Date(parseInt(nS) * 1000);
@@ -305,7 +444,7 @@
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
               console.log(orderStatus);
               if(orderStatus == "10"){
-                var orderContent = stateWaiting(orderId,serviceName,serviceTime,serviceAddress,price);
+                var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
                // console.log(orderContent);
                $("#itemList").append(orderContent);
               }
@@ -322,7 +461,7 @@
                 $("#itemList").append(orderContent);
               }
               if( orderStatus == "50"){
-                var orderContent = canceled(orderId,serviceName,serviceTime,serviceAddress,totalPrice);
+                var orderContent = canceled(orderId,serviceName,createAt,serviceAddress,totalPrice);
                 $("#itemList").append(orderContent);
               }
             }
@@ -342,7 +481,7 @@
               var price = listData[i].Price;
               var totalPrice = listData[i].TotalPrice;
               var total = listData[i].Total;
-              var unitName = listData[i].UnitName;
+              var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -354,10 +493,16 @@
               var refundStatus = listData[i].RefundStatus;
               var activity = listData[i].Activity;
               var totalCount = listData[i].TotalCount;
-              if(orderStatus == "10"){
-                var orderContent = stateWaiting(orderId,serviceName,serviceTime,serviceAddress,price);
-                $("#itemList").append(orderContent);
+              if(unit == "无"){
+                var unitName = "";
               }
+              if(unit != "无"){
+                var unitName = "/" + unit;
+              }
+              // if(orderStatus == "10"){
+                var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
+                $("#itemList").append(orderContent);
+              // }
             }
             break;
             case 2:
@@ -374,7 +519,7 @@
               var price = listData[i].Price;
               var totalPrice = listData[i].TotalPrice;
               var total = listData[i].Total;
-              var unitName = listData[i].UnitName;
+              var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -390,6 +535,12 @@
                 var gender = "师傅";
               }else if(serviceProviderGender == "1"){
                 var gender = "阿姨";
+              }
+              if(unit == "无"){
+                var unitName = "";
+              }
+              if(unit != "无"){
+                var unitName = "/" + unit;
               }
               if( isPayOff == "0" && orderStatus == "20" ){
                 var orderContent = payment(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
@@ -412,7 +563,7 @@
               var price = listData[i].Price;
               var totalPrice = listData[i].TotalPrice;
               var total = listData[i].Total;
-              var unitName = listData[i].UnitName;
+              var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -428,6 +579,12 @@
                 var gender = "师傅";
               }else if(serviceProviderGender == "1"){
                 var gender = "阿姨";
+              }
+              if(unit == "无"){
+                var unitName = "";
+              }
+              if(unit != "无"){
+                var unitName = "/" + unit;
               }
               function getLocalTime(nS) {     
                 var time = new Date(parseInt(nS) * 1000);
@@ -450,10 +607,8 @@
               }
               var formatTime = getLocalTime(createAt);
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
-              if( orderStatus == "30"){
-                var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
-                $("#itemList").append(orderContent);
-              }
+              var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
+              $("#itemList").append(orderContent);
             }
             break;
             case 4:
@@ -470,7 +625,7 @@
               var price = listData[i].Price;
               var totalPrice = listData[i].TotalPrice;
               var total = listData[i].Total;
-              var unitName = listData[i].UnitName;
+              var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
@@ -507,6 +662,12 @@
                 var gender = "师傅";
               }else if(serviceProviderGender == "1"){
                 var gender = "阿姨";
+              }
+              if(unit == "无"){
+                var unitName = "";
+              }
+              if(unit != "无"){
+                var unitName = "/" + unit;
               }
               if( orderStatus == "40"){
                 var orderContent = evaluation(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
@@ -646,127 +807,92 @@
       //   return htmlList;
       // }
 
-
-      $("#cancelBtn2").click(function(){
-        $("#cancelOrder2").hide();
-      })
-      $("#cancelBtn1").click(function(){
-        $("#cancelOrder1").hide();
-      })
-      $("#deleteCancel").click(function(){
-        $("#deleteOrder").hide();
-      })
-
-      $("#itemList #orderCancel").on("click",function(){
-        $("#cancelOrder1").css("display","block");
-        $("#cancelOrderBtn").click(function(){
-          cancelOrder(token,orderId);
-          $("#cancelOrder1").hide();
-          location.reload();
-        })
-      })
-      $("#itemList #orderDelete").on("click",function(){
-        $("#deleteOrder").css("display","block");
-      })
-        $("#deleteBtn").click(function(){
-          deleteOrder(token,orderId);
-          $("#deleteOrder").hide();
-          location.reload();
-        })
-
-
-
-
-
-
 /*--按钮操作--*/
-      function removeOrder(token,orderId){
-        console.log("删除订单");
-        $.ajax({
-          type:"POST",
-          url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
-          data:{
-            Token:token,
-            OrderId:orderId
-          },
-          success:function(data){
-            console.log("删除订单成功");
-          }
-        })
-      }
-      function updateOrder(token,orderId){
-        console.log("更新订单");
-        $.ajax({
-            type:"POST",
-            url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
-            data:{
-              Token:token,
-              OrderId:orderId
-            },
-            success:function(data){
-              console.log("更新订单成功");
-            }     
-        })
-      }
-      function cancelOrder(token,orderId){
-        console.log("取消订单");
-        $.ajax({
-            type:"POST",
-            url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
-            data:{
-              Token:token,
-              OrderId:orderId
-            },
-            success:function(data){
-              console.log("取消订单成功");
-            }     
-        })
-      }
-      function confirmOrder(token,orderId,memo){
-        console.log("确认订单");
-        $.ajax({
-          type:"POST",
-          url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
-          data:{
-            Token:token,
-            OrderId:orderId,
-            Memo:memo
-          },
-          success:function(data){
-            console.log("确认订单成功");
-          }
-        })
-      } 
-      function completeOrder(token,orderId){
-        console.log("完成订单");
-        $.ajax({
-          type:"POST",
-          url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
-          data:{
-            Token:token,
-            OrderId:orderId
-          },
-          success:function(data){
-            console.log("完成订单成功");
-          }
-        })
-      }
-      function deleteOrder(token,orderId){
-        console.log("完成订单");
-        $.ajax({
-          type:"POST",
-          url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
-          data:{
-            Token:token,
-            OrderId:orderId
-          },
-          success:function(data){
-            console.log("完成订单成功");
-          }
-        })
-      }
-
-
+      // function removeOrder(token,orderId){
+      //   console.log("删除订单");
+      //   $.ajax({
+      //     type:"POST",
+      //     url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+      //     data:{
+      //       Token:token,
+      //       OrderId:orderId
+      //     },
+      //     success:function(data){
+      //       console.log("删除订单成功");
+      //     }
+      //   })
+      // }
+      // function updateOrder(token,orderId){
+      //   console.log("更新订单");
+      //   $.ajax({
+      //       type:"POST",
+      //       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+      //       data:{
+      //         Token:token,
+      //         OrderId:orderId
+      //       },
+      //       success:function(data){
+      //         console.log("更新订单成功");
+      //       }     
+      //   })
+      // }
+      // function cancelOrder(token,orderId){
+      //   console.log("取消订单");
+      //   $.ajax({
+      //       type:"POST",
+      //       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+      //       data:{
+      //         Token:token,
+      //         OrderId:orderId
+      //       },
+      //       success:function(data){
+      //         console.log("取消订单成功");
+      //       }     
+      //   })
+      // }
+      // function confirmOrder(token,orderId,memo){
+      //   console.log("确认订单");
+      //   $.ajax({
+      //     type:"POST",
+      //     url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      //     data:{
+      //       Token:token,
+      //       OrderId:orderId,
+      //       Memo:memo
+      //     },
+      //     success:function(data){
+      //       console.log("确认订单成功");
+      //     }
+      //   })
+      // } 
+      // function completeOrder(token,orderId){
+      //   console.log("完成订单");
+      //   $.ajax({
+      //     type:"POST",
+      //     url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      //     data:{
+      //       Token:token,
+      //       OrderId:orderId
+      //     },
+      //     success:function(data){
+      //       console.log("完成订单成功");
+      //     }
+      //   })
+      // }
+      // function deleteOrder(token,orderId){
+      //   console.log("完成订单");
+      //   $.ajax({
+      //     type:"POST",
+      //     url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+      //     data:{
+      //       Token:token,
+      //       OrderId:orderId
+      //     },
+      //     success:function(data){
+      //       console.log("完成订单成功");
+      //     }
+      //   })
+      // }
 
       // $ul.hide();
       // $ul.eq($num).css("display","block");

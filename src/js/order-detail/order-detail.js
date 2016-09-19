@@ -11,23 +11,54 @@ $(function(){
       }
       return null;
   }
+  function getLocalTime(nS) {     
+    var time = new Date(parseInt(nS) * 1000);
+    return time;
+  }
+  function unix_to_datetime(unix) {
+      var now = new Date(parseInt(unix) * 1000);
+      return now.toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+  }
+  function string_to_date(strDate){
+    var dateString = strDate.replace(/年|月/g, "/").replace(/日/g, " ");
+    var t = new Date(dateString);
+    var tm = new Date(t.getFullYear(),t.getMonth(),t.getDate()+7,t.getHours(),t.getMinutes(),t.getSeconds());
+    return tm;
+  }
+  Date.prototype.Format = function (fmt) { //格式化时间
+    var o = {
+      "M+": this.getMonth() + 1, //月份 
+      "d+": this.getDate(), //日 
+      "h+": this.getHours(), //小时 
+      "m+": this.getMinutes(), //分 
+      "s+": this.getSeconds(), //秒 
+      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+      "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+  }
   var thisOrderId = getQueryString("orderId");
-  var token = $.cookie("Token");
+  console.log(thisOrderId);
+  var token = localStorage.getItem("Token");
+  console.log(token);
   $cancelBtn.on('click',function(){
     $workerPhone.hide();
   });
-  $("#cancelBtn2").click(function(){
+  $("#cancelBtn2").on("click",function(){
     $("#cancelOrder2").hide();
   })
-  $("#cancelBtn1").click(function(){
+  $("#cancelBtn1").on("click",function(){
     $("#cancelOrder1").hide();
   })
-  $("#deleteCancel").click(function(){
+  $("#deleteCancel").on("click",function(){
     $("#deleteOrder").hide();
   })
   $("#orderCancel").on("click",function(){
     $("#cancelOrder1").css("display","block");
-    $("#cancelOrderBtn").click(function(){
+    $("#cancelOrderBtn").on("click",function(){
       cancelOrder(token,orderId);
       $("#cancelOrder1").hide();
       location.reload();
@@ -35,7 +66,7 @@ $(function(){
   })
   $("#orderDelete").on("click",function(){
     $("#deleteOrder").css("display","block");
-    $("#deleteBtn").click(function(){
+    $("#deleteBtn").on("click",function(){
       deleteOrder(token,orderId);
       $("#deleteOrder").hide();
       location.reload();
@@ -43,7 +74,7 @@ $(function(){
   })
   $("#contactWorkerBtn").on("click",function(){
     $("#cancelOrder2").css("display","block");
-    $("#contactWorkerBtn").click(function(){
+    $("#contactWorkerBtn").on("click",function(){
       $("#cancelOrder2").hide();
     })
   })
@@ -53,14 +84,16 @@ $(function(){
     url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
     async:false,
     data:{
-    Token:'865077b7deb3082261d22bfc2765c5e0',
-    OrderId:"2433d1cf-d665-e611-a80e-14dda950621b"
+    Token:token,
+    OrderId:thisOrderId
     },
     success:function(data){
       console.log(data);
       orderState = data.Body.OrderStatus;
       serviceId = data.Body.ServiceId;
       serviceProviderType = data.Body.ServiceProviderType;
+      isPayOff = data.Body.IsPayOff;
+      console.log(isPayOff);
 
       // picData = data.Body.OrderService.Pictures;
       // picLength = data.Body.OrderService.Pictures.length;
@@ -79,15 +112,16 @@ $(function(){
       $("#cancalAt").text(data.Body.CancelTime);
       // $("#clientName").text(data.Body.AddressInfo.Contact);
       
-      console.log(data.Body.Service.ServiceName);
+      // payOffTime = unix_to_datetime(data.Body.PayOffTime).Format("yyyy/MM/dd hh:mm");
+      // console.log(data.Body.Service.ServiceName);
       $("#serviceName").text(data.Body.Service.ServiceName);
       $("#clientName").text(data.Body.Service.ServiceProviderName);
       $("#serviceAddress").text(data.Body.Service.AddressInfo.Address1);
-      $("#payOffTime").text(data.Body.PayOffTime);
-      $("#clinetPhone").text(data.Body.AddressInfo.PhoneNumber);
+      $("#payOffTime").text(data.Body.payOffTime);
+      // $("#clinetPhone").text(data.Body.AddressInfo.PhoneNumber);
       $("#quantity").text(data.Service.Total);
-
-      isPayOff = data.Body.IsPayOff;
+      finishedTime = data.Body.FinishTime;
+      console.log(finishedTime);
       payLock = data.Body.PayLock;
       $("#price").text(data.Body.Price);
       $("#discountInfo").text(data.Body.DiscountAmount);
@@ -204,9 +238,9 @@ console.log(orderState);
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
 
-    $("#btnRight").click(function(){
+    $("#btnRight").on("click",function(){
       $("#cancelOrder1").css("display","block");
-      $("#cancelOrderBtn").click(function(){
+      $("#cancelOrderBtn").on("click",function(){
         cancelOrder(token,orderId);
         $("#cancelOrder1").hide();
         location.reload();
@@ -252,9 +286,9 @@ console.log(orderState);
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
 
-    $("#btnRight").click(function(){
+    $("#btnRight").on("click",function(){
       $("#cancelOrder1").css("display","block");
-      $("#cancelOrderBtn").click(function(){
+      $("#cancelOrderBtn").on("click",function(){
         cancelOrder(token,orderId);
         $("#cancelOrder1").hide();
         location.reload();
@@ -298,9 +332,9 @@ console.log(orderState);
      $("#orderTime").css("marginBottom","4px");
      $("#servicePrice").css("marginBottom","4px"); 
 
-    $("#btnRight").click(function(token,orderId){
+    $("#btnRight").on("click",function(token,orderId){
       $("#deleteOrder").css("display","block");
-      $("#deleteBtn").click(function(){
+      $("#deleteBtn").on("click",function(){
         $("#deleteOrder").hide();
         removeOrder(token,orderId);
         location.reload();
@@ -476,22 +510,56 @@ console.log(orderState);
       $("#orderPrice").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
-      $("#btnLeft").click(function(){
+      $("#btnLeft").on("click",function(){
         $("#cancelOrder1").css("display","block");
-        $("#cancelOrderBtn").click(function(){
+        $("#cancelOrderBtn").on("click",function(){
           cancelOrder(Token,OrderId);
           $("#cancelOrder1").hide();
           // UpdataOrder(Token,OrderId);
           location.reload();
         })
       })
-      $("#btnRight").click(function(){
+      $("#btnRight").on("click",function(){
         window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
       })
     }
-    // if(hasPaied == "1"){
-    //   console.log("订单状态：付清");
-    // }
+
+    if(isPayOff == "1"){
+      $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
+
+      $("#status").text('上门服务');
+      $("#explanation").text('请耐心等待工人在约定时间上门服务哦');
+      $("#tabFirst").text('订单已提交');
+      $("#tabSecond").text('工人已接单');
+      $("#tabThird").text('待付款');
+      $("#tabFourth").text('待服务');
+      $("#btnRight").text('取消订单');
+
+      $("#explanation").css("width","205px");
+
+      $("#tabFourth").addClass("processing");
+      $("#roundFirst").addClass("round-complete");
+      $("#roundSecond").addClass("round-complete");
+      $("#roundThird").addClass("round-complete");
+      $("#roundFourth").addClass("round-processing");
+      $("#btnRight").addClass("delete-btn");
+
+      $("#refundRecord").hide();
+      $("#filling2").hide();
+      $("#negotiable").hide();
+      $("#btnLeft").hide();
+      $("#cancelTime").hide();
+
+      $("#btnRight").on("click",function(){
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").on("click",function(){
+          cancelOrder(Token,OrderId);
+          $("#cancelOrder1").hide();
+          location.reload();
+        })
+      })
+    }
+
     if(payLock == "1"){
       console.log("付款中");
       $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
@@ -521,60 +589,54 @@ console.log(orderState);
       $("#specialPrice").hide();
 
       $("#acceptTime").css("marginBottom","4px");
+    }    
 
-    }
-    
+    // $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
-    $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
+    // $("#status").text('工人已接单');
+    // $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
+    // $("#tabFirst").text('订单已提交');
+    // $("#tabSecond").text('待工人接单');
+    // $("#tabThird").text('待付款');
+    // $("#tabFourth").text('待服务');
+    // $("#btnLeft").text('取消订单');
+    // $("#btnRight").text('支付');
 
-    $("#status").text('工人已接单');
-    $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
-    $("#tabFirst").text('订单已提交');
-    $("#tabSecond").text('待工人接单');
-    $("#tabThird").text('待付款');
-    $("#tabFourth").text('待服务');
-    $("#btnLeft").text('取消订单');
-    $("#btnRight").text('支付');
+    // $("#tabThird").addClass("processing");
+    // $("#roundFirst").addClass("round-complete");
+    // $("#roundSecond").addClass("round-complete");
+    // $("#roundThird").addClass("round-processing");
+    // $("#roundFourth").addClass("round-undone");
+    // $("#wait").addClass("actual");
+    // $("#btnLeft").addClass("delete-btn")
+    // $("#btnRight").addClass("pay-btn");
 
-    $("#tabThird").addClass("processing");
-    $("#roundFirst").addClass("round-complete");
-    $("#roundSecond").addClass("round-complete");
-    $("#roundThird").addClass("round-processing");
-    $("#roundFourth").addClass("round-undone");
-    // $("#total").addClass("actual");
-    $("#wait").addClass("actual");
-    $("#btnLeft").addClass("delete-btn")
-    $("#btnRight").addClass("pay-btn");
+    // $("#orderDiscount").hide();
+    // $("#orderActual").hide();
+    // $("#refundRecord").hide();
+    // $("#filling2").hide();
+    // $("#negotiable").hide();
+    // $("#cancelTime").hide();
 
-    $("#orderDiscount").hide();
-    $("#orderActual").hide();
-    $("#refundRecord").hide();
-    $("#filling2").hide();
-    $("#negotiable").hide();
-    $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#waitOrder").css("marginBottom","0px");
 
-    $("#waitOrder").css("marginBottom","0px");
-    // $("#btnRight").css("left","181px");
-
-    $("#btnLeft").click(function(){
-      $("#cancelOrder1").css("display","block");
-      $("#cancelOrderBtn").click(function(){
-        cancelOrder(Token,OrderId);
-        $("#cancelOrder1").hide();
-        // UpdataOrder(Token,OrderId);
-        location.reload();
-      })
-    })
-    $("#btnRight").click(function(){
-      window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
-    })
+    // $("#btnLeft").on("click",function(){
+    //   $("#cancelOrder1").css("display","block");
+    //   $("#cancelOrderBtn").on("click",function(){
+    //     cancelOrder(Token,OrderId);
+    //     $("#cancelOrder1").hide();
+    //     location.reload();
+    //   })
+    // })
+    // $("#btnRight").on("click",function(){
+    //   window.location.href="../pay/pay.html?orderId" + orderId;
+    // })
     break;
 
     case "30":
     console.log("已完成");
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
-
+    $("#status").text('工人已完成服务');
     Date.prototype.Format = function (fmt) { //格式化时间
       var o = {
         "M+": this.getMonth() + 1, //月份 
@@ -590,11 +652,12 @@ console.log(orderState);
       if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
       return fmt;
     }
-
+    var ft = finishedTime;
+    var ct = string_to_date(ft);
     var now = new Date().Format("yyyy-MM-dd hh:mm:ss");
-    var confirmTime = (new Date(2016,8,13,14,09,58)).Format("yyyy-MM-dd hh:mm:ss");
-    // var time = "2016/09/12 11:16:30";
-    // var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
+    var confirmTime = ct.Format("yyyy-MM-dd hh:mm:ss");
+    var time = "2016/09/12 11:16:30";
+    var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
 
     function DateDiff(sDate1, sDate2){//sDate1和sDate2是yyyy-MM-dd格式  
       var aDate, oDate1, oDate2, iDays, iHours, diffText;
@@ -616,7 +679,7 @@ console.log(orderState);
     console.log(confirmTime);
     // console.log(ftime);
 
-    $("#status").text('工人已完成服务');
+    
     $("#explanation").text(dataDiffText);
     $("#tabFirst").text('订单已提交');
     $("#tabSecond").text('待工人接单');
@@ -642,7 +705,7 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
-    $("#btnRight").click(function(){
+    $("#btnRight").on("click",function(){
       confirmOrder(Token,OrderId,Memo);
       location.reload();
 
@@ -681,7 +744,7 @@ console.log(orderState);
       $("#specialPrice").hide();
       $("#waitOrder").hide();
 
-      $("#btnRight").click(function(){
+      $("#btnRight").on("click",function(){
         window.location.href="";
       })
     }
@@ -713,9 +776,9 @@ console.log(orderState);
       $("#specialPrice").hide();
       $("#waitOrder").hide();
 
-      $("#btnRight").click(function(){
+      $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
-        $("#deleteBtn").click(function(){
+        $("#deleteBtn").on("click",function(){
           $("#deleteOrder").hide();
           removeOrder(token,orderId);
           location.reload();
@@ -792,9 +855,9 @@ console.log(orderState);
       // $("#orderTime").css("marginBottom","4px");
       $("#servicePrice").css("marginBottom","4px"); 
 
-      $("#btnRight").click(function(){
+      $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
-        $("#deleteBtn").click(function(){
+        $("#deleteBtn").on("click",function(){
           removeOrder(token,orderId);
           location.reload();
           $("#deleteOrder").hide();
@@ -848,9 +911,9 @@ console.log(orderState);
       $("#roundThird").addClass("round-undone");
       $("#roundFourth").addClass("round-undone");
       $("#btnRight").addClass("delete-btn");
-      $("#btnRight").click(function(){
+      $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
-        $("#deleteBtn").click(function(){
+        $("#deleteBtn").on("click",function(){
           removeOrder(token,orderId);
           location.reload();
           $("#deleteOrder").hide();
