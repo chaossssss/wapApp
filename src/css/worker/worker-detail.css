@@ -533,19 +533,26 @@ textarea{resize: none;}
     width: 100%;
 }
 /*工人标签*/
+/*工人标签*/
 .worker-tag{
     /*height: 60px;*/
     border-bottom: 1px solid #e4e4e4;
 }
 .worker-tag-box{
-    margin: 10px 20px 10px 15px;
-    width: 80px;
+    margin: 15px;
+    width: 95%;
+    margin-bottom: 8px;
 }
 .Tag{
-    height:18px;
+    height: 18px;
+    line-height: 18px;
     border: 1px solid #3cbffd;
+    color:#3cbffd;
     padding: 5px 12px;
     border-radius: 5px;
+    margin-left: 10px;
+    display: inline-block;
+    margin-bottom: 9px;
 }
 /*工人活动*/
 .exercise{

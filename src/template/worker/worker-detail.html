@@ -116,15 +116,10 @@
     </div>
     <!--工人标签-->
     <div class="worker-tag">
-        <div class="worker-tag-box">
-            <span class="Tag TagName"></span>
-            <!--<span class="Tag"></span>-->
+        <div class="worker-tag-box  ">
+
         </div>
-        <!--<div>-->
-            <!--<span></span>-->
-            <!--<span></span>-->
-            <!--<span></span>-->
-        <!--</div>-->
+
     </div>
     <hr class="line">
     <!-- 认证信息	 -->
@@ -296,27 +291,27 @@
                     $(".Gender").attr("src","../../images/worker/ic_nan.svg");
                 }
 
-//                 var RzImgs="";
-//                 for (var i = 0; i < data.SystemCertification.length; i++) {
-//                  RzImgs+='<img src="'+data.SystemCertification[i].pic+'" class="rz-dia-img" alt="">';
-//                 }
-//                 $(".rz-imgs").html(RzImgs);
-//
-//                 var ModelRzImgs="";
-//                 for (var j = 0; j < data.SystemCertification.length; j++) {
-//                  ModelRzImgs+='<li><img src="'+data.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.SystemCertification[j].title+'</span></li>';
-//                 }
-//                 $(".dialog-imgs").html(ModelRzImgs);
-                var ModelRzImgs="";
-                for (var j = 0; j < api.SystemCertification.length; j++) {
-                    ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-                }
-                $(".rz-imgs").html(ModelRzImgs);
-                var RzImgs="";
-                for (var j = 0; j < api.SystemCertification.length; j++) {
-                    RzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-                }
-                $(".dialog-imgs").html(RzImgs);
+                 var RzImgs="";
+                 for (var i = 0; i < data.SystemCertification.length; i++) {
+                  RzImgs+='<img src="'+data.SystemCertification[i].pic+'" class="rz-dia-img" alt="">';
+                 }
+                 $(".rz-imgs").html(RzImgs);
+
+                 var ModelRzImgs="";
+                 for (var j = 0; j < data.SystemCertification.length; j++) {
+                  ModelRzImgs+='<li><img src="'+data.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.SystemCertification[j].title+'</span></li>';
+                 }
+                 $(".dialog-imgs").html(ModelRzImgs);
+//                var ModelRzImgs="";
+//                for (var j = 0; j < api.SystemCertification.length; j++) {
+//                    ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+//                }
+//                $(".rz-imgs").html(ModelRzImgs);
+//                var RzImgs="";
+//                for (var j = 0; j < api.SystemCertification.length; j++) {
+//                    RzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+//                }
+//                $(".dialog-imgs").html(RzImgs);
 
             },
             error: function(xhr, type){
@@ -351,24 +346,52 @@
             }
         });
         //获取工人标签
+//        $.ajax({
+//            type: 'POST',
+//            url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+//            dataType: 'json',
+//            data:{
+//                GetWorkerTags:"GetWorkerTags",
+//                WorkerId:'1474'
+//            },
+//            success:function(data){
+//                var api=data.Body.TagList;
+//                var res="";
+//                for(var i=0;i<=api.length;i++){
+//                    res+="<span class="+api[i].TagName+"></span>";
+//                }
+//                $(".worker-tag-box").html(res);
+//
+//
+//            },
+//            error: function(xhr, type){
+////                alert('Ajax error!');
+////                // 即使加载出错，也得重置
+////                me.resetload();
+//            }
+//        });
+        //获取工人标签
         $.ajax({
             type: 'POST',
             url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
             dataType: 'json',
             data:{
-//                GetWorkerTags:GetWorkerTags,
                 WorkerId:'1474'
             },
             success:function(data){
                 var api=data.Body.TagList;
-//                $(".TagName").text(api.TagName);
+                var res="";
+                for (var i = 0; i < api.length; i++) {
+                    res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
+                }
 
+                $(".worker-tag-box").html(res);
 
             },
             error: function(xhr, type){
-//                alert('Ajax error!');
-//                // 即使加载出错，也得重置
-//                me.resetload();
+                alert('Ajax error!');
+                // 即使加载出错，也得重置
+                me.resetload();
             }
         });
 
