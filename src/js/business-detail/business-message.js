@@ -36,6 +36,35 @@ $(function(){
 	       console("type");
 	    }
 	});
+
+	// 获取商户标签
+	$.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/Business/GetMerchantTags',
+        dataType: 'json',
+        data:{
+            BusinessId:Id
+        },
+        success:function(data){
+            var api=data.Body.TagList;
+            var res="";
+            for (var i = 0; i < api.length; i++) {
+                res+="<li>"+api[i].TagName+"</li>";
+            }
+
+            if(api.length==0){
+            	$(".business-tag").css("display","none");
+            	$(".hide-line").css("display","none");
+            }
+            $(".tag-item").html(res);
+
+        },
+        error: function(xhr, type){
+           alert('Ajax error!');
+           // 即使加载出错，也得重置
+           me.resetload();
+        }
+    });
 });
 
 // 获取地址传参

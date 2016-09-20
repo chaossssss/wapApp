@@ -2,7 +2,7 @@
 /*公共样式*/
 * {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
 	-webkit-tap-highlight-color: transparent;}
-body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:14px;}
+body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:17px;line-height: 1.41176471;}
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
 input, select {vertical-align:middle;}
 textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
@@ -22,13 +22,16 @@ textarea{resize: none;}
 }
 .name-info{
 	height: 20px;
+	margin-top: 2px;
 }
 .yewu{
 	height: 25px;
+	font-size: 16px;
+	margin-top:8px;
 }
 .bus-img{
-	width: 65px;
-	height: 65px;
+	width: 80px;
+	height: 80px;
 	float:left;
 }
 .swiper-img{
@@ -49,14 +52,14 @@ textarea{resize: none;}
       
 }
 .dianzan{
-	width: 9px;
-	height: 9px;
+	width: 15px;
+	height: 15px;
 }
 .font-style{
 	display:inline-block;
 	color:#3f3e48;
 	width:27px;
-	height:17px;
+	height:19px;
 	overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap; 
@@ -79,13 +82,16 @@ textarea{resize: none;}
 	width: 27px;
 	height: 11px;
 	border-radius: 5px;
+	font-size: 14px;
 }
 .wk-list{
     width: 74%;
     height: 20px;
+    line-height: 19px;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
+    vertical-align: bottom;
 }
 .bus-work ul{
 	display: inline-block;
@@ -97,11 +103,13 @@ textarea{resize: none;}
 .bus-add{
 	margin-left: 12px;
     margin-top: 2px;
+    font-size: 16px;
+    margin-top: 7px;
 }
 .address{
 	float:left;
 	width: 42%;
-	height: 19px;
+	height: 21px;
 	overflow: hidden;
     padding-left: 10px;
     text-overflow:ellipsis;
@@ -110,19 +118,46 @@ textarea{resize: none;}
 .bus-jl{
 	float: right;
 	margin-left: 10px;
-	width: 78px;
-    height: 19px;
+	width: 90px;
+    height: 21px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
 .score{
-	border-top:1px solid #e4e4e4;
-	border-bottom:1px solid #e4e4e4;
+	position: relative;
 	padding-top:25px;
-	padding-left: 10px;
 	padding-bottom:10px;
 }
+.score:after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    top: 0;
+    border-top:1px solid #e4e4e4;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.score:before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    bottom: 0;
+    border-bottom: 1px solid #e4e4e4;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 
 .score li{
 	display: inline-block;
@@ -166,7 +201,7 @@ textarea{resize: none;}
 	border:5px solid #f6f6f6;
 }
 .rz-info{
-    padding: 15px;
+    padding: 15px 10px 15px 10px;
     position: relative;
 }
 
@@ -180,8 +215,8 @@ textarea{resize: none;}
 .rz-imgs{
 	display: inline-block;
     position: absolute;
-    left: 78px;
-    top: 7px;
+    left: 87px;
+    top: 13px;
 }
 .rz-img{
 	width: 17px;
@@ -209,7 +244,7 @@ textarea{resize: none;}
     text-align: center;
     -webkit-tap-highlight-color: transparent;
     width: 50%;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #edecec;
 }
 .active{
 	color:#3cbffd;
@@ -224,13 +259,16 @@ textarea{resize: none;}
 
 .weui_media_desc{
 	width: 274px;
-    height: 15px;
+    height: 14px;
 }
 #tab-kehu{
 	display: none;
 }
+.weui_tabbar{
+    background: #fff;
+}
 .weui_tabbar_item{
-	padding:8px 0px 7px;
+	padding:15px 0px;
 }
 .weui_navbar:after{
 	border-bottom: none;
@@ -389,40 +427,82 @@ textarea{resize: none;}
 	width: 96%;
 }
 .weui_media_box .weui_media_title{
+	font-size: 16px;
+}
+.weui_media_box .weui_media_desc{
 	font-size: 14px;
 }
 
 /*工人标签*/
-.worker-tag{
-    border-bottom: 1px solid #e4e4e4;
-    color:#3cbffd;
+.worker-tag,.worker-tag a{
+    color:#27b8f3;
 }
 .worker-tag-box{
-    margin: 15px;
-    width: 95%;
-    margin-bottom: 8px;
+	position: relative;
+    margin: 15px 10px 5px;
+    max-height: 132px;
+    overflow: hidden;
+}
+.worker-tag-box:before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    bottom: 0;
+    border-bottom: 1px solid #e4e4e4;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .Tag{
     height: 18px;
     line-height: 18px;
-    border: 1px solid #3cbffd;
+    border: 1px solid #27b8f3;
     padding: 5px 12px;
     border-radius: 5px;
-    margin-left: 10px;
+    margin-right: 10px;
     display: inline-block;
-    margin-bottom: 9px;
+    margin-bottom: 14px;
+}
+.font-alltag{
+	text-align: center;
+	font-size: 16px;
+	padding:6px;
+}
+.blue-jiantou{
+    width: 10px;
+    height: 12px;
 }
 
 /*活动内容*/
 .ac_cont{
-	padding: 0px 10px 0px 10px;
+	padding: 7px 0px;
+	position: relative;
+}
+
+.ac_cont:before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    top: 0;
+    border-top: 1px solid #e4e4e4;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .exercise{
     width: 60px;
 }
 .exercise-one{
     width: 65px;
-    height: 40px;
+    height: 30px;
 }
 .pitch{
     padding: 5px 10px;
@@ -438,7 +518,7 @@ textarea{resize: none;}
     font-size: 12px;
     height: 40px;
     line-height: 53px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 .youhui_info{
     position: absolute;
@@ -448,4 +528,6 @@ textarea{resize: none;}
 }
 .ac_right{
 	float:right;
+	margin-top:3px;
+	margin-right: 10px;
 }

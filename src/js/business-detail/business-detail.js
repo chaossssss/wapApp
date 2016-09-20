@@ -67,6 +67,7 @@ $(function(){
     		$(".GradeRank").text(api.GradeRank);
             $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
             $(".business-mes").attr("href","business-message.html?type="+Type+"&id="+Id);
+            $(".a-tag").attr("href","business-tags.html?markid="+Id);
 
             // 认证集合
     		var RzImgs="";
@@ -256,7 +257,12 @@ $(function(){
             for (var i = 0; i < api.length; i++) {
                 res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
             }
+            
+            if(api.length==0){
+                $(".worker-tag").css("display","none");
+            }
 
+            $(".tab-num").text(api.length);
             $(".worker-tag-box").html(res);
 
         },

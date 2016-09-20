@@ -68,7 +68,7 @@ function(a) {
 				domClass: "dropload-down",
 				domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
 				domLoad: '<div class="dropload-load"></div>',
-				domNoData: '<div class="dropload-noData">暂无数据</div>'
+				domNoData: '<div class="dropload-noData"></div>'
 			},
 			autoLoad: !0,
 			distance: 50,
