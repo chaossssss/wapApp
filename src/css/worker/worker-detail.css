@@ -21,6 +21,9 @@ textarea{resize: none;}
 .fr{
     float: right;
 }
+body{
+    font-size: 14px;
+}
 /*-------------------*/
 
 .top-info{
@@ -501,6 +504,7 @@ textarea{resize: none;}
 }
 .pl-date{
     margin-left:10px;
+    font-size: 14px;
 }
 .pl-cont{
     text-align: left;
@@ -522,6 +526,7 @@ textarea{resize: none;}
 }
 .client-name{
     padding-left: 5px;
+    font-size: 14px;
 }
 .Age{
     font-size: 14px;

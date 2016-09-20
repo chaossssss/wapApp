@@ -15,8 +15,8 @@
 </head>
 <style>
     .xingx-img{
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height:10px;
     }
 </style>
 <body>
@@ -127,8 +127,9 @@
     <a href="javascript:;" id="showDialog2">
         <div class="rz-info">
             <span class="rz-title">认证信息</span>
-            <!--<div class="bus-img"></div>-->
-            <span><img src="" alt=""/></span>
+            <div class="rz-imgs">
+
+            </div>
 
             <img style="float: right; " src="/images/business-detail/jiantou.png" alt="" class="more">
         </div>
@@ -165,7 +166,7 @@
         <div class="clear"></div>
     </div>
 
-    <hr class="line">
+    <!--<hr class="line">-->
     <a href="javascript:;" id="showDialog9">
         <div class="rz-infof">
             <span class="rz-titles">客户评价</span>
@@ -273,7 +274,6 @@
             },
             success:function(data){
                 var api = data.Body.Worker;
-                var ser = data.SystemCertification
                 $(".bus-img").attr("src",api.Photo);
                 $(".Gender").attr("src",api.Gender);
                 $(".Name").text(api.Name);
@@ -300,26 +300,17 @@
                 }
 
                  var RzImgs="";
-                 for (var i = 0; i < ser.length; i++) {
-                  RzImgs+='<img src="'+ser[i].pic+'" class="rz-dia-img" alt="">';
+                 for (var i = 0; i < api.length; i++) {
+                     RzImgs+='<img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="">';
                  }
                  $(".rz-imgs").html(RzImgs);
 
                  var ModelRzImgs="";
-                 for (var j = 0; j < ser.length; j++) {
-                  ModelRzImgs+='<li><img src="'+ser[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+ser[j].title+'</span></li>';
+                 for (var j = 0; j < api.length; j++) {
+                     ModelRzImgs+='<li><img src="'+api.SystemCertification[j].Image+'" class="rz-dia-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
                  }
                  $(".dialog-imgs").html(ModelRzImgs);
-//                var ModelRzImgs="";
-//                for (var j = 0; j < api.SystemCertification.length; j++) {
-//                    ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-//                }
-//                $(".rz-imgs").html(ModelRzImgs);
-//                var RzImgs="";
-//                for (var j = 0; j < api.SystemCertification.length; j++) {
-//                    RzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-//                }
-//                $(".dialog-imgs").html(RzImgs);
+
 
             },
             error: function(xhr, type){
