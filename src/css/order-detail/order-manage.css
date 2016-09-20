@@ -61,7 +61,7 @@ body{ font-size:14px;}
 .processing{ color: #3fbef9; }
 
 /*--订单已取消--*/
-.round{ width: 11px; height: 11px; border-radius: 50%; position: relative; top: -6px; left: 40px; }
+.round{ width: 11px; height: 11px; border-radius: 50%; position: relative; top: -6px; left: 50%; }
 .round-complete{ background: #3fbef9; }
 .round-processing{ background: #3fbef9; width: 7px; height: 7px; border: 2px solid #88d7fc; }
 .round-undone{ background: #fff; width: 9px; height: 9px; border: 1px solid #88d7fc; }

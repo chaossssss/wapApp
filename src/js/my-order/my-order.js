@@ -59,7 +59,7 @@
               OrderId:orderId
             },
             success:function(data){
-              console.log("取消订单成功");
+              alert("取消订单成功");
             }     
         })
       }
@@ -93,7 +93,7 @@
         })
       }
       function deleteOrder(token,orderId){
-        console.log("完成订单");
+        console.log("删除订单");
         $.ajax({
           type:"POST",
           url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
@@ -102,7 +102,7 @@
             OrderId:orderId
           },
           success:function(data){
-            console.log("完成订单成功");
+            console.log("删除订单成功");
           }
         })
       }
@@ -269,7 +269,7 @@
           $("#deleteBtn").on("click",function(){
             deleteOrder(token,orderId);
             $("#deleteOrder").hide();
-            location.reload();
+            // location.reload();
           })
           $("#deleteCancel").on("click",function(){
             $("#deleteOrder").hide();
