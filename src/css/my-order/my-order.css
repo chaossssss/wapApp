@@ -105,7 +105,7 @@ div,li{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 	border-bottom: 1px solid #ccc;
 	background: #fff;
 }
-.order-cancel,.order-pay,.order-pay2{
+.order-cancel,.order-pay,.order-pay2,.order-delete{
 	float: right;
 	display: inline-block;
  	padding-right: 10px;
@@ -150,3 +150,4 @@ div,li{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 	color: #ccc;
 }
 .weui_dialog_confirm .weui_dialog .zj-align{ text-align: center; }
+.weui_dialog_confirm .weui_dialog .weui_dialog_ft .zj-bluecol{ color: #27b8f3; }

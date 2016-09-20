@@ -136,7 +136,7 @@
             $("#cancelOrder1").hide();
             location.reload();
           })
-          $("#cancelBtn1").on("click",function(){
+          $(".uncancel").on("click",function(){
             $("#cancelOrder1").hide();
           })
         })
@@ -167,16 +167,19 @@
           "</div>" +
         "</div>";
         htmlList += html;
-        $("#itemList #orderCancel").on("click",function(){
+        $("#itemList .order-cancel").on("click",function(){
           $("#cancelOrder1").css("display","block");
           $("#cancelOrderBtn").on("click",function(){
             cancelOrder(token,orderId);
             $("#cancelOrder1").hide();
             location.reload();
           })
+          $(".uncancel").on("click",function(){
+            $("#cancelOrder1").hide();
+          })
         })
         $("#orderPay").on("click",function(){
-          window.location.href="";
+          window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
         })
         return htmlList;
       }
@@ -257,11 +260,11 @@
             "</ul>" +
           "</div>" +
           "<div class='item-buttom'>" +
-            "<a id='orderDelete' class='order-cancel'>删除订单</a>" +
+            "<a id='orderDelete' class='order-delete'>删除订单</a>" +
           "</div>" +
         "</div>";
         htmlList += html;
-        $("#orderDelete").on("click",function(){
+        $(".order-delete").on("click",function(){
           $("#deleteOrder").css("display","block");
           $("#deleteBtn").on("click",function(){
             deleteOrder(token,orderId);
@@ -348,23 +351,27 @@
             var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
             console.log(orderStatus);
             if(orderStatus == "10"){
+              $("#noOrder").hide();
               var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
-             // console.log(orderContent);
              $("#itemList").append(orderContent);
             }
             if( isPayOff == "0" && orderStatus == "20" ){
+              $("#noOrder").hide();
               var orderContent = payment(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
               $("#itemList").append(orderContent);
             }
             if( orderStatus == "30"){
+              $("#noOrder").hide();
               var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
               $("#itemList").append(orderContent);
             }
             if( orderStatus == "40"){
+              $("#noOrder").hide();
               var orderContent = evaluation(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
               $("#itemList").append(orderContent);
             }
             if( orderStatus == "50"){
+              $("#noOrder").hide();
               var orderContent = canceled(orderId,serviceName,createAt,serviceAddress,totalPrice);
               $("#itemList").append(orderContent);
             }
@@ -462,7 +469,6 @@
               if(orderStatus == "10"){
                 $("#noOrder").hide();
                 var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
-               // console.log(orderContent);
                $("#itemList").append(orderContent);
               }
               if( isPayOff == "0" && orderStatus == "20" ){
@@ -521,7 +527,7 @@
                 var unitName = "/" + unit;
               }
               if(orderStatus == "10"){
-                $("#noOrder").hide();
+                // $("#noOrder").hide();
                 var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
                 $("#itemList").append(orderContent);
               }
@@ -529,9 +535,6 @@
             break;
             case 2:
             console.log("待付款");
-            if(listData == null){
-              $("#noOrder").css("display","block");
-            }
             for(i = 0; i < listLength; i++){
               var orderId = listData[i].OrderId;
               var orderCode = listData[i].OrderCode;
@@ -574,9 +577,6 @@
             break;
             case 3:
             console.log("已完成");
-            if(listData == null){
-              $("#noOrder").css("display","block");
-            }
             for(i = 0; i < listLength; i++){
               var orderId = listData[i].OrderId;
               var orderCode = listData[i].OrderCode;

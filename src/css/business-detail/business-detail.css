@@ -35,15 +35,15 @@ textarea{resize: none;}
 	float:left;
 }
 .swiper-img{
-	width:80px;
-	height: 80px;
+	width:145px;
+	height: 145px;
 }
 .bus-name{
     float: left;
     padding-left: 12px;
     margin-top: -5px;
     font-weight: 400;
-    width: 40%;
+    width: 32%;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -108,7 +108,7 @@ textarea{resize: none;}
 }
 .address{
 	float:left;
-	width: 42%;
+	width: 34%;
 	height: 21px;
 	overflow: hidden;
     padding-left: 10px;
@@ -238,6 +238,9 @@ textarea{resize: none;}
 .weui_navbar{
 	background-color:#fff;
 	position: static;
+}
+.weui_tabbar_icon{
+    height:27px;
 }
 .fuwu-cont,.kehu-pingjia{
 	padding: 13px 0;
@@ -515,16 +518,15 @@ textarea{resize: none;}
 	display: inline-block;
     position: relative;
     color: #fff;
-    font-size: 12px;
-    height: 40px;
-    line-height: 53px;
+    font-size: 14px;
     margin-left: 10px;
+    background: url(/images/business-detail/ac_bg.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin-top: 10px;
 }
 .youhui_info{
-    position: absolute;
-    top:-3px;
-    left:0;
-    margin-left: 3px;
+    padding: 5px;
 }
 .ac_right{
 	float:right;

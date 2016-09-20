@@ -22,8 +22,8 @@ $(function(){
 // 轮播图弹出效果---------------------------------------------
     var swiper = new Swiper('.swiper-container', {
             //pagination: '.swiper-pagination',
-            initialSlide :2,
-            slidesPerView: 3,
+            initialSlide :0,
+            slidesPerView: 2,
             paginationClickable: true,
             spaceBetween: 0,
             touchRatio:1,
