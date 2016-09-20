@@ -40,7 +40,7 @@ $(function(){
 	// 获取商户标签
 	$.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Business/GetMerchantTags',
+        url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
         dataType: 'json',
         data:{
             BusinessId:Id

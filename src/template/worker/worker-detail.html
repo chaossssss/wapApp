@@ -15,8 +15,8 @@
 </head>
 <style>
     .xingx-img{
-        width: 10px;
-        height:10px;
+        width: 14px;
+        height:14px;
     }
 </style>
 <body>
@@ -61,11 +61,11 @@
             </div>
             <div class="clear"></div>
         </div>
-        <a href="worker-message.html">
+        <a class="worker-mes" href="">
             <div class="yewu">
                 <div class="bus-work">
-                    <span style="font-size: 14px;" class="">小时工</span>
-                    <span class="Wage" style="padding-left: 70%; font-size: 12px; color:#ec4836;"></span>
+                    <span style="font-size: 14px; color: #3f3e48;" class="">小时工</span>
+                    <span class="Wage"></span>
                     <!--<span style="font-size: 12px; color:#ec4836;">元/小时</span>-->
                     <span class="wk-list"></span>
                 </div>
@@ -117,9 +117,13 @@
     </div>
     <!--工人标签-->
     <div class="worker-tag">
-        <div class="worker-tag-box  ">
+        <div class="worker-tag-box"></div>
+        <a href="" class="a-tag">
+            <p class="font-alltag">全部标签<span class="tab-num"></span>
+                <img src="/images/business-detail/blue-arrows.png" alt="" class="blue-jiantou">
+            </p>
+        </a>
 
-        </div>
 
     </div>
     <hr class="line">
@@ -160,7 +164,7 @@
         </div>
         <a href="javascript:;">
             <div class="ac_right">
-                <img src="../../images/worker/button@2x.png" class="exercise-one" alt=""/>
+                <img src="../../images/worker/btn-background.png" class="exercise-one" alt=""/>
             </div>
         </a>
         <div class="clear"></div>
@@ -192,17 +196,17 @@
     <!-- 底部导航条 -->
     <div class=" navigation">
         <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on" id="quick-order">
-            <div class="weui_tabbar_icon">
+            <div class="weui_tabbar_icon bottom-ico">
                 <img src="/images/worker/ic_zhijiezhifu_nor.svg" alt="">
             </div>
         </a>
         <a href="javascript:;" class="weui_tabbar_item" id="point-order">
-            <div class="weui_tabbar_icon">
+            <div class="weui_tabbar_icon bottom-ico">
                 <img src="/images/worker/ic_order_nor.svg" alt="">
             </div>
         </a>
         <a href="" class="weui_tabbar_item phoneNo ">
-            <div class="weui_tabbar_icon">
+            <div class="weui_tabbar_icon bottom-ico">
                 <img src="/images/worker/ic_phone_nor.svg"  class="dianhua-img" alt="">
             </div>
         </a>
@@ -293,10 +297,12 @@
                 $(".PhoneCount").text(api.PhoneCount);
                 $(".PhoneRank").text(api.PhoneRank);
                 $(".GradeRank").text(api.GradeRank);
+                $(".worker-mes").attr("href","worker-message.html?type="+Type+"&markid="+Id);
                 if(api.Gender=="1"){
                     $(".Gender").attr("src","../../images/worker/ic_nv.svg");
                 }else{
                     $(".Gender").attr("src","../../images/worker/ic_nan.svg");
+
                 }
 
                  var RzImgs="";
@@ -350,7 +356,7 @@
             url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
             dataType: 'json',
             data:{
-                WorkerId:'1474'
+                WorkerId:Id
             },
             success:function(data){
                 var api=data.Body.TagList;
@@ -358,7 +364,11 @@
                 for (var i = 0; i < api.length; i++) {
                     res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
                 }
+                if(api.length==0){
+                    $(".worker-tag").css("display","none");
+                }
 
+                $(".tab-num").text(api.length);
                 $(".worker-tag-box").html(res);
 
             },
@@ -373,6 +383,8 @@
         $.ajax({
             type: 'POST',
             url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
+
+
             dataType: 'json',
             data:{
                 ID:'1162'
@@ -401,7 +413,7 @@
                         }
                     }
 
-                    result+='<div class="pl-item"><div class="fl"><img style="width: 20px; height: 20px; vertical-align: middle;" src="'+api[i].Pictures[0].SmallPic+'" class="touxiang-img" alt=""/><span class="client-name">'+api[i].ClientName+'</span><span class="pl-date">'+api[i].Date+'</span></div><div class="fr"><span class="xinxin">'+res_xin+'</span><span class="pl-score">'+api[i].Score+'</span></div><div class="clear"></div><div class="pl-cont">'+api[i].Content+'</div></div>';
+                    result+='<div class="pl-item"><div class="fl"><img style="width: 28px; height: 28px; vertical-align: middle;" src="'+api[i].Pictures[0].SmallPic+'" class="touxiang-img" alt=""/><span class="client-name">'+api[i].ClientName+'</span><span class="pl-date">'+api[i].Date+'</span></div><div class="fr"><span class="xinxin">'+res_xin+'</span><span class="pl-score">'+api[i].Score+'</span></div><div class="clear"></div><div class="pl-cont">'+api[i].Content+'</div></div>';
                 }
                 $('.client-pl').html(result);
 

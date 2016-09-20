@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <title>商户标签</title>
+    <link rel="stylesheet" href="/css/weui.min.css">
+    <link rel="stylesheet" href="/css/worker/worker-tags.min.css">
+    <style>
+        header{
+            color:#27b8f3;
+            padding:26px 26px 14px 26px;
+        }
+        .tag-item{
+            padding: 0px 26px;
+            font-size: 16px;
+        }
+        .tag-item li{
+            display: inline-block;
+            border:1px solid #e0dfe8;
+            border-radius: 5px;
+            padding:5px 10px;
+            color:#6f6e76;
+            margin-bottom: 8px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+	<header>共<span class="tag-num"></span>个标签</header>
+	<ul class="tag-item"></ul>
+
+	<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+</body>
+</html>
+<script>
+    $(function(){
+        var Type=getUrl('type');
+        var Id=getUrl('markid');
+        //获取商户标签
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+            dataType: 'json',
+            data:{
+                WorkerId:Id
+            },
+            success:function(data){
+                var api=data.Body.TagList;
+                var res="";
+                for (var i = 0; i < api.length; i++) {
+                    res+="<li>"+api[i].TagName+"</li>";
+                }
+
+                $(".tag-num").text(api.length);
+                $(".tag-item").html(res);
+
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+                // 即使加载出错，也得重置
+                me.resetload();
+            }
+        });
+
+    });
+
+
+    // 获取地址传参
+    function getUrl(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r!=null) return unescape(r[2]); return null; //返回参数值
+    }
+</script>

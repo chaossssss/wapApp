@@ -151,3 +151,23 @@ a{
     margin-top: 10px;
     background-color: #fff;
 }
+/*…Ãªß±Í«©*/
+.business-tag{
+    padding: 10px;
+    padding-top: 20px;
+}
+.tag-item{
+    font-size: 16px;
+    float: right;
+    width: 76%;
+    margin-top: -7px;
+}
+.tag-item li{
+    display: inline-block;
+    border:1px solid #e0dfe8;
+    border-radius: 5px;
+    padding:5px 10px;
+    color:#6f6e76;
+    margin-bottom: 8px;
+    margin-right: 8px;
+}
