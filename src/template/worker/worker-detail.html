@@ -298,6 +298,7 @@
                 $(".PhoneRank").text(api.PhoneRank);
                 $(".GradeRank").text(api.GradeRank);
                 $(".worker-mes").attr("href","worker-message.html?type="+Type+"&markid="+Id);
+                $(".a-tag").attr("href","worker-tags.html?markid="+Id);
                 if(api.Gender=="1"){
                     $(".Gender").attr("src","../../images/worker/ic_nv.svg");
                 }else{
@@ -306,13 +307,14 @@
                 }
 
                  var RzImgs="";
-                 for (var i = 0; i < api.length; i++) {
+                 for (var i =0; i < api.SystemCertification.length; i++) {
                      RzImgs+='<img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="">';
+
                  }
                  $(".rz-imgs").html(RzImgs);
 
                  var ModelRzImgs="";
-                 for (var j = 0; j < api.length; j++) {
+                 for (var j = 0; j < api.SystemCertification.length; j++) {
                      ModelRzImgs+='<li><img src="'+api.SystemCertification[j].Image+'" class="rz-dia-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
                  }
                  $(".dialog-imgs").html(ModelRzImgs);
