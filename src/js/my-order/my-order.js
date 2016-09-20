@@ -4,6 +4,22 @@
       var token = localStorage.getItem("Token");
       console.log(token);
       $li.eq(0).addClass("active");
+      function money(m){
+        if(m == '面议'){
+          var ml = m;
+        }else{
+          var ml = "￥" + m;
+        }
+        return ml;
+      }
+      function mul(t){
+        if(t == ''){
+          var tl = t;
+        }else{
+          var tl = "×" + t;
+        }
+        return tl;
+      }
 /*--按钮操作--*/
       function removeOrder(token,orderId){
         console.log("删除订单");
@@ -105,7 +121,7 @@
               "<li><span>客服正在努力安排工人</span></li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time +
               "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" +
-              "<li><span>服务价格</span><span class='title-right'>￥" + serPrice + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>" + serPrice + "</span></li>" +
             "</ul>" +
           "</div>" +
           "<div class='item-buttom'>" +
@@ -140,10 +156,10 @@
             "<li><img src='" + picSrc + "' alt='' class='worker-img'><span>" + name + " " + gender +"</span></li>" +
             "<li><span>服务时间</span><span class='title-right'>" + time + "</span></li>" +
             "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" +
-            "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
+            "<li><span>服务价格</span><span class='title-right'>" + price + unit + " ×" + total + "</span></li>" +
           "</ul>" +
           "</div>" +
-          "<div class='total-price'>订单总价：<span class='price-num'>￥" + totalPrice + "</span></div>" +
+          "<div class='total-price'>订单总价：<span class='price-num'>" + totalPrice + "</span></div>" +
           "<div class='item-buttom'>" +
           "<a id='orderPay' href='../pay/pay.html?orderId=" + orderId + "' class='order-pay'>支 付</a>" +
           "<a id='orderCancel' href='#' class='order-cancel'>取消订单</a>" +
@@ -178,10 +194,10 @@
               "<li><img src='" + picSrc + "' alt='' class='worker-img'>" + name + " " + gender + "</li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time + "</span></li>" +
               "<li><span>服务地址</span><span class='title-right'>" + addr + "</span></li>" + 
-              "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>" + price + unit + " ×" + total + "</span></li>" +
             "</ul>" +
           "</div>" +
-          "<div class='total-price'>订单总价：<span class='price-num'>￥" + totalPrice + "</span></div>" +
+          "<div class='total-price'>订单总价：<span class='price-num'>" + totalPrice + "</span></div>" +
           "<div class='item-buttom'>" +         
             "<a id='confirmOrder' href='#' class='order-cancel'>确认服务完成</a>" +
             "<div class='clear'></div>" +
@@ -208,10 +224,10 @@
               "<li><img src='" + picSrc + "' alt='' class='worker-img'><span>" + name + " " + gender + "</span></li>" +
               "<li><span>服务时间</span><span class='title-right'>" + time +"</span></li>" +
               "<li><span>服务地址</span><span class='title-right'>" + addr +"</span></li>" +
-              "<li><span>服务价格</span><span class='title-right'>￥" + price + unit + " ×" + total + "</span></li>" +
+              "<li><span>服务价格</span><span class='title-right'>" + price + unit + " ×" + total + "</span></li>" +
             "</ul>" +
           "</div>" +
-          "<div class='total-price'>实付<span class='price-num'>￥" + totalPrice + "</span></div>" +
+          "<div class='total-price'>实付<span class='price-num'>" + totalPrice + "</span></div>" +
             "<div class='item-buttom'>" +         
             "<a id='orderEval' href='#' class='order-pay2'>评价</a>" +
             "<div class='clear'></div>" +
@@ -283,8 +299,8 @@
             var createAt = listData[i].CreateTime;
             var orderStatus = listData[i].OrderStatus;
             var isPayOff = listData[i].IsPayOff;
-            var price = listData[i].Price;
-            var totalPrice = listData[i].TotalPrice;
+            var price = money(listData[i].Price);
+            var totalPrice = money(listData[i].TotalPrice);
             var total = listData[i].Total;
             var unit = listData[i].UnitName;
             var discountInfo = listData[i].DiscountInfo;
@@ -363,7 +379,7 @@
       $li.removeClass();
       $this.addClass("active");
       $("#itemList").empty();
-
+      $("#noOrder").show();
       $.ajax({
         type:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderListEx",
@@ -385,7 +401,7 @@
           switch($num){
             case 0:
             console.log("全部");
-            if(listData == null){
+            if(listData != ""){
               $("#noOrder").css("display","block");
             }
             for(i = 0; i < listLength; i++){
@@ -394,9 +410,9 @@
               var createAt = listData[i].CreateTime;
               var orderStatus = listData[i].OrderStatus;
               var isPayOff = listData[i].IsPayOff;
-              var price = listData[i].Price;
-              var totalPrice = listData[i].TotalPrice;
-              var total = listData[i].Total;
+              var price = money(listData[i].Price);
+              var totalPrice = money(listData[i].TotalPrice);
+              var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
@@ -444,23 +460,28 @@
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
               console.log(orderStatus);
               if(orderStatus == "10"){
+                $("#noOrder").hide();
                 var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
                // console.log(orderContent);
                $("#itemList").append(orderContent);
               }
               if( isPayOff == "0" && orderStatus == "20" ){
+                $("#noOrder").hide();
                 var orderContent = payment(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
               if( orderStatus == "30"){
+                $("#noOrder").hide();
                 var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
               if( orderStatus == "40"){
+                $("#noOrder").hide();
                 var orderContent = evaluation(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
               if( orderStatus == "50"){
+                $("#noOrder").hide();
                 var orderContent = canceled(orderId,serviceName,createAt,serviceAddress,totalPrice);
                 $("#itemList").append(orderContent);
               }
@@ -469,8 +490,8 @@
             case 1:
             console.log("待接单");
             console.log(listLength);
-            if(listData == null){
-              $("#noOrder").css("display","block");
+            if(listData != ""){
+              $("#noOrder").hide();
             }
             for(i = 0; i < listLength; i++){
               var orderId = listData[i].OrderId;
@@ -478,9 +499,9 @@
               var createAt = listData[i].CreateTime;
               var orderStatus = listData[i].OrderStatus;
               var isPayOff = listData[i].IsPayOff;
-              var price = listData[i].Price;
-              var totalPrice = listData[i].TotalPrice;
-              var total = listData[i].Total;
+              var price = money(listData[i].Price);
+              var totalPrice = money(listData[i].TotalPrice);
+              var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
@@ -500,6 +521,7 @@
                 var unitName = "/" + unit;
               }
               if(orderStatus == "10"){
+                $("#noOrder").hide();
                 var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
                 $("#itemList").append(orderContent);
               }
@@ -516,9 +538,9 @@
               var createAt = listData[i].CreateTime;
               var orderStatus = listData[i].OrderStatus;
               var isPayOff = listData[i].IsPayOff;
-              var price = listData[i].Price;
-              var totalPrice = listData[i].TotalPrice;
-              var total = listData[i].Total;
+              var price = money(listData[i].Price);
+              var totalPrice = money(listData[i].TotalPrice);
+              var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
@@ -543,6 +565,7 @@
                 var unitName = "/" + unit;
               }
               if( isPayOff == "0" && orderStatus == "20" ){
+                $("#noOrder").hide();
                 var orderContent = payment(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
@@ -560,9 +583,9 @@
               var createAt = listData[i].CreateTime;
               var orderStatus = listData[i].OrderStatus;
               var isPayOff = listData[i].IsPayOff;
-              var price = listData[i].Price;
-              var totalPrice = listData[i].TotalPrice;
-              var total = listData[i].Total;
+              var price = money(listData[i].Price);
+              var totalPrice = money(listData[i].TotalPrice);
+              var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
@@ -608,6 +631,7 @@
               var formatTime = getLocalTime(createAt);
               var serviceTime = formatTime.Format("yyyy-MM-dd hh:mm");
               if( orderStatus == "30"){
+                $("#noOrder").hide();
                 var orderContent = unconfirm(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
@@ -624,9 +648,9 @@
               var createAt = listData[i].CreateTime;
               var orderStatus = listData[i].OrderStatus;
               var isPayOff = listData[i].IsPayOff;
-              var price = listData[i].Price;
-              var totalPrice = listData[i].TotalPrice;
-              var total = listData[i].Total;
+              var price = money(listData[i].Price);
+              var totalPrice = money(listData[i].TotalPrice);
+              var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
               var serviceProviderType = listData[i].ServiceProviderType;
@@ -672,6 +696,7 @@
                 var unitName = "/" + unit;
               }
               if( orderStatus == "40"){
+                $("#noOrder").hide();
                 var orderContent = evaluation(orderId,serviceName,serviceProviderPic,serviceProviderName,gender,createAt,serviceAddress,price,unitName,totalCount,totalPrice);
                 $("#itemList").append(orderContent);
               }
