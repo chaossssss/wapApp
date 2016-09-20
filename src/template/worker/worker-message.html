@@ -87,6 +87,26 @@
             margin-top: 10px;
             background-color: #fff;
         }
+        /*商户标签*/
+        .business-tag{
+            padding: 10px;
+            padding-top: 20px;
+        }
+        .tag-item{
+            font-size: 16px;
+            float: right;
+            width: 76%;
+            margin-top: -7px;
+        }
+        .tag-item li{
+            display: inline-block;
+            border:1px solid #e0dfe8;
+            border-radius: 5px;
+            padding:5px 10px;
+            color:#6f6e76;
+            margin-bottom: 8px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body ng-controller="bossInfoCtrl"><script id="__bs_script__">//<![CDATA[
@@ -144,7 +164,12 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
         <div class="zj_cell_bd pl10 Signature"></div>
     </div>
 </div>
-
+<!-- 商户标签 -->
+<div class="business-tag">
+    <span class="title">标　　签</span>
+    <ul class="tag-item"></ul>
+    <div class="clear"></div>
+</div>
 <div class="weui_cells mt10">
     <div class="zj_cell zj_cell_primary pd">
         <div class="zj_cell_hd">服务时间</div>
@@ -217,38 +242,78 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
 </body>
 </html>
 <script>
-    $.ajax({
-        dataType:"json",
-        type:"POST",
-        url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
-        data:{
-            Type:"1",
-            Id:"3110"
-        },
-        success:function(data){
-            var api=data.Body.Worker;
-            $(".JobNumber").text(api.JobNumber);
-            $(".NativePlace").text(api.NativePlace);
-            $(".Education").text(api.Education);
-            $(".Stature").text(api.Stature);
-            $(".Weight").text(api.Weight);
-            $(".WorkingYears").text(api.WorkingYears);
-            $(".Hobby").text(api.Hobby);
-            $(".BloodType").text(api.BloodType);
-            $(".Constellation").text(api.Constellation);
-            $(".Signature").text(api.Signature);
-            $(".ServiceTime").text(api.ServiceTime);
-            $(".ServiceScope").text(api.ServiceScope);
-            $(".Intro").text(api.Intro);
-            $(".Address").text(api.Address);
-            var ModelRzImgs="";
-            for (var j = 0; j < api.SystemCertification.length; j++) {
-                ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+    $(function() {
+
+        var Type = getUrl('type');
+        var Id = getUrl('id');
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
+            data: {
+                Type: "1",
+                Id: "3110"
+            },
+            success: function (data) {
+                var api = data.Body.Worker;
+                $(".JobNumber").text(api.JobNumber);
+                $(".NativePlace").text(api.NativePlace);
+                $(".Education").text(api.Education);
+                $(".Stature").text(api.Stature);
+                $(".Weight").text(api.Weight);
+                $(".WorkingYears").text(api.WorkingYears);
+                $(".Hobby").text(api.Hobby);
+                $(".BloodType").text(api.BloodType);
+                $(".Constellation").text(api.Constellation);
+                $(".Signature").text(api.Signature);
+                $(".ServiceTime").text(api.ServiceTime);
+                $(".ServiceScope").text(api.ServiceScope);
+                $(".Intro").text(api.Intro);
+                $(".Address").text(api.Address);
+                var ModelRzImgs = "";
+                for (var j = 0; j < api.SystemCertification.length; j++) {
+                    ModelRzImgs += '<li><img src="' + api.SystemCertification[j].pic + '" class="sys-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
+                }
+                $(".items").html(ModelRzImgs);
+            },
+            //error: function(xhr, type){
+            //    console("type");
+            //}
+        })
+        // 获取商户标签
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+            dataType: 'json',
+            data:{
+                WorkerId:"1474"
+            },
+            success:function(data){
+                var api=data.Body.TagList;
+                var res="";
+                for (var i = 0; i < api.length; i++) {
+                    res+="<li>"+api[i].TagName+"</li>";
+                }
+
+                if(api.length==0){
+                    $(".business-tag").css("display","none");
+                    $(".hide-line").css("display","none");
+                }
+                $(".tag-item").html(res);
+
+            },
+            error: function(xhr, type){
+                alert('Ajax error!');
+                // 即使加载出错，也得重置
+                me.resetload();
             }
-            $(".items").html(ModelRzImgs);
-        },
-        //error: function(xhr, type){
-        //    console("type");
-        //}
-    })
+        });
+    });
+    // 获取地址传参
+    function getUrl(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
 </script>
