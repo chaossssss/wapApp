@@ -43,7 +43,7 @@ textarea{resize: none;}
     padding-left: 12px;
     margin-top: -5px;
     font-weight: 400;
-    width: 40%;
+    width: 32%;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -108,7 +108,7 @@ textarea{resize: none;}
 }
 .address{
 	float:left;
-	width: 42%;
+	width: 34%;
 	height: 21px;
 	overflow: hidden;
     padding-left: 10px;
