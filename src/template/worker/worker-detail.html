@@ -164,7 +164,7 @@
         </div>
         <a href="javascript:;">
             <div class="ac_right">
-                <img src="../../images/worker/btn-background.png" class="exercise-one" alt=""/>
+                <img src="../../images/worker/button@2x.png" class="exercise-one" alt=""/>
             </div>
         </a>
         <div class="clear"></div>
@@ -176,9 +176,7 @@
             <span class="rz-titles">客户评价</span>
             <!--<div class="bus-img"></div>-->
             <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
-            <span><img src="" alt=""/></span>
+
         </div>
     </a>
     <!--客户无评价-->
@@ -189,6 +187,13 @@
     <!--<div class="shafa-font">沙发没人做,赶紧去抢吧</div>-->
     <!--</div>-->
     <!--客户评论-->
+    <div id="tab-kehu" >
+        <div class="no-fuwu" style="display:none;">
+            <img class="weui_media_appmsg_thumb no-fuwu-img" src="/images/worker/shafa.png" alt="">
+            <p class="no-fuwu-nocice">沙发还没人做，赶紧去抢吧</p>
+        </div>
+        <div class="kehu-list"></div>
+    </div>
     <div class="client-pl">
 
     </div>
@@ -196,7 +201,7 @@
     <!-- 底部导航条 -->
     <div class=" navigation">
         <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on" id="quick-order">
-            <div class="weui_tabbar_icon bottom-ico">
+            <div class="weui_tabbar_icon bottom-ico" >
                 <img src="/images/worker/ic_zhijiezhifu_nor.svg" alt="">
             </div>
         </a>
@@ -206,7 +211,7 @@
             </div>
         </a>
         <a href="" class="weui_tabbar_item phoneNo ">
-            <div class="weui_tabbar_icon bottom-ico">
+            <div class="weui_tabbar_icon bottom-ico" style="border: none;">
                 <img src="/images/worker/ic_phone_nor.svg"  class="dianhua-img" alt="">
             </div>
         </a>
@@ -381,12 +386,10 @@
             }
         });
 
-        // 客户评论列表
+//         客户评论列表
         $.ajax({
             type: 'POST',
             url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
-
-
             dataType: 'json',
             data:{
                 ID:'1162'
@@ -428,6 +431,81 @@
         });
 
     });
+    //上滑加载"客户评价"更多数据--------------------------------
+//    var counter2 = 0;
+//    var num2 = 5;// 每页展示5个
+//    var pageStart2 = 0,pageEnd2 = 0;
+//    $('#tab-kehu').dropload({
+//        scrollArea : window,
+//        loadDownFn : function(me){
+//            $.ajax({
+//                type: 'POST',
+//                url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
+//                dataType: 'json',
+//                data:{
+//                    ID:"59"
+//                },
+//
+//                success: function(data){
+//                    var api=data.Body.EvaluationList;
+//                    if(data.Body){
+//                        var result = '';
+//                        counter2++;
+//                        pageEnd2 = num2 * counter2;
+//                        pageStart2 = pageEnd2 - num2;
+//
+//                        for(var i = pageStart2; i < pageEnd2; i++){
+//                            var res='';
+//                            if(api[i].xin<5){
+//                                for(var j = 1; j <= api[i].Score; j++){
+//                                    res+='<img src="/images/worker/ic_xin_sel.svg" alt="" class="xingx-img"">'
+//                                }
+//                                var x=5-api[i].Score;
+//                                for(var m = 1; m <= x; m++){
+//                                    res+='<img src="/images/worker/ic_xin_nor.svg" alt="" class="xingx-img"">'
+//                                }
+//                            }else{
+//                                for(var k = 1; k <= 5; k++){
+//                                    res+='<img src="/images/worker/ic_xin_sel.svg" alt="" class="xingx-img"">'
+//                                }
+//                            }
+//
+//                            result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/worker/bus-img.png" alt="" class="kehu-img">'
+//                                    +'<span class="kehu-name">'+api[i].ClientName+'</span>'
+//                                    +'<span class="kehu-time">'+api[i].date+'</span>'
+//                                    +'<div class="kehu-heart">'+res
+//                                    +'<span class="kehu-pingfen">'+api[i].Score+'</span></div></div>'
+//                                    +'<div class="clear"></div><div class="kehu-cont">'+data.Pingjia[i].Content+'</div></div>';
+//
+//                            if((i + 1) >= data.Pingjia.length){
+//                                // 锁定
+//                                me.lock();
+//                                // 无数据
+//                                me.noData();
+//                                break;
+//                            }
+//                        }
+//                        // 为了测试，延迟1秒加载
+//                        setTimeout(function(){
+//                            $('.kehu-list').append(result);
+//                            // 每次数据加载完，必须重置
+//                            me.resetload();
+//                        },1000);
+//                    }else{
+//                        $('#tab-kehu').find('.no-fuwu').show();
+//                    }
+//
+//
+//
+//                },
+//                error: function(xhr, type){
+//                    alert('Ajax error!');
+//                    // 即使加载出错，也得重置
+//                    me.resetload();
+//                }
+//            });
+//        }
+//    });
 
 
     function ShowDiv(show_div,bg_div){
@@ -438,6 +516,7 @@
         // bgdiv.style.height = $(document).height();
         $("#"+bg_div).height($(document).height());
     };
+
 
     //关闭弹出层
     function CloseDiv(show_div,bg_div)

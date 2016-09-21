@@ -238,21 +238,21 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
         </div>
     </div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="../../js/worker/worker-message.min.js"></script>
+<!--<script src="../../js/worker/worker-message.min.js"></script>-->
 </body>
 </html>
 <script>
     $(function() {
 
         var Type = getUrl('type');
-        var Id = getUrl('id');
+        var Id = getUrl('markid');
         $.ajax({
             dataType: "json",
             type: "POST",
             url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
             data: {
-                Type: "1",
-                Id: "3110"
+                Type:Type,
+                Id:Id
             },
             success: function (data) {
                 var api = data.Body.Worker;
@@ -272,7 +272,7 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
                 $(".Address").text(api.Address);
                 var ModelRzImgs = "";
                 for (var j = 0; j < api.SystemCertification.length; j++) {
-                    ModelRzImgs += '<li><img src="' + api.SystemCertification[j].pic + '" class="sys-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
+                    ModelRzImgs += '<li><img src="' + api.SystemCertification[j].Image + '" class="sys-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
                 }
                 $(".items").html(ModelRzImgs);
             },

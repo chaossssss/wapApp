@@ -10,7 +10,7 @@ li {list-style-type:none;}
 img {border:0 none;}
 a {color:#000; text-decoration:none;-webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;}
-a:hover {color:#628828;}
+/*a:hover {color:#628828;}*/
 a {outline:none; star:expression_r(this.onFocus=this.blur());}
 button{outline: none;cursor: pointer;border:none;}
 .clear{clear:both;}
@@ -31,6 +31,7 @@ body{
 }
 .name-info{
     height: 20px;
+    margin-top: 2px;
 }
 .yewu{
     height: 25px;
@@ -51,7 +52,7 @@ body{
     padding-left: 12px;
     margin-top: -5px;
     font-weight: 400;
-    width: 180px;
+    width: 36%;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -267,6 +268,8 @@ body{
 }
 .weui_tabbar_item{
     padding:8px 0px 7px;
+    display: inline-block;
+    width: 32%;
 }
 .weui_navbar:after{
     border-bottom: none;
@@ -287,6 +290,7 @@ body{
 /*认证弹出层*/
 .weui_dialog{
     padding-bottom: 20px;
+
 }
 .weui_dialog_hd{
     text-align: left;
@@ -332,10 +336,11 @@ body{
 }
 .weui_tabbar_icon{
     border-right: 1px solid #ccc;
+    width: 100%;
 }
-/*.weui_tabbar_icon:last-child{
-    border-right:none;
-}*/
+.weui_tabbar_icon:last-child{
+    /*border-right:none;*/
+}
 .weui_tabbar_icon{
     width:100%;
 }
@@ -543,7 +548,7 @@ body{
     position: absolute;
     z-index: 500;
     bottom: 0;
-    width: 100%;
+    width:100%;
 }
 /*工人标签*/
 .worker-tag,.worker-tag a{
@@ -597,10 +602,10 @@ body{
 .ac_cont:before {
     content: '';
     position: absolute;
-    width: 200%;
+    width: 100%;
     height: 1px;
     top: 0;
-    border-top: 1px solid #e4e4e4;
+    /*border-top: 1px solid #e4e4e4;*/
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
     -webkit-transform: scale(.5,.5);
@@ -633,7 +638,7 @@ body{
 }
 .youhui_info{
     position: absolute;
-    top:-3px;
+    top:-4px;
     left:0;
     margin-left: 3px;
 }
@@ -646,8 +651,16 @@ body{
     color: #3f3e48;
 }
 .Wage{
-    padding-left: 70%; font-size: 14px; color:#fa5136;
+    font-size: 14px;
+     color:#fa5136;
 }
 .bottom-ico{
     height: 27px;
 }
+.weui_dialog {
+    top: 37%;
+    left: 8%;
+    transform: none;
+}
+
+
