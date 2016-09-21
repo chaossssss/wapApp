@@ -434,6 +434,24 @@ ul,li {
 .blpink {
 	border-left: 3px solid rgb(248,43,75);
 }
+.icon_phone {
+	position: relative;
+	padding-left: 10px;
+}
+.icon_phone:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0;
+	top: 0;
+	width: 1px;
+	height: 100%;
+	border-left: 1px solid #d9d9d9;
+	/*-webkit-transform-origin:100% 0;
+	transform-origin:100% 0;
+	-webkit-transform:scaleX(0.5);
+	transform: scaleX(0.5);*/
+}
 /*活动样式 promotion*/
 .pro_box {
 	display: inline-block;

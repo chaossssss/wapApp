@@ -16,14 +16,15 @@ angular.module('com.wapapp.app',[])
     $rootScope.addressId = getvl("id");
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService){
-	var vm = $scope.vm = {};
-	var addr = $scope.addr = {};
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService){
+	var vm = $scope.vm = {};		//订单
+	var addr = $scope.addr = {};	//地址
+	var uc = $scope.uc = {};	//工人，商户信息
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
 
-	vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
+	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
 	vm.Total = 0;
 	// vm.unitPrice = 30;
 	vm.datePickerShow = false;
@@ -45,7 +46,7 @@ angular.module('com.wapapp.app',[])
 
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
-			console.log(res);
+			console.log("获取地址成功",res);
 			// if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
 			// }
@@ -54,11 +55,12 @@ angular.module('com.wapapp.app',[])
 
 	markService.search($rootScope.ObjectType,$rootScope.ObjectId)
 		.success(function(res){
-			console.log(res);
+			console.log("获取工人信息",res);
 			if(res.Meta.ErrorCode === "0"){
-				vm.Name = res.Body.Worker.Name;
-				vm.Gender = res.Body.Worker.Gender;
-				vm.Photo = res.Body.Worker.Photo;
+				uc = res.Body[0];
+				// vm.Name = res.Body.Worker.Name;
+				// vm.Gender = res.Body.Worker.Gender;
+				// vm.Photo = res.Body.Worker.Photo;
 			}
 			$scope.$apply();
 		})
@@ -66,7 +68,7 @@ angular.module('com.wapapp.app',[])
 	if($rootScope.ObjectType == "1"){
 		typeService.searchWorkList($rootScope.ObjectId)
 			.success(function(res){
-				console.log(res);
+				console.log("获取服务类型",res);
 				if(res.Meta.ErrorCode === "0"){
 					vm.serviceTypeList = res.Body.ServiceTypeList;
 				}
@@ -75,13 +77,26 @@ angular.module('com.wapapp.app',[])
 	}else{
 		typeService.searchBossList($rootScope.ObjectId)
 			.success(function(res){
-				console.log(res);
+				console.log("获取服务类型",res);
 				if(res.Meta.ErrorCode === "0"){
 					vm.serviceTypeList = res.Body.ServiceTypeList;
 				}
 				$scope.$apply();
 			})
 	}
+
+	giftService.gift($rootScope.token,"153")
+			.success(function(res){
+				console.log("获取活动",res);
+			})
+			
+	$scope.$watch('vm.serviceTypeObj',function(){
+		console.log("123");
+		giftService.gift($rootScope.token,"153")
+			.success(function(res){
+				console.log("获取活动",res);
+			})
+	})
 
 	//流程流向判断并跳转
 	vm.gotojudge = function(){
@@ -205,8 +220,8 @@ angular.module('com.wapapp.app',[])
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
             if (file.type.indexOf("image") == 0) {
-                if (file.size >= 512000) {
-                    alert('您这张"'+ file.name +'"图片大小过大，应小于500k');    
+                if (file.size >= 5120000) {
+                    alert('您这张"'+ file.name +'"图片大小过大，应小于5000k');    
                 } else {
                     arrFiles.push(file);    
                 }           
@@ -453,6 +468,7 @@ angular.module('com.wapapp.app',[])
 	}
 }])
 .factory('addrService',[function(){
+	// 根据工人id 查找已添加的地址
 	var _searchpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetAddress";
 	var searchAddr = function(token,id){
 		var formData = {
@@ -482,6 +498,7 @@ angular.module('com.wapapp.app',[])
 	};
 }])
 .factory('markService',[function(){
+	// 根据类型和id查找工人
 	var _searchpath = "http://192.168.1.191:3003/api/v2/Provider/Detail";
 	var searchMark = function(type,id){
 		var formData = {
@@ -493,9 +510,6 @@ angular.module('com.wapapp.app',[])
 					url: _searchpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -510,9 +524,9 @@ angular.module('com.wapapp.app',[])
 	};
 }])
 .factory('typeService',[function(){
+	// 根据工人，商户id获取服务列表
 	var _searchwpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetWorkerServiceListEx";
 	var _searchbpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetMerchantServiceListEx"
-
 	var searchWork = function(id){
 		var formData = {
 			WorkerId: id
@@ -522,9 +536,6 @@ angular.module('com.wapapp.app',[])
 					url: _searchwpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -541,9 +552,6 @@ angular.module('com.wapapp.app',[])
 					url: _searchbpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -560,7 +568,30 @@ angular.module('com.wapapp.app',[])
 		}
 	};
 }])
-
+.factory('giftService',[function(){
+	// 根据服务类型，获取此类型的活动
+	var _giftPath = "http://192.168.1.191:3003/api/v2/SystemService/GetActivity";
+	var getGift = function(token,id){
+		var formData = {
+			Token: token,
+			ServiceTypeId:id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _giftPath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		gift:getGift
+	}
+}])
 
 
 

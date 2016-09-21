@@ -20,13 +20,13 @@
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
-	<!-- <div class="weui_cells">
+	<div class="weui_cells">
 		<div class="weui_cell">
 			<p class="f14 fc8">可以联系客服直接电话下单哦
 				<a class="pblue" href="tel:4008-262-056">4008-262-056</a>
 			</p>
 		</div>
-	</div> -->
+	</div> 
 	<div class="weui_cells weui_cells_access zj_local_image" >
 		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
 			<div class="weui_cell_hd">
@@ -51,12 +51,15 @@
 		<img  class="pb2" src="/images/quick-order/local-border.png" alt="">
 	</div>
 	<div class="weui_cells weui_cells_access">
-		<div class="weui_cell">
-			<div class="weui_cell_hd"><img ng-src="{{vm.Photo}}" src="http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/" alt="" style="width:20px;margin-right:15px;display:block;"></div>
+		<div class="weui_cell" style="padding:10px;">
+			<div class="weui_cell_hd"><img ng-src="{{uc.Photo}}" src="http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/" alt="" style="width:26px;margin-right:15px;display:block;"></div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<span ng-bind="vm.Name"></span>
-				<span ng-if="vm.Gender == 0">师傅</span>
-				<span ng-if="vm.Gender == 1">阿姨</span>
+				<span ng-bind="uc.Name"></span>
+				<span ng-if="uc.Gender == 0">师傅</span>
+				<span ng-if="uc.Gender == 1">阿姨</span>
+			</div>
+			<div class="zj_cell_ft icon_phone">
+				<a ng-href="tel:{{uc.PhoneNumber}}"><img src="/images/quick-order/i-phone.png" alt="" style="width:26px;display:block;"></a>
 			</div>
 		</div>
 		<a href="javascript:;" class="weui_cell weui_cell_select" style="padding:5px 0 5px 10px;">
@@ -263,10 +266,10 @@
 				</li>
 			</ul>
 			<ul class="zj_tab_bd zj_flex_1">
-				<li class="zj_li">
+				<!-- <li class="zj_li">
 					<span>立即服务</span>
 					<i class="weui_icon_success zj_icon show"></i>
-				</li>
+				</li> -->
 				<li class="zj_li"  ng-repeat="item in dp.timeItem" ng-click="dp.getdpTime(item)">
 					<span>{{item}}</span>
 					<i class="weui_icon_success zj_icon hide"></i>
