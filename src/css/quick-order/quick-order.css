@@ -9,11 +9,17 @@ ul,li {
 	list-style: none;
 }
 /*配色方案*/
+.pblue {
+	color: #27b8f3;
+}
 .pgreen {
 	color:#04BE02;
 }
 .pred {
 	color: #f43530;
+}
+.sblue {
+	color: #3fbef9;
 }
 /*活动配色 promotion*/
 .p-orange {
@@ -167,7 +173,8 @@ ul,li {
 	padding: 12px 10px;
 	text-align: center;
 	color: #fff;
-	background-color: #04be02;
+	/*background-color: #04be02;*/
+	background-color: #27b8f3;
 }
 .zj_cell_select {
 	-webkit-appearance:none;
@@ -233,7 +240,8 @@ ul,li {
 	top: 50%;
 	left: 50%;
 	transform:translate(-50%,-50%);
-	background-color: #04BE02;
+	/*background-color: #04BE02;*/
+	background-color: #27b8f3;
 }
 .zj_select_plus .zj_select_add:after {
 	width: 10px;
@@ -243,7 +251,8 @@ ul,li {
 	top: 50%;
 	left: 50%;
 	transform:translate(-50%,-50%);
-	background-color: #04BE02;
+	/*background-color: #04BE02;*/
+	background-color: #27b8f3;
 }
 /*日期样式*/
 .zj_date_picker {
@@ -372,8 +381,9 @@ ul,li {
 	color: #fff;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 	overflow: hidden;
-	background-color: #04be02;
+	/*background-color: #04be02;*/
 	text-align: center;
+	background-color: #27b8f3;
 }
 /*服务类型选择*/
 .zj_service .title {

@@ -376,7 +376,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg);
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -457,7 +457,7 @@ angular.module('com.wapapp.app',[])
 	var searchAddr = function(token,id){
 		var formData = {
 			Token: token,
-			AddressId: id
+			Id: id
 		}
 		return $.ajax({
 					method:"POST",
@@ -468,7 +468,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -497,7 +497,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -526,7 +526,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
@@ -545,7 +545,7 @@ angular.module('com.wapapp.app',[])
 						// alert(res.Meta.ErrorMsg)
 					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");

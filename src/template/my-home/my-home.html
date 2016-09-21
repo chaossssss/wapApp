@@ -72,12 +72,18 @@
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a>
-		<a href="javascript:;" class="weui_cell">
+		<a href="/template/location/mag-location.html" class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>地址管理</p>
+			</div>
+			<div class="weui_cell_ft"></div>
+		</a>
+		<!-- <a href="javascript:;" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>修改密码</p>
 			</div>
 			<div class="weui_cell_ft"></div>
-		</a>
+		</a> -->
 	</div>
 	<div class="weui_cells weui_cells_access mt10">
 		<a href="/template/my-order/my-order.html" class="weui_cell">
@@ -87,8 +93,8 @@
 			<div class="weui_cell_ft"></div>
 		</a>
 	</div>
-	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_warn col90 container" ng-click="vm.loginOut()">退出当前账号</a>
+	<div class="foot" ng-click="vm.login()">
+		<a href="javascript:;" class="weui_btn weui_btn_warn col90 container" ng-click="loginOut()">退出当前账号</a>
 	</div>
 
 

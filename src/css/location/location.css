@@ -65,6 +65,9 @@ body {
 .pgreen {
 	color:#04BE02;
 }
+.pblue {
+	color: #27b8f3;
+}
 /*display 块*/
 .none{ display:none;}
 .block{ display:block;}
@@ -130,7 +133,8 @@ body {
 	margin-right:auto;
 }
 .tag {
-	background-color: #04BE02;
+	/*background-color: #04BE02;*/
+	background-color: #27b8f3;
 	color: #fff;
 	font-size: 12px;
 	padding: 0 3px;
@@ -175,7 +179,8 @@ body {
 	position: fixed;
 	width: 100%;
 	background-color: #fff;
-	color:#04BE02;
+	/*color:#04BE02;*/
+	color: #27b8f3;
 	bottom: 0;
 }
 #select {

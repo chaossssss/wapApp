@@ -9,6 +9,7 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('myHomeCtrl',['$rootScope','$scope','getMyInfo','loginOut',function($rootScope,$scope,getMyInfo,loginOut){
 	var vm = $scope.vm = {};
+	
 	getMyInfo.event($rootScope.token)
 		.success(function(res){
 			console.log(res);
@@ -16,14 +17,16 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 	
-	vm.loginOut = function(){
+
+	$scope.loginOut = function(){
 		console.log("1");
 		loginOut.event()
 			.success(function(res){
 				console.log(res);
-				// window.location.href = "";
+				window.localStorage.removeItem("Token");
+				window.location.href = "/template/login/login.html";
 			})
-	}	
+	}
 
 }])
 .factory('getMyInfo',[function(){

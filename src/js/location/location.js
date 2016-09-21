@@ -20,15 +20,8 @@ angular.module('com.wapapp.app',[])
 .controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
 	var sessionStorage = window.sessionStorage;
- 
 	var vm = $scope.vm = {};
 
-	// vm.Contact = "小豪";
-	// vm.PhoneNumber = "18257561789";
-	// // vm.sex = "先生";
-	// vm.Address1 = "迪凯国际中心";
-	// vm.Address2 = "2502室";
- 
 	vm.error = "";
 	vm.isActive = false;
 
@@ -47,10 +40,7 @@ angular.module('com.wapapp.app',[])
 		})
 
 	vm.save = function(name,address,addrDetail,phone){
-		// console.log(name);
-		// console.log(address);
-		// console.log(addrDetail);
-		// console.log(phone);
+		console.log(vm.Gender);
 		if(name.$valid === true && address.$valid === true && phone.$valid === true){
 			var formData = {
 				Contact: vm.Contact,
@@ -63,12 +53,10 @@ angular.module('com.wapapp.app',[])
 			addrService.add($rootScope.token,formData)
 				.success(function(res){
 					console.log(res);
-					if(res.ErrorCode === "0"){
-						window.location.href = "/template/location/mag-location.html?channel="+$rootScope.channel;
+					if(res.Meta.ErrorCode === "0"){
+						window.location.href = "/template/location/mag-location.html"+$rootScope.search;
 					}
 				})
-
-
 		}
 		if(name.$dirty === true && name.$valid === false){
 			vm.error = "请输入联系人姓名";
@@ -91,24 +79,16 @@ angular.module('com.wapapp.app',[])
 		console.log(address);
 		console.log(addrDetail);
 		if(address === false && addrDetail === false){
-			var search = window.location.search;
-			window.location.href = '/template/map/ser-location.html'+search;
+			window.location.href = '/template/map/ser-location.html'+$rootScope.search;
 		}
 	}
-
-
 
 }])
 .controller('editLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 	var sessionStorage = window.sessionStorage;
 
 	var vm = $scope.vm = {};
-
-	// vm.Contact = "小豪";
-	// vm.PhoneNumber = "18257561789";
-	// // vm.sex = "先生";
-	// vm.Address1 = "迪凯国际中心";
-	// vm.Address2 = "2502室";
+	var hm = $scope.hm = {};
 
 	vm.error = "";
 	vm.isActive = false;
@@ -131,39 +111,35 @@ angular.module('com.wapapp.app',[])
 	addrService.tag()
 		.success(function(res){
 			console.log("标签回调",res);
-			vm.tagList = res.Body;
+			hm.tagList = res.Body;
 			$scope.$apply();
 		})
 
 	addrService.search($rootScope.token,addressId)
 		.success(function(res){
 			console.log("根据id查找地址",res);
-			$scope.vm = res.Body[0];
+			vm = $scope.vm = res.Body[0];
 			$scope.$apply();
 		})	
 
-	vm.saveLocal = function(name,address,addrDetail,phone){
-		// console.log(name);
-		// console.log(address);
-		// console.log(addrDetail);
-		// console.log(phone);
+	$scope.saveLocal = function(name,address,addrDetail,phone){
 		if(name.$valid === true && address.$valid === true && phone.$valid === true){
 			var formData = {
+				Id: addressId,
 				Contact: vm.Contact,
 				Gender: vm.Gender,
 				PhoneNumber: vm.PhoneNumber,
-				Tag: "",
+				Tag: vm.Tag,
 				Address1: vm.Address1,
 				Address2: vm.Address2
 			};
 			addrService.edit($rootScope.token,formData)
 				.success(function(res){
 					console.log(res);
-					if(res.ErrorCode !== "0"){
-						window.location.href = "/template/location/mag-location.html?channel="+$rootScope.channel;
+					if(res.Meta.ErrorCode === "0"){
+						window.location.href = "/template/location/mag-location.html"+$rootScope.search;
 					}
 				})	
-
 		}
 		if(name.$dirty === true && name.$valid === false){
 			vm.error = "请输入联系人姓名";
@@ -182,23 +158,21 @@ angular.module('com.wapapp.app',[])
 			vm.isActive = true;
 		}
 	};
-	vm.searchLocal = function(address,addrDetail){
+	$scope.deleteLocal = function(){
+		addrService.delete($rootScope.token,addressId)
+			.success(function(res){
+				console.log("删除回调",res);
+				window.location.href = "/template/location/mag-location.html"+$rootScope.search;
+			})
+	}
+	// 搜索地址
+	$scope.searchLocal = function(address,addrDetail){
 		console.log(address);
 		console.log(addrDetail);
 		if(address === false && addrDetail === false){
-			var search = window.location.search;
-			window.location.href = '/template/map/ser-location.html'+search;
+			window.location.href = '/template/map/ser-location.html'+$rootScope.search;
 		}
 	};
-	vm.deleteLocal = function(){
-		var id = getvl("id");
-		addrService.delete($rootScope.token,id)
-			.success(function(res){
-				console.log("删除回调",res);
-				var search = window.location.search;
-				window.location.href = "/template/location/mag-location.html"+search;
-			})
-	}
 }])
 .controller('magLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
@@ -216,12 +190,26 @@ angular.module('com.wapapp.app',[])
 			case "1" :
 				window.location.href = '/template/quick-order/quick-order.html?channel=1&id='+item.Id;
 				break;
+			default:
+				window.location.href = '/template/location/edit-location.html?id='+item.Id;
+				break;	
 		}	
 	}
 
 	//跳转到新增地址
 	vm.gotoAdd = function(){
-		window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
+		switch ($rootScope.channel)
+		{
+			case "0":
+				window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
+				break;
+			case "1":
+				window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
+				break;
+			default:
+				window.location.href = '/template/location/add-location.html';
+				break;		
+		}	
 	}
 
 	addrService.get($rootScope.token)
@@ -305,7 +293,7 @@ angular.module('com.wapapp.app',[])
 	var searchAddr = function(token,id){
 		var formData = {
 			Token: token,
-			AddressId: id
+			Id: id
 		}
 		return $.ajax({
 					method:"POST",

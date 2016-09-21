@@ -23,17 +23,17 @@
 	<!-- <div class="weui_cells">
 		<div class="weui_cell">
 			<p class="f14 fc8">可以联系客服直接电话下单哦
-				<a class="pgreen" href="tel:4008-262-056">4008-262-056</a>
+				<a class="pblue" href="tel:4008-262-056">4008-262-056</a>
 			</p>
 		</div>
 	</div> -->
 	<div class="weui_cells weui_cells_access zj_local_image" >
 		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
 			<div class="weui_cell_hd">
-				<img src="/images/quick-order/local.png" alt="" style="width:20px;margin-right:10px;display:block">
+				<img src="/images/quick-order/local.png" alt="" style="width:15px;margin-right:18px;display:block">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary" ng-if="!vm.ServiceAddressId">
-				<p class="pgreen">请选择服务地址</p>
+				<p class="pblue">请选择服务地址</p>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId">
 				<div class="zj_cell_hd">
@@ -100,14 +100,13 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务时间</p>
 			</div>
-			<div ng-if="!vm.ServiceStartAt" class="weui_cell_ft pgreen" >请选择服务时间</div>
-			<div ng-if="vm.ServiceStartAt" class="weui_cell_ft pgreen">
+			<div ng-if="!vm.ServiceStartAt" class="weui_cell_ft pblue" >请选择服务时间</div>
+			<div ng-if="vm.ServiceStartAt" class="weui_cell_ft pblue">
 				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
-		<!-- 活动 beginning -->
+		<!-- 活动 不满足条件 beginning-->
 		<div class="weui_cells weui_cells_access" ng-if="vm.serviceTypeObj.ServiceTypeId != 5">	
-			<!-- 活动 不满足条件 beginning-->
 			<div class="weui_cell">
 				<div class="weui_cell_bd weui_cell_primary">
 					<span class="pro_box">满80返20</span>
@@ -120,9 +119,9 @@
 			</div>
 		</div>
 		<!-- 活动 不满足条件 ending -->
-		<div class="weui_cells weui_cells_access" ng-if="vm.serviceTypeObj.ServiceTypeId == 5">
-			<!-- 活动 满足条件 beginning -->
-			<div class="weui_cell no_access">
+		<!-- 活动 满足条件 beginning -->
+		<div class="weui_cells weui_cells_access" ng-if="vm.serviceTypeObj.ServiceTypeId == 5">	
+			<div class="weui_cell no_access" ng-if="vm.serviceTypeObj.Price*vm.Total >= 90" style="padding-bottom:0;">
 				<div class="weui_cell_hd">
 					<img src="/images/quick-order/i-gift.png" alt="" style="width:22px;margin-right:10px;display:block;">
 				</div>
@@ -134,13 +133,30 @@
 					<p ng-if="vm.serviceTypeObj.Price*vm.Total >= 80">-¥10.0</p>
 				</div>
 			</div>
-			<div style="padding:5px 1px 15px 10px;font-size:16px;" class="pred">
+			<div style="padding:15px 10px;font-size:16px;" class="pred">
 				<span class="pro_box">满80返20</span>
 			 	<span>已享优惠：满80返20</span>
 				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:10px;">
 			</div>
+			<div class="weui_cell no_access" style="padding:10px;font-size:15px;">
+				<div class="weui_cell_bd flex2">
+					<p>订单总价&nbsp;¥
+						<span ng-bind="vm.serviceTypeObj.Price*vm.Total"></span>
+						<span class="pl10 ml10" ng-if="vm.serviceTypeObj.Price*vm.Total >=90">优惠&nbsp;¥10</span>
+					</p>
+				</div>
+				<div class="zj_cell_right">
+					<span class="pred">待支付</span>
+					<span class="pred f20 pl5 f18" ng-if="vm.serviceTypeObj.Price*vm.Total < 90">¥&nbsp;<span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span></span>
+					<span class="pred f20 pl5 f18" ng-if="vm.serviceTypeObj.Price*vm.Total >= 90">¥&nbsp;<span ng-bind="vm.serviceTypeObj.Price*vm.Total-10 | number:1"></span></span>
+				</div>
+			</div>
+			<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box" ng-if="vm.serviceTypeObj.Price*vm.Total < 90">
+				<span class="flex1 pred">小时工服务现有特价活动： 满90立减10元！</span>
+				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;">
+			</div>
 		</div>	
-		<!-- 活动 endind -->
+		<!-- 活动 满足条件 endind -->
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>

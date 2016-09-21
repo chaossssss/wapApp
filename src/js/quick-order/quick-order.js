@@ -14,7 +14,7 @@ angular.module('com.wapapp.app',[])
     $rootScope.addressId = getvl("id");
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService',function($rootScope,$scope,priceService,orderService,addrService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','giftService',function($rootScope,$scope,priceService,orderService,addrService,giftService){
 	var vm = $scope.vm = {};
 	var addr = $scope.addr = {};
 	var sv = $scope.sv = {};
@@ -60,6 +60,15 @@ angular.module('com.wapapp.app',[])
 	$scope.$watch('vm.ServiceContent',function(){
 		var a = vm.ServiceContent;
 		$scope.textarea_size = a.length;
+	})
+
+	//监控serviceTypeId的值
+	$scope.$watch('vm.ServiceTypeId',function(){
+		console.log(vm.ServiceTypeId);
+		giftService.event($rootScope.token,vm.ServiceTypeId)
+			.success(function(res){
+				console.log("活动",res);
+			})
 	})
 
 	$scope.$on('service-type-id',function(event,id,name){
@@ -365,11 +374,9 @@ angular.module('com.wapapp.app',[])
 		}
 	};
 })
-.factory('orderService',[function(){
+.factory('orderService',['urlService',function(urlService){
 	// 获取服务类型列表
-	var PATH = "http://192.168.1.191:3003/";
-	var _postpath = PATH+"api/v2/OrderInfo/CreateOrderOneKey";
-
+	var _postpath = urlService.url+"api/v2/OrderInfo/CreateOrderOneKey";
 	var uploaderService = function(formData){
 		return $.ajax({
 					method:"POST",
@@ -397,11 +404,9 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-.factory('listService',[function(){
+.factory('listService',['urlService',function(urlService){
 	// 获取服务类型列表
-	var PATH = "http://192.168.1.191:3003/";
-	var _getpath = PATH+"api/v2/SystemService/InfoListEx";
-
+	var _getpath = urlService.url+"api/v2/SystemService/InfoListEx";
 	var getService = function(){
 		return $.ajax({
 					method:"POST",
@@ -424,11 +429,9 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-.factory('priceService',[function(){
+.factory('priceService',['urlService',function(urlService){
 	// 获取服务价格
-	var PATH = "http://192.168.1.191:3003/";
-	var _getpath = PATH+"api/v2/ClientInfo/GetServicePriceEx";
-
+	var _getpath = urlService.url+"api/v2/ClientInfo/GetServicePriceEx";
 	var getPrice = function(token,id,type){
 		var formData = {
 			Token: token,
@@ -456,11 +459,9 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-.factory('timeService',[function(){
+.factory('timeService',['urlService',function(urlService){
 	// 获取服务时间
-	var PATH = "http://192.168.1.191:3003/";
-	var _getpath = PATH+"api/v2/SystemService/ServiceTimeStartAt";
-
+	var _getpath = urlService.url+"api/v2/SystemService/ServiceTimeStartAt";
 	var getService = function(id){
 		var formData = {
 			ServiceTypeId: id
@@ -487,29 +488,25 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-.factory('addrService',[function(){
-	var _searchpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetAddress";
+.factory('addrService',['urlService',function(urlService){
+	var _searchpath = urlService.url+"api/v2/ClientInfo/GetAddress";
 	var searchAddr = function(token,id){
 		var formData = {
 			Token: token,
-			AddressId: id
+			Id: id
 		}
 		return $.ajax({
 					method:"POST",
 					url: _searchpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
-						// window.location.href = "/template/login/login.html";
+						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
 					alert("服务器连接失败，请检查网络设置");
 				})
 	};
-
 	return {
 		search:function(token,id){
 			return searchAddr(token,id);
@@ -517,8 +514,39 @@ angular.module('com.wapapp.app',[])
 	};
 
 }])
+.factory('giftService',['urlService',function(urlService){
+	var _getGift = urlService.url+"api/v2/SystemService/GetActivity";
+	var getGift = function(token,id){
+		var formdata = {
+			Token: token,
+			ServiceTypeId: id
+		}
+		return $.ajax({
+					method: "POST",
+					url: _getGift,
+					data: formdata,
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		event:function(token,id){
+			return getGift(token,id);
+		}
+	}
+}])
+.factory('urlService',[function(){
+	var testUrl = "http://192.168.1.191:3003/";
+	var inlineUrl = "";
+	return {
+		url : testUrl
+	}
 
-
+}])
 
 
 
