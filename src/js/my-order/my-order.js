@@ -16,7 +16,7 @@
         if(t == ''){
           var tl = t;
         }else{
-          // var tl = "×"localStorage + t;
+          var tl = "×" + t;
         }
         return tl;
       }
