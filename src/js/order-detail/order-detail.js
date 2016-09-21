@@ -3,28 +3,43 @@ $(function(){
   var $workerPhone = $("#workerPhone");
   var $cancelBtn = $("#cancelBtn");
 
-  // function getQueryString(name) {
-  //     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-  //     var r = window.location.search.substr(1).match(reg);
-  //     if (r != null) {
-  //         return unescape(r[2]);
-  //     }
-  //     return null;
-  // }
+  function getQueryString(name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+          return unescape(r[2]);
+      }
+      return null;
+  }
   // function getLocalTime(nS) {     
   //   var time = new Date(parseInt(nS) * 1000);
   //   return time;
   // }
-  // function unix_to_datetime(unix) {
-  //     var now = new Date(parseInt(unix) * 1000);
-  //     return now.toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-  // }
-  // function string_to_date(strDate){
-  //   var dateString = strDate.replace(/年|月/g, "/").replace(/日/g, " ");
-  //   var t = new Date(dateString);
-  //   var tm = new Date(t.getFullYear(),t.getMonth(),t.getDate()+7,t.getHours(),t.getMinutes(),t.getSeconds());
-  //   return tm;
-  // }
+  function getDatetime(tm){
+    var timestamp = tm;
+    var d = new Date(timestamp * 1000);    //根据时间戳生成的时间对象
+    var minutes = d.getMinutes();
+    var seconds = d.getSeconds()
+    if(minutes<= 9){
+      minutes = "0" + minutes;
+    }
+    if(seconds<= 9){
+      seconds = "0" + seconds;
+    }
+    var date = (d.getFullYear()) + "/" + 
+               (d.getMonth() + 1) + "/" +
+               (d.getDate()) + " " + 
+               (d.getHours()) + ":" + 
+               (minutes) + ":" + 
+               (seconds);
+    return date;
+  }
+  function string_to_date(strDate){
+    var dateString = strDate.replace(/年|月/g, "/").replace(/日/g, " ");
+    var t = new Date(dateString);
+    var tm = new Date(t.getFullYear(),t.getMonth(),t.getDate()+7,t.getHours(),t.getMinutes(),t.getSeconds());
+    return tm;
+  }
   // Date.prototype.Format = function (fmt) { //格式化时间
   //   var o = {
   //     "M+": this.getMonth() + 1, //月份 
@@ -40,8 +55,40 @@ $(function(){
   //   if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   //   return fmt;
   // }
-  // var thisOrderId = getQueryString("orderId");
-  console.log(thisOrderId);
+  function clientGenderChange(g){
+    if(g == "1"){
+      var gn = "女士";
+    }else if(g == "0"){
+      var gn = "先生";
+    }
+    return gn;
+  }
+  function moneySymbol(m){
+    if(m == '面议'){
+      var ml = m;
+    }else{
+      var ml = "￥" + m;
+    }
+    return ml;
+  }
+  function multipleSymbol(t){
+    if(t == ''){
+      var tl = t;
+    }else{
+      var tl = "×" + t;
+    }
+    return tl;
+  }
+  function minus(minus){
+    if(minus == ''){
+      var mn = '';
+    }else{
+      var mn = "-￥" + minus;
+    }
+    return mn;
+  }
+  var orderId = getQueryString("orderId");
+  console.log(orderId);
   var token = localStorage.getItem("Token");
   console.log(token);
   $cancelBtn.on('click',function(){
@@ -78,6 +125,7 @@ $(function(){
       $("#cancelOrder2").hide();
     })
   })
+
 /*--订单详情--*/
   $.ajax({
     method:"POST",
@@ -85,70 +133,93 @@ $(function(){
     async:false,
     data:{
     Token:token,
-    OrderId:thisOrderId
+    OrderId:orderId
     },
     success:function(data){
       console.log(data);
       orderState = data.Body.OrderStatus;
       serviceId = data.Body.ServiceId;
       serviceProviderType = data.Body.ServiceProviderType;
+      serviceProviderId = data.Body.ServiceProviderId;
       isPayOff = data.Body.IsPayOff;
       console.log(isPayOff);
 
-      // picData = data.Body.OrderService.Pictures;
-      // picLength = data.Body.OrderService.Pictures.length;
-      // var gender = data.body[0].ServiceProviderGender;
       orderIsGeted = data.Body.ServiceProviderId;
 
       var orderId = data.Body.OrderId;
       isEvaluated = data.Body.IsEvaluated;
       var workHeadPic = data.Body.ServiceProviderPic;
       console.log(workHeadPic);
-      console.log('111');
       $("#providerHead").attr("src",workHeadPic);
       $("#orderCode").text(data.Body.OrderCode);
       $("#createTime").text(data.Body.CreateTime);
       $("#acceptAt").text(data.Body.AcceptTime);
-      $("#serviceAt").text(data.Body.Service.ServiceStartAt);
+      var serviceStartAt = getDatetime(data.Body.Service.ServiceStartAt);
+      $("#serviceAt").text(serviceStartAt);
       $("#finishAt").text(data.Body.FinishTime);
       $("#confirmAt").text(data.Body.ConfirmTime);
-      $("#cancalAt").text(data.Body.CancelTime);
+      $("#cancelAt").text(data.Body.CancelTime);
       $("#clientName").text(data.Body.Service.AddressInfo.Contact);
-      
-      // payOffTime = unix_to_datetime(data.Body.PayOffTime).Format("yyyy/MM/dd hh:mm");
-      // console.log(data.Body.Service.ServiceName);
+      var clientGender = clientGenderChange(data.Body.Service.AddressInfo.Gender);
+      $("#clientGender").text(clientGender);
+      var workName = data.Body.ServiceProviderName;
+      $("#serviceProviderName").text(workName);
+      var totalPrice = moneySymbol(data.Body.Service.TotalPrice);
+      $("#actualMoney").text(totalPrice);
+      $("#price").text(totalPrice);
+      var gender = data.Body.ServiceProviderGender;
+      if(gender == "1"){
+        $("#workerGender").text('阿姨');
+      }else if(gender == "0"){
+        $("#workerGender").text("师傅");
+      }
+
+      var picNum = data.Body.Service.Pictures.length;
+      var picData = data.Body.Service.Pictures;
+      console.log(picNum);
+      if(picNum == "0"){
+        $("#pictureLine").hide();
+      }else{
+        for(i = 0; i < picNum; i++ ){
+          console.log(picData[i].SmallPIc);
+          var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPIc + ")'>"
+          + "</li>";
+          $("#showPics").append(html);
+        }
+      }
+      var notesNum = data.Body.Service.Content;
+      var noteList = "<li>" + notesNum + "</li>";
+      $("#remarkLists").append(noteList);
+      var unitName = "/" + data.Body.Service.UnitName;
+      $("#unit").text(unitName);
+      var singlePrice = moneySymbol(data.Body.Service.Price);
+      $("#single").text(singlePrice);
+      var q = multipleSymbol(data.Body.Service.Total);
+      $("#quantity").text(q);
+
       $("#serviceName").text(data.Body.Service.ServiceName);
       $("#clientName").text(data.Body.Service.ServiceProviderName);
       $("#serviceAddress").text(data.Body.Service.AddressInfo.Address1);
-      $("#payOffTime").text(data.Body.payOffTime);
+      var payOffTime = getDatetime(data.Body.PayOffTime);
+      $("#payOffTime").text(payOffTime);
       $("#clinetPhone").text(data.Body.Service.AddressInfo.PhoneNumber);
-      // $("#quantity").text(data.Body.Total);
+
+      
       finishedTime = data.Body.FinishTime;
       console.log(finishedTime);
       payLock = data.Body.PayLock;
-      $("#price").text(data.Body.Price);
+      // $("#price").text(data.Body.Service.Price);
       $("#discountInfo").text(data.Body.DiscountAmount);
-      var unitName = "/" + data.Body.Service.UnitName;
-      $("#unit").text(unitName);
-      $("#single").text(data.Body.Price);
       $("#refundAt").text(data.Body.Refunds.RefundTime);
       $("#lostIncome").text(data.Body.Refunds.LostIncome);
       $("#refundAmount").text(data.Body.Service.TotalPrice);
       $("#hourly").text(data.Body.Activity);
       var toBePaid = data.Body.TotalPrice - data.Body.Refunds.LostIncome - data.Body.Activity;
       $("#toBePaid").text(toBePaid);
-      if(data.Body.Activity == ""){
+      if(data.Body.Activity == null){
         $("#specialPrice").hide();
       }
-      // if(data.Body.Price == "面议"){
-      //   $("ifNegotiable").text("面议");
-      //   $("#multiple").hide();
-      // }
-      if(data.Body.AddressInfo.Gender == "0"){
-        $("#clientGender").text("先生");
-      }else if(data.Body.AddressInfo.Gender == "1"){
-        $("#clientGender").text("女士");
-      }
+
       if(data.Body.DiscountAmount == ""){
         $("#orderDiscount").hide();
       }
@@ -159,44 +230,19 @@ $(function(){
           $workerPhone.css('display','block');
         });
       }
-      $("#actualMoney").text(data.Body.TotalPrice);
+      
 
-      // if(data.Body.ServiceProviderType == "2"){
+      if(data.Body.ServiceProviderType == "2"){
         console.log("工人");
-        var workHeadPic = data.Body.ServiceProviderPic;
-        var workName = data.Body.ServiceProviderName;
-        var gender = data.Body.ServiceProviderGender;
-        $("#serviceProviderName").text(workName);
-        $("#providerHead").attr("src",workHeadPic);
-        if(gender == "1"){
-          $("#workerGender").text('阿姨');
-        }else if(gender == "0"){
-          $("#workerGender").text("师傅");
-        }
-      // }
+        href="../worker-detail/worker-info.html?type=" + serviceProviderType + "&id=" + serviceProviderId;
+        $("#goToProvider").attr("href",href);
+      }
       if(data.Body.ServiceProviderType == "3"){
         console.log("商户");
-        var busHeadPic = data.Body.Business.Photo;
-        $("#providerHead").attr("src",busHeadPic);
+        href="../boss-detail/boss-info.html?type=" + serviceProviderType + "&id=" + serviceProviderId;
+        $("#goToProvider").attr("href",href);
       }
 
-      var notesNum = data.Notes.length;
-      for(i = 0; i < noteNum; i++){
-        var noteList = "<li>" + data.Notes[i].content + "</li>";
-        $("#remarkLists").append(noteList);
-      }
-      var picNum = data.Body.Service.Pictures.length;
-      console.log(picNum);
-      if(picNum == "0"){
-        $("#pictureLine").hide();
-      }else{
-        for(i = 0; i < picLength; i++ ){
-          console.log(picData[i].SmallPic);
-          var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPic + ")'>"
-          + "</li>";
-          $("#showPics").append(html);
-        }
-      }
      }
    });
 
@@ -309,7 +355,7 @@ console.log(orderState);
      $("#roundSecond").addClass("round-undone");
      $("#btnRight").addClass("delete-btn");
 
-     $(".round").css("left","89px");
+     // $(".round").css("left","89px");
 
      $("#proThird").hide();
      $("#proFourth").hide();
@@ -332,7 +378,7 @@ console.log(orderState);
      $("#orderTime").css("marginBottom","4px");
      $("#servicePrice").css("marginBottom","4px"); 
 
-    $("#btnRight").on("click",function(token,orderId){
+    $("#btnRight").on("click",function(){
       $("#deleteOrder").css("display","block");
       $("#deleteBtn").on("click",function(){
         $("#deleteOrder").hide();
@@ -495,7 +541,7 @@ console.log(orderState);
       $("#roundSecond").addClass("round-complete");
       $("#roundThird").addClass("round-processing");
       $("#roundFourth").addClass("round-undone");
-      $("#total").addClass("actual");
+      $("#wait").addClass("actual");
       $("#btnLeft").addClass("delete-btn")
       $("#btnRight").addClass("pay-btn");
 
@@ -505,23 +551,23 @@ console.log(orderState);
       $("#filling2").hide();
       $("#negotiable").hide();
       $("#cancelTime").hide();
-      $("#waitOrder").hide();
+      $("#finishTime").hide();
+      $("#payTime").hide();
       // $("#specialPrice").hide();
-
-      $("#orderPrice").css("marginBottom","0px");
+      $("#waitOrder").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").on("click",function(){
         $("#cancelOrder1").css("display","block");
         $("#cancelOrderBtn").on("click",function(){
-          cancelOrder(Token,OrderId);
+          cancelOrder(token,orderId);
           $("#cancelOrder1").hide();
           // UpdataOrder(Token,OrderId);
           location.reload();
         })
       })
-      $("#btnRight").on("click",function(){
-        window.location.href="http://localhost:8080/template/pay/pay.html?orderId" + orderId;
+      $(".pay-btn").on("click",function(){
+        window.location.href="../pay/pay.html?orderId" + orderId;
       })
     }
 
@@ -554,7 +600,7 @@ console.log(orderState);
       $("#btnRight").on("click",function(){
         $("#cancelOrder1").css("display","block");
         $("#cancelOrderBtn").on("click",function(){
-          cancelOrder(Token,OrderId);
+          cancelOrder(token,orderId);
           $("#cancelOrder1").hide();
           location.reload();
         })
@@ -707,7 +753,7 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
-      confirmOrder(Token,OrderId,Memo);
+      confirmOrder(token,orderId,Memo);
       location.reload();
 
     })
@@ -734,7 +780,7 @@ console.log(orderState);
       $("#roundThird").addClass("round-processing");
       $("#btnRight").addClass("confirm-btn");
 
-      $(".round").css("left","58px");  
+      // $(".round").css("left","58px");  
 
       $("#proFourth").hide();
       $("#refundRecord").hide();
@@ -766,7 +812,7 @@ console.log(orderState);
       $("#roundThird").addClass("round-processing");
       $("#btnRight").addClass("confirm-btn");
 
-      $(".round").css("left","58px");  
+      // $(".round").css("left","58px");  
 
       $("#proFourth").hide();
       $("#refundRecord").hide();
@@ -833,7 +879,7 @@ console.log(orderState);
       $("#roundThird").addClass("round-undone");
       $("#btnRight").addClass("delete-btn");
 
-      $(".round").css("left","60px");
+      // $(".round").css("left","60px");
 
       // $("#proThird").hide();
       $("#proFourth").hide();
@@ -854,7 +900,7 @@ console.log(orderState);
 
       $("#status").css("paddingTop","90px");
       // $("#orderTime").css("marginBottom","4px");
-      $("#servicePrice").css("marginBottom","4px"); 
+      $("#waitOrder").css("marginBottom","4px"); 
 
       $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
@@ -866,7 +912,6 @@ console.log(orderState);
       })
     };
 
-    
     break;
 
     /*--退款状态--*/
@@ -986,7 +1031,7 @@ console.log(orderState);
   function cancelOrder(token,orderId){
     console.log("取消订单");
     $.ajax({
-        type:"POST",
+        method:"POST",
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
         data:{
           Token:token,
