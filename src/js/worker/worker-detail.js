@@ -1,30 +1,24 @@
-/**
- * Created by Administrator on 2016/9/13.
- */
-$(function(){
+$(function () {
+    var Type = getUrl('type');
+    var Id = getUrl('markid');
+    $("#quick-order").on("click", function () {
+        window.location.href = "/template/quick-order/quick-order.html?channel=1";
+    })
+    $("#point-order").on("click", function () {
+        window.location.href = "/template/point-order/point-order.html?channel=0&type=" + Type + "&markid=" + Id;
+    })
+})
+$(function () {
     var swiper = new Swiper('.swiper-container', {
         //pagination: '.swiper-pagination',
-        initialSlide:0,
+        initialSlide: 0,
         slidesPerView: 3,
         paginationClickable: true,
         spaceBetween: 0,
-        touchRatio:1,
-        observer:true,//修改swiper自己或子元素时，自动初始化swiper
-        observeParents:true//修改swiper的父元素时，自动初始化swiper
+        touchRatio: 1,
+        observer: true,//修改swiper自己或子元素时，自动初始化swiper
+        observeParents: true//修改swiper的父元素时，自动初始化swiper
     });
-
-    $(".fuwu-cont").click(function(){
-        $(".kehu-pingjia").removeClass("active");
-        $(this).addClass("active");
-        $("#tab-kehu").css("display","none");
-        $("#tab-fuwu").css("display","block");
-    })
-    $(".kehu-pingjia").click(function(){
-        $(".fuwu-cont").removeClass("active");
-        $(this).addClass("active");
-        $("#tab-kehu").css("display","block");
-        $("#tab-fuwu").css("display","none");
-    })
 
     // 轮播图弹出层
     $('#container').on('click', '#showDialog1', function () {
@@ -32,13 +26,6 @@ $(function(){
             $('#dialog1').off('click').hide();
         });
     });
-    ////手机弹出框
-    //$('.dianhua-img').click(function(){
-    //    $('.weui_dialog_alert').show();
-    //})
-    //$('.xx-img').click(function(){
-    //    $('.weui_dialog_alert').hide();
-    //})
 
     // 认证信息弹出层
     $('#container').on('click', '#showDialog2', function () {
@@ -49,36 +36,34 @@ $(function(){
 
 // 轮播图弹出效果---------------------------------------------
     //弹出隐藏层
-    $("#showSlide").click(function(){
-        ShowDiv('MyDiv','fade');
+    $("#showSlide").click(function () {
+        ShowDiv('MyDiv', 'fade');
     });
-    $(".black_overlay").click(function(){
-        CloseDiv('MyDiv','fade');
+    $(".black_overlay").click(function () {
+        CloseDiv('MyDiv', 'fade');
     });
 
-
-// jax--------------------------------------------------------
-// 加载页面其他数据
-    var Type=getUrl('type');
-    var Id=getUrl('id');
+    // 加载页面其他数据
+    var Type = getUrl('type');
+    var Id = getUrl('markid');
     $.ajax({
         type: 'POST',
         url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',
         dataType: 'json',
-        data:{
-            Type:"1",
-            Id:"3110"
+        data: {
+            Type: Type,
+            Id: Id
         },
-        success:function(data){
-            var api=data.Body.Worker;
-            $(".bus-img").attr("src",api.Photo);
-            $(".Gender").attr("src",api.Gender);
+        success: function (data) {
+            var api = data.Body.Worker;
+            $(".bus-img").attr("src", api.Photo);
+            $(".Gender").attr("src", api.Gender);
             $(".Name").text(api.Name);
             $(".Age").text(api.Age);
             $(".jl-num").text(api.Distance);
             $(".PraiseCount").text(api.PraiseCount);
             $(".Grade").text(api.Grade);
-            $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
+            $(".phoneNo").attr("href", "tel:" + api.PhoneNumber);
             $(".FavoriteCount").text(api.FavoriteCount);
             $(".Wage").text(api.Wage);
             $(".NativePlace").text(api.NativePlace);
@@ -90,128 +75,177 @@ $(function(){
             $(".PhoneCount").text(api.PhoneCount);
             $(".PhoneRank").text(api.PhoneRank);
             $(".GradeRank").text(api.GradeRank);
-            if(api.Gender=="0"){
-                $(".Gender").attr("src","../../images/worker/ic_nv.svg");
-            }else if(api.Gender=="1"){
-                $(".Gender").attr("src","../../images/worker/ic_nan.svg");
+            $(".worker-mes").attr("href", "worker-message.html?type=" + Type + "&markid=" + Id);
+            $(".a-tag").attr("href", "worker-tags.html?markid=" + Id);
+            if (api.Gender == "1") {
+                $(".Gender").attr("src", "../../images/worker/ic_nv.svg");
+            } else {
+                $(".Gender").attr("src", "../../images/worker/ic_nan.svg");
+
             }
 
-            // var RzImgs="";
-            // for (var i = 0; i < data.Rzimgs.length; i++) {
-            // 	RzImgs+='<img src="'+data.Rzimgs[i].pic+'" class="rz-dia-img" alt="">';
-            // }
-            // $(".rz-imgs").html(RzImgs);
+            var RzImgs = "";
+            for (var i = 0; i < api.SystemCertification.length; i++) {
+                RzImgs += '<img src="' + api.SystemCertification[i].Image + '" class="rz-dia-img" alt="">';
 
-            // var ModelRzImgs="";
-            // for (var j = 0; j < data.Rzimgs.length; j++) {
-            // 	ModelRzImgs+='<li><img src="'+data.Rzimgs[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+data.Rzimgs[j].title+'</span></li>';
-            // }
-            // $(".dialog-imgs").html(ModelRzImgs);
+            }
+            $(".rz-imgs").html(RzImgs);
 
+            var ModelRzImgs = "";
+            for (var j = 0; j < api.SystemCertification.length; j++) {
+                ModelRzImgs += '<li><img src="' + api.SystemCertification[j].Image + '" class="rz-dia-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
+            }
+            $(".dialog-imgs").html(ModelRzImgs);
 
 
         },
-        error: function(xhr, type){
+        error: function (xhr, type) {
+            alert('Ajax error!');
+            // 即使加载出错，也得重置
+            me.resetload();
+        }
+    });
+    // 加载商户头像列表
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/Provider/Avatar',
+        dataType: 'json',
+        data: {
+            Type: Type,
+            Id: Id
+        },
+        success: function (data) {
+            var imgs_api = data.Body.Avatars;
+            var imgs_res = "";
+            for (var i = 0; i < imgs_api.length; i++) {
+                imgs_res += '<div class="swiper-slide"><img src="' + imgs_api[i] + '" class="swiper-img" alt=""></div>';
+            }
+            $(".swiper-wrapper").html(imgs_res);
+
+
+        },
+        error: function (xhr, type) {
+            alert('Ajax error!');
+            // 即使加载出错，也得重置
+            me.resetload();
+        }
+    });
+    //获取工人标签
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+        dataType: 'json',
+        data: {
+            WorkerId: Id
+        },
+        success: function (data) {
+            var api = data.Body.TagList;
+            var res = "";
+            for (var i = 0; i < api.length; i++) {
+                res += "<span class='Tag TagName'>" + api[i].TagName + "</span>";
+            }
+            if (api.length == 0) {
+                $(".worker-tag").css("display", "none");
+            }
+
+            $(".tab-num").text(api.length);
+            $(".worker-tag-box").html(res);
+
+        },
+        error: function (xhr, type) {
             alert('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
     });
 
-    //上滑加载"客户评价"更多数据--------------------------------
-    var counter2 = 0;
-    var num2 = 5;// 每页展示5个
-    var pageStart2 = 0,pageEnd2 = 0;
-    $('#tab-kehu').dropload({
-        scrollArea : window,
-        loadDownFn : function(me){
-            $.ajax({
-                type: 'POST',
-                url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetMerchantEvaluationList',
-                dataType: 'json',
-                data:{
-                    ID:Id
-                },
-
-                success: function(data){
-                    if(data.Body)
-                        var result = '';
-                        counter2++;
-                        pageEnd2 = num2 * counter2;
-                        pageStart2 = pageEnd2 - num2;
-
-                    for(var i = pageStart2; i < pageEnd2; i++){
-                        var res='';
-                        var api=data.Body.Worker;
-                        if(api[i].Gender<5){
-                            for(var j = 1; j <= api[i].Gender; j++){
-                                res+='<img src="/images/worker/ic_xin_sel.svg" alt="" class="kehu-xin">'
-                            }
-                            var x=5-api[i].Gender;
-                            for(var m = 1; m <= x; m++){
-                                res+='<img src="/images/worker/ic_xin_nor.svg" alt="" class="kehu-xin">'
-                            }
-                        }else{
-                            for(var k = 1; k <= 5; k++){
-                                res+='<img src="/images/worker/ic_xin_sel.svg" alt="" class="kehu-xin">'
-                            }
-                        }
-
-                        result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/worker/bus-img.png" alt="" class="kehu-img">'
-                            +'<span class="kehu-name">'+api[i].name+'</span>'
-                            +'<span class="kehu-time">'+api[i].date+'</span>'
-                            +'<div class="kehu-heart">'+res
-                            +'<span class="kehu-pingfen">'+api[i].Gender+'</span></div></div>'
-                            +'<div class="clear"></div><div class="kehu-cont">'+api[i].cont+'</div></div>';
-
-                        if((i + 1) >= data.Worker.length){
-                            // 锁定
-                            me.lock();
-                            // 无数据
-                            me.noData();
-                            break;
-                        }
-                    }
-                    // 为了测试，延迟1秒加载
-                    setTimeout(function(){
-                        $('.kehu-list').append(result);
-                        // 每次数据加载完，必须重置
-                        me.resetload();
-                    },1000);
-
-
-                },
-                error: function(xhr, type){
-                    alert('Ajax error!');
-                    // 即使加载出错，也得重置
-                    me.resetload();
-                }
-            });
-        }
-    });
 
 });
+//   客户评论列表
+    var Type = getUrl('type');
+    var Id = getUrl('markid');
+    var counter2 = 0;
+    var num2 = 5;// 每页展示5个
+    var pageStart2 = 0, pageEnd2 = 0;
+$('.kuhupingjia').dropload({
+    scrollArea: window,
+    loadDownFn: function (me) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
+            dataType: 'json',
+            data: {
+                ID: Id
+            },
 
-function ShowDiv(show_div,bg_div){
-    document.getElementById(show_div).style.display='block';
-    document.getElementById(bg_div).style.display='block' ;
+            success: function (data) {
+                if (api.length == 0) {
+                    $(".kuhupingjia").css("display", "block");
+                }
+                var api = data.Body.EvaluationList;
+                var result = '';
+                if (data.Body) {
+                for (var i = 0; i < api.length; i++) {
+                    var res_xin = ''
+                    if (api[i].Score == 0) {
+                        for (var m = 0; m <= 5; m++) {
+                            res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
+                        }
+                    } else if (api[i].Score == 5) {
+                        for (var k = 0; k <= 5; m++) {
+                            res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
+                        }
+                    } else {
+                        var x = 5 - api[i].Score;
+                        for (var n = 0; n <= api[i].Score; n++) {
+                            res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
+                        }
+                        for (var j = 1; j <= x; j++) {
+                            res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
+                        }
+                    }
+
+                    result += '<div class="pl-item"><div class="fl"><img style="width: 28px; height: 28px; vertical-align: middle;" src="'
+                        + api[i].Pictures[0].SmallPic + '" class="touxiang-img" alt=""/><span class="client-name">' + api[i].ClientName + '</span><span class="pl-date">'
+                        + api[i].Date + '</span></div><div class="fr"><span class="xinxin">' + res_xin + '</span><span class="pl-score">'
+                        + api[i].Score + '</span></div><div class="clear"></div><div class="pl-cont">' + api[i].Content + '</div></div>';
+
+                }
+            }
+                $('.client-pl').html(result);
+
+            },
+            error: function (xhr, type) {
+                alert('Ajax error!');
+                // 即使加载出错，也得重置
+                me.resetload();
+            }
+        });
+    }
+});
+
+
+function ShowDiv(show_div, bg_div) {
+    document.getElementById(show_div).style.display = 'block';
+    document.getElementById(bg_div).style.display = 'block';
     var bgdiv = document.getElementById(bg_div);
     bgdiv.style.width = document.body.scrollWidth;
     // bgdiv.style.height = $(document).height();
-    $("#"+bg_div).height($(document).height());
+    $("#" + bg_div).height($(document).height());
 };
 
+
 //关闭弹出层
-function CloseDiv(show_div,bg_div)
-{
-    $('#'+show_div).hide();
-    $('#'+bg_div).hide();
+function CloseDiv(show_div, bg_div) {
+    $('#' + show_div).hide();
+    $('#' + bg_div).hide();
 };
 
 // 获取地址传参
-function getUrl(name)
-{
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+function getUrl(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-    if (r!=null) return unescape(r[2]); return null; //返回参数值
+    if (r != null) return unescape(r[2]);
+    return null; //返回参数值
 }

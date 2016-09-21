@@ -180,8 +180,8 @@
         </div>
     </a>
     <!--客户无评价-->
-    <div id="tab-kehu">
-    <div  style="margin: 0 auto; display: none;" class="shafa no-fuwu">
+    <div class="kuhupingjia" style="margin-top: 30px; display: none; ">
+    <div  style="margin: 0 auto; " class="shafa no-fuwu">
     <img src="../../images/worker/shafa.png" class=" weui_media_appmsg_thumb no-fuwu-img" alt=""/>
         <p class="shafa-font">沙发没人做,赶紧去抢吧</p>
     </div>
@@ -337,6 +337,7 @@
             }
         });
         // 加载商户头像列表
+
         $.ajax({
             type: 'POST',
             url: 'http://192.168.1.191:3001/api/v2/Provider/Avatar',
@@ -393,11 +394,13 @@
 
 
     });
-    //         客户评论列表
+    //   客户评论列表
+    var Type=getUrl('type');
+    var Id=getUrl('markid');
     var counter2 = 0;
     var num2 = 5;// 每页展示5个
     var pageStart2 = 0,pageEnd2 = 0;
-    $('#tab-kehu').dropload({
+    $('.kuhupingjia').dropload({
         scrollArea : window,
         loadDownFn : function(me){
             $.ajax({
@@ -405,51 +408,59 @@
                 url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
                 dataType: 'json',
                 data:{
-                    ID:'1162'
+                    ID:Id
                 },
+                success: function(data) {
+                    if (data.Body == null) {
+                        $(".kuhupingjia").css("display", "block");
+                    }
+                    var api = data.Body.EvaluationList;
+//                    var result = '';
+                    if (data.Body) {
+                         var result = '';
+//                         counter2++;
+//                         pageEnd2 = num2 * counter2;
+//                         pageStart2 = pageEnd2 - num2;
+                        for (var i = 0; i < api.length; i++) {
+                            var res_xin = ''
+                            if (api[i].Score == 0) {
+                                for (var m = 0; m <= 5; m++) {
+                                    res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
+                                }
+                            } else if (api[i].Score == 5) {
+                                for (var k = 0; k <= 5; m++) {
+                                    res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
+                                }
+                            } else {
+                                var x = 5 - api[i].Score;
+                                for (var n = 0; n <= api[i].Score; n++) {
+                                    res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
+                                }
+                                for (var j = 1; j <= x; j++) {
+                                    res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
+                                }
+                            }
 
-                success: function(data){
-                    var api=data.Body.EvaluationList;
-                    var result='';
-                    for (var i = 0; i < api.length; i++) {
-                        var res_xin=''
-                        if(api[i].Score==0){
-                            for (var m = 0; m <= 5; m++) {
-                                res_xin+='<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
-                            }
-                        }else if(api[i].Score==5){
-                            for (var k = 0; k <= 5; m++) {
-                                res_xin+='<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
-                            }
-                        }else{
-                            var x=5-api[i].Score;
-                            for (var n = 0; n <= api[i].Score; n++) {
-                                res_xin+='<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
-                            }
-                            for (var j = 1; j <=x; j++) {
-                                res_xin+='<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
-                            }
+                            result += '<div class="pl-item"><div class="fl"><img style="width: 28px; height: 28px; vertical-align: middle;" src="'
+                                    + api[i].Pictures[0].SmallPic + '" class="touxiang-img" alt=""/><span class="client-name">' + api[i].ClientName + '</span><span class="pl-date">'
+                                    + api[i].Date + '</span></div><div class="fr"><span class="xinxin">' + res_xin + '</span><span class="pl-score">'
+                                    + api[i].Score + '</span></div><div class="clear"></div><div class="pl-cont">' + api[i].Content + '</div></div>';
+
+                        }
+                        $('.client-pl').html(result);
+                    }
+                    },
+                    error: function (xhr, type) {
+                        alert('Ajax error!');
+                        // 即使加载出错，也得重置
+                        me.resetload();
+
                     }
 
-                        result+='<div class="pl-item"><div class="fl"><img style="width: 28px; height: 28px; vertical-align: middle;" src="'
-                                +api[i].Pictures[0].SmallPic+'" class="touxiang-img" alt=""/><span class="client-name">'+api[i].ClientName+'</span><span class="pl-date">'
-                                +api[i].Date+'</span></div><div class="fr"><span class="xinxin">'+res_xin+'</span><span class="pl-score">'
-                                +api[i].Score+'</span></div><div class="clear"></div><div class="pl-cont">'+api[i].Content+'</div></div>';
-
-                    }
-                    $('.client-pl').html(result);
-
-                },
-                error: function(xhr, type){
-                    alert('Ajax error!');
-                    // 即使加载出错，也得重置
-                    me.resetload();
-                }
             });
+
         }
     });
-
-
     function ShowDiv(show_div,bg_div){
         document.getElementById(show_div).style.display='block';
         document.getElementById(bg_div).style.display='block' ;
