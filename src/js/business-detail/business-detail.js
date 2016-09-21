@@ -155,6 +155,12 @@ $(function(){
                             break;
                         }
                     }
+
+                    // 没有数据时展示内容
+                    if(ser_api.length==0){
+                        $(".no-fuwu").css("display","block");
+                    }
+
                     $('.lists').append(result);
                     // 每次数据加载完，必须重置
                     me.resetload();
