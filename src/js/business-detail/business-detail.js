@@ -182,14 +182,14 @@ $(function(){
                 data:{
                     ID:Id
                 },
-                
-                success: function(data){ 
+
+                success: function(data){
                     if(data.Body){
                         // var result = '';
                         // counter2++;
                         // pageEnd2 = num2 * counter2;
                         // pageStart2 = pageEnd2 - num2;
-                        
+
                         // for(var i = pageStart2; i < pageEnd2; i++){
                         //     var res='';
                         //     if(data.Pingjia[i].xin<5){
@@ -204,7 +204,7 @@ $(function(){
                         //         for(var k = 1; k <= 5; k++){
                         //             res+='<img src="/images/business-detail/ic_xin_sel.svg" alt="" class="kehu-xin">'
                         //          }
-                        //     }   
+                        //     }
 
                         //     result  +='<div class="kehu-item"><div class="kehu-top"><img src="../../images/business-detail/bus-img.png" alt="" class="kehu-img">'
                         //         +'<span class="kehu-name">'+data.Pingjia[i].name+'</span>'
@@ -226,13 +226,13 @@ $(function(){
                         //     $('.kehu-list').append(result);
                         //     // 每次数据加载完，必须重置
                         //     me.resetload();
-                        // },1000);               
+                        // },1000);
                     }else{
                         $('#tab-kehu').find('.no-fuwu').show();
                     }
-                    
-                       
-                    
+
+
+
                 },
                 error: function(xhr, type){
                     alert('Ajax error!');
