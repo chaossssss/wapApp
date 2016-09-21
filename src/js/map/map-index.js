@@ -446,7 +446,7 @@ bossControl.prototype = new BMap.Control();
 bossControl.prototype.initialize = function(map){
     var img = document.createElement("img");
     img.src = "/images/map/btn_boss.svg";
-    img.style.width = "30px";
+    img.style.width = "40px";
     img.id = "boss";
     img.active = "active";
 
@@ -475,13 +475,13 @@ bossControl.prototype.initialize = function(map){
  */
 function workManControl(){
     this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
-    this.defaultOffset = new BMap.Size(10, 108);
+    this.defaultOffset = new BMap.Size(10, 118);
 }  
 workManControl.prototype = new BMap.Control();    
 workManControl.prototype.initialize = function(map){
     var img = document.createElement("img");
     img.src = "/images/map/btn_worker.svg";
-    img.style.width = "30px";
+    img.style.width = "40px";
     img.id = "worker";
     img.active = "active";
 

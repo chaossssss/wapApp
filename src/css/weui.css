@@ -119,7 +119,8 @@ a {
 }
 .weui_icon_success:before {
   font-size: 23px;
-  color: #09BB07;
+  /*color: #09BB07;*/
+  color: #27b8f3;
 }
 .weui_icon_waiting:before {
   font-size: 23px;
@@ -281,14 +282,16 @@ input.weui_btn_mini {
   background-color: #DEDEDE;
 }
 .weui_btn_primary {
-  background-color: #04BE02;
+  /*background-color: #04BE02;*/
+  background-color: #27b8f3;
 }
 .weui_btn_primary:not(.weui_btn_disabled):visited {
   color: #FFFFFF;
 }
 .weui_btn_primary:not(.weui_btn_disabled):active {
   color: rgba(255, 255, 255, 0.4);
-  background-color: #039702;
+  /*background-color: #039702;*/
+  background-color: #27b8f3;
 }
 .weui_btn_warn {
   background-color: #EF4F4F;
@@ -307,8 +310,10 @@ input.weui_btn_mini {
   color: #C9C9C9;
 }
 .weui_btn_plain_primary {
-  color: #04BE02;
-  border: 1px solid #04BE02;
+  /*color: #04BE02;*/
+  color: #27b8f3;
+  /*border: 1px solid #04BE02;*/
+  border: 1px solid #27b8f3;
 }
 button.weui_btn_plain_primary,
 input.weui_btn_plain_primary {
@@ -316,7 +321,8 @@ input.weui_btn_plain_primary {
   background-color: transparent;
 }
 .weui_btn_plain_primary:active {
-  border-color: #039702;
+  /*border-color: #039702;*/
+  border-color: #27b8f3;
 }
 .weui_btn_plain_primary:after {
   border-width: 0;
@@ -467,7 +473,8 @@ input.weui_btn_plain_default {
 .weui_cells_radio .weui_check:checked + .weui_icon_checked:before {
   display: block;
   content: '\EA08';
-  color: #09BB07;
+  /*color: #09BB07;*/
+  color: #27b8f3;
   font-size: 16px;
 }
 .weui_cells_checkbox .weui_cell_hd {
@@ -478,13 +485,15 @@ input.weui_btn_plain_default {
 }
 .weui_cells_checkbox .weui_icon_checked:before {
   content: '\EA01';
-  color: #C9C9C9;
+  /*color: #C9C9C9;*/
+  color: #27b8f3;
   font-size: 23px;
   display: block;
 }
 .weui_cells_checkbox .weui_check:checked + .weui_icon_checked:before {
   content: '\EA06';
-  color: #09BB07;
+  /*color: #09BB07;*/
+  color: #27b8f3;
 }
 .weui_label {
   display: block;
@@ -1363,7 +1372,8 @@ a.weui_media_box:active {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
           flex: 1;
-  color: #3CC51F;
+  /*color: #3CC51F;*/
+  color:#27b8f3;
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

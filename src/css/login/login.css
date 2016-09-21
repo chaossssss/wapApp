@@ -11,6 +11,10 @@ body {
 .cb{ clear:both;}
 .cl{ clear:left;}
 .cr{ clear:right;}
+/*配色*/
+.pblue {
+	color: #27b8f3;
+}
 .mt10 {
 	margin-top: 10px;
 }
@@ -60,6 +64,5 @@ body {
 	position: relative;
 }
 .footlink {
-	color: #04be02;
 	text-decoration: none;
 }

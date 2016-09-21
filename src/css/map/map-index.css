@@ -2,22 +2,6 @@ html{height:100%}
 body{height:100%;margin:0px;padding:0px}    
 /*#wapper{height:100%;}*/
 /*#container{height:100%;}*/
-
-/*文本 左 中 右*/
-.tl{ text-align:left;}
-.tc{ text-align:center;}
-.tr{ text-align:right;}
-
-/*浮动 左 右*/
-.fl{ float:left;}
-.fr{ float:right;}
-
-.webkit_box{display: -webkit-flex;display: -moz-flex; display: flex; -webkit-box-orient: horizontal; }
-.flex1 {-webkit-flex-grow: 1;-moz-flex-grow: 1; flex-grow: 1;}
-.flex2 {-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
-.flex3 {-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
-.flexc {align-items:center;}
-.flexs {align-self: center;}
 /*信息窗口*/
 .bubbleInfo {
     display:inline-block;

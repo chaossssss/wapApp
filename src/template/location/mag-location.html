@@ -19,14 +19,14 @@
 </head>
 <body ng-controller="magLocationCtrl">
 	
-	<div class="msg" ng-if="!vm.editLocation">
+	<div class="msg" ng-if="!(vm.locationList.length>0)">
 		<div class="weui_msg">
 			<div class="weui_icon_area">
 				<img src="/images/location/img-local.png" alt="" style="width:130px;">
 			</div>
 			<div class="weui_text_area">
 				<p class="weui_msg_desc">
-					您还没有添加服务地址哦，快去 <a  href="/template/location/add-location.html" class="pgreen">新增&nbsp;</a>吧
+					您还没有添加服务地址哦，快去 <a  href="javascript:;" class="pblue" ng-click="vm.gotoAdd()">新增&nbsp;</a>吧
 				</p>
 			</div>
 		</div>

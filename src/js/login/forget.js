@@ -1,37 +1,38 @@
 "use strict"
 angular.module('com.wapapp.app',[])
-.run(function(){
+.run(['$rootScope',function($rootScope){
 	// FastClick.attach(document.body);
-})
-.controller('forgetCtrl',['$scope','$timeout','registService','captchaService',function($scope,$timeout,registService,captchaService){
+	$rootScope.url = "http://192.168.1.191:3003/";
+	$rootScope.token = window.localStorage.getItem("Token");
+}])
+.controller('forgetCtrl',['$scope','$timeout','forgetService','captchaService',function($scope,$timeout,forgetService,captchaService){
 	var vm = $scope.vm = {};
-	
 	vm.submitRegist = function(){
-		registService.event(vm.phone,vm.password,vm.code)
+		forgetService.event(vm.phone,vm.password,vm.code)
 			.success(function(res){
 				console.log(res);
-				if(res.Meta.ErrorCode !== "0"){
+				if(res.Meta.ErrorCode === "0"){
+					window.location.href = "/template/login/login.html";
+				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
 				}
 				$scope.$apply();
 			})
 	}	
-
 	vm.sendTime = function(){
 		captchaService.event(vm.phone)
 			.success(function(res){
 				console.log(res);
-				if(res.Meta.ErrorCode !== "0"){
+				if(res.Meta.ErrorCode === "0"){
+					smsCodeLoad(50);
+				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
-				}else{
-					smsCodeLoad(50);
 				}
 				$scope.$apply();
 			})
 	}
-
 	//发送内容
 	$scope.sms_code_content='发送验证码';
 	//用于设置disabled
@@ -52,26 +53,19 @@ angular.module('com.wapapp.app',[])
 	        }, 800);
 	    }
 	};
-
 }])
-.factory('registService',[function(){
-	var PATH = "http://192.168.1.191:3003/";
-	var _regist = PATH+"api/v1/clientinfo/Register";
-	
+.factory('forgetService',['$rootScope',function($rootScope){
+	var _forget = $rootScope.url+"api/v1/clientinfo/ResetPwd";
 	var runlogin = function(loginName,password,captcha){
 		return $.ajax({
 					method:"POST",
-					url: _regist,
+					url: _forget,
 					data: {
-						LoginName: loginName,
+						Phone: loginName,
 						Password: password,
-						Captcha: captcha,
-						Type: 0
+						Captcha: captcha
 					}
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -80,15 +74,13 @@ angular.module('com.wapapp.app',[])
 				})
 	};
 	return {
-		event:function(loginName,password){
-			return runlogin(loginName,password);
+		event:function(loginName,password,captcha){
+			return runlogin(loginName,password,captcha);
 		}
 	};
 }])
-.factory('captchaService',[function(){
-	var PATH = "http://192.168.1.191:3001/";
-	var _sendcode = PATH+"api/v1/helper/SendCaptcha";
-	
+.factory('captchaService',['$rootScope',function($rootScope){
+	var _sendcode = $rootScope.url+"api/v1/helper/SendCaptcha";
 	var sendCode = function(phone){
 		return $.ajax({
 					method:"POST",
@@ -98,9 +90,6 @@ angular.module('com.wapapp.app',[])
 						Type: "2"
 					}
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
