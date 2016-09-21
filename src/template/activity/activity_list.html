@@ -11,7 +11,6 @@
     <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <script type="text/javascript" src="/js/activity/flexible.min.js"></script>
 	<script type="text/javascript" src="/js/activity/flexible_css.min.js"></script>
-    <script type="text/javascript" src="/js/activity/activity.min.js"></script>
     <script type="text/javascript" src="/js/activity/browser.min.js"></script>
 </head>
 <body>
@@ -162,7 +161,10 @@ $(function(){
                     DeviceType:"2"
                 }
             });
+
+            // 列表页点击下单按钮后禁用
+            $(this).attr("href","javascript:void(0)");
         })
-    })
+    });
 })
 </script>
