@@ -13,7 +13,7 @@ a:hover {color:#628828;}
 button{outline: none;cursor: pointer;border:none;}
 .clear{clear:both;}
 textarea{resize: none;}
-div,li{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+a,div,li{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 /*-------------------*/
 
 .active{
