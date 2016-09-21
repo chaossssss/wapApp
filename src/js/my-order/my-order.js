@@ -108,6 +108,17 @@
       }
 /*--动态生成列表--*/      
       function stateWaiting(orderId,serName,time,addr,serPrice){
+        $("#itemList #orderCancel").on("click",function(){
+          $("#cancelOrder1").css("display","block");
+          $("#cancelOrderBtn").on("click",function(){
+            cancelOrder(token,orderId);
+            $("#cancelOrder1").hide();
+            location.reload();
+          })
+          $(".uncancel").on("click",function(){
+            $("#cancelOrder1").hide();
+          })
+        })
         var htmlList = "";
         var html = 
         "<div class='item'>" +
@@ -129,17 +140,6 @@
           "</div>" +
         "</div>";
         htmlList += html;
-        $("#itemList #orderCancel").on("click",function(){
-          $("#cancelOrder1").css("display","block");
-          $("#cancelOrderBtn").on("click",function(){
-            cancelOrder(token,orderId);
-            $("#cancelOrder1").hide();
-            location.reload();
-          })
-          $(".uncancel").on("click",function(){
-            $("#cancelOrder1").hide();
-          })
-        })
         return htmlList;
       }
       function payment(orderId,serName,picSrc,name,gender,time,addr,price,unit,total,totalPrice){
@@ -202,7 +202,7 @@
           "</div>" +
           "<div class='total-price'>订单总价：<span class='price-num'>" + totalPrice + "</span></div>" +
           "<div class='item-buttom'>" +         
-            "<a id='confirmOrder' href='#' class='order-cancel'>确认服务完成</a>" +
+            "<a id='confirmOrder' href='#' class='order-confirm'>确认服务完成</a>" +
             "<div class='clear'></div>" +
           "</div>" +
         "</div>";
