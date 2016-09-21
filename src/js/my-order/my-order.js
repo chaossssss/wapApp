@@ -31,7 +31,7 @@
             OrderId:orderId
           },
           success:function(data){
-            console.log("删除订单成功" + orderId);
+            // console.log("删除订单成功" + orderId);
           }
         })
       }
@@ -59,7 +59,7 @@
               OrderId:orderId
             },
             success:function(data){
-              console.log("取消订单成功" + orderId );
+              // console.log("取消订单成功" + orderId );
             }     
         })
       }

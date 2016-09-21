@@ -3,7 +3,7 @@ var PATH = "http://192.168.1.191:7002/";
 var WORK_MAN = "/images/map/test1.png";
 var Local_Img = "/images/map/ic_coordinate.svg";
 
-
+ 
 
 /**
  * 创建标注
@@ -394,14 +394,12 @@ function remove_overlay(){
  * @return {[type]}      [description]
  */
 function getData(data){
-
 	$.ajax({
 		method: "POST",
 		url: PATH+"api/v2/Provider/IndexEx",
 		data: data,
 	}).success(function(res){
-        console.log("标符号",$.cookie("Token"));
-
+        console.log("标符号token",$.cookie("Token"));
 		console.log("获取数据",res);
         var workers = res.Body.Workers;
         var length = res.Body.Workers.length;
@@ -416,21 +414,17 @@ function getData(data){
             var numb =  parseInt(Math.random()*6);
             boss[j].DisplayAttribute = numb;
         }
-
 		createMarker(res.Body.Workers,res.Body.Business);
 	})
 }
 
-
 function getServiceList(data){
-
     $.ajax({
         method:"POST",
         url: PATH+"api/v1/clientinfo/Index",
         data:data
     }).success(function(res){
         console.log("个人信息",res);
-
     })
 }
 
@@ -505,29 +499,31 @@ workManControl.prototype.initialize = function(map){
  * 初始化定位(根据浏览器定位)
  * @type {BMap}
  */
-var geolocation = new BMap.Geolocation();
-geolocation.getCurrentPosition(function(r){
-    if(this.getStatus() == BMAP_STATUS_SUCCESS){
-        var myIcon = new BMap.Icon(Local_Img, new BMap.Size(22,22));
-        mk = new BMap.Marker(r.point,{icon:myIcon});
-        mk.setTop(true);
-        mk.setZIndex(10000);
-        mk.disableMassClear();
-        map.addOverlay(mk);
-        map.panTo(r.point); 
+function firstGeolocation(){
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var myIcon = new BMap.Icon(Local_Img, new BMap.Size(22,22));
+            mk = new BMap.Marker(r.point,{icon:myIcon});
+            mk.setTop(true);    // 放置到最顶层
+            mk.setZIndex(10000);   
+            mk.disableMassClear();  //不能被clear掉
+            map.addOverlay(mk);     //mk放到地图中
+            map.panTo(r.point);     //地图中心移动到定位点
 
-        console.log('您的位置：'+r.point.lng+','+r.point.lat);
-        //去除百度底部广告
-        // $(".anchorBL > a").attr("href","javascript:;");
-        // $(".BMap_cpyCtrl.BMap_noprint.anchorBL").css("display","none");
-        // $(".anchorBL > a > img").css("opacity","0.5");
-        //手动定位控件的自定义样式
-        // console.log($(".BMap_geolocationIcon").css("background-image","url('img/geolocationIcon.png')"));
-    }
-    else {
-        alert('failed'+this.getStatus());
-    }        
-},{enableHighAccuracy: true})
+            console.log('您的位置：'+r.point.lng+','+r.point.lat);
+            //去除百度底部广告
+            // $(".anchorBL > a").attr("href","javascript:;");
+            // $(".BMap_cpyCtrl.BMap_noprint.anchorBL").css("display","none");
+            // $(".anchorBL > a > img").css("opacity","0.5");
+            //手动定位控件的自定义样式
+            // console.log($(".BMap_geolocationIcon").css("background-image","url('img/geolocationIcon.png')"));
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }        
+    },{enableHighAccuracy: true})
+}
 
 /**
  * 添加手动定位控件

@@ -186,15 +186,19 @@ var map = new BMap.Map("container");          // 创建地图实例
 var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
 map.centerAndZoom(point, 15); 	
 
+var sessionStorage = window.sessionStorage;
 //移动地图事件
 map.addEventListener("moveend",function(){
   console.log("地图移动结束时触发此事件");
-  // var point = mk.getPosition();
-  var point = map.getCenter();
-  mk.setPosition(point);
-  console.log("移动定位中点",point);
+  var point_c = map.getCenter();
+  console.log("移动定位中点",point_c);
+  mk.setPosition(point_c);
+  searchData(point_c.lng,point_c.lat);
 
-  searchData(point.lng,point.lat);
+  sessionStorage.setItem("Map_Lng",point_c.lng);
+  sessionStorage.setItem("Map_Lat",point_c.lat+0.019439); //加上百度坐标偏移
+
+  console.log("移动后定位点的坐标",mk.getPosition());
 })
 
 //数据筛选
@@ -284,8 +288,29 @@ $("#worker").on("click",function(){
   searchData(point.lng,point.lat);
 })
 
-// 添加手动定位
+// 添加地图手动定位
 map.addControl(geolocationControl);
+
+// 浏览器自动定位
+if(sessionStorage.getItem("Map_Lng")){
+  //设置定位点样式
+  var _lng = sessionStorage.getItem("Map_Lng");
+  var _lat = sessionStorage.getItem("Map_Lat");
+
+  var session_point = new BMap.Point(_lng,_lat);
+  var myIcon = new BMap.Icon(Local_Img, new BMap.Size(22,22));
+  mk = new BMap.Marker(session_point,{icon:myIcon});
+  mk.setTop(true);
+  mk.setZIndex(10000);
+  mk.disableMassClear();
+
+  map.addOverlay(mk);
+  map.panTo(session_point); 
+  searchData(_lng,_lat);
+}else{
+  firstGeolocation();
+}
+
 
 
 </script>	
