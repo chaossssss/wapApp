@@ -80,3 +80,6 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 /*--弹出框样式--*/
 .order-detail .weui_dialog_confirm .zj-align{ text-align: center; }
 .order-detail .zj-bluecol{ color: #27b8f3; }
+
+/*--待接单，点击支付--*/
+.zj-prompt{ width: 220px; height: 160px; color: white; background: red; text-align: center; }

@@ -149,7 +149,6 @@ $(function(){
       var orderId = data.Body.OrderId;
       isEvaluated = data.Body.IsEvaluated;
       var workHeadPic = data.Body.ServiceProviderPic;
-      console.log(workHeadPic);
       $("#providerHead").attr("src",workHeadPic);
       $("#orderCode").text(data.Body.OrderCode);
       $("#createTime").text(data.Body.CreateTime);
@@ -181,7 +180,6 @@ $(function(){
         $("#pictureLine").hide();
       }else{
         for(i = 0; i < picNum; i++ ){
-          console.log(picData[i].SmallPIc);
           var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPIc + ")'>"
           + "</li>";
           $("#showPics").append(html);
@@ -204,9 +202,7 @@ $(function(){
       $("#payOffTime").text(payOffTime);
       $("#clinetPhone").text(data.Body.Service.AddressInfo.PhoneNumber);
 
-      
       finishedTime = data.Body.FinishTime;
-      console.log(finishedTime);
       payLock = data.Body.PayLock;
       // $("#price").text(data.Body.Service.Price);
       $("#discountInfo").text(data.Body.DiscountAmount);
@@ -214,8 +210,11 @@ $(function(){
       $("#lostIncome").text(data.Body.Refunds.LostIncome);
       $("#refundAmount").text(data.Body.Service.TotalPrice);
       $("#hourly").text(data.Body.Activity);
-      var toBePaid = data.Body.TotalPrice - data.Body.Refunds.LostIncome - data.Body.Activity;
-      $("#toBePaid").text(toBePaid);
+      $("#toBePaid").text(totalPrice);
+      if( data.Body.Refunds.LostIncome != null && data.Body.Activity != null){
+        var toBePaid = data.Body.TotalPrice - data.Body.Refunds.LostIncome - data.Body.Activity;
+        $("#toBePaid").text(toBePaid);
+      }
       if(data.Body.Activity == null){
         $("#specialPrice").hide();
       }
@@ -305,7 +304,8 @@ console.log(orderState);
     $("#tabSecond").text('待工人接单');
     $("#tabThird").text('待付款');
     $("#tabFourth").text('待服务');
-    $("#btnRight").text('取消订单');
+    $("#btnLeft").text('取消订单');
+    $("#btnRight").text('支付');
 
     $("#explanation").css("width","256px");
 
@@ -314,7 +314,8 @@ console.log(orderState);
     $("#roundSecond").addClass("round-processing");
     $("#roundThird").addClass("round-undone");
     $("#roundFourth").addClass("round-undone");
-    $("#btnRight").addClass("delete-btn");
+    $("#btnLeft").addClass("delete-btn");
+    $("#btnRight").addClass("pay-btn");
 
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -323,7 +324,6 @@ console.log(orderState);
     $("#filling2").hide();
     $("#acceptTime").hide();
     $("#payTime").hide();
-    $("#btnLeft").hide();
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
@@ -331,8 +331,10 @@ console.log(orderState);
 
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
-
-    $("#btnRight").on("click",function(){
+    $(".pay-btn").on("click",function(){
+      
+    })
+    $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
       $("#cancelOrderBtn").on("click",function(){
         cancelOrder(token,orderId);
