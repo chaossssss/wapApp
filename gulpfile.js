@@ -2,17 +2,21 @@ var path = require('path');
 var fs = require('fs');
 
 var gulp = require('gulp');
-var clean = require('gulp-clean');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var minifyCSS = require('gulp-minify-css');
+var clean = require('gulp-clean');          //清空文件夹
+var rename = require('gulp-rename');        //文件重命名
+var uglify = require('gulp-uglify');        //js压缩
+var minifyCSS = require('gulp-minify-css'); //css压缩
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
-var imagemin = require('gulp-imagemin');
+var imagemin = require('gulp-imagemin');    //压缩图片
 var sourcemaps = require('gulp-sourcemaps');
 var replace = require('gulp-str-replace');
 var yargs = require('yargs').argv;
 var browserSync = require('browser-sync');
+// var rev = require('gulp-rev')  更改版本号
+// var revCollector = require('gulp-rev-collector') 用于html模版更改引用路径
+// var upload = require('gulp-qndn').upload 七牛上传
+// var cdn = require('gulp-cdn-replace')  替换CDN链接
 
 /* 基础路径 */
 var paths = {
@@ -54,8 +58,9 @@ gulp.task('build:html',function(){
             prefix : prefix
           }
       }))
-		.pipe(gulp.dest(paths.build))
-		.pipe(browserSync.reload({stream: true}));
+		// .pipe(gulp.dest(paths.build))
+		.pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest(paths.build));
 });
 
 //压缩js
@@ -77,8 +82,9 @@ gulp.task('build:js',function(){
               prefix : prefix
             }
         }))   
-		.pipe(gulp.dest(paths.build+'/js'))
-		.pipe(browserSync.reload({stream: true}));
+		// .pipe(gulp.dest(paths.build+'/js'))
+		.pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest(paths.build+'/js'));
 });
 
 //压缩css
@@ -101,18 +107,18 @@ gulp.task('build:css',function(){
                 prefix : prefix
               }
           }))
-    .pipe(gulp.dest(paths.build+'/css'))
-    .pipe(browserSync.reload({stream: true}));
+    // .pipe(gulp.dest(paths.build+'/css'))
+    .pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest(paths.build+'/css'));
 });
 
 // 压缩图片
 gulp.task('build:images', function () {
-    gulp.src(paths.img+'/**/*.?(png|jpg|gif|svg)')
-        .pipe(imagemin({
-            progressive: true
-        }))
-        .pipe(gulp.dest(paths.build+'/images'))
-        .pipe(browserSync.reload({stream: true}));
+  gulp.src(paths.img+"/**/*.?(png|jpg|gif|svg)")
+    .pipe(imagemin())
+    // .pipe(gulp.dest('dist/images'))
+    .pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest('dist/images'));
 });
 
 //生成候选版本
