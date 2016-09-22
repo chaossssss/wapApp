@@ -31,7 +31,7 @@
             OrderId:orderId
           },
           success:function(data){
-            // console.log("删除订单成功" + orderId);
+            console.log("删除订单成功");
           }
         })
       }
@@ -59,7 +59,7 @@
               OrderId:orderId
             },
             success:function(data){
-              // console.log("取消订单成功" + orderId );
+              console.log(data);
             }     
         })
       }
@@ -88,7 +88,7 @@
             OrderId:orderId
           },
           success:function(data){
-            console.log("完成订单成功" + orderId);
+            console.log("完成订单成功");
           }
         })
       }
@@ -102,7 +102,7 @@
             OrderId:orderId
           },
           success:function(data){
-            console.log("删除订单成功" + orderId);
+            console.log("删除订单成功");
           }
         })
       }
@@ -168,14 +168,14 @@
         "</div>";
         htmlList += html;
         $("#itemList .order-cancel").on("click",function(){
-          $("#cancelOrder1").css("display","block");
-          $("#cancelOrderBtn").on("click",function(){
+          $("#cancelOrder2").css("display","block");
+          $("#cancelBtn2").on("click",function(){
             cancelOrder(token,orderId);
-            $("#cancelOrder1").hide();
+            $("#cancelOrder2").hide();
             // location.reload();
           })
-          $(".uncancel").on("click",function(){
-            $("#cancelOrder1").hide();
+          $("#contactWorkerBtn").on("click",function(){
+            $("#cancelOrder2").hide();
           })
         })
         $("#orderPay").on("click",function(){
@@ -245,8 +245,9 @@
       function canceled(orderId,serName,time,addr,totalPrice,count){
         var htmlList = "";
         // var countString = count.toString();
-        var deleteBtn = "deleteBtn" + count + "";
-        var deleteBtnId = "#" + deleteBtn;
+        var deleteBtn = "deleteBtn" + count;
+        var deleteBtnId = deleteBtn;
+
         var html =
         "<a href='../orderManage/order-detail.html?orderId=" + orderId + "'>" + "<div class='item'>" +
           "<div class='item-top'>" +
@@ -321,6 +322,7 @@
             var total = listData[i].Total;
             var unit = listData[i].UnitName;
             var discountInfo = listData[i].DiscountInfo;
+            var orderIsGeted = listData[i].ServiceProviderId;
             var serviceProviderType = listData[i].ServiceProviderType;
             var serviceProviderPic = listData[i].ServiceProviderPic;
             var serviceProviderName = listData[i].ServiceProviderName;
@@ -368,7 +370,7 @@
             if(orderStatus == "10"){
               $("#noOrder").hide();
               var orderContent = stateWaiting(orderId,serviceName,createAt,serviceAddress,price);
-             $("#itemList").append(orderContent);
+              $("#itemList").append(orderContent);
             }
             if( isPayOff == "0" && orderStatus == "20" ){
               $("#noOrder").hide();
@@ -437,6 +439,7 @@
               var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
+              var orderIsGeted = listData[i].ServiceProviderId;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
               var serviceProviderName = listData[i].ServiceProviderName;
@@ -525,6 +528,7 @@
               var total = mul(listData[i].Total);
               var unit = listData[i].UnitName;
               var discountInfo = listData[i].DiscountInfo;
+              var orderIsGeted = listData[i].ServiceProviderId;
               var serviceProviderType = listData[i].ServiceProviderType;
               var serviceProviderPic = listData[i].ServiceProviderPic;
               var serviceProviderName = listData[i].ServiceProviderName;
