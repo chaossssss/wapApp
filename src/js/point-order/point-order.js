@@ -20,6 +20,7 @@ angular.module('com.wapapp.app',[])
 	var vm = $scope.vm = {};		//订单
 	var addr = $scope.addr = {};	//地址
 	var uc = $scope.uc = {};	//工人，商户信息
+	var gt = $scope.gt = {};	//活动
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
@@ -47,9 +48,9 @@ angular.module('com.wapapp.app',[])
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log("获取地址成功",res);
-			// if(res.Meta.ErrorCode === "0"){
+			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
-			// }
+			}
 			$scope.$apply();
 		})
 
@@ -84,18 +85,18 @@ angular.module('com.wapapp.app',[])
 				$scope.$apply();
 			})
 	}
-
-	giftService.gift($rootScope.token,"153")
-			.success(function(res){
-				console.log("获取活动",res);
-			})
 			
 	$scope.$watch('vm.serviceTypeObj',function(){
-		console.log("123");
-		giftService.gift($rootScope.token,"153")
-			.success(function(res){
-				console.log("获取活动",res);
-			})
+		if(vm.serviceTypeObj){
+			giftService.gift($rootScope.token,vm.serviceTypeObj.ServiceTypeId)
+				.success(function(res){
+					console.log("获取活动",res);
+					if(res.Meta.ErrorCode === "0"){
+						gt = $scope.gt = res.Body;
+					}
+					$scope.$apply();
+				})
+		}
 	})
 
 	//流程流向判断并跳转
@@ -387,9 +388,6 @@ angular.module('com.wapapp.app',[])
 	                processData: false,  // 告诉jQuery不要去处理发送的数据
 	                contentType: false  // 告诉jQuery不要去设置Content-Type请求头
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -420,9 +418,6 @@ angular.module('com.wapapp.app',[])
 					url: _getpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -450,9 +445,6 @@ angular.module('com.wapapp.app',[])
 					url: _getpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -480,9 +472,6 @@ angular.module('com.wapapp.app',[])
 					url: _searchpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
