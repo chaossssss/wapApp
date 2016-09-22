@@ -98,22 +98,22 @@ body{height:100%;margin:0px;padding:0px}
   position: relative;
   padding-right: 15px;
 } 
-#left img {
+/*#left img {
   position: absolute;
   top:50%;
   transform: translateY(-50%);
   width: 25px;
-}
+}*/
 #right {
   position: relative;
   padding-left: 15px;
 }
-#right img {
+/*#right img {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: 25px;
-}
+}*/
 
 /*.zj_cells {
   background-color: #FFFFFF;

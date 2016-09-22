@@ -21,8 +21,8 @@
 <body>
   <div id="wapper">
     <div id="search_bar" class="weui_search_bar flexc">
-      <div class="flex1 flexs tc" id="left">
-        <img id="leftImg" src="/images/map/btn_personal.svg" alt="" style="width:25px;display:block;">
+      <div class="tc" id="left">
+        <img id="leftImg" src="/images/map/btn_personal.png" alt="" style="width:25px;display:block;">
       </div>
       <form action="" class="weui_search_outer flex3">
         <div class="weui_search_inner">
@@ -35,8 +35,8 @@
           <span>搜索</span>
         </label>
       </form>
-      <div class="flex1 tc" id="right">
-          <img src="/images/map/btn_list.svg" alt="" style="width:25px;display:block;">
+      <div class="tc" id="right">
+          <img src="/images/map/btn-information.png" alt="" style="width:25px;display:block;">
       </div>
       <a href="javascript:;" id="search_cancel" class="weui_search_cancel">取消</a>
       <a href="javascript:;" id="search_btn" class="zj_search_btn">搜索</a>
@@ -72,6 +72,10 @@
     var $height = $(window).height();
     $("#container").height($height-44);
 
+    var token = window.localStorage.getItem("Token");
+    if(token){
+      $("#leftImg").attr("src","/images/map/btn_personal_active.png");
+    }
     // $("#leftImg").on("click",function(){
     //   alert("1");
     //   var a = window.localStorage.getItem("Token");
@@ -168,8 +172,8 @@
         $("#search_btn").show();
       })
       $("#left").on("click",function(){
-        var a = window.localStorage.getItem("Token");
-        if(a != undefined){
+        var token = window.localStorage.getItem("Token");
+        if(token != undefined){
           window.location.href = "/template/my-home/my-home.html";
         }else{
           window.location.href = "/template/login/login.html";
@@ -204,8 +208,8 @@ map.addEventListener("moveend",function(){
 //数据筛选
 function searchData(lng,lat,queryName){
   var $input = $("#search_input").val();
-  var $worker = $("#worker").attr("active");
-  var $boss = $("#boss").attr("active");
+  var $worker = $("#worker").hasClass("active");
+  var $boss = $("#boss").hasClass("active");
 
   if($input && $worker && $boss ){
     var testData0 = {
@@ -273,7 +277,6 @@ function searchData(lng,lat,queryName){
 var sosoBossControl = new bossControl();
 map.addControl(sosoBossControl);
 
-//工人商户控件点击事件
 $("#boss").on("click",function(){
   var point = mk.getPosition();
   searchData(point.lng,point.lat);
@@ -287,6 +290,10 @@ $("#worker").on("click",function(){
   var point = mk.getPosition();
   searchData(point.lng,point.lat);
 })
+
+//创建活动一键下单控件
+var sosoActivityControl  = new activityControl();
+map.addControl(sosoActivityControl);
 
 // 添加地图手动定位
 map.addControl(geolocationControl);

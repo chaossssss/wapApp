@@ -439,23 +439,21 @@ function bossControl(){
 bossControl.prototype = new BMap.Control();
 bossControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "/images/map/btn_boss.svg";
+    img.src = "/images/map/btn_boss_active.svg";
     img.style.width = "40px";
     img.id = "boss";
-    img.active = "active";
-
+    img.className = "active";
     // 绑定事件
     img.onclick = function(e){    
-        var boss = document.getElementById("boss");
-        var yesorno = boss.getAttribute("active");  
-        // console.log(yesorno);
-        if(yesorno === "active"){
-            boss.removeAttribute("active");
-            img.src = "/images/map/btn_boss.svg";
+        var $boss = $("#boss");   
+        var yesorno = $("#boss").hasClass("active");
+        if(yesorno){
+            $boss.removeClass("active");
+            $boss.attr("src","/images/map/btn_boss.svg");
         }else{
-            boss.setAttribute("active","active");
-            img.src = "/images/map/btn_boss_active.svg";     
-        }              
+            $boss.addClass("active");
+            $boss.attr("src","/images/map/btn_boss_active.svg");    
+        }         
     }
     // 添加DOM元素到地图中
     map.getContainer().appendChild(img);
@@ -469,27 +467,46 @@ bossControl.prototype.initialize = function(map){
  */
 function workManControl(){
     this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
-    this.defaultOffset = new BMap.Size(10, 118);
+    this.defaultOffset = new BMap.Size(10, 20);
 }  
 workManControl.prototype = new BMap.Control();    
 workManControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "/images/map/btn_worker.svg";
+    img.src = "/images/map/btn_worker_active.svg";
     img.style.width = "40px";
     img.id = "worker";
-    img.active = "active";
+    img.className = "active";
+
+    img.onclick = function(e){ 
+        var $worker = $("#worker");   
+        var yesorno = $("#worker").hasClass("active");
+        if(yesorno){
+            $worker.removeClass("active");
+            $worker.attr("src","/images/map/btn_worker.svg");
+        }else{
+            $worker.addClass("active");
+            $worker.attr("src","/images/map/btn_worker_active.svg");    
+        }              
+    }
+    map.getContainer().appendChild(img);
+    return img;
+}
+
+/**
+ *  添加一键下单控件
+ */
+function activityControl(){
+    this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
+    this.defaultOffset = new BMap.Size(20,50);
+}
+activityControl.prototype = new BMap.Control();    
+activityControl.prototype.initialize = function(map){
+    var img = document.createElement("img");
+    img.src = "/images/map/one-key.png";
+    img.style.width = "60px";
 
     img.onclick = function(e){    
-        var worker = document.getElementById("worker");
-        var yesorno = worker.getAttribute("active");    
-        // console.log(yesorno);
-        if(yesorno === "active"){
-            worker.removeAttribute("active");
-            img.src = "/images/map/btn_worker.svg";
-        }else{
-            worker.setAttribute("active","active");
-            img.src = "/images/map/btn_worker_active.svg";     
-        }              
+        window.location.href = "/template/quick-order/quick-order.html?channel=1";     
     }
     map.getContainer().appendChild(img);
     return img;
@@ -558,6 +575,8 @@ geolocationControl.addEventListener("locationError",function(e){
     // 定位失败事件
     alert(e.message);
 });
+
+
    
 
 
