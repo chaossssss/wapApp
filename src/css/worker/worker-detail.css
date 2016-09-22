@@ -330,6 +330,7 @@ body{
     width: 48%;
 }
 .weui_tabbar{
+    background:#fff;
     position: fixed;
 }
 .weui_tabbar_icon{
@@ -541,9 +542,9 @@ body{
     font-size: 16px;
 }
 .navigation{
-    border-top:1px solid #e4e4e4;
+    /*border-top:1px solid #e4e4e4;*/
     display: flex;
-    position: absolute;
+    position: fixed;
     z-index: 500;
     bottom: 0;
     width:100%;

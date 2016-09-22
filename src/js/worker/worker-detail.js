@@ -1,4 +1,4 @@
-"use strict"
+
 $(function() {
     var swiper = new Swiper('.swiper-container', {
         //pagination: '.swiper-pagination',
@@ -71,6 +71,7 @@ $(function() {
             $(".PhoneCount").text(api.PhoneCount);
             $(".PhoneRank").text(api.PhoneRank);
             $(".GradeRank").text(api.GradeRank);
+            $(".Activity").text(api.Activity);
             $(".worker-mes").attr("href", "worker-message.html?type=" + Type + "&markid=" + Id);
             $(".a-tag").attr("href", "worker-tags.html?markid=" + Id);
             if (api.Gender == "1") {
@@ -79,7 +80,12 @@ $(function() {
                 $(".Gender").attr("src", "../../images/worker/ic_nan.svg");
 
             }
-
+            if(api.Activity==null){
+                $(".ac_cont").css("display","none");
+            }
+            if(api.Activity==null){
+                $(".rz-info").css("border","none");
+            }
             var RzImgs = "";
             for (var i = 0; i < api.SystemCertification.length; i++) {
                 RzImgs += '<img src="' + api.SystemCertification[i].Image + '" class="rz-dia-img" alt="">';
