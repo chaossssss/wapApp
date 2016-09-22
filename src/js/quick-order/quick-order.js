@@ -17,7 +17,8 @@ angular.module('com.wapapp.app',[])
 .controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','giftService',function($rootScope,$scope,priceService,orderService,addrService,giftService){
 	var vm = $scope.vm = {};
 	var addr = $scope.addr = {};
-	var sv = $scope.sv = {};
+	var sv = $scope.sv = {};	//根据服务类型查找其价格
+	var gt = $scope.gt = {};	//活动
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
@@ -44,10 +45,10 @@ angular.module('com.wapapp.app',[])
 
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
-			console.log(res);
-			// if(res.Meta.ErrorCode === "0"){
+			console.log("获取地址",res);
+			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
-			// }
+			}
 			$scope.$apply();
 		})
 
@@ -68,6 +69,10 @@ angular.module('com.wapapp.app',[])
 		giftService.event($rootScope.token,vm.ServiceTypeId)
 			.success(function(res){
 				console.log("活动",res);
+				if(res.Meta.ErrorCode === "0"){
+					gt = $scope.gt = res.Body;
+				}
+				$scope.$apply();	
 			})
 	})
 
@@ -78,7 +83,7 @@ angular.module('com.wapapp.app',[])
 		console.log("ParentCtrl",id,name);
 		priceService.get($rootScope.token,id,"2")
 			.success(function(res){
-				console.log(res);
+				console.log("获取服务价格",res);
 				vm.IsNegotiable = res.Body.IsNegotiable;
 				sv.Unit = res.Body.Unit;
 				sv.Min = res.Body.Min;
@@ -169,22 +174,6 @@ angular.module('com.wapapp.app',[])
 		dp.show = false;
 		$scope.$emit("service-time-date",serviceStartAt);
 	}
-
-	// dp.dayDate = [
-	// 	"2016-08-24 今天",
-	// 	"2016-08-25 明天",
-	// 	"2016-08-25 周五",
-	// 	"2016-08-25 周六",
-	// 	"2016-08-25 周日"
-	// ]
-	// dp.timeDate = [
-	// 	"15:30",
-	// 	"16:00",
-	// 	"16:30",
-	// 	"17:00",
-	// 	"17:30"
-	// ]
-
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;
 		console.log(id);
@@ -197,9 +186,7 @@ angular.module('com.wapapp.app',[])
 	})
 }])
 .controller('serviceTypeCtrl',['$scope','listService',function($scope,listService){
-
 	var st = $scope.st = {};
-
 	listService.get()
 		.success(function(res){
 			console.log("服务类型",res);
@@ -214,9 +201,7 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('uploaderFileCtrl',['$scope',function($scope){
 	var uf = $scope.uf = {};
-
 	var fileFilter = [];
-
 	//选择文件组的过滤方法
 	function filter(files) {
         var arrFiles = [];
@@ -233,7 +218,6 @@ angular.module('com.wapapp.app',[])
         }
         return arrFiles;
     };
-
 	//选中文件的处理与回调
 	function funDealFiles() {
 		for (var i = 0, file; file = fileFilter[i]; i++) {
@@ -243,7 +227,6 @@ angular.module('com.wapapp.app',[])
 		//执行选择回调
 		onSelect(fileFilter);
 	};
-
 	//获取选择文件，file控件或拖放
 	function funGetFiles(e) {
 		// 获取文件列表对象
@@ -252,7 +235,6 @@ angular.module('com.wapapp.app',[])
 		fileFilter = fileFilter.concat(filter(files));
 		funDealFiles();
 	};
-
 	function onSelect(files){
 		var html = '', i = 0;
 		var file;

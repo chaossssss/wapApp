@@ -2,7 +2,6 @@
 <html lang="en" ng-app="com.wapapp.app">
 <head>
 	<meta charset="UTF-8">
-	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- 为移动设备添加 viewport -->
@@ -109,26 +108,26 @@
 		</a>
 	</div>
 	<!-- 活动 不满足条件 beginning-->
-	<div class="weui_cells weui_cells_access" ng-show="vm.ServiceTypeId != 5">	
+	<!-- <div class="weui_cells weui_cells_access" ng-show="vm.ServiceTypeId != 5">	
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<span class="pro_box">满80返20</span>
 				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:middle;padding-left:10px;">
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- 活动 不满足条件 ending -->
 	<!-- 活动 满足条件 beginning -->
 	<div class="weui_cells weui_cells_access" ng-show="vm.ServiceTypeId == 5">
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
-				<span class="pro_box">满80返20</span>
+				<span class="pro_box" ng-bind="gt.PromotionTitle">/span>
 				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:middle;padding-left:10px;">
 			</div>
 		</div>
-		<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box">
-			<span class="flex1 pred">小时工服务现有特价活动： 满90立减10元！</span>
-			<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;">
+		<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box" ng-if="gt.SpecialRule.length > 0">
+			<span class="flex1 pred" ng-bind="gt.SpecialHelp"></span>
+			<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:10px;">
 		</div>	
 	</div>	
 	<!-- 活动 满足条件 ending -->
