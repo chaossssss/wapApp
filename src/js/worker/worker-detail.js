@@ -82,10 +82,12 @@ $(function() {
             }
             if(api.Activity==null){
                 $(".ac_cont").css("display","none");
-            }
-            if(api.Activity==null){
                 $(".rz-info").css("border","none");
+            }else{
+                $(".ac_cont").css("display","block");
             }
+
+
             var RzImgs = "";
             for (var i = 0; i < api.SystemCertification.length; i++) {
                 RzImgs += '<img src="' + api.SystemCertification[i].Image + '" class="rz-dia-img" alt="">';
@@ -101,7 +103,7 @@ $(function() {
 
         },
         error: function(xhr, type) {
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
@@ -125,7 +127,7 @@ $(function() {
 
         },
         error: function(xhr, type) {
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
@@ -153,7 +155,7 @@ $(function() {
 
         },
         error: function(xhr, type) {
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
@@ -195,9 +197,12 @@ $('.kuhupingjia').dropload({
                                 res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
                             }
                         }else if(api[i].Score == 5) {
-                            for (var k = 0; k <= 5; m++) {
+
+                            for (var k = 0; k < 5; k++) {
+                                //console.log(res_xin);
                                 res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
                             }
+
                         }else {
                             var x = 5 - api[i].Score;
                             for (var n = 0; n <= api[i].Score; n++) {
@@ -208,7 +213,10 @@ $('.kuhupingjia').dropload({
                             }
                         }
 
-                        result += '<div class="pl-item"><div class="fl"><img style="width: 28px; height: 28px; vertical-align: middle;" src="' + api[i].Pictures[0].SmallPic + '" class="touxiang-img" alt=""/><span class="client-name">' + api[i].ClientName + '</span><span class="pl-date">' + api[i].Date + '</span></div><div class="fr"><span class="xinxin">' + res_xin + '</span><span class="pl-score">' + api[i].Score + '</span></div><div class="clear"></div><div class="pl-cont">' + api[i].Content + '</div></div>';
+                        if(api[i].Pictures.length==""){
+                            $(".txiang-img").css("visible","hidden");
+                        }
+                        result += '<div class="pl-item"><div class="fl txiang-img"><img style="width: 28px; height: 28px; vertical-align: middle;" src="' + api[i].Pictures.SmallPic + '" class="touxiang-img" alt=""/><span class="client-name">' + api[i].ClientName + '</span><span class="pl-date">' + api[i].Date + '</span></div><div class="fr"><span class="xinxin">' + res_xin + '</span><span class="pl-score">' + api[i].Score + '</span></div><div class="clear"></div><div class="pl-cont">' + api[i].Content + '</div></div>';
 
                         if((i + 1) >= api.length){
                                      // 锁定
@@ -223,7 +231,7 @@ $('.kuhupingjia').dropload({
 
             },
             error: function(xhr, type) {
-                alert('Ajax error!');
+                console.log('Ajax error!');
                 // 即使加载出错，也得重置
                 me.resetload();
 
