@@ -52,49 +52,51 @@
 			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '40'">待评价</div>
 			        		<div class="weui_cell_ft" ng-if="item.OrderStatus === '50'">订单已取消</div>
 			        	</div>
-			        	<div class="zj_cells_title plr10 ptb5" ng-if="item.OrderStatus === '1'">
-				        	客服正在努力安排工人
-				        </div>
-				        <div class="zj_cell plr10 ptb5" ng-if="item.ServiceProviderName && item.OrderStatus !== '1'">
-				        	<div class="weui_cell_hd">
-				        		<img ng-src="{{item.ServiceProviderPic}}" src="/images/emt.jpg" alt="" style="width:26px;margin-right:10px;display:block;border-radius:13px;">
-				        	</div>
-				        	<div class="weui_cell_bd weui_cell_primary">
-				        		<span ng-bind="item.ServiceProviderName"></span>
-				        		<span ng-if="item.ServiceProviderGender === '0'">师傅</span>
-				        		<span ng-if="item.ServiceProviderGender === '1'">阿姨</span>
-			        		</div>
-				        </div>
-				        <div class="zj_cell plr10">
-				        	<div class="weui_cell_bd weui_cell_primary">
-				        		<p class="fc8">服务时间</p>
-				        	</div>
-				        	<div class="weui_cell_ft"></div>
-				        </div>
-				        <div class="zj_cell plr10">
-				        	<div class="weui_cell_bd weui_cell_primary">
-				        		<p class="fc8">服务地址</p>
-				        	</div>
-				        	<div class="weui_cell_ft" ng-bind="item.ServiceAddress"></div>
-				        </div>
-				        <div class="zj_cell plr10" ng-if="item.Price === '面议'">
-				        	<div class="weui_cell_bd weui_cell_primary">
-				        		<p class="fc8">服务价格</p>
-				        	</div>
-				        	<div class="weui_cell_ft" ng-bind="item.TotalPrice"></div>
-				        </div>
-				        <div class="zj_cell plr10" ng-if="item.Price !== '面议'">
-				        	<div class="weui_cell_bd weui_cell_primary">
-				        		<p class="fc8">服务价格</p>
-				        	</div>
-				        	<div class="weui_cell_ft">
-				        		¥ <span ng-bind="item.Price"></span>/<span ng-bind="item.UnitName"></span>
-				        		<span class="ml30">
-				        			x
-				        			<span ng-bind="item.TotalCount"></span>
-				        		</span>
-				        	</div>
-				        </div>
+			        	<div ng-click="vm.goOrderDetail(item.OrderId)">
+				        	<div class="zj_cells_title plr10 ptb5" ng-if="item.OrderStatus === '1'">
+					        	客服正在努力安排工人
+					        </div>
+					        <div class="zj_cell plr10 ptb5" ng-if="item.ServiceProviderName && item.OrderStatus !== '1'">
+					        	<div class="weui_cell_hd">
+					        		<img ng-src="{{item.ServiceProviderPic}}" src="/images/emt.jpg" alt="" style="width:26px;margin-right:10px;display:block;border-radius:13px;">
+					        	</div>
+					        	<div class="weui_cell_bd weui_cell_primary">
+					        		<span ng-bind="item.ServiceProviderName"></span>
+					        		<span ng-if="item.ServiceProviderGender === '0'">师傅</span>
+					        		<span ng-if="item.ServiceProviderGender === '1'">阿姨</span>
+				        		</div>
+					        </div>
+					        <div class="zj_cell plr10">
+					        	<div class="weui_cell_bd weui_cell_primary">
+					        		<p class="fc8">服务时间</p>
+					        	</div>
+					        	<div class="weui_cell_ft"></div>
+					        </div>
+					        <div class="zj_cell plr10">
+					        	<div class="weui_cell_bd weui_cell_primary">
+					        		<p class="fc8">服务地址</p>
+					        	</div>
+					        	<div class="weui_cell_ft" ng-bind="item.ServiceAddress"></div>
+					        </div>
+					        <div class="zj_cell plr10" ng-if="item.Price === '面议'">
+					        	<div class="weui_cell_bd weui_cell_primary">
+					        		<p class="fc8">服务价格</p>
+					        	</div>
+					        	<div class="weui_cell_ft" ng-bind="item.TotalPrice"></div>
+					        </div>
+					        <div class="zj_cell plr10" ng-if="item.Price !== '面议'">
+					        	<div class="weui_cell_bd weui_cell_primary">
+					        		<p class="fc8">服务价格</p>
+					        	</div>
+					        	<div class="weui_cell_ft">
+					        		¥ <span ng-bind="item.Price"></span>/<span ng-bind="item.UnitName"></span>
+					        		<span class="ml30">
+					        			x
+					        			<span ng-bind="item.TotalCount"></span>
+					        		</span>
+					        	</div>
+					        </div>
+					    </div>    
 				        <div class="zj_cell plr10" ng-if="item.OrderStatus === '20' || item.OrderStatus === '30' || item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
@@ -127,7 +129,7 @@
 				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='0'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="tip.explain = true">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" id="showToast">
 				        			取消订单
 				        		</a>
 				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)">
@@ -138,7 +140,7 @@
 				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='1'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="tip.explain = true">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" id="showToast">
 				        			取消订单
 				        		</a>
 				        	</div>
@@ -154,8 +156,8 @@
 				        <div class="weui_cell" ng-if="item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_blue" ng-click="vm.pay(item.OrderId)">
-				        			支付
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.pay(item.OrderId)">
+				        			评价
 				        		</a>
 				        	</div>
 				        </div>
@@ -183,7 +185,7 @@
 </div>	
 	
 <!--BEGIN toast-->
-<div id="toast" ng-show="tip.toast">
+<div ng-if="tip.toast">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <i class="weui_icon_toast"></i>
@@ -193,32 +195,30 @@
 <!--end toast-->
 
 <!--BEGIN toast-->
-<div id="toast" ng-show="tip.explain">
+<div id="toast" style="display:none;">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast" style="min-height:0;">
         <!-- <i class="weui_icon_toast"></i> -->
-        <p class="weui_toast_content" style="margin:15px 0;">抱歉，请耐心等待工人接单</p>
+        <p class="weui_toast_content" style="margin:15px 0;">抱歉，请联系客服处理</p>
     </div>
 </div>
 <!--end toast-->
 
 <!-- loading toast -->
-<div id="loadingToast" class="weui_loading_toast" style="display: none;">
+<div id="loadingToast" class="weui_loading_toast" ng-if="tip.loading">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <div class="weui_loading">
-            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
-            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+            <div class="loader-inner line-spin-fade-loader">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+        	</div>
         </div>
         <p class="weui_toast_content">数据加载中</p>
     </div>

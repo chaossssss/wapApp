@@ -23,9 +23,9 @@ angular.module('com.wapapp.app',[])
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
 
-	vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
+	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
 	vm.Total = 0;
-	vm.unitPrice = 30;
+	// vm.unitPrice = 0;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
 
@@ -40,7 +40,7 @@ angular.module('com.wapapp.app',[])
 		}
 	}
  
-	vm.ServiceContent = "1234";
+	vm.ServiceContent = "";
 	vm.ServiceAddressId = $rootScope.addressId;
 
 	addrService.search($rootScope.token,$rootScope.addressId)
@@ -99,7 +99,12 @@ angular.module('com.wapapp.app',[])
 	})
 
 	vm.datePickerShow = function(){
-		$scope.$broadcast("service-time-show",vm.ServiceTypeId);
+		if(vm.ServiceTypeId){
+			$scope.$broadcast("service-time-show",vm.ServiceTypeId);
+		}else{
+			vm.dialogshow = true;
+			vm.errorMsg = "请先选择服务类型";
+		}
 	}
 
 	vm.submitOrder = function(){
@@ -156,7 +161,6 @@ angular.module('com.wapapp.app',[])
 	})
 }])
 .controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
-
 	var dp = $scope.dp = {};
 	dp.show =false;
 
@@ -379,7 +383,6 @@ angular.module('com.wapapp.app',[])
 					alert("服务器连接失败，请检查网络设置");
 				})
 	}
-
 	return {
 		uploader: function(formData){
 			return uploaderService(formData);
@@ -404,7 +407,6 @@ angular.module('com.wapapp.app',[])
 					alert("服务器连接失败，请检查网络设置");
 				})
 	}
-
 	return {
 		get: function(){
 			return getService();
@@ -453,9 +455,6 @@ angular.module('com.wapapp.app',[])
 					url: _getpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -463,7 +462,6 @@ angular.module('com.wapapp.app',[])
 					alert("服务器连接失败，请检查网络设置");
 				})
 	}
-
 	return {
 		get: function(token,id){
 			return getService(token,id);

@@ -3,8 +3,6 @@ var PATH = "http://192.168.1.191:7002/";
 var WORK_MAN = "/images/map/test1.png";
 var Local_Img = "/images/map/ic_coordinate.svg";
 
- 
-
 /**
  * 创建标注
  * @param  {[type]} workers [description]
@@ -12,7 +10,6 @@ var Local_Img = "/images/map/ic_coordinate.svg";
  */
 function createMarker(workers,boss){
     remove_overlay();
-
 	for(var i=0,len=workers.length;i<len;i++){
 		var point = new BMap.Point(workers[i].Longitude,workers[i].Latitude);
 		var icon = new BMap.Icon(WORK_MAN,new BMap.Size(34,32));
@@ -31,7 +28,6 @@ function createMarker(workers,boss){
             position:point
             // offset:new BMap.Size(-40,-30)
         }              
-
         // marker.setLabel(label);
         // map.addOverlay(label);
         
@@ -149,13 +145,13 @@ function createMarker(workers,boss){
             default :
                 var htm0 = "<div class='bubbleInfo'>"
                 +   "<span>"+workers[i].DefaultService.Name+"</span>"
-                +   "<span class='num'>杭州</span>"
+                // +   "<span class='num'>杭州</span>"
                 +"</div>";
                 var label = new BMap.Label(htm0,opts);
                 label.setStyle({
                     border:0,
                     backgroundColor:"rgba(0,0,0,0)",
-                    marginLeft:"-50px",
+                    marginLeft:"-15px",
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);
@@ -182,11 +178,7 @@ function createMarker(workers,boss){
         var opts = {
             position:point
             // offset:new BMap.Size(-40,-30)
-        }              
-
-        // marker.setLabel(label);
-        // map.addOverlay(label);
-        
+        }                  
         switch (flag) {
             case 1:
                 var htm1 = "<div class='bubbleInfo'>"
@@ -300,13 +292,13 @@ function createMarker(workers,boss){
             default :
                 var htm0 = "<div class='bubbleInfo'>"
                 +   "<span>"+boss[j].DefaultService.Name+"</span>"
-                +   "<span class='num'>杭州</span>"
+                // +   "<span class='num'>杭州</span>"
                 +"</div>";
                 var label = new BMap.Label(htm0,opts);
                 label.setStyle({
                     border:0,
                     backgroundColor:"rgba(0,0,0,0)",
-                    marginLeft:"-50px",
+                    marginLeft:"-10px",
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);
@@ -401,19 +393,19 @@ function getData(data){
 	}).success(function(res){
         console.log("标符号token",$.cookie("Token"));
 		console.log("获取数据",res);
-        var workers = res.Body.Workers;
-        var length = res.Body.Workers.length;
-        for(var i=0;i<length;i++){
-            var num =  parseInt(Math.random()*6);
-            workers[i].DisplayAttribute = num;
-        }
+        // var workers = res.Body.Workers;
+        // var length = res.Body.Workers.length;
+        // for(var i=0;i<length;i++){
+        //     var num =  parseInt(Math.random()*6);
+        //     workers[i].DisplayAttribute = num;
+        // }
 
-        var boss = res.Body.Business;
-        var length = res.Body.Business.length;
-        for(var j=0;j<length;j++){
-            var numb =  parseInt(Math.random()*6);
-            boss[j].DisplayAttribute = numb;
-        }
+        // var boss = res.Body.Business;
+        // var length = res.Body.Business.length;
+        // for(var j=0;j<length;j++){
+        //     var numb =  parseInt(Math.random()*6);
+        //     boss[j].DisplayAttribute = numb;
+        // }
 		createMarker(res.Body.Workers,res.Body.Business);
 	})
 }
@@ -427,6 +419,32 @@ function getServiceList(data){
         console.log("个人信息",res);
     })
 }
+// 获取热门服务
+function getHotList(){
+    $.ajax({
+        method:'POST',
+        url: "http://192.168.1.191:3003/api/v2/SystemService/InfoListEx",
+    }).success(function(res){
+        if(res.Meta.ErrorCode === "0"){
+            console.log(res);
+            var htm = "";
+            res.Body.map(function(ele,index,array){
+                if(ele.TypeId == "0"){
+                    for(var i=0,len=ele.Children.length;i<len;i++){
+                        htm = htm + '<li class="fl f15">'+ele.Children[i].TypeName+'</li>';      
+                    }
+                }
+            })
+            $("#result").find(".hot-service").append(htm);
+        }
+        if(res.Meta.ErrorCode === "2004"){
+            window.location.href = "/template/login/login.html";
+        }
+    }).error(function(res){
+        alert("服务器连接失败，请检查网络设置");
+    })
+}
+getHotList();
 
 /**
  * 商户控件
@@ -510,7 +528,7 @@ activityControl.prototype.initialize = function(map){
     }
     map.getContainer().appendChild(img);
     return img;
-}
+} 
 
 /**
  * 初始化定位(根据浏览器定位)
