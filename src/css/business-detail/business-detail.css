@@ -88,6 +88,7 @@ textarea{resize: none;}
     width: 74%;
     height: 20px;
     line-height: 19px;
+    font-size: 15px;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
@@ -110,6 +111,7 @@ textarea{resize: none;}
 	float:left;
 	width: 34%;
 	height: 21px;
+    font-size: 15px;
 	overflow: hidden;
     padding-left: 10px;
     text-overflow:ellipsis;
@@ -120,6 +122,7 @@ textarea{resize: none;}
 	margin-left: 10px;
 	width: 90px;
     height: 21px;
+    font-size: 15px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
@@ -269,7 +272,7 @@ textarea{resize: none;}
 	border-bottom: 1px solid #ccc;
 }
 .tab-price,.price{
-	color: #fda538;
+	color: #fa5136;
 }
 .weui_media_hd,.weui_media_bd{
     display:inline-block;
@@ -439,6 +442,7 @@ textarea{resize: none;}
 	width: 96%;
 }
 .weui_media_box .weui_media_title{
+    color: #3f3148;
 	font-size: 16px;
 }
 .weui_media_box .weui_media_desc{

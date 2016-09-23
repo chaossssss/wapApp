@@ -53,15 +53,16 @@ $(function(){
         },
     	success:function(data){
             if(data.Body){
-                var api=data.Body.Worker;;
+                var api=data.Body.Worker;
                 $(".bus-img").attr("src",api.Photo);
                 $(".bus-name").text(api.Name);
                 $(".age").text(api.Age);
                 $(".PraiseCount").text(api.PraiseCount);
                 $(".FavoriteCount").text(api.FavoriteCount);
-                $(".wk-list").text(api.DefaultService.Name);
+                //$(".wk-list").text(api.DefaultService.Name);
                 $(".wage").text(api.Wage);
-                $(".address").text(api.Address);
+                $(".NativePlace").text(api.NativePlace);
+                $(".WorkingYears").text(api.WorkingYears);
                 $(".jl-num").text(api.Distance);
                 $(".OrderCount").text(api.OrderCount);
                 $(".OrderRank").text(api.OrderRank);

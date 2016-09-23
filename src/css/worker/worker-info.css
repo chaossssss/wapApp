@@ -87,10 +87,15 @@ textarea{resize: none;}
     width: 74%;
     height: 20px;
     line-height: 19px;
+    font-size: 15px;
+
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
     vertical-align: bottom;
+}
+.wage{
+    font-size: 15px;
 }
 .bus-work ul{
 	display: inline-block;
@@ -101,22 +106,26 @@ textarea{resize: none;}
 }
 .bus-add{
 	margin-left: 12px;
-    margin-top: 2px;
-    font-size: 16px;
-    margin-top: 7px;
+    font-size: 15px;
+    margin-top: 8px;
+    line-height: 15px;
 }
-.address{
+.NativePlace{
 	float:left;
-	width: 34%;
+	width: 18%;
 	height: 21px;
+    font-size: 15px;
 	overflow: hidden;
     padding-left: 10px;
     text-overflow:ellipsis;
     white-space: nowrap;
 }
+.WorkingYears,.bus-jl{
+    font-size: 15px;
+}
 .bus-jl{
 	float: right;
-	margin-left: 10px;
+	/*margin-left: 10px;*/
 	width: 90px;
     height: 21px;
     overflow: hidden;
