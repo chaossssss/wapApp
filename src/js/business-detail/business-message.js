@@ -11,25 +11,31 @@ $(function(){
 	        Id:Id
 	    },
 	    success:function(data){
-	        var api=data.Body.Business;
-	        $(".Number").text(api.Number);
-	        $(".region").text(api.EstablishedTime);
-	        $(".Area").text(api.Area);
-	        $(".Scale").text(api.Scale);
-	        $(".Property").text(api.Property);
-	        $(".StaffNumber").text(api.StaffNumber);
-	        $(".Signature").text(api.Signature);
-	        $(".ServiceTime").text(api.ServiceTime);
-	        $(".Address").text(api.Address);
-	        $(".ServiceScope").text(api.ServiceScope);
-	        $(".Intro").text(api.Intro);
-	        $(".ServiceScope").text(api.ServiceScope);
+            if(data.Body){
+                var api=data.Body.Business;
+                $(".Number").text(api.Number);
+                $(".region").text(api.EstablishedTime);
+                $(".Area").text(api.Area);
+                $(".Scale").text(api.Scale);
+                $(".Property").text(api.Property);
+                $(".StaffNumber").text(api.StaffNumber);
+                $(".Signature").text(api.Signature);
+                $(".ServiceTime").text(api.ServiceTime);
+                $(".Address").text(api.Address);
+                $(".ServiceScope").text(api.ServiceScope);
+                $(".Intro").text(api.Intro);
+                $(".ServiceScope").text(api.ServiceScope);
 
-	        var ModelRzImgs="";
-    		for (var j = 0; j < api.SystemCertification.length; j++) {
-    			ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-    		}
-    		$(".items").html(ModelRzImgs);
+                if(api.SystemCertification.length){
+                    var ModelRzImgs="";
+                    for (var j = 0; j < api.SystemCertification.length; j++) {
+                        ModelRzImgs+='<li><img src="'+api.SystemCertification[j].Image+'" class="sys-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
+                    }
+                    $(".items").html(ModelRzImgs);  
+                }
+                              
+            }
+
 	        
 	    },
 	    error: function(xhr, type){
@@ -42,27 +48,31 @@ $(function(){
 	// 获取商户标签
 	$.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
+        url: 'http://192.168.1.191:3003/api/v2/Business/GetMerchantTags',
         dataType: 'json',
         data:{
             BusinessId:Id
         },
         success:function(data){
-            var api=data.Body.TagList;
-            var res="";
-            for (var i = 0; i < api.length; i++) {
-                res+="<li>"+api[i].TagName+"</li>";
-            }
+            if(data.Body){
+                var api=data.Body.TagList;
+                if(api.length==0){
+                    $(".business-tag").css("display","none");
+                    $(".hide-line").css("display","none");
+                }else{
+                    var res="";
+                    for (var i = 0; i < api.length; i++) {
+                        res+="<li>"+api[i].TagName+"</li>";
+                    }
+                    $(".tag-item").html(res);
 
-            if(api.length==0){
-            	$(".business-tag").css("display","none");
-            	$(".hide-line").css("display","none");
+                    $(".business-tag").css("display","block");
+                    $(".hide-line").css("display","block");
+                }                   
             }
-            $(".tag-item").html(res);
-
         },
         error: function(xhr, type){
-           alert('Ajax error!');
+           console.log('Ajax error!');
            // 即使加载出错，也得重置
            me.resetload();
         }

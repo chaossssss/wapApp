@@ -217,7 +217,7 @@ textarea{resize: none;}
 .rz-imgs{
 	display: inline-block;
     position: absolute;
-    left: 87px;
+    left: 75px;
     top: 17px;
 }
 .rz-img{
@@ -286,7 +286,7 @@ textarea{resize: none;}
     background: #fff;
 }
 .weui_tabbar_item{
-	padding:15px 0px;
+	padding:12px 0px;
     display: inline-block;
     width: 32%;
 }
@@ -447,6 +447,10 @@ textarea{resize: none;}
 }
 
 /*工人标签*/
+.worker-tag{
+    display: none;
+}
+
 .worker-tag,.worker-tag a{
     color:#27b8f3;
 }

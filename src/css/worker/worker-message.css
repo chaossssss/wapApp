@@ -1,10 +1,55 @@
-/*?????®¥??*/
+/*?????¬®¬¥??*/
 body{
     margin:0;
-    font-size: 12px;
-    /*font-family: "PingFang SC Regular" , "??°§?-?®∞" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
+    font-size: 17px;
+    /*font-family: "PingFang SC Regular" , "??¬°¬§?-?¬®¬∞" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
     font-family:"Times New Roman",Georgia,Serif;
 }
+/*Âü∫Á°ÄÊ†∑Âºè*/
+a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+body {
+    background-color: rgb(238,238,238);
+}
+.mt10 {
+    margin-top: 10px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+/*Ëá™ÂÆö‰πâÊ†∑Âºè*/
+.zj_cell {
+    display: -webkit-box-flex;
+    display: -webkit-flex;
+    display: flex;
+    /*align-items: center;*/
+}
+.zj_cell_primary {
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    flex:1;
+}
+.zj_cell_hd {
+    color: #888;
+}
+.zj_cell_bd {
+    text-align: left;
+}
+.pl10 {
+    padding-left: 10px;
+}
+.pd {
+    padding: 10px 10px;
+}
+
+.flex1 {-webkit-box-flex:1;-webkit-flex-grow: 1;-moz-flex-grow: 1; flex-grow: 1;}
+.flex2 {-webkit-box-flex:2;-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
+.flex3 {-webkit-box-flex:3;-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
+.flexc {align-items:center;}
+
+
 ol,ul{
     list-style:none
 }
@@ -26,10 +71,10 @@ p{
 }
 a{
     font-size: 12px;
-    font-family: "PingFang SC Regular" , "??°§?-?®∞" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
+    font-family: "PingFang SC Regular" , "??¬°¬§?-?¬®¬∞" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;
     color: black;
 }
-/*?°Ë??????*/
+/*?¬°√®??????*/
 /*.main{*/
 /*padding-top: 20px;*/
 /*padding-bottom: 60px;*/
@@ -110,26 +155,22 @@ a{
     height: 10px;
     background: #f7f6f6;
 }
-.sys-rz{
-    border-top: 1px solid #e4e4e4;
-    padding: 15px;
-}
+
 .title{
     color:#8a889c;
 }
 .sys-img{
-    width: 15px;
+    float: left;
     height: 15px;
-    vertical-align: text-bottom;;
+    width: 15px;
+    margin-top: 6px;
 }
 .items{
-    width:200px;
+    width:100%;
 }
 .items li{
     display: inline-block;
-    text-align: center;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    width: 50%;
 }
 .rz-name{
     display: inline-block;
@@ -141,20 +182,20 @@ a{
 }
 .Signature{
     display: inline-block;
-    width: 277px;
     padding-left: 5px;
 }
 .sys-rz{
-    border-top:1px solid red;
-    border-bottom:1px solid red;
+    padding: 10px;
     padding-bottom: 160px;
     margin-top: 10px;
     background-color: #fff;
 }
-/*…Ãªß±Í«©*/
+/*ÂïÜÊà∑Ê†áÁ≠æ*/
 .business-tag{
+    display: none;
     padding: 10px;
     padding-top: 20px;
+    background: #fff;
 }
 .tag-item{
     font-size: 16px;
@@ -170,4 +211,11 @@ a{
     color:#6f6e76;
     margin-bottom: 8px;
     margin-right: 8px;
+}
+
+.system,.sign,.reside{
+    width: 70px;
+}
+.Intro,.Signature,.Address{
+    width:70%;
 }

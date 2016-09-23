@@ -85,7 +85,6 @@ a{
     padding-left: 10px;
 }
 .model2{
-    border-top: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
     padding:10px;
 }
@@ -162,6 +161,7 @@ a{
 
 /*商户标签*/
 .business-tag{
+    display: none;
     padding: 10px;
     padding-top: 20px;
 }

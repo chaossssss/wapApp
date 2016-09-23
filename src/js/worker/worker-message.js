@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/9/13.
  */
-"use strict"
+
 $(function() {
     var Type = getUrl('type');
     var Id = getUrl('markid');
@@ -14,30 +14,39 @@ $(function() {
             Id:Id
         },
         success: function (data) {
-            var api = data.Body.Worker;
-            $(".JobNumber").text(api.JobNumber);
-            $(".NativePlace").text(api.NativePlace);
-            $(".Education").text(api.Education);
-            $(".Stature").text(api.Stature);
-            $(".Weight").text(api.Weight);
-            $(".WorkingYears").text(api.WorkingYears);
-            $(".Hobby").text(api.Hobby);
-            $(".BloodType").text(api.BloodType);
-            $(".Constellation").text(api.Constellation);
-            $(".Signature").text(api.Signature);
-            $(".ServiceTime").text(api.ServiceTime);
-            $(".ServiceScope").text(api.ServiceScope);
-            $(".Intro").text(api.Intro);
-            $(".Address").text(api.Address);
-            var ModelRzImgs = "";
-            for (var j = 0; j < api.SystemCertification.length; j++) {
-                ModelRzImgs += '<li><img src="' + api.SystemCertification[j].Image + '" class="sys-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
+            if(data.Body){
+                var api = data.Body.Worker;
+                if(api.length!=0){
+                    $(".JobNumber").text(api.JobNumber);
+                    $(".NativePlace").text(api.NativePlace);
+                    $(".Education").text(api.Education);
+                    $(".Stature").text(api.Stature);
+                    $(".Weight").text(api.Weight);
+                    $(".WorkingYears").text(api.WorkingYears);
+                    $(".Hobby").text(api.Hobby);
+                    $(".BloodType").text(api.BloodType);
+                    $(".Constellation").text(api.Constellation);
+                    $(".Signature").text(api.Signature);
+                    $(".ServiceTime").text(api.ServiceTime);
+                    $(".ServiceScope").text(api.ServiceScope);
+                    $(".Intro").text(api.Intro);
+                    $(".Address").text(api.Address);
+                    if(api.SystemCertification.length){
+                        var ModelRzImgs = "";
+                        for (var j = 0; j < api.SystemCertification.length; j++) {
+                            ModelRzImgs += '<li><img src="' + api.SystemCertification[j].Image + '" class="sys-img" alt=""><span class="rz-name">' + api.SystemCertification[j].Name + '</span></li>';
+                        }
+                        $(".items").html(ModelRzImgs);
+                    }
+                    
+                }
+
             }
-            $(".items").html(ModelRzImgs);
+            
         },
-        //error: function(xhr, type){
-        //    console("type");
-        //}
+        error: function(xhr, type){
+           console.log('Ajax error!');
+        }
     })
     // 获取商户标签
     $.ajax({
@@ -45,24 +54,28 @@ $(function() {
         url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
         dataType: 'json',
         data:{
-            WorkerId:"1474"
+            WorkerId:Id
         },
         success:function(data){
-            var api=data.Body.TagList;
-            var res="";
-            for (var i = 0; i < api.length; i++) {
-                res+="<li>"+api[i].TagName+"</li>";
-            }
+            if(data.Body){
+                var api=data.Body.TagList;
+                if(api.length==0){
+                    $(".business-tag").css("display","none");
+                    $(".hide-line").css("display","none");
+                }else{
+                    var res="";
+                    for (var i = 0; i < api.length; i++) {
+                        res+="<li>"+api[i].TagName+"</li>";
+                    }
+                    $(".tag-item").html(res);
 
-            if(api.length==0){
-                $(".business-tag").css("display","none");
-                $(".hide-line").css("display","none");
+                    $(".business-tag").css("display","block");
+                    $(".hide-line").css("display","block");
+                }                   
             }
-            $(".tag-item").html(res);
-
         },
         error: function(xhr, type){
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }

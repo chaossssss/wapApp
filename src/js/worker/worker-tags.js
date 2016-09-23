@@ -10,15 +10,18 @@ $(function(){
             BusinessId:Id
         },
         success:function(data){
-            var api=data.Body.TagList;
-            var res="";
-            for (var i = 0; i < api.length; i++) {
-                res+="<li>"+api[i].TagName+"</li>";
-            }
+            if(data.Body){
+                var api=data.Body.TagList;
+                if(api.length){
+                    var res="";
+                    for (var i = 0; i < api.length; i++) {
+                        res+="<li>"+api[i].TagName+"</li>";
+                    }
 
-            $(".tag-num").text(api.length);
-            $(".tag-item").html(res);
-
+                    $(".tag-num").text(api.length);
+                    $(".tag-item").html(res); 
+                }               
+            }            
         },
         error: function(xhr, type){
            alert('Ajax error!');

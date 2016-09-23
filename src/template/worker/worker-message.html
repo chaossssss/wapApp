@@ -14,110 +14,8 @@
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
     <title>工人信息</title>
-
     <link rel="stylesheet" href="../../css/weui.min.css">
-    <style>
-        /*基础样式*/
-        a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
-        body {
-            background-color: rgb(238,238,238);
-        }
-        .mt10 {
-            margin-top: 10px;
-        }
-        .fl{
-            float: left;
-        }
-        .fr{
-            float: right;
-        }
-        /*自定义样式*/
-        .zj_cell {
-            display: -webkit-box-flex;
-            display: -webkit-flex;
-            display: flex;
-            align-items: center;
-        }
-        .zj_cell_primary {
-            -webkit-box-flex:1;
-            -webkit-flex:1;
-            flex:1;
-        }
-        .zj_cell_hd {
-            color: #888;
-        }
-        .zj_cell_bd {
-            text-align: left;
-        }
-        .pl10 {
-            padding-left: 10px;
-        }
-        .pd {
-            padding: 10px 10px;
-        }
-        .sys-rz{
-            border-top: 1px solid #e4e4e4;
-            padding: 10px;
-        }
-        .title{
-            color:#8a889c;
-        }
-        .sys-img{
-            width: 15px;
-            height: 15px;
-            vertical-align: text-bottom;;
-        }
-        .items{
-            width:200px;
-        }
-        .items li{
-            display: inline-block;
-            text-align: center;
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
-        .flex1 {-webkit-box-flex:1;-webkit-flex-grow: 1;-moz-flex-grow: 1; flex-grow: 1;}
-        .flex2 {-webkit-box-flex:2;-webkit-flex-grow: 2;-moz-flex-grow: 2; flex-grow: 2;}
-        .flex3 {-webkit-box-flex:3;-webkit-flex-grow: 3;-moz-flex-grow: 3; flex-grow: 3;}
-        .flexc {align-items:center;}
-        .sys-rz{
-            border-top:1px solid #fff;
-            border-bottom:1px solid #fff;
-            padding-bottom: 184px;
-            margin-top: 10px;
-            background-color: #fff;
-        }
-        /*商户标签*/
-        .business-tag{
-            padding: 10px;
-            padding-top: 20px;
-        }
-        .tag-item{
-            font-size: 16px;
-            float: right;
-            width: 76%;
-            margin-top: -7px;
-        }
-        .tag-item li{
-            display: inline-block;
-            border:1px solid #e0dfe8;
-            border-radius: 5px;
-            padding:5px 10px;
-            color:#6f6e76;
-            margin-bottom: 8px;
-            margin-right: 8px;
-        }
-        .sign{
-            width: 25%;
-        }
-        .reside{
-            width: 22%;
-        }
-        .system{
-            width: 26%;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../../css/worker/worker-message.min.css">
 </head>
 <body ng-controller="bossInfoCtrl"><script id="__bs_script__">//<![CDATA[
 document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'><\/script>".replace("HOST", location.hostname));
@@ -196,27 +94,18 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
 </div>
 
 <div class="weui_cells mt10">
-    <!--<div class="zj_cell zj_cell_primary pd">-->
-        <!--<div class="zj_cell_hd zj_cell_primary">系统介绍</div>-->
-        <!--<div class="zj_cell_bd flex3 Intro">-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="zj_cell zj_cell_primary pd">
-        <div class="zj_cell_hd system">系统介绍</div>
-        <div class="zj_cell_bd pl10 Intro"></div>
+        <span class="zj_cell_hd system">系统介绍</span>
+        <span class="zj_cell_bd pl10 Intro"></span>
     </div>
 </div>
-    <div class="sys-rz">
-        <div class="cle">
-            <div class="fl">
-                <span class="title">系统认证</span>
-                <div class="">
-                    <ul class="items"></ul>
-                </div>
-            </div>
 
-        </div>
-    </div>
+<div class="sys-rz">
+    <span class="title">系统认证</span>
+    <div class="clear"></div>
+    <ul class="items"></ul>
+</div>
+
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="../../js/worker/worker-message.min.js"></script>
 </body>

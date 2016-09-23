@@ -4,20 +4,26 @@ $(function(){
     //获取商户标签
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Business/GetMerchantTags',
+        url: 'http://192.168.1.191:3003/api/v2/Business/GetMerchantTags',
         dataType: 'json',
         data:{
             BusinessId:Id
         },
         success:function(data){
-            var api=data.Body.TagList;
-            var res="";
-            for (var i = 0; i < api.length; i++) {
-                res+="<li>"+api[i].TagName+"</li>";
-            }
+            if(data.Body){
+                var api=data.Body.TagList;
+                if(api.length){
+                    var res="";
+                    for (var i = 0; i < api.length; i++) {
+                        res+="<li>"+api[i].TagName+"</li>";
+                    }
 
-            $(".tag-num").text(api.length);
-            $(".tag-item").html(res);
+                    $(".tag-num").text(api.length);
+                    $(".tag-item").html(res);
+                }
+                
+            }
+            
 
         },
         error: function(xhr, type){

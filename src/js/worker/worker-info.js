@@ -249,6 +249,26 @@ $(function(){
         }
     });
 
+    //获取工人活动
+    var token = window.localStorage.getItem("Token");
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.191:3001/api/v2/SystemService/GetActivity',
+        dataType: 'json',
+        data:{
+            Token:token,
+            ServiceTypeId:Id
+        },
+        success:function(data){
+
+        },
+        error: function(xhr, type){
+           console.log('Ajax error!');
+           // 即使加载出错，也得重置
+           me.resetload();
+        }
+    });
+
 });
 
 function ShowDiv(show_div,bg_div){
