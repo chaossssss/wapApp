@@ -21,7 +21,7 @@ $(function(){
 
         },
         error: function(xhr, type){
-           alert('Ajax error!');
+           console.log('Ajax error!');
            // 即使加载出错，也得重置
            me.resetload();
         }

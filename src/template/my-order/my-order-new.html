@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="com.wapapp.app">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 为移动设备添加 viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+	<!--禁止电话，邮件识别-->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <meta name="author" content="zxh">
+	<title>我的订单</title>
+
+	<link rel="stylesheet" href="/css/weui.min.css">
+	<link rel="stylesheet" href="/css/my-order/my-order-new.min.css">
+</head>
+<body ng-controller="orderListCtrl">
+	
+<div class="container" id="container">
+	<div class="navbar">
+		<div class="bd" style="height: 100%;">
+		    <div class="weui_tab">
+		        <div class="weui_navbar">
+		            <div class="weui_navbar_item" ng-class="{weui_bar_item_on:tb.activeTab==1}" ng-click="tb.activeTab=1">全部</div>
+		            <div class="weui_navbar_item" ng-class="{weui_bar_item_on:tb.activeTab==2}" ng-click="tb.activeTab=2">待接单</div>
+		            <div class="weui_navbar_item" ng-class="{weui_bar_item_on:tb.activeTab==3}" ng-click="tb.activeTab=3">待付款</div>
+		            <div class="weui_navbar_item" ng-class="{weui_bar_item_on:tb.activeTab==4}" ng-click="tb.activeTab=4">待确认</div>
+		            <div class="weui_navbar_item" ng-class="{weui_bar_item_on:tb.activeTab==5}" ng-click="tb.activeTab=5">待评价</div>
+		        </div>
+		        <div class="weui_tab_bd" infinite-scroll="reddit.nextPage()" infinite-scroll-disabled="reddit.busy" infinite-scroll-distance="1">
+					<div class="weui_cells mt10 pt5" ng-repeat="item in reddit.items">
+			        	<div class="zj_cell zj_cell_title">
+			        		<div class="weui_cell_bd weui_cell_primary">
+			        			<p class="left_red" ng-bind="item.Service.ServiceName"></p>
+			        		</div>
+			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '1' || item.OrderStatus === '10'">等待工人接单</div>
+			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='0'">待付款</div>
+			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='1'">待工人服务</div>
+			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '30'">待确认</div>
+			        		<div class="weui_cell_ft pblue" ng-if="item.OrderStatus === '40'">待评价</div>
+			        		<div class="weui_cell_ft" ng-if="item.OrderStatus === '50'">订单已取消</div>
+			        	</div>
+			        	<div class="zj_cells_title plr10 ptb5" ng-if="item.OrderStatus === '1' || item.OrderStatus === '10' || item.OrderStatus === '50'">
+				        	客服正在努力安排工人
+				        </div>
+				        <div class="zj_cell plr10 ptb5" ng-if="item.OrderStatus !== '1' || item.OrderStatus !== '10' || item.OrderStatus !== '50'">
+				        	<div class="weui_cell_hd">
+				        		<img ng-src="{{item.ServiceProviderPic}}" src="/images/emt.jpg" alt="" style="width:26px;margin-right:10px;display:block;border-radius:13px;">
+				        	</div>
+				        	<div class="weui_cell_bd weui_cell_primary">
+				        		<span ng-bind="item.ServiceProviderName"></span>
+				        		<span ng-if="item.ServiceProviderGender === '0'">师傅</span>
+				        		<span ng-if="item.ServiceProviderGender === '1'">阿姨</span>
+			        		</div>
+				        </div>
+				        <div class="zj_cell plr10">
+				        	<div class="weui_cell_bd weui_cell_primary">
+				        		<p class="fc8">服务时间</p>
+				        	</div>
+				        	<div class="weui_cell_ft"></div>
+				        </div>
+				        <div class="zj_cell plr10">
+				        	<div class="weui_cell_bd weui_cell_primary">
+				        		<p class="fc8">服务地址</p>
+				        	</div>
+				        	<div class="weui_cell_ft" ng-bind="item.ServiceAddress"></div>
+				        </div>
+				        <div class="zj_cell plr10">
+				        	<div class="weui_cell_bd weui_cell_primary">
+				        		<p class="fc8">服务价格</p>
+				        	</div>
+				        	<div class="weui_cell_ft" ng-bind="item.TotalPrice"></div>
+				        </div>
+				        <div class="zj_cell plr10">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<span>订单总价：</span>
+				        		<span class="pred">¥
+				        			<span ng-bind="item.TotalPrice"></span>
+				        		</span>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '1' || item.OrderStatus === '10'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default ">
+				        			取消订单
+				        		</a>
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange">
+				        			支付
+				        		</a>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='0'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default ">
+				        			取消订单
+				        		</a>
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange">
+				        			支付
+				        		</a>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='1'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default ">
+				        			取消订单
+				        		</a>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '30'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default ">
+				        			待确认
+				        		</a>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '40'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_blue">
+				        			支付
+				        		</a>
+				        	</div>
+				        </div>
+				        <div class="weui_cell" ng-if="item.OrderStatus === '50'">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default ">
+				        			删除订单
+				        		</a>
+				        	</div>
+				        </div>
+			        </div>   
+					<div ng-show='reddit.busy'>Loading data...</div>
+		        </div>
+		        	
+		    </div>
+		</div>
+	</div>
+</div>	
+	
+
+ 
+
+
+
+
+
+
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
+<script src="/js/common/ng-infinite-scroll.min.js"></script>
+<script src="/js/my-order/my-order-new.min.js"></script>
+</body>
+</html>

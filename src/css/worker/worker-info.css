@@ -43,7 +43,6 @@ textarea{resize: none;}
     padding-left: 12px;
     margin-top: -5px;
     font-weight: 400;
-    width: 32%;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -59,19 +58,19 @@ textarea{resize: none;}
 	display:inline-block;
 	color:#3f3e48;
 	width:27px;
-	height:19px;
+	height:18px;
 	overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap; 
 }
 .top-ic{
 	float: right;
-	margin-top:-6px;
+	margin-top:-4px;
 }
 .bus-work{
 	float:left;
 	margin-left:12px;
-	width: 60%;
+	width: 49%;
 }
 .work-ic{
 	border:1px solid #7ed0fe;
@@ -226,7 +225,7 @@ textarea{resize: none;}
     height: 17px;
 }
 .rz-name{
-	margin-left: 5px;
+    margin-left: 5px;
     position: absolute;
     top: -2px;
 }
@@ -256,9 +255,8 @@ textarea{resize: none;}
 }
 .fuwu-cont,.kehu-pingjia{
     display: inline-block;
-	padding: 13px 0;
-    text-align: center;
-    width: 49.3%;
+	padding: 15px 10px;
+    width: 100%;
     border-bottom: 1px solid #edecec;
 }
 .active{
@@ -282,7 +280,7 @@ textarea{resize: none;}
     height: 16px;
 }
 #tab-kehu{
-	display: none;
+
 }
 .weui_tabbar{
     background: #fff;
@@ -335,13 +333,15 @@ textarea{resize: none;}
     white-space: nowrap;
 }
 .rz-dia-img{
-	width: 16px;
-	height: 16px;
-	margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
 }
+
 .dialog-imgs li{
     position: relative;
 }
+
 .weui_tabbar{
 	position: fixed;
 }
@@ -385,11 +385,12 @@ textarea{resize: none;}
 .kehu-pingfen{
 	color:#fa5236;
 	float: right;
-    margin-top: -2px;
+    margin-top: -1px;
+    margin-left: 3px;
 }
 .kehu-cont{
 	color:#807f84;
-	margin-top:5px;
+	margin-top:12px;
 }
 
 /*轮播图*/
@@ -448,6 +449,9 @@ textarea{resize: none;}
 /*工人标签*/
 .worker-tag,.worker-tag a{
     color:#27b8f3;
+}
+.worker-tag{
+    display: none;
 }
 .worker-tag-box{
 	position: relative;
@@ -543,4 +547,24 @@ textarea{resize: none;}
 	float:right;
 	margin-top:3px;
 	margin-right: 10px;
+}
+
+
+/*后加后改的*/
+.wage{
+    float: right;
+    margin-right: 10px;
+    color: red;
+}
+.xingx-img{
+    width: 16px;
+    height: 12px;
+}
+.age{
+    float: left;
+    margin-top: -3px;
+}
+.sex{
+    float: left;
+    margin: 0px 3px 0px 3px;
 }

@@ -7,10 +7,10 @@
     <meta content="telephone=no,email=no" name="format-detection">
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
-    <title>商户详情</title>
+    <title>工人详情</title>
     <link rel="stylesheet" href="/css/weui.min.css">
-    <link rel="stylesheet" href="/css/business-detail/business-detail.min.css">
-    <link rel="stylesheet" href="/css/business-detail/dropload.min.css">
+    <link rel="stylesheet" href="/css/worker/worker-info.min.css">
+    <link rel="stylesheet" href="/css/worker/dropload.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/css/swiper.min.css">
 
 </head>
@@ -18,7 +18,7 @@
 	<div class="contain" id="container">
 		<div class="top-info">
 			<a href="javascript:;" id="showSlide">
-				<img src="" class="bus-img" alt="">
+				<img src="" class="bus-img" alt="" onerror='this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png"'>
 			</a>
 
 			<div id="fade" class="black_overlay"></div>
@@ -30,11 +30,13 @@
 					 				
 			<div class="name-info">
 				<h4 class="bus-name"></h4>
+				<img class="sex" src="" alt="">
+				<span class="age"></span>
 				<div class="top-ic">
-						<img src="/images/worker/ic_dianzan.svg" alt="" class="dianzan">
-						<span class="font-style"><span class="PraiseCount"></span></span>
-						<img src="/images/worker/ic_shoucang.svg" alt="" class="dianzan">
-						<span class="font-style"><span class="FavoriteCount"></span></span>
+					<img src="/images/worker/ic_dianzan.svg" alt="" class="dianzan">
+					<span class="font-style"><span class="PraiseCount"></span></span>
+					<img src="/images/worker/ic_shoucang.svg" alt="" class="dianzan">
+					<span class="font-style"><span class="FavoriteCount"></span></span>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -42,10 +44,10 @@
 			<a href="" class="business-mes">
 				<div class="yewu">
 					<div class="bus-work">
-						<span class="work-ic">业务</span>
 						<span class="wk-list"></span>
 					</div>
 					<img src="/images/business-detail/jiantou.png" alt="" class="more">
+					<span class="wage"></span>
 					<div class="clear"></div>
 				</div>
 			</a>
@@ -137,22 +139,12 @@
 			<div class="bd" style="height: 100%;">
 			    <div class="weui_tab">
 			        <div class="weui_navbar">
-			            <div class="fuwu-cont active">
-			                服务内容
-			            </div>
 			            <div class="kehu-pingjia">
 			                客户评价
 			            </div>
 			        </div>
-			        <div id="tab-fuwu" >
-			        	<div class="lists"></div>
-			            <div class="no-fuwu" style="display:none;">
-							<img class="weui_media_appmsg_thumb no-fuwu-img" src="/images/business-detail/ic-home.png" alt="">
-							<p class="no-fuwu-nocice">该商户较懒，还未上传服务内容，<br>直接电话联系吧</p>
-			            </div>
-			        </div>
 		            <div id="tab-kehu" >
-		            	<div class="no-fuwu">
+		            	<div class="no-fuwu" style="display:none;">
 							<img class="weui_media_appmsg_thumb no-fuwu-img" src="/images/worker/shafa.png" alt="">
 							<p class="no-fuwu-nocice">沙发还没人做，赶紧去抢吧</p>
 			            </div>
@@ -182,8 +174,8 @@
    		<div class="clear"></div>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-	<script src="/js/business-detail/business-detail.min.js"></script>
-	<script src="/js/business-detail/dropload.min.js"></script>
+	<script src="/js/worker/worker-info.min.js"></script>
+	<script src="/js/worker/dropload.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/js/swiper.min.js"></script>
 	<script>
     $(function(){

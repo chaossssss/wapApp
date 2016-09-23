@@ -271,6 +271,11 @@ npm install gulp-autoprefixer --save-dev
 
 ### vue
 
+## 插件资源
+
+####ng无限滚动插件
+[ng-infinite-scroll](http://sroze.github.io/ngInfiniteScroll/)
+
 
 
 

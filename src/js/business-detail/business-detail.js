@@ -23,7 +23,7 @@ $(function(){
     var swiper = new Swiper('.swiper-container', {
             //pagination: '.swiper-pagination',
             initialSlide :0,
-            slidesPerView: 2,
+            slidesPerView: 1,
             paginationClickable: true,
             spaceBetween: 0,
             touchRatio:1,
@@ -51,42 +51,38 @@ $(function(){
             Id:Id
         },
     	success:function(data){
-            var api=data.Body.Business;
-            $(".bus-img").attr("src",api.Photo);
-    		$(".bus-name").text(api.DefaultService.Name);
-    		$(".PraiseCount").text(api.PraiseCount);
-    		$(".FavoriteCount").text(api.FavoriteCount);
-    		$(".wk-list").text(api.Intro);
-    	    $(".address").text(api.Address);
-    		$(".jl-num").text(api.Distance);
-    		$(".OrderCount").text(api.OrderCount);
-    		$(".OrderRank").text(api.OrderRank);
-    		$(".PhoneCount").text(api.PhoneCount);
-    		$(".PhoneRank").text(api.PhoneRank);
-    		$(".Grade").text(api.Grade);
-    		$(".GradeRank").text(api.GradeRank);
-            $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
-            $(".business-mes").attr("href","business-message.html?type="+Type+"&id="+Id);
-            $(".a-tag").attr("href","business-tags.html?markid="+Id);
+            if(data.Body){
+                var api=data.Body.Business;
+                $(".bus-img").attr("src",api.Photo);
+                $(".bus-name").text(api.DefaultService.Name);
+                $(".PraiseCount").text(api.PraiseCount);
+                $(".FavoriteCount").text(api.FavoriteCount);
+                $(".wk-list").text(api.Intro);
+                $(".address").text(api.Address);
+                $(".jl-num").text(api.Distance);
+                $(".OrderCount").text(api.OrderCount);
+                $(".OrderRank").text(api.OrderRank);
+                $(".PhoneCount").text(api.PhoneCount);
+                $(".PhoneRank").text(api.PhoneRank);
+                $(".Grade").text(api.Grade);
+                $(".GradeRank").text(api.GradeRank);
+                $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
+                $(".business-mes").attr("href","business-message.html?type="+Type+"&id="+Id);
+                $(".a-tag").attr("href","business-tags.html?markid="+Id);
 
-            // 认证集合
-    		var RzImgs="";
-    		for (var i = 0; i < api.SystemCertification.length; i++) {
-    			RzImgs+='<img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="">';
-    		}
-    		$(".rz-imgs").html(RzImgs);
-
-    		var ModelRzImgs="";
-    		for (var j = 0; j < api.SystemCertification.length; j++) {
-    			ModelRzImgs+='<li><img src="'+api.SystemCertification[j].pic+'" class="rz-dia-img" alt=""><span class="rz-name">'+api.SystemCertification[j].Name+'</span></li>';
-    		}
-    		$(".dialog-imgs").html(ModelRzImgs);
-
-
-    		
+                // 认证集合
+                var RzImgs="";
+                var ModelRzImgs="";
+                for (var i = 0; i < api.SystemCertification.length; i++) {
+                    RzImgs+='<img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="" onerror=this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png">';
+                    ModelRzImgs+='<li><img src="'+api.SystemCertification[i].Image+'" class="rz-dia-img" alt="" onerror=this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png"><span class="rz-name">'+api.SystemCertification[i].Name+'</span></li>';
+                }
+                $(".rz-imgs").html(RzImgs);
+                $(".dialog-imgs").html(ModelRzImgs);
+            }    		
     	},
     	error: function(xhr, type){
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
@@ -102,17 +98,17 @@ $(function(){
             Id:Id
         },
         success:function(data){
-            var imgs_api=data.Body.Avatars;
-            var imgs_res="";
-            for (var i = 0; i <imgs_api.length; i++) {
-                imgs_res+='<div class="swiper-slide"><img src="'+imgs_api[i]+'" class="swiper-img" alt=""></div>';            
-            }
-            $(".swiper-wrapper").html(imgs_res);
-
-            
+            if(data.Body){
+                var imgs_api=data.Body.Avatars;
+                var imgs_res="";
+                for (var i = 0; i <imgs_api.length; i++) {
+                    imgs_res+='<div class="swiper-slide"><img src="'+imgs_api[i]+'" class="swiper-img" alt="" onerror=this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png"></div>';            
+                }
+                $(".swiper-wrapper").html(imgs_res);
+            }    
         },
         error: function(xhr, type){
-            alert('Ajax error!');
+            console.log('Ajax error!');
             // 即使加载出错，也得重置
             me.resetload();
         }
@@ -133,40 +129,44 @@ $(function(){
                     MerchantId:Id
                 },
                 success: function(data){ 
-                    var ser_api=data.Body.ServiceTypeList;        
-                    var result = '';
-                    counter++;
-                    pageEnd = num * counter;
-                    pageStart = pageEnd - num;
 
-                    for(var i = pageStart; i < pageEnd; i++){
-                        result  +='<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
-                                +' <div class="weui_media_hd"><img src="'+ser_api[i].PicPath+'" alt="" class="weui_media_appmsg_thumb"></div>'
-                                +'<div class="weui_media_bd"><h4 class="weui_media_title">'+ser_api[i].ServiceName+'</h4>'
-                                +'<p class="weui_media_desc">'+ser_api[i].ServiceTypeName+'</p>'
-                                +'<span class="price">￥<span class="tab-price">'+ser_api[i].Price+'</span>/小时</span>'
-                                +'</div></a>';
+                    if(data.Body){
+                        var ser_api=data.Body.ServiceTypeList;        
+                        var result = '';
+                        counter++;
+                        pageEnd = num * counter;
+                        pageStart = pageEnd - num;
 
-                        if((i + 1) >=ser_api.length){
-                            // 锁定
-                            me.lock();
-                            // 无数据
-                            me.noData();
-                            break;
+                        for(var i = pageStart; i < pageEnd; i++){
+                            result  +='<a class="weui_media_box weui_media_appmsg" href="javascrit:void(0);">'
+                                    +' <div class="weui_media_hd"><img src="'+ser_api[i].PicPath+'" alt="" class="weui_media_appmsg_thumb" onerror=this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png"></div>'
+                                    +'<div class="weui_media_bd"><h4 class="weui_media_title">'+ser_api[i].ServiceName+'</h4>'
+                                    +'<p class="weui_media_desc">'+ser_api[i].ServiceTypeName+'</p>'
+                                    +'<span class="price">￥<span class="tab-price">'+ser_api[i].Price+'</span>/小时</span>'
+                                    +'</div></a>';
+
+                            if((i + 1) >=ser_api.length){
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                                break;
+                            }
                         }
+
+                        // 没有数据时展示内容
+                        if(ser_api.length==0){
+                            $(".no-fuwu").css("display","block");
+                        }
+
+                        $('.lists').append(result);
+                        // 每次数据加载完，必须重置
+                        me.resetload();
                     }
 
-                    // 没有数据时展示内容
-                    if(ser_api.length==0){
-                        $(".no-fuwu").css("display","block");
-                    }
-
-                    $('.lists').append(result);
-                    // 每次数据加载完，必须重置
-                    me.resetload();
                 },
                 error: function(xhr, type){
-                    alert('Ajax error!');
+                    console.log('Ajax error!');
                     // 即使加载出错，也得重置
                     me.resetload();
                 }
@@ -241,7 +241,7 @@ $(function(){
 
                 },
                 error: function(xhr, type){
-                    alert('Ajax error!');
+                    console.log('Ajax error!');
                     // 即使加载出错，也得重置
                     me.resetload();
                 }
@@ -258,22 +258,27 @@ $(function(){
             BusinessId:Id
         },
         success:function(data){
-            var api=data.Body.TagList;
-            var res="";
-            for (var i = 0; i < api.length; i++) {
-                res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
-            }
-            
-            if(api.length==0){
-                $(".worker-tag").css("display","none");
+            if(data.Body){
+                var api=data.Body.TagList;
+                var res="";
+                for (var i = 0; i < api.length; i++) {
+                    res+="<span class='Tag TagName'>"+api[i].TagName+"</span>";
+                }
+                var all_tag_jtml='<a href="" class="a-tag"><p class="font-alltag">全部标签<span class="tab-num"></span><img src="/images/business-detail/blue-arrows.png" alt="" class="blue-jiantou"></p></a>';
+
+                if(api.length==0){
+                    $(".worker-tag").css("display","none");
+                }
+
+                $(".tab-num").text(api.length);
+                $(".worker-tag-box").html(res);
+                $(".worker-tag").append(all_tag_jtml);
             }
 
-            $(".tab-num").text(api.length);
-            $(".worker-tag-box").html(res);
 
         },
         error: function(xhr, type){
-           alert('Ajax error!');
+           console.log('Ajax error!');
            // 即使加载出错，也得重置
            me.resetload();
         }

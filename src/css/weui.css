@@ -992,7 +992,7 @@ input.weui_btn_plain_default {
 .weui_navbar_item.weui_bar_item_on {
   background-color: #eaeaea;
 }
-.weui_navbar_item:after {
+/*.weui_navbar_item:after {
   content: " ";
   position: absolute;
   right: 0;
@@ -1005,7 +1005,7 @@ input.weui_btn_plain_default {
           transform-origin: 100% 0;
   -webkit-transform: scaleX(0.5);
           transform: scaleX(0.5);
-}
+}*/
 .weui_navbar_item:last-child:after {
   display: none;
 }

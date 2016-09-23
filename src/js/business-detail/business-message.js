@@ -18,7 +18,7 @@ $(function(){
 	        $(".Scale").text(api.Scale);
 	        $(".Property").text(api.Property);
 	        $(".StaffNumber").text(api.StaffNumber);
-	        //$(".Signature").text(api.Signature);
+	        $(".Signature").text(api.Signature);
 	        $(".ServiceTime").text(api.ServiceTime);
 	        $(".Address").text(api.Address);
 	        $(".ServiceScope").text(api.ServiceScope);
@@ -33,7 +33,9 @@ $(function(){
 	        
 	    },
 	    error: function(xhr, type){
-	       console("type");
+	        console.log('Ajax error!');
+            // 即使加载出错，也得重置
+            me.resetload();
 	    }
 	});
 
