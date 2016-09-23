@@ -18,43 +18,59 @@ $(function(){
   function getDatetime(tm){
     var timestamp = tm;
     var d = new Date(timestamp * 1000);    //根据时间戳生成的时间对象
+    var month = d.getMonth() + 1;
+    var date = d.getDate();
+    var hours = d.getHours();
     var minutes = d.getMinutes();
     var seconds = d.getSeconds()
+    if(month <= 9){
+      month = "0" + month;
+    }
+    if(date <= 9){
+      date = "0" + date;
+    }
+    if(hours <= 9){
+      hours = "0" + hours;
+    }
     if(minutes<= 9){
       minutes = "0" + minutes;
     }
     if(seconds<= 9){
       seconds = "0" + seconds;
     }
-    var date = (d.getFullYear()) + "/" + 
-               (d.getMonth() + 1) + "/" +
-               (d.getDate()) + " " + 
-               (d.getHours()) + ":" + 
+    var date = (d.getFullYear()) + "-" + 
+               month + "-" +
+               date + " " + 
+               hours + ":" + 
                (minutes) + ":" + 
                (seconds);
     return date;
   }
   function string_to_date(strDate){
     var dateString = strDate.replace(/年|月/g, "/").replace(/日/g, " ");
-    var t = new Date(dateString);
-    var tm = new Date(t.getFullYear(),t.getMonth(),t.getDate()+7,t.getHours(),t.getMinutes(),t.getSeconds());
+    var t = new Date(new Date(dateString).valueOf() + 7*24*60*60*1000);
+    var tm = new Date(t.getFullYear(),t.getMonth(),t.getDate(),t.getHours(),t.getMinutes(),t.getSeconds());
     return tm;
   }
-  // Date.prototype.Format = function (fmt) { //格式化时间
-  //   var o = {
-  //     "M+": this.getMonth() + 1, //月份 
-  //     "d+": this.getDate(), //日 
-  //     "h+": this.getHours(), //小时 
-  //     "m+": this.getMinutes(), //分 
-  //     "s+": this.getSeconds(), //秒 
-  //     "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-  //     "S": this.getMilliseconds() //毫秒 
-  //   };
-  //   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  //   for (var k in o)
-  //   if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-  //   return fmt;
-  // }
+  function replaceTime(t){
+    var a = t.replace(/\//g,'-');
+    return a;
+  }
+  Date.prototype.Format = function (fmt) { //格式化时间
+    var o = {
+      "M+": this.getMonth() + 1, //月份 
+      "d+": this.getDate(), //日 
+      "h+": this.getHours(), //小时 
+      "m+": this.getMinutes(), //分 
+      "s+": this.getSeconds(), //秒 
+      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+      "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+  }
   function clientGenderChange(g){
     if(g == "1"){
       var gn = "女士";
@@ -151,13 +167,26 @@ $(function(){
       var workHeadPic = data.Body.ServiceProviderPic;
       $("#providerHead").attr("src",workHeadPic);
       $("#orderCode").text(data.Body.OrderCode);
-      $("#createTime").text(data.Body.CreateTime);
-      $("#acceptAt").text(data.Body.AcceptTime);
+      if(data.Body.CreateTime != null){
+        var createTime = new Date(data.Body.CreateTime);
+      $("#createTime").text(createTime.Format("yyyy-MM-dd hh:mm:ss"));
+      }
+      if(data.Body.AcceptTime != null){
+        var acceptAt = new Date(data.Body.AcceptTime);
+        $("#acceptAt").text(acceptAt.Format("yyyy-MM-dd hh:mm:ss"));
+      }
       var serviceStartAt = getDatetime(data.Body.Service.ServiceStartAt);
       $("#serviceAt").text(serviceStartAt);
-      $("#finishAt").text(data.Body.FinishTime);
+      if(data.Body.FinishTime != null){
+        var finishTime = new Date(data.Body.FinishTime)
+        $("#finishAt").text(finishTime.Format("yyyy-MM-dd hh:mm:ss"));
+      }
       $("#confirmAt").text(data.Body.ConfirmTime);
-      $("#cancelAt").text(data.Body.CancelTime);
+      if(data.Body.CancelTime != null){
+        var cancelAt = new Date(data.Body.CancelTime);
+        $("#cancelAt").text(cancelAt.Format("yyyy-MM-dd hh:mm:ss"));
+      }
+      // $("#cancelAt").text(data.Body.CancelTime);
       $("#clientName").text(data.Body.Service.AddressInfo.Contact);
       var clientGender = clientGenderChange(data.Body.Service.AddressInfo.Gender);
       $("#clientGender").text(clientGender);
@@ -198,21 +227,29 @@ $(function(){
       $("#serviceName").text(data.Body.Service.ServiceName);
       $("#clientName").text(data.Body.Service.ServiceProviderName);
       $("#serviceAddress").text(data.Body.Service.AddressInfo.Address1);
-      var payOffTime = getDatetime(data.Body.PayOffTime);
-      $("#payOffTime").text(payOffTime);
+      if(data.Body.PayOffTime != null){
+        var payOffTime = getDatetime(data.Body.PayOffTime);
+        $("#payOffTime").text(payOffTime);
+      }
       $("#clinetPhone").text(data.Body.Service.AddressInfo.PhoneNumber);
 
       finishedTime = data.Body.FinishTime;
       payLock = data.Body.PayLock;
       // $("#price").text(data.Body.Service.Price);
       $("#discountInfo").text(data.Body.DiscountAmount);
+      if(data.Body.DiscountAmount == null){
+        $("#orderDiscount").hide();
+      }
+      if(data.Body.Refunds){
+
       $("#refundAt").text(data.Body.Refunds.RefundTime);
       $("#lostIncome").text(data.Body.Refunds.LostIncome);
       $("#refundAmount").text(data.Body.Service.TotalPrice);
+      }
       $("#hourly").text(data.Body.Activity);
       $("#toBePaid").text(totalPrice);
-      if( data.Body.Refunds.LostIncome != null && data.Body.Activity != null){
-        var toBePaid = data.Body.TotalPrice - data.Body.Refunds.LostIncome - data.Body.Activity;
+      if( data.Body.DiscountAmount != null || data.Body.Activity != null){
+        var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
         $("#toBePaid").text(toBePaid);
       }
       if(data.Body.Activity == null){
@@ -233,12 +270,12 @@ $(function(){
 
       if(data.Body.ServiceProviderType == "2"){
         console.log("工人");
-        href="../worker-detail/worker-info.html?type=" + serviceProviderType + "&id=" + serviceProviderId;
+        href="../worker/worker-info.html?type=" + serviceProviderType + "&markid=" + serviceProviderId;
         $("#goToProvider").attr("href",href);
       }
       if(data.Body.ServiceProviderType == "3"){
         console.log("商户");
-        href="../boss-detail/boss-info.html?type=" + serviceProviderType + "&id=" + serviceProviderId;
+        href="../business-detail/business-detail.html?type=" + serviceProviderType + "&markid=" + serviceProviderId;
         $("#goToProvider").attr("href",href);
       }
 
@@ -299,7 +336,7 @@ console.log(orderState);
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
 
     $("#status").text('订单提交成功');
-    $("#explanation").text('请耐心等待客服为您安排工人，并确定服务价格');
+    $("#explanation").html('请耐心等待工人确认价格并接单<br>注意查收付款通知，您可以在服务开始前完成付款');
     $("#tabFirst").text('订单已提交');
     $("#tabSecond").text('待工人接单');
     $("#tabThird").text('待付款');
@@ -307,7 +344,8 @@ console.log(orderState);
     $("#btnLeft").text('取消订单');
     $("#btnRight").text('支付');
 
-    $("#explanation").css("width","256px");
+    $("#explanation").css("width","266px");
+    $("#orderStatus").css("height","169px");
 
     $("#tabSecond").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -328,11 +366,12 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#finishTime").hide();
+    $("#zjWorker").hide();
 
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
     $(".pay-btn").on("click",function(){
-      
+
     })
     $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
@@ -342,53 +381,15 @@ console.log(orderState);
         location.reload();
       })
     });
-
-    if(orderIsGeted == ""){
-      console.log("取消订单，工人没接单");
-     $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
-
-     $("#status").text('订单已取消');
-     $("#explanation").text('');
-     $("#tabFirst").text('订单已提交');
-     $("#tabSecond").text('订单已取消');
-     $("#btnRight").text('删除订单');
-
-     $("#roundFirst").addClass("round-undone");
-     $("#roundSecond").addClass("round-undone");
-     $("#btnRight").addClass("delete-btn");
-
-     // $(".round").css("left","89px");
-
-     $("#proThird").hide();
-     $("#proFourth").hide();
-     $("#zjWorker").hide();
-     $("#addRemark").hide();
-     $("#refundRecord").hide();
-     $("#filling2").hide();
-     $("#unitPrice").hide();
-     $("#multiple").hide();
-     $("#orderPrice").hide();
-     $("#orderDiscount").hide();
-     $("#orderActual").hide();
-     $("#acceptTime").hide();
-     $("#payTime").hide();
-     $("#finishTime").hide();
-     $("#btnLeft").hide();
-     $("#cancelTime").hide();
-
-     $("#status").css("paddingTop","90px");
-     $("#orderTime").css("marginBottom","4px");
-     $("#servicePrice").css("marginBottom","4px"); 
-
     $("#btnRight").on("click",function(){
-      $("#deleteOrder").css("display","block");
-      $("#deleteBtn").on("click",function(){
-        $("#deleteOrder").hide();
-        removeOrder(token,orderId);
-        location.reload();
-      })
+      // $("#prompt").css("display","block");
+      $("#prompt").addClass("prompt-animation");
+      setTimeout(function(){
+      $("#prompt").removeClass("prompt-animation");
+      },2500);
     })
-    }
+
+
     break;
     
     // case "11":
@@ -530,7 +531,7 @@ console.log(orderState);
       $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
 
       $("#status").text('工人已接单');
-      $("#explanation").text('请支付服务费用并等待工人上门服务您也可以在工人服务完成后再付款哦');
+      $("#explanation").text('请支付服务费用并等待工人上门服务');
       $("#tabFirst").text('订单已提交');
       $("#tabSecond").text('待工人接单');
       $("#tabThird").text('待付款');
@@ -560,12 +561,12 @@ console.log(orderState);
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").on("click",function(){
-        $("#cancelOrder1").css("display","block");
-        $("#cancelOrderBtn").on("click",function(){
+        $("#cancelOrder2").css("display","block");
+        $("#contactWorkerBtn").on("click",function(){
           cancelOrder(token,orderId);
-          $("#cancelOrder1").hide();
+          $("#cancelOrder2").hide();
           // UpdataOrder(Token,OrderId);
-          location.reload();
+          // location.reload();
         })
       })
       $(".pay-btn").on("click",function(){
@@ -705,8 +706,6 @@ console.log(orderState);
     var ct = string_to_date(ft);
     var now = new Date().Format("yyyy-MM-dd hh:mm:ss");
     var confirmTime = ct.Format("yyyy-MM-dd hh:mm:ss");
-    var time = "2016/09/12 11:16:30";
-    var ftime = new Date(time).Format("yyyy-MM-dd hh:mm:ss");
 
     function DateDiff(sDate1, sDate2){//sDate1和sDate2是yyyy-MM-dd格式  
       var aDate, oDate1, oDate2, iDays, iHours, diffText;
@@ -726,8 +725,6 @@ console.log(orderState);
     console.log(dataDiffText);
     console.log(now);
     console.log(confirmTime);
-    // console.log(ftime);
-
     
     $("#explanation").text(dataDiffText);
     $("#tabFirst").text('订单已提交');
@@ -755,9 +752,8 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
-      confirmOrder(token,orderId,Memo);
+      confirmOrder(token,orderId);
       location.reload();
-
     })
 
     break;
@@ -831,6 +827,7 @@ console.log(orderState);
           $("#deleteOrder").hide();
           removeOrder(token,orderId);
           location.reload();
+          window.location.href="../my-order/my-order.html";
         })
       })
     }
@@ -865,6 +862,52 @@ console.log(orderState);
     // break;
     case "50":
     console.log("已取消");
+    if(orderIsGeted == null){
+      console.log("取消订单，工人没接单");
+     $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
+
+     $("#status").text('订单已取消');
+     $("#explanation").text('');
+     $("#tabFirst").text('订单已提交');
+     $("#tabSecond").text('订单已取消');
+     $("#btnRight").text('删除订单');
+
+     $("#roundFirst").addClass("round-undone");
+     $("#roundSecond").addClass("round-undone");
+     $("#btnRight").addClass("delete-btn");
+
+     // $(".round").css("left","89px");
+
+     $("#proThird").hide();
+     $("#proFourth").hide();
+     $("#zjWorker").hide();
+     $("#addRemark").hide();
+     $("#refundRecord").hide();
+     $("#filling2").hide();
+     $("#unitPrice").hide();
+     $("#multiple").hide();
+     $("#orderPrice").hide();
+     $("#orderDiscount").hide();
+     $("#orderActual").hide();
+     $("#acceptTime").hide();
+     $("#payTime").hide();
+     $("#finishTime").hide();
+     $("#btnLeft").hide();
+     $("#cancelTime").hide();
+
+     $("#status").css("paddingTop","90px");
+     $("#orderTime").css("marginBottom","4px");
+     $("#servicePrice").css("marginBottom","4px"); 
+
+    $("#btnRight").on("click",function(){
+      $("#deleteOrder").css("display","block");
+      $("#deleteBtn").on("click",function(){
+        $("#deleteOrder").hide();
+        removeOrder(token,orderId);
+        location.reload();
+      })
+    })
+    }
     if(orderIsGeted!=""){
       console.log('取消订单，工人已经接单');
       $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
@@ -880,6 +923,7 @@ console.log(orderState);
       $("#roundSecond").addClass("round-undone");
       $("#roundThird").addClass("round-undone");
       $("#btnRight").addClass("delete-btn");
+      $("#toBePaid").addClass("actual");
 
       // $(".round").css("left","60px");
 
@@ -889,8 +933,8 @@ console.log(orderState);
       $("#addRemark").hide();
       $("#refundRecord").hide();
       $("#filling2").hide();
-      $("#unitPrice").hide();
-      $("#multiple").hide();
+      // $("#unitPrice").hide();
+      // $("#multiple").hide();
       $("#orderPrice").hide();
       $("#orderDiscount").hide();
       $("#orderActual").hide();
@@ -908,8 +952,9 @@ console.log(orderState);
         $("#deleteOrder").css("display","block");
         $("#deleteBtn").on("click",function(){
           removeOrder(token,orderId);
-          location.reload();
+          // location.reload();
           $("#deleteOrder").hide();
+          window.location.href="../my-order/my-order.html";
         })
       })
     };
@@ -920,7 +965,6 @@ console.log(orderState);
     if(refundIsFinshed == "1"){
       console.log("退款中");
       $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
-
       $("#status").text('退款中');
       $("#explanation").text('系统将于72小时内退款');
       $("#tabFirst").text('订单已提交');
@@ -965,12 +1009,11 @@ console.log(orderState);
           removeOrder(token,orderId);
           location.reload();
           $("#deleteOrder").hide();
+          window.location.href="../my-order/my-order.html";
         })
       })
     }
   }
-
-
 
   function removeOrder(token,orderId){
     console.log("删除订单");
@@ -982,7 +1025,7 @@ console.log(orderState);
         OrderId:orderId
       },
       success:function(data){
-        console.log("删除订单成功");
+        console.log(data);
       }
     })
   }
@@ -1040,22 +1083,21 @@ console.log(orderState);
           OrderId:orderId
         },
         success:function(data){
-          console.log("取消订单成功");
+          console.log(data);
         }     
     })
   }
-  function confirmOrder(token,orderId,memo){
+  function confirmOrder(token,orderId){
     console.log("确认订单");
     $.ajax({
       type:"POST",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
       data:{
         Token:token,
-        OrderId:orderId,
-        Memo:memo
+        OrderId:orderId
       },
       success:function(data){
-        console.log("确认订单成功");
+        console.log(data);
       }
     })
   } 
@@ -1069,7 +1111,7 @@ console.log(orderState);
         OrderId:orderId
       },
       success:function(data){
-        console.log("完成订单成功");
+        console.log(data);
       }
     })
   }

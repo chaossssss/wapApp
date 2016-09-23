@@ -5,14 +5,14 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 /*---*/
 .order-detail{ width: 100%; margin: 0 auto; background: #f8f8f8; }
 .order-detail .order-status{ height: 148px; width: 100%; text-align: center; background: #eefaff no-repeat center 10px; background-size: 65% 50%; }
-.order-detail .order-status .status{ color: #3fbef9; font-size: 18px; padding-top: 78px; }
+.order-detail .order-status .status{ color: #3fbef9; font-size: 18px; padding-top: 86px; }
 .order-detail .process{ width: 100%; height: 42.5px; display: flex; display: -webkit-flex; display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox; background: #fff; border-top: 1px solid #3fbef9; margin-bottom: 13px; border-bottom: 1px #ccc solid; }
 .order-detail .process .process-status{ flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; -moz-box-flex: 1; -ms-flex: 1; text-align: center; line-height: 20px; font-size: 14px; }
 .order-detail .explanation{ color: #666; font-size: 12px; margin: 0 auto; width: 200px; }
 
 .order-detail .weui_cell .zj-remark{ color: #3fbef9; background: url(../../images/order-detail/add.png) no-repeat; height: 21px; background-size: 21px 21px; padding-left: 25px; line-height: 21px; }
-.order-detail .weui_cells .remark{ margin-left: 30px; margin-bottom: 12px; }
-.order-detail .weui_cells .remark li{ list-style-type: disc; font-size: 13px; color: #999; }
+.order-detail .weui_cells .remark{ margin-left: 10px; margin-bottom: 12px; }
+.order-detail .weui_cells .remark li{ font-size: 13px; color: #999; }
 .order-detail .weui_cell .zj-show-pic{ width: 74px; height: 74px; border-radius: 6.5px; margin-right: 6px; margin-left: 12px; margin-top: 10.5px; margin-bottom: 10.5px; background: center center no-repeat; background-size: cover; float: left; }
 /*.order-detail .weui_cell .zj-show-lastpic{ width: 74px; height: 74px; border-radius: 6.5px; margin-top: 10.5px; margin-bottom: 10.5px; background: center center no-repeat; background-size: cover; float: left; }*/
 .order-detail .zj-mark{ padding-bottom: 8px; }
@@ -82,4 +82,32 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail .zj-bluecol{ color: #27b8f3; }
 
 /*--待接单，点击支付--*/
-.zj-prompt{ width: 220px; height: 160px; color: white; background: red; text-align: center; }
+.zj-prompt{ width: 180px; height: 54px; color: white; opacity: 0; background: rgba(0,0,0,0.5); text-align: center; border-radius: 9px; font-size: 15px; position: absolute; top: 348px; left: 102px; }
+.zj-prompt .prompt-news{ margin: 10px 13px 0; line-height: 1.2; }
+.prompt-animation
+{ 
+  animation: prompts 3s;
+  -moz-animation: prompts 3s;
+  -webkit-animation: prompts 3s;
+  -o-animation: prompts 3s;
+}
+@keyframes prompts
+{
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-moz-keyframes prompts
+{
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-webkit-keyframes prompts
+{
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-o-keyframes prompts
+{
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
