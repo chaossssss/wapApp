@@ -72,6 +72,7 @@ $(function() {
             $(".PhoneRank").text(api.PhoneRank);
             $(".GradeRank").text(api.GradeRank);
             $(".Activity").text(api.Activity);
+
             $(".worker-mes").attr("href", "worker-message.html?type=" + Type + "&markid=" + Id);
             $(".a-tag").attr("href", "worker-tags.html?markid=" + Id);
             if (api.Gender == "1") {
@@ -197,12 +198,10 @@ $('.kuhupingjia').dropload({
                                 res_xin += '<img src="../../images/worker/ic_xin_nor.svg"  class="xingx-img" alt=""/>';
                             }
                         }else if(api[i].Score == 5) {
-
                             for (var k = 0; k < 5; k++) {
                                 //console.log(res_xin);
                                 res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
                             }
-
                         }else {
                             var x = 5 - api[i].Score;
                             for (var n = 0; n <= api[i].Score; n++) {

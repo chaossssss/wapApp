@@ -18,7 +18,7 @@ button{outline: none;cursor: pointer;border:none;}
 /*-------------------*/
 .contain{
 	position: relative;
-	background-image: url(/images/activity/bg_light.png);
+	background-image: url(images/bg_light.png);
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
