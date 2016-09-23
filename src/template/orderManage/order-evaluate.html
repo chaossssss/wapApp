@@ -32,15 +32,24 @@
     <div class="weui_cells">
       <div class="weui_cell zj-marks">
         <div class="weui_cell_bd weui_cell_primary">
-          <p>评分</p>
+          <div>
+            <span class="score-title">评分</span>
+            <ul class="rate">
+              <li><img src="../../images/order-detail/darkLove.png"></li>
+              <li><img src="../../images/order-detail/darkLove.png"></li>
+              <li><img src="../../images/order-detail/darkLove.png"></li>
+              <li><img src="../../images/order-detail/darkLove.png"></li>
+              <li><img src="../../images/order-detail/darkLove.png"></li>
+            </ul>
+          </div>
         </div>
-        <div class="weui_cell_ft">5.0分</div>
+        <div class="weui_cell_ft"><span id="score">5</span>.0分</div>
       </div>
     </div>
     <div class="weui_cells weui_cells_form zj-eva">
       <div class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
-          <textarea class="weui_textarea" placeholder="再次输入我的评价" rows="3"></textarea>
+          <textarea id="zj-textarea" class="weui_textarea" placeholder="再次输入我的评价" rows="3"></textarea>
         </div>
       </div>
       <div class="weui_cell zj-eva-pic">
@@ -63,8 +72,8 @@
         </div>
       </div>
     </div>
-    <a id="" href="" disabled="disabled">
-      <div class="submit-eva">提交评价</div>
+    <a id="sendEva" href="" disabled="disabled">
+      <div id="submitBtn" class="submit-eva">提交评价</div>
     </a>
   </div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
