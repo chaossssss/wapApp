@@ -5,27 +5,91 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 	$rootScope.token = window.localStorage.getItem("Token");
 	$rootScope.url = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
 
+	//获取url参数
+    function getvl(name) {
+        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+        return "";
+    } 
+    $rootScope.flag = getvl("flag");
 
 }])
-.controller('orderListCtrl',['$rootScope','$scope',function($rootScope,$scope){
-	var tb = $scope.tb = {};
+.controller('orderListCtrl',['$rootScope','$scope','orderService',function($rootScope,$scope,orderService){
+	var tb = $scope.tb = {};	//tab标签点击
 	var vm = $scope.vm = {};
+	var tip = $scope.tip = {};	//提示
 
-	tb.activeTab = 1;
+	tb.activeTab = $rootScope.flag;
+	tip.toast = false;
+	tip.explain = false;
 
- 	
+	$scope.$watch('tip.explain',function(){
+		if(tip.explain == true){
+			setTimeout(function () {
+	            tip.explain = false;
+	        }, 2000);
+		}
+	})
 
-	var Reddit = function() {
+	//支付订单
+ 	vm.pay = function(orderId){
+ 		console.log("订单id",orderId);
+ 		window.location.href = "/template/pay/pay.html?orderId="+orderId;
+ 	}
+ 	//确认订单完成
+ 	vm.confirm = function(orderId){
+ 		console.log("订单id",orderId);
+ 		tip.toast = true;
+ 		orderService.confirm($rootScope.token,orderId)
+ 			.success(function(res){
+ 				console.log("订单确认",res);
+ 				tip.toast = false;
+ 				if(res.Meta.ErrorCode === "0"){
+					window.location.reload();
+				}
+ 				$scope.$apply();
+ 			})
+ 	}
+	//取消订单
+ 	vm.cancel = function(orderId){
+ 		tip.toast = true;
+ 		console.log("订单id",orderId);
+ 		orderService.cancel($rootScope.token,orderId)
+ 			.success(function(res){
+ 				console.log("订单取消",res);
+ 				tip.toast = false;
+ 				if(res.Meta.ErrorCode === "0"){
+					window.location.reload();
+				}
+ 				$scope.$apply();
+ 			})
+ 	}
+ 	//删除订单
+ 	vm.delete = function(orderId){
+ 		console.log("订单id",orderId);
+ 		tip.toast = true;
+ 		orderService.delete($rootScope.token,orderId)
+ 			.success(function(res){
+ 				console.log("订单删除",res);
+ 				tip.toast = false;
+ 				if(res.Meta.ErrorCode === "0"){
+					window.location.reload();
+				}
+ 				$scope.$apply();
+ 			})
+ 	}
+
+
+	var Reddit = function(type) {
          this.items = [];
          this.busy = false;
          this.currentPage = 1;
+         this.type = type;
     };
-
     Reddit.prototype.nextPage = function() {
         console.log("当前页:::",this.currentPage);
         if (this.busy) return;
         this.busy = true;
-
         $.ajax({
         	method:"POST",
         	url:$rootScope.url,
@@ -33,7 +97,7 @@ angular.module('com.wapapp.app',['infinite-scroll'])
         		Token: $rootScope.token,
         		PageIndex: this.currentPage,
         		PageSize: 2,
-        		Type: "0" 
+        		Type: this.type 
         	}
         }).success(function(res){
         	console.log("全部列表",res); 
@@ -57,7 +121,37 @@ angular.module('com.wapapp.app',['infinite-scroll'])
         }.bind(this));
     };
 
-	$scope.reddit = new Reddit();
+    tb.active = function(flag){
+    	console.log("当前点击:",flag);
+    	$rootScope.flag = flag;
+    	if($rootScope.flag){
+    		window.location.href = window.location.pathname+'?flag='+flag;
+    	}else{
+    		var url = window.location.pathname+'?flag='+flag;
+    		window.location.href = url;
+    	}  	
+    }
+    switch ($rootScope.flag)
+    {
+    	case "1":
+    		$scope.reddit = new Reddit("0");
+    		break;
+    	case "2":
+    		$scope.reddit = new Reddit("4");
+    		break;
+    	case "3":
+			$scope.reddit = new Reddit("1");
+			break;
+		case "4":
+			$scope.reddit = new Reddit("2");
+			break;
+		case "5":
+			$scope.reddit = new Reddit("3");
+			break;	
+		default	:
+			$scope.reddit = new Reddit("0");	
+    }
+	
 
 }]) 
 .factory('Reddit',[function(){
@@ -108,31 +202,74 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 
     return Reddit;
 }])
-// .factory('listService',[function(){
-// 	var _getPath = "api/v2/SystemService/GetActivity";
-// 	var getGift = function(token,id){
-// 		var formdata = {
-// 			Token: token,
-// 			ServiceTypeId: id
-// 		}
-// 		return $.ajax({
-// 					method: "POST",
-// 					url: _getPath,
-// 					data: formdata,
-// 				}).success(function(res){
-// 					if(res.Meta.ErrorCode === "2004"){
-// 						window.location.href = "/template/login/login.html";
-// 					}
-// 				}).error(function(res){
-// 					alert("服务器连接失败，请检查网络设置");
-// 				})
-// 	}
-// 	return {
-// 		event:function(token,id){
-// 			return getGift(token,id);
-// 		}
-// 	}
-// }])
+.factory('orderService',[function(){
+	var _confirmPath = "http://192.168.1.191:3003/api/v2/orderinfo/ConfirmOrderEx";
+	var _cancelPath = "http://192.168.1.191:3003/api/v2/orderinfo/CancelOrderEx";
+	var _deletePath = "http://192.168.1.191:3003/api/v2/orderinfo/RemoveOrderEx";
+
+	var confirmOrder = function(token,id){
+		var formdata = {
+			Token: token,
+			OrderId: id
+		}
+		return $.ajax({
+					method: "POST",
+					url: _confirmPath,
+					data: formdata,
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	var cancelOrder = function(token,id){
+		var formdata = {
+			Token: token,
+			OrderId: id
+		}
+		return $.ajax({
+					method: "POST",
+					url: _cancelPath,
+					data: formdata,
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	var deleteOrder = function(token,id){
+		var formdata = {
+			Token: token,
+			OrderId: id
+		}
+		return $.ajax({
+					method: "POST",
+					url: _deletePath,
+					data: formdata,
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		confirm:function(token,id){
+			return confirmOrder(token,id);
+		},
+		cancel: function(token,id){
+			return cancelOrder(token,id);
+		},
+		delete: function(token,id){
+			return deleteOrder(token,id);
+		}
+	}
+}])
 
 
 
