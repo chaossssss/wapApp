@@ -228,6 +228,7 @@ textarea{resize: none;}
     margin-left: 5px;
     position: absolute;
     top: -2px;
+    color:#3f3148;
 }
 .more{
 	float: right;
@@ -258,11 +259,9 @@ textarea{resize: none;}
 	padding: 15px 10px;
     width: 100%;
     border-bottom: 1px solid #edecec;
+    color:#aaa;
 }
-.active{
-	color:#3cbffd;
-	border-bottom: 2px solid #3cbffd;
-}
+
 .no-active{
 	border-bottom: 1px solid #ccc;
 }
@@ -311,7 +310,7 @@ textarea{resize: none;}
 }
 .weui_dialog_hd{
 	text-align: left;
-	color: #ccc;
+	color: #aaa;
 }
 .re-close{
 	float: right;
@@ -371,7 +370,7 @@ textarea{resize: none;}
 	margin-left: 5px;
 }
 .kehu-time{
-	color: #c1c1c1;
+	color: #aaa;
 }
 .kehu-heart{
 	float: right;
@@ -383,13 +382,13 @@ textarea{resize: none;}
     margin-right: 4px;
 }
 .kehu-pingfen{
-	color:#fa5236;
+	color:#fa5136;
 	float: right;
     margin-top: -1px;
     margin-left: 3px;
 }
 .kehu-cont{
-	color:#807f84;
+	color:#3f3148;
 	margin-top:12px;
 }
 

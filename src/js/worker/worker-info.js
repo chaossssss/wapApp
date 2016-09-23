@@ -260,10 +260,15 @@ $(function(){
                 if(api.length){
                     var res="";
                     for (var i = 0; i < api.length; i++) {
-                        res+='<div class="ac_detail"><span class="youhui_info">'+XXX+'</span></div>';
+                        res+='<div class="ac_detail"><span class="youhui_info">'+api[i].XXX+'</span></div>';
                     }
                     $(".ac_list").html(res);
-                }        
+                }
+
+
+            }else {
+                $(".ac_cont").css("display","none");
+                //$(".kehu-pingjia").css("border-top","1px solid #edecec;");
             }
         },
         error: function(xhr, type){

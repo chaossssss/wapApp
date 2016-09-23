@@ -53,9 +53,7 @@ $(function() {
         success: function(data) {
             if(data.Body==null) {
                 return false;
-            }//else{}
-            //    return true;
-            //}
+            }
             var api = data.Body.Worker;
             $(".bus-img").attr("src", api.Photo);
             $(".Gender").attr("src", api.Gender);
@@ -196,12 +194,9 @@ $('.kuhupingjia').dropload({
             },
             success: function(data) {
                 if(data.Body==null) {
+                    $(".kuhupingjia").css("display", "block");
                     return false;
                 }
-                if (data.Body == null) {
-                    $(".kuhupingjia").css("display", "block");
-                }
-
                 if (data.Body) {
                     var api = data.Body.EvaluationList;
                     var result = '';
@@ -216,7 +211,6 @@ $('.kuhupingjia').dropload({
                             }
                         }else if(api[i].Score == 5) {
                             for (var k = 0; k < 5; k++) {
-                                //console.log(res_xin);
                                 res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
                             }
                         }else {
