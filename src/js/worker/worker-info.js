@@ -72,6 +72,7 @@ $(function(){
                 $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
                 $(".business-mes").attr("href","worker-message.html?type="+Type+"&markid="+Id);
                 $(".a-tag").attr("href","worker-tags.html?markid="+Id);
+                $(".join_now").attr("href","/template/quick-order/quick-order.html?channel=1");
 
                 // 男女图标
                 if (api.Gender == "1") {
@@ -98,8 +99,6 @@ $(function(){
     	},
     	error: function(xhr, type){
             console.log('Ajax error!');
-            // 即使加载出错，也得重置
-            me.resetload();
         }
     });
 
@@ -127,8 +126,6 @@ $(function(){
         },
         error: function(xhr, type){
             console.log('Ajax error!');
-            // 即使加载出错，也得重置
-            me.resetload();
         }
     });
 
@@ -244,8 +241,6 @@ $(function(){
         },
         error: function(xhr, type){
            console.log('Ajax error!');
-           // 即使加载出错，也得重置
-           me.resetload();
         }
     });
 
@@ -257,15 +252,22 @@ $(function(){
         dataType: 'json',
         data:{
             Token:token,
-            ServiceTypeId:Id
+            ServiceTypeId:"0"
         },
         success:function(data){
-
+            if(data.Body){
+                var api=data.Body.XXX;
+                if(api.length){
+                    var res="";
+                    for (var i = 0; i < api.length; i++) {
+                        res+='<div class="ac_detail"><span class="youhui_info">'+XXX+'</span></div>';
+                    }
+                    $(".ac_list").html(res);
+                }        
+            }
         },
         error: function(xhr, type){
            console.log('Ajax error!');
-           // 即使加载出错，也得重置
-           me.resetload();
         }
     });
 

@@ -572,3 +572,6 @@ textarea{resize: none;}
     float: left;
     margin: 0px 3px 0px 3px;
 }
+.ac_list{
+    float: left;
+}

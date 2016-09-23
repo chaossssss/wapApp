@@ -86,8 +86,6 @@ $(function(){
     	},
     	error: function(xhr, type){
             console.log('Ajax error!');
-            // 即使加载出错，也得重置
-            me.resetload();
         }
     });
 
@@ -115,8 +113,6 @@ $(function(){
         },
         error: function(xhr, type){
             console.log('Ajax error!');
-            // 即使加载出错，也得重置
-            me.resetload();
         }
     });
 
@@ -183,22 +179,22 @@ $(function(){
     });
 
     //上滑加载"客户评价"更多数据--------------------------------
-    var counter2 = 0;
-    var num2 = 5;// 每页展示5个
-    var pageStart2 = 0,pageEnd2 = 0;
-    $('#tab-kehu').dropload({
-        scrollArea : window,
-        loadDownFn : function(me){
-            $.ajax({
-                type: 'POST',
-                url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetMerchantEvaluationList',
-                dataType: 'json',
-                data:{
-                    ID:Id
-                },
+    // var counter2 = 0;
+    // var num2 = 5;// 每页展示5个
+    // var pageStart2 = 0,pageEnd2 = 0;
+    // $('#tab-kehu').dropload({
+    //     scrollArea : window,
+    //     loadDownFn : function(me){
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetMerchantEvaluationList',
+    //             dataType: 'json',
+    //             data:{
+    //                 ID:Id
+    //             },
 
-                success: function(data){
-                    if(data.Body){
+    //             success: function(data){
+    //                 if(data.Body){
                         // var result = '';
                         // counter2++;
                         // pageEnd2 = num2 * counter2;
@@ -241,21 +237,21 @@ $(function(){
                         //     // 每次数据加载完，必须重置
                         //     me.resetload();
                         // },1000);
-                    }else{
-                        $('#tab-kehu').find('.no-fuwu').show();
-                    }
+    //                 }else{
+    //                     $('#tab-kehu').find('.no-fuwu').show();
+    //                 }
 
 
 
-                },
-                error: function(xhr, type){
-                    console.log('Ajax error!');
-                    // 即使加载出错，也得重置
-                    me.resetload();
-                }
-            });
-        }
-    });
+    //             },
+    //             error: function(xhr, type){
+    //                 console.log('Ajax error!');
+    //                 // 即使加载出错，也得重置
+    //                 me.resetload();
+    //             }
+    //         });
+    //     }
+    // });
 
     //获取工人标签
     $.ajax({
@@ -290,8 +286,6 @@ $(function(){
         },
         error: function(xhr, type){
            console.log('Ajax error!');
-           // 即使加载出错，也得重置
-           me.resetload();
         }
     });
 
