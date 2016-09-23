@@ -51,6 +51,11 @@ $(function() {
             Id: Id
         },
         success: function(data) {
+            if(data.Body==null) {
+                return false;
+            }//else{}
+            //    return true;
+            //}
             var api = data.Body.Worker;
             $(".bus-img").attr("src", api.Photo);
             $(".Gender").attr("src", api.Gender);
@@ -118,6 +123,9 @@ $(function() {
             Id: Id
         },
         success: function(data) {
+            if(data.Body==null) {
+                return false;
+            }
             var imgs_api = data.Body.Avatars;
             var imgs_res = "";
             for (var i = 0; i < imgs_api.length; i++) {
@@ -141,24 +149,30 @@ $(function() {
             WorkerId: Id
         },
         success: function(data) {
-            var api = data.Body.TagList;
-            var res = "";
-            for (var i = 0; i < api.length; i++) {
-                res += "<span class='Tag TagName'>" + api[i].TagName + "</span>";
+            if(data.Body==null) {
+                return false;
             }
-            if (api.length == 0) {
-                $(".worker-tag").css("display", "none");
+                var api = data.Body.TagList;
+                var res = "";
+
+                for (var i = 0; i < api.length; i++) {
+                    res += "<span class='Tag TagName'>" + api[i].TagName + "</span>";
+                }
+                if (api.length == 0) {
+                    $(".worker-tag").css("display", "none");
+                }
+
+                $(".tab-num").text(api.length);
+                $(".worker-tag-box").html(res);
+
+            }
+            ,
+            error: function (xhr, type) {
+                console.log('Ajax error!');
+                // 即使加载出错，也得重置
+                me.resetload();
             }
 
-            $(".tab-num").text(api.length);
-            $(".worker-tag-box").html(res);
-
-        },
-        error: function(xhr, type) {
-            console.log('Ajax error!');
-            // 即使加载出错，也得重置
-            me.resetload();
-        }
     });
 
 });
@@ -180,6 +194,9 @@ $('.kuhupingjia').dropload({
                 ID: Id
             },
             success: function(data) {
+                if(data.Body==null) {
+                    return false;
+                }
                 if (data.Body == null) {
                     $(".kuhupingjia").css("display", "block");
                 }

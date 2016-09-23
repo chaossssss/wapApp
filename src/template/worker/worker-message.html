@@ -107,6 +107,16 @@
             margin-bottom: 8px;
             margin-right: 8px;
         }
+        .sign{
+            width: 25%;
+        }
+        .reside{
+            width: 22%;
+        }
+        .system{
+            width: 26%;
+        }
+
     </style>
 </head>
 <body ng-controller="bossInfoCtrl"><script id="__bs_script__">//<![CDATA[
@@ -160,7 +170,7 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
         </div>
     </div>
     <div class="zj_cell zj_cell_primary pd">
-        <div class="zj_cell_hd">个人签名</div>
+        <div class="zj_cell_hd sign">个人签名</div>
         <div class="zj_cell_bd pl10 Signature"></div>
     </div>
 </div>
@@ -176,7 +186,7 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
         <div class="zj_cell_bd pl10 ServiceTime"></div>
     </div>
     <div class="zj_cell zj_cell_primary pd">
-        <div class="zj_cell_hd">居住地址</div>
+        <div class="zj_cell_hd reside">居住地址</div>
         <div class="zj_cell_bd pl10 Address"></div>
     </div>
     <div class="zj_cell zj_cell_primary pd">
@@ -186,55 +196,25 @@ document.write("<script async src='/browser-sync/browser-sync-client.2.15.0.js'>
 </div>
 
 <div class="weui_cells mt10">
+    <!--<div class="zj_cell zj_cell_primary pd">-->
+        <!--<div class="zj_cell_hd zj_cell_primary">系统介绍</div>-->
+        <!--<div class="zj_cell_bd flex3 Intro">-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="zj_cell zj_cell_primary pd">
-        <div class="zj_cell_hd zj_cell_primary">系统介绍</div>
-        <div class="zj_cell_bd flex3 Intro">
-            <ul class="items">
-                <!--<li>-->
-                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                    <!--<span>有工人端</span>-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                    <!--<span>实名认证</span>-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                    <!--<span>配备工具</span>-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                    <!--<span>持健康证</span>-->
-                <!--</li>-->
-        </div>
+        <div class="zj_cell_hd system">系统介绍</div>
+        <div class="zj_cell_bd pl10 Intro"></div>
     </div>
 </div>
-
     <div class="sys-rz">
         <div class="cle">
             <div class="fl">
                 <span class="title">系统认证</span>
+                <div class="">
+                    <ul class="items"></ul>
+                </div>
             </div>
-            <div class="">
-                <ul class="items">
-                    <!--<li>-->
-                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                        <!--<span>有工人端</span>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                        <!--<span>实名认证</span>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                        <!--<span>配备工具</span>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<img src="http://www.52ij.com/uploads/allimg/160317/003T95164-3.jpg" alt="" class="sys-img">-->
-                        <!--<span>持健康证</span>-->
-                    <!--</li>-->
-                </ul>
-            </div>
+
         </div>
     </div>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
