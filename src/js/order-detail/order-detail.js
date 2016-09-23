@@ -241,10 +241,12 @@ $(function(){
         $("#orderDiscount").hide();
       }
       if(data.Body.Refunds){
-
-      $("#refundAt").text(data.Body.Refunds.RefundTime);
-      $("#lostIncome").text(data.Body.Refunds.LostIncome);
-      $("#refundAmount").text(data.Body.Service.TotalPrice);
+        var refundsNum = data.Body.Refunds.length;
+        for(var i = 0; i < refundsNum; i++){      
+          $("#refundAt").text(data.Body.Refunds[i].RefundTime);
+          $("#lostIncome").text(data.Body.Refunds[i].LostIncome);
+          $("#refundAmount").text(data.Body.Service[i].TotalPrice);
+        }
       }
       $("#hourly").text(data.Body.Activity);
       $("#toBePaid").text(totalPrice);
