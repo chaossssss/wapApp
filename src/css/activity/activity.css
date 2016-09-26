@@ -18,7 +18,7 @@ button{outline: none;cursor: pointer;border:none;}
 /*-------------------*/
 .contain{
 	position: relative;
-	background-image: url(images/bg_light.png);
+	background-image: url(../../images/activity/bg_light.png);
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
@@ -32,8 +32,8 @@ button{outline: none;cursor: pointer;border:none;}
 	width:2.53rem;
 }
 .top_title{
-	padding:0.7rem;
-	padding-bottom: 0;
+	padding: 0.5rem;
+    padding-top: 1.6rem;
 }
 .ad{
 	text-align: center;
@@ -41,10 +41,11 @@ button{outline: none;cursor: pointer;border:none;}
 }
 .btn_detail{
 	text-align: center;
+	margin-top: 0.5rem;
 }
 .btn_detail img{
-	width: 4.0rem;
-	height: 1.24rem;
+	width: 5.7rem;
+    height: 1.7rem;
 }
 
 
@@ -81,7 +82,7 @@ button{outline: none;cursor: pointer;border:none;}
     bottom: 0;
     left: 1.25rem;
     width: 77%;
-    line-height: 1.4;
+    line-height: 0.5rem;
     height: 78%;
 }
 .pink_font{

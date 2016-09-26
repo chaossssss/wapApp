@@ -158,7 +158,7 @@
 		<div class="weui_tabbar">
 	        <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on" id="quick-order">
 	            <div class="weui_tabbar_icon">
-	                <img src="/images/worker/ic_zhijiezhifu_nor.svg" alt="">
+	                <img src="/images/worker/ic_zhijiezhifu_nor_h.svg" alt="">
 	            </div>
 	        </a>
 	        <a href="javascript:;" class="weui_tabbar_item" id="point-order">
@@ -182,9 +182,9 @@
     $(function(){
         var Type=getUrl('type');
         var Id=getUrl('markid');
-        $("#quick-order").on("click",function(){
-            window.location.href = "/template/quick-order/quick-order.html?channel=1";
-        })
+        // $("#quick-order").on("click",function(){
+        //     window.location.href = "/template/quick-order/quick-order.html?channel=1";
+        // })
         $("#point-order").on("click",function(){
             window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
         })

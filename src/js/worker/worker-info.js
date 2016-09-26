@@ -269,7 +269,6 @@ $(function(){
 
             }else {
                 $(".ac_cont").css("display","none");
-                //$(".kehu-pingjia").css("border-top","1px solid #edecec;");
             }
         },
         error: function(xhr, type){
