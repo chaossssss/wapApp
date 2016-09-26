@@ -42,7 +42,7 @@ angular.module('com.wapapp.app',[])
 		}
 	}
  
-	vm.ServiceContent = "1234";
+	vm.ServiceContent = "";
 	vm.ServiceAddressId = $rootScope.addressId;
 
 	addrService.search($rootScope.token,$rootScope.addressId)
@@ -117,7 +117,12 @@ angular.module('com.wapapp.app',[])
 	})
 
 	vm.datePickerShow = function(){
-		$scope.$broadcast("service-time-show",vm.ServiceTypeId);
+		if(vm.ServiceTypeId){
+			$scope.$broadcast("service-time-show",vm.ServiceTypeId);
+		}else{
+			vm.dialogshow = true;
+			vm.errorMsg = "请先选择服务类型";
+		}
 	}
 
 	vm.submitOrder = function(){

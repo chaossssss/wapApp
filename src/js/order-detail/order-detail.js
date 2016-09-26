@@ -236,7 +236,10 @@ $(function(){
       finishedTime = data.Body.FinishTime;
       payLock = data.Body.PayLock;
       // $("#price").text(data.Body.Service.Price);
-      $("#discountInfo").text(data.Body.DiscountAmount);
+
+      var discountAmount = data.Body.DiscountAmount;
+      $("#discountInfo").text("-￥" + discountAmount);
+      $("#refundDiscount").text(discountAmount);
       if(data.Body.DiscountAmount == null){
         $("#orderDiscount").hide();
       }
@@ -248,7 +251,8 @@ $(function(){
           $("#refundAmount").text(data.Body.Service[i].TotalPrice);
         }
       }
-      $("#hourly").text(data.Body.Activity);
+      var activity = data.Body.Activity;
+      $("#hourly").text("-￥" + activity);
       $("#toBePaid").text(totalPrice);
       if( data.Body.DiscountAmount != null || data.Body.Activity != null){
         var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;

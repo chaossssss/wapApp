@@ -386,6 +386,9 @@ ul,li {
 	background-color: #27b8f3;
 }
 /*服务类型选择*/
+.zj_service {
+	font-size: 15px;
+}
 .zj_service .title {
 	display: -webkit-box-flex;
 	display: -webkit-flex;

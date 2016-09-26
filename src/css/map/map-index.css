@@ -2,6 +2,9 @@ html{height:100%}
 body{height:100%;margin:0px;padding:0px}    
 /*#wapper{height:100%;}*/
 /*#container{height:100%;}*/
+.f15{
+  font-size: 15px;
+}
 /*信息窗口*/
 .bubbleInfo {
     display:inline-block;

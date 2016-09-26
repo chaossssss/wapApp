@@ -13,7 +13,7 @@ angular.module('com.wapapp.app',['infinite-scroll'])
     } 
     $rootScope.flag = getvl("flag");
 
-}])
+}]) 
 .controller('orderListCtrl',['$rootScope','$scope','orderService',function($rootScope,$scope,orderService){
 	var tb = $scope.tb = {};	//tab标签点击
 	var vm = $scope.vm = {};
@@ -21,16 +21,20 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 
 	tb.activeTab = $rootScope.flag;
 	tip.toast = false;
-	tip.explain = false;
+	tip.loading = true;
 
-	$scope.$watch('tip.explain',function(){
-		if(tip.explain == true){
-			setTimeout(function () {
-	            tip.explain = false;
-	        }, 2000);
-		}
-	})
+	$('#container').on('click', '#showToast', function () {
+        $('#toast').show();
+        setTimeout(function () {
+            $('#toast').hide();
+        }, 2000);
+    })
 
+
+	//跳转到订单详情页面
+	vm.goOrderDetail = function(orderId){
+		window.location.href = "/template/orderManage/order-detail.html?orderId="+orderId;
+	}
 	//支付订单
  	vm.pay = function(orderId){
  		console.log("订单id",orderId);
@@ -79,7 +83,6 @@ angular.module('com.wapapp.app',['infinite-scroll'])
  			})
  	}
 
-
 	var Reddit = function(type) {
          this.items = [];
          this.busy = false;
@@ -96,10 +99,11 @@ angular.module('com.wapapp.app',['infinite-scroll'])
         	data:{
         		Token: $rootScope.token,
         		PageIndex: this.currentPage,
-        		PageSize: 2,
+        		PageSize: 3,
         		Type: this.type 
         	}
         }).success(function(res){
+        	tip.loading = false;
         	console.log("全部列表",res); 
         	if(res.Meta.ErrorCode === "0"){
                 if(res.Body.OrderList){
@@ -120,7 +124,6 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 			} 
         }.bind(this));
     };
-
     tb.active = function(flag){
     	console.log("当前点击:",flag);
     	$rootScope.flag = flag;
