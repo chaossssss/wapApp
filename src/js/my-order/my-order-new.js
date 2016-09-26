@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',['infinite-scroll'])
 .run(['$rootScope',function($rootScope){
-	// FastClick.attach(document.body);
+	FastClick.attach(document.body);
 	$rootScope.token = window.localStorage.getItem("Token");
 	$rootScope.url = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
 

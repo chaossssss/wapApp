@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// FastClick.attach(document.body);
+	FastClick.attach(document.body);
 	// $rootScope.token = "61517f53ac915b617b41a201c55d9ae3";
 	// $rootScope.token = $.cookie("Token");
 	$rootScope.token = window.localStorage.getItem("Token");

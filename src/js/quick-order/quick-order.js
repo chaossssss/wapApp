@@ -2,6 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
+	FastClick.attach(document.body);
 	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
@@ -24,7 +25,7 @@ angular.module('com.wapapp.app',[])
 	$scope.loadingToast = false;
 
 	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
-	vm.Total = 0;
+	vm.Total = 2;
 	// vm.unitPrice = 0;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
@@ -40,14 +41,37 @@ angular.module('com.wapapp.app',[])
 		}
 	}
  
+	/*
+ 	*	数据初始化
+ 	 */
 	vm.ServiceContent = "";
-	vm.ServiceAddressId = $rootScope.addressId;
+	vm.Total = 2;
+	if($rootScope.addressId){
+		vm.ServiceAddressId = $rootScope.addressId;
+	}else if(window.localStorage.getItem("_address")){
+		//未选择过地址，取出上次缓存的地址
+		var _address = JSON.parse(window.localStorage.getItem("_address"));
+		vm.ServiceAddressId = _address.Id;
+		$scope.addr = _address;
+	}
+
+	//取出缓存数据
+	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
+	console.log(_pointOrder);
+	if(_pointOrder){
+		vm.ServiceTypeId = _pointOrder.ServiceTypeId;
+		vm.Total = _pointOrder.Total;
+		vm.ServiceStartAt = _pointOrder.ServiceStartAt;
+		vm.ServiceContent = _pointOrder.ServiceContent;
+	}
 
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log("获取地址",res);
 			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
+				//地址数据永久缓存
+				window.localStorage.setItem("_address",JSON.stringify(res.Body[0]));
 			}
 			$scope.$apply();
 		})
@@ -109,6 +133,14 @@ angular.module('com.wapapp.app',[])
 
 	vm.submitOrder = function(){
 		$scope.loadingToast = true;
+		//数据缓存进sessionStroage
+		var stroage = {
+			ServiceTypeId: vm.ServiceTypeId,
+			Total: vm.Total,
+			ServiceStartAt: vm.ServiceStartAt,
+			ServiceContent: vm.ServiceContent
+		}
+		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
 		$scope.$broadcast("uploader-img-data");
 	}
 
@@ -191,6 +223,7 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('serviceTypeCtrl',['$scope','listService',function($scope,listService){
 	var st = $scope.st = {};
+
 	listService.get()
 		.success(function(res){
 			console.log("服务类型",res);

@@ -15,7 +15,7 @@
  
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/point-order/point-order.min.css">
-	<link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css">
+	<!-- <link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css"> -->
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
@@ -245,7 +245,6 @@
 	</div>
 </div>
 
-
 <div class="zj_date_picker" zh-date-picker id="zh_date_picker" ng-controller="datePickerCtrl">
 	<div class="" ng-class="{true:'zj_mask_transition zj_fade_toggle',false:''}[dp.show]"></div>
 	<div class="zj_actionsheet" ng-class="{true:'zj_actionsheet_toggle',false:''}[dp.show]">
@@ -256,91 +255,17 @@
 				</li>
 			</ul>
 			<ul class="zj_tab_bd zj_flex_1">
-				<!-- <li class="zj_li">
-					<span>立即服务</span>
-					<i class="weui_icon_success zj_icon show"></i>
-				</li> -->
 				<li class="zj_li"  ng-repeat="item in dp.timeItem" ng-click="dp.getdpTime(item)">
 					<span>{{item}}</span>
 					<i class="weui_icon_success zj_icon hide"></i>
 				</li>
 			</ul>
-			<!-- <ul class="zj_navbar_item zj_flex_1">
-				<li ng-repeat="item in dp.dayDate" ng-click="dp.getdpDay(item)">
-					<span>{{item}}</span>
-				</li>
-			</ul>
-			<ul class="zj_tab_bd zj_flex_1">
-				<li class="zj_li">
-					<span>立即服务</span>
-					<i class="weui_icon_success zj_icon show"></i>
-				</li>
-				<li class="zj_li"  ng-repeat="item in dp.timeDate" ng-click="dp.getdpTime(item)">
-					<span>{{item}}</span>
-					<i class="weui_icon_success zj_icon hide"></i>
-				</li>
-			</ul> -->
 		</div>
 		<div class="zj_ft" ng-click="dp.show = false">
 			取消
 		</div>
 	</div>
 </div>
-
-<!-- <div class="zj_service" ng-controller="serviceTypeCtrl" ng-if="vm.serviceShow === true">
-	<div class="zj_mask_transition zj_fade_toggle"></div>
-	<div class="zj_actionsheet zj_actionsheet_toggle"  style="overflow:auto;height:100%;">
-		<div class="col90 container style='overflow:auto'">
-			<div class="title">
-				<img class="mr20 w30 h30" src="/images/quick-order/i-hot.png" alt="">
-				热门推荐
-			</div>
-			<div class="bd blred">
-				<div class="cell" ng-repeat="item in st.serviceList[5].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
-				</div>
-			</div>
-			<div class="title">
-				<img class="mr20 w30 h30" src="/images/quick-order/i-broom.png" alt="">
-				家政
-			</div>
-			<div class="bd blgreen">
-				<div class="cell" ng-repeat="item in st.serviceList[2].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
-				</div>
-			</div>
-			<div class="title">
-				<img class="mr20 w30 h30" src="/images/quick-order/i-fix.png" alt="">
-				维修
-			</div>
-			<div class="bd blpurple">
-				<div class="cell" ng-repeat="item in st.serviceList[3].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
-				</div>
-			</div>
-			<div class="title">
-				<img class="mr20 w30 h30" src="/images/quick-order/i-install.png" alt="">
-				安装
-			</div>
-			<div class="bd blorange">
-				<div class="cell" ng-repeat="item in st.serviceList[0].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
-				</div>
-			</div>
-			<div class="title">
-				<img class="mr20 w30 h30" src="/images/quick-order/i-decoration.png" alt="">
-				装修
-			</div>
-			<div class="bd blpink mb15">
-				<div class="cell" ng-repeat="item in st.serviceList[4].Children" ng-click="st.getTypeName(item.TypeId)">
-					{{item.TypeName}}
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
-
-
 
 
 
@@ -352,7 +277,8 @@
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
-<script src="/lib/jquery-scroll/prefect-scrollbar.jquery.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<!-- <script src="/lib/jquery-scroll/prefect-scrollbar.jquery.min.js"></script> -->
 <script src="/js/point-order/point-order.min.js"></script>
 </body>
 </html>

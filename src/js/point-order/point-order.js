@@ -2,6 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// $rootScope.token = "8c03ea1b31cef926698d08c964f53302";
+	FastClick.attach(document.body);
 	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
@@ -26,11 +27,10 @@ angular.module('com.wapapp.app',[])
 	$scope.loadingToast = false;
 
 	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
-	vm.Total = 0;
+	
 	// vm.unitPrice = 30;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
-
 	vm.sub = function(){
 		if(vm.Total >0){
 			vm.Total -= 1;
@@ -42,18 +42,43 @@ angular.module('com.wapapp.app',[])
 		}
 	}
  
+ 	/*
+ 	*	数据初始化
+ 	 */
 	vm.ServiceContent = "";
-	vm.ServiceAddressId = $rootScope.addressId;
+	vm.Total = 2;
+	if($rootScope.addressId){
+		vm.ServiceAddressId = $rootScope.addressId;
+	}else if(window.localStorage.getItem("_address")){
+		//未选择过地址，取出上次缓存的地址	
+		var _address = JSON.parse(window.localStorage.getItem("_address"));
+		vm.ServiceAddressId = _address.Id;
+		$scope.addr = _address;
+	}
+	
+	//取出缓存数据
+	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
+	console.log(_pointOrder);
+	if(_pointOrder){
+		vm.serviceTypeObj = _pointOrder.serviceTypeObj;
+		vm.Total = _pointOrder.Total;
+		vm.ServiceStartAt = _pointOrder.ServiceStartAt;
+		vm.ServiceContent = _pointOrder.ServiceContent;
+	}
 
+	//拉取地址
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log("获取地址成功",res);
 			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
+				//地址数据永久缓存
+				window.localStorage.setItem("_address",JSON.stringify(res.Body[0]));
 			}
 			$scope.$apply();
 		})
 
+	//拉取工人信息
 	markService.search($rootScope.ObjectType,$rootScope.ObjectId)
 		.success(function(res){
 			console.log("获取工人信息",res);
@@ -113,12 +138,11 @@ angular.module('com.wapapp.app',[])
 	$scope.$on('service-time-date',function(event,date){
 		console.log("父亲接收时间",date);
 		vm.ServiceStartAt = date;
-
 	})
 
 	vm.datePickerShow = function(){
-		if(vm.ServiceTypeId){
-			$scope.$broadcast("service-time-show",vm.ServiceTypeId);
+		if(vm.serviceTypeObj){
+			$scope.$broadcast("service-time-show",vm.serviceTypeObj.ServiceTypeId);
 		}else{
 			vm.dialogshow = true;
 			vm.errorMsg = "请先选择服务类型";
@@ -126,70 +150,83 @@ angular.module('com.wapapp.app',[])
 	}
 
 	vm.submitOrder = function(){
-		$scope.loadingToast = true;
+		//数据缓存进sessionStroage
+		var stroage = {
+			serviceTypeObj: vm.serviceTypeObj,
+			Total: vm.Total,
+			ServiceStartAt: vm.ServiceStartAt,
+			ServiceContent: vm.ServiceContent
+		}
+		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
 		$scope.$broadcast("uploader-img-data");
 	}
 
 	$scope.$on("uploader-form",function(event,img){
-		console.log("img",img);
-		console.log("Token",$rootScope.token);
-		console.log("ObjectType",$rootScope.ObjectType);
-		console.log("ObjectId",$rootScope.ObjectId);
-		console.log("serviceTypeObj",vm.serviceTypeObj),
-		console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
-		console.log("ServiceContent",vm.ServiceContent);
-		console.log("Total",vm.Total);
-		console.log("ServiceStartAt",vm.ServiceStartAt);
-		console.log("ServiceAddressId",vm.ServiceAddressId);
+		if(vm.serviceTypeObj == undefined){
+			vm.dialogshow = true;
+			vm.errorMsg = "请先选择服务类型";
+		}else{
+			$scope.loadingToast = true;
+			console.log("img",img);
+			console.log("Token",$rootScope.token);
+			console.log("ObjectType",$rootScope.ObjectType);
+			console.log("ObjectId",$rootScope.ObjectId);
+			console.log("serviceTypeObj",vm.serviceTypeObj),
+			console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
+			console.log("ServiceContent",vm.ServiceContent);
+			console.log("Total",vm.Total);
+			console.log("ServiceStartAt",vm.ServiceStartAt);
+			console.log("ServiceAddressId",vm.ServiceAddressId);
 
-		var Json_data = {
-            "Token":$rootScope.token,
-            "ObjectType":$rootScope.ObjectType,
-            "ObjectId":$rootScope.ObjectId,
-            "ServiceTypeId": vm.serviceTypeObj.ServiceTypeId,
-            "ServiceContent": vm.ServiceContent,
-            "Total": vm.Total,
-            "OrderFrom": "1",
-            "ServiceStartAt": vm.ServiceStartAt,
-            "ServiceAddressId": vm.ServiceAddressId
-        };
-        Json_data = JSON.stringify(Json_data);
+			var Json_data = {
+	            "Token":$rootScope.token,
+	            "ObjectType":$rootScope.ObjectType,
+	            "ObjectId":$rootScope.ObjectId,
+	            "ServiceTypeId": vm.serviceTypeObj.ServiceTypeId,
+	            "ServiceContent": vm.ServiceContent,
+	            "Total": vm.Total,
+	            "OrderFrom": "1",
+	            "ServiceStartAt": vm.ServiceStartAt,
+	            "ServiceAddressId": vm.ServiceAddressId
+	        };
+	        Json_data = JSON.stringify(Json_data);
 
-        var formdata = new FormData();
-        formdata.append("Token",$rootScope.token);   
-        formdata.append("ObjectType",$rootScope.ObjectType);  
-        formdata.append("ObjectId",$rootScope.ObjectId);  
-        formdata.append("ServiceTypeId", vm.serviceTypeObj.ServiceTypeId);   
-        formdata.append("ServiceContent", vm.ServiceContent);   
-        formdata.append("Total", vm.Total);    
-        formdata.append("OrderForm", "1");   
-        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
-        formdata.append("ServiceAddressId", vm.ServiceAddressId); 
+	        var formdata = new FormData();
+	        formdata.append("Token",$rootScope.token);   
+	        formdata.append("ObjectType",$rootScope.ObjectType);  
+	        formdata.append("ObjectId",$rootScope.ObjectId);  
+	        formdata.append("ServiceTypeId", vm.serviceTypeObj.ServiceTypeId);   
+	        formdata.append("ServiceContent", vm.ServiceContent);   
+	        formdata.append("Total", vm.Total);    
+	        formdata.append("OrderForm", "1");   
+	        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+	        formdata.append("ServiceAddressId", vm.ServiceAddressId); 
 
-        for(var i=0,leng=img.length;i<leng;i++){
-            formdata.append("img"+i,img[i]);
-        }
-        formdata.append("JSON_Data",Json_data);
+	        for(var i=0,leng=img.length;i<leng;i++){
+	            formdata.append("img"+i,img[i]);
+	        }
+	        formdata.append("JSON_Data",Json_data);
 
-		orderService.uploader(formdata)
-			.success(function(res){
-				console.log(res);
-				$scope.loadingToast = false;
-				if(res.Meta.ErrorCode === "0"){
-					window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
-				}else{
-					vm.dialogshow = true;
-					vm.errorMsg = res.Meta.ErrorMsg;
-				}
-				$scope.$apply();
-			})
+			orderService.uploader(formdata)
+				.success(function(res){
+					console.log(res);
+					$scope.loadingToast = false;
+					if(res.Meta.ErrorCode === "0"){
+						window.sessionStorage.removeItem("point-order");
+						window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
+					}else{
+						vm.dialogshow = true;
+						vm.errorMsg = res.Meta.ErrorMsg;
+					}
+					$scope.$apply();
+				})
+		}
+		
 	})
 }])
 .controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
-
 	var dp = $scope.dp = {};
 	dp.show =false;
-
 	dp.getdpDay = function(item){
 		// console.log(item.TimeRange);
 		dp.timeItem = item.TimeRange;
@@ -204,11 +241,10 @@ angular.module('com.wapapp.app',[])
 		dp.show = false;
 		$scope.$emit("service-time-date",serviceStartAt);
 	}
-
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;
 		console.log(id);
-		timeService.get("5")
+		timeService.get(id)
 			.success(function(res){
 				console.log(res);
 				dp.timeList =  res.Body;
@@ -218,9 +254,7 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('uploaderFileCtrl',['$scope',function($scope){
 	var uf = $scope.uf = {};
-
 	var fileFilter = [];
-
 	//选择文件组的过滤方法
 	function filter(files) {
         var arrFiles = [];
@@ -237,7 +271,6 @@ angular.module('com.wapapp.app',[])
         }
         return arrFiles;
     };
-
 	//选中文件的处理与回调
 	function funDealFiles() {
 		for (var i = 0, file; file = fileFilter[i]; i++) {
@@ -247,7 +280,6 @@ angular.module('com.wapapp.app',[])
 		//执行选择回调
 		onSelect(fileFilter);
 	};
-
 	//获取选择文件，file控件或拖放
 	function funGetFiles(e) {
 		// 获取文件列表对象
@@ -256,7 +288,6 @@ angular.module('com.wapapp.app',[])
 		fileFilter = fileFilter.concat(filter(files));
 		funDealFiles();
 	};
-
 	function onSelect(files){
 		var html = '', i = 0;
 		var file;
@@ -293,7 +324,6 @@ angular.module('com.wapapp.app',[])
         };
         funAppendImage();    
 	};
-
 	//删除对应的文件
 	function funDeleteFile(fileDelete) {
 		var arrFile = [];
@@ -306,50 +336,42 @@ angular.module('com.wapapp.app',[])
 		}
 		fileFilter = arrFile;
 	};
-
 	//文件删除后
 	function onDelete(file){
 		$("#uploadList_"+ file.index).fadeOut();
 	}
-
 	//文件上传进度
 	function onProgress(file, loaded, total) {
 		var eleProgress = $("#uploadProgress_" + file.index);
 		var percent = (loaded / total * 100).toFixed(2) + '%';
 		eleProgress.show().text(percent);
 	};
-
 	//文件上传成功时
 	function onSuccess(file,response){
 		var eleSuccess = $("#uploadProgress_" + file.index);
 		eleSuccess.append('<i class="weui_icon_success"></i>');
 	}
-
 	//文件上传失败时
 	function onFailure(file){
 		var eleError = $("#uploadProgress_" + file.index);
 		eleError.append('<i class="weui_icon_warn"></i>');
 	}
-
 	//文件全部上传完毕时
     function onComplete() {
         //file控件value置空
         $("#file").val("");
     }    
 
-
 	var fileInput = document.getElementById("file"); 
 	fileInput.addEventListener("change",function(e){
 		console.log(e.target);
 		funGetFiles(e);
 	})
-
 	//文件上传
 	function funUploadFile(){
 		// console.log(fileFilter);
 		$scope.$emit("uploader-form",fileFilter)
 	}
-
 	$scope.$on("uploader-img-data",function(event,data){
 		funUploadFile();
 	})

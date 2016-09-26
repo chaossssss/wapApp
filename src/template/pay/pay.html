@@ -20,7 +20,7 @@
 <body ng-controller="payCtrl">
 <form novalidate="novalidate" name="form">
 	<div class="weui_cells">
-		<div class="weui_cell">
+		<div class="weui_cell" style="padding:10px;">
 			<div class="weui_cell_hd">
 				<img src="/images/emt.jpg" alt="" style="width:30px;margin-right:5px;display:block;border-radius:15px;">
 			</div>
@@ -48,17 +48,17 @@
 			<div class="weui_cell_ft" ng-bind="vm.Price">¥60.0</div>
 		</div>
 	</div>
-	<div class="weui_cells weui_cells_access mt10">
+	<!-- <div class="weui_cells weui_cells_access mt10">
 		<a href="javascript:;" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>优惠券</p>
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a>
-	</div>
+	</div> -->
 	<div class="weui_cells weui_cells_checkbox mt10">
 		<div class="weui_cell">请选择支付方式</div>
-		<label class="weui_cell weui_check_label for='s11' ">
+		<label for='s11' class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
 				<img src="/images/pay/yue.png" alt="" style="width:20px;display:block;margin-right:5px;">
 			</div>
@@ -66,7 +66,7 @@
 				<p>账户余额支付 余额<span ng-bind="vm.Balance"></span>元</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s11" value="account" class="weui_check" ng-model="vm.radioBox" ng-required="true">
+				<input type="checkbox" name="checkbox" id="s11" class="weui_check" ng-model="vm.yeradio">
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
@@ -78,7 +78,7 @@
 				<p>支付宝支付</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s12" value="zhifubao" class="weui_check" ng-model="vm.radioBox" ng-required="true"></input>
+				<input type="radio" name="checkbox1" id="s12" class="weui_check" value="zhifubao" ng-model="vm.wxOrzfb"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
@@ -90,7 +90,7 @@
 				<p>微信支付</p>
 			</div>
 			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s13" value="weixin" class="weui_check" ng-model="vm.radioBox" ng-required="true"></input>
+				<input type="radio" name="checkbox1" id="s13" class="weui_check" value="weixin" ng-model="vm.wxOrzfb"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>

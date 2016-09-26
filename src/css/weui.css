@@ -1420,7 +1420,8 @@ a.weui_media_box:active {
   color: #353535;
 }
 .weui_btn_dialog.primary {
-  color: #0BB20C;
+  /*color: #0BB20C;*/
+  color: #27b8f3;
 }
 @media screen and (min-width: 1024px) {
   .weui_dialog {
