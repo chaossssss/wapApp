@@ -84,22 +84,13 @@
             <div class="weui_uploader">
               <div class="weui_uploader_bd">
                 <ul id="showPics" class="weui_uploader_files">
-<!--                   <li class="zj-show-pic" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
-                  <li class="weui_uploader_file zj-show-pic" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
-                  <li class="weui_uploader_file zj-show-pic" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
-                  <li class="weui_uploader_file zj-show-pic" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li> -->
+
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-<!--       <div class="weui_cell">
-        <div class="weui_cell_bd weui_cell_primary">
-          <p class="zj-fontsize">服务价格</p>
-        </div>
-        <div class="weui_cell_ft zj-fontsize">面议</div>
-      </div> -->
       <div class="weui_media_box weui_media_text zj-pay zj-cell-border">
         <div id="servicePrice" class="weui_media_desc zj-fontsize spacing">服务价格
         <p id="ifNegotiable" class="money">
@@ -117,6 +108,8 @@
         <p id="total" class="money"><span id="price"></span></p></div>
         <div id="specialPrice" class="weui_media_desc zj-fontsize spacing">特价小时工
         <p id="special" class="money"><span id="hourly"></span></p></div>
+<!--         <div id="activityName" class="weui_media_desc zj-fontsize spacing">优惠活动名称
+        <p id="activityRight" class="money"><span id="activityPrice"></span></p></div> -->
         <div id="waitOrder" class="weui_media_desc zj-fontsize spacing">
         待支付
         <p id="wait" class="money"><span id="toBePaid"></span></p></div>
@@ -192,7 +185,7 @@
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd"><strong class="weui_dialog_title">联系师傅</strong></div>
-    <div class="weui_dialog_bd zj-align">暂时不接受电话</div>
+    <div class="weui_dialog_bd zj-align  zj-confirm-word">暂时不接受电话</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn" class="weui_btn_dialog default">取消</a>
       <a href="javascript:;" class="weui_btn_dialog primary bluecol">确定</a>
@@ -216,7 +209,7 @@
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd"><strong class="weui_dialog_title">删除订单</strong></div>
-    <div class="weui_dialog_bd zj-align">确定删除订单吗？删除后不可恢复哦</div>
+    <div class="weui_dialog_bd zj-align zj-confirm-word">确定删除订单吗？删除后不可恢复哦</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="deleteCancel" class="weui_btn_dialog default">取消</a>
       <a href="javascript:;" id="deleteBtn" class="weui_btn_dialog primary bluecol">删除</a>
@@ -228,7 +221,7 @@
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd"><strong class="weui_dialog_title">取消订单</strong></div>
-    <div class="weui_dialog_bd zj-align">确定取消订单吗？</div>
+    <div class="weui_dialog_bd zj-align zj-confirm-word">确定取消订单吗？</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn1" class="weui_btn_dialog default">先不取消</a>
       <a href="javascript:;" id="cancelOrderBtn" class="weui_btn_dialog primary zj-bluecol">确定</a>
@@ -239,12 +232,23 @@
 <div id="prompt" class="zj-prompt">
   <p class="prompt-news">抱歉，请耐心等待工人接单</p>
 </div>
+<!--支付弹窗-->
+<div class="weui_dialog_alert" id="pay-box" style="display:none">
+  <div class="weui_mask"></div>
+  <div class="weui_dialog">
+    <div class="weui_dialog_hd"><strong class="weui_dialog_title"></strong></div>
+    <div class="weui_dialog_bd zj-alert-word">您已完成下单，请等待工人接单后完成支付，预计时间0.5-1小时。详情请查看【首页-个人中心-我的订单】</div>
+    <div class="weui_dialog_ft">
+        <a id="know" href="javascript:;" class="weui_btn_dialog primary zj-bluecol">我知道了</a>
+    </div>
+  </div>
+</div>
 <!--客户已付款，工人还未确认取消订单-->
 <div class="weui_dialog_confirm" id="cancelOrder2" style="display:none">
   <div class="weui_mask"></div>
   <div class="weui_dialog">
     <div class="weui_dialog_hd">工人/商户已接单，若需取消，请联系客服</div>
-    <div class="weui_dialog_bd zj-align">客服电话：4008-262-056</div>
+    <div class="weui_dialog_bd zj-align zj-confirm-word">客服电话：4008-262-056</div>
     <div class="weui_dialog_ft">
       <a href="javascript:;" id="cancelBtn2" class="weui_btn_dialog default">先不取消</a>
       <a href="tel:4008-262-056;" id="contactWorkerBtn" class="weui_btn_dialog primary zj-bluecol">联系客服</a>

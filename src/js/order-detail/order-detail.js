@@ -35,15 +35,11 @@ $(function(){
     if(minutes<= 9){
       minutes = "0" + minutes;
     }
-    if(seconds<= 9){
-      seconds = "0" + seconds;
-    }
     var date = (d.getFullYear()) + "-" + 
                month + "-" +
                date + " " + 
                hours + ":" + 
-               (minutes) + ":" + 
-               (seconds);
+               minutes;
     return date;
   }
   function string_to_date(strDate){
@@ -169,22 +165,22 @@ $(function(){
       $("#orderCode").text(data.Body.OrderCode);
       if(data.Body.CreateTime != null){
         var createTime = new Date(data.Body.CreateTime);
-      $("#createTime").text(createTime.Format("yyyy-MM-dd hh:mm:ss"));
+      $("#createTime").text(createTime.Format("yyyy-MM-dd hh:mm"));
       }
       if(data.Body.AcceptTime != null){
         var acceptAt = new Date(data.Body.AcceptTime);
-        $("#acceptAt").text(acceptAt.Format("yyyy-MM-dd hh:mm:ss"));
+        $("#acceptAt").text(acceptAt.Format("yyyy-MM-dd hh:mm"));
       }
       var serviceStartAt = getDatetime(data.Body.Service.ServiceStartAt);
       $("#serviceAt").text(serviceStartAt);
       if(data.Body.FinishTime != null){
         var finishTime = new Date(data.Body.FinishTime)
-        $("#finishAt").text(finishTime.Format("yyyy-MM-dd hh:mm:ss"));
+        $("#finishAt").text(finishTime.Format("yyyy-MM-dd hh:mm"));
       }
       $("#confirmAt").text(data.Body.ConfirmTime);
       if(data.Body.CancelTime != null){
         var cancelAt = new Date(data.Body.CancelTime);
-        $("#cancelAt").text(cancelAt.Format("yyyy-MM-dd hh:mm:ss"));
+        $("#cancelAt").text(cancelAt.Format("yyyy-MM-dd hh:mm"));
       }
       // $("#cancelAt").text(data.Body.CancelTime);
       $("#clientName").text(data.Body.Service.AddressInfo.Contact);
@@ -192,9 +188,11 @@ $(function(){
       $("#clientGender").text(clientGender);
       var workName = data.Body.ServiceProviderName;
       $("#serviceProviderName").text(workName);
-      var totalPrice = moneySymbol(data.Body.Service.TotalPrice);
+      totalPrice = moneySymbol(data.Body.Service.TotalPrice);
       $("#actualMoney").text(totalPrice);
-      $("#price").text(totalPrice);
+      if(data.Body.Service.TotalPrice){
+        $("#price").text(totalPrice);
+      }
       var gender = data.Body.ServiceProviderGender;
       if(gender == "1"){
         $("#workerGender").text('阿姨');
@@ -257,6 +255,9 @@ $(function(){
       if( data.Body.DiscountAmount != null || data.Body.Activity != null){
         var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
         $("#toBePaid").text(toBePaid);
+      }
+      if(totalPrice == null){
+        $("toBePaid").hide();
       }
       if(data.Body.Activity == null){
         $("#specialPrice").hide();
@@ -339,6 +340,10 @@ console.log(orderState);
     break;
     case "10":
     console.log("待接单");
+    $("#pay-box").css("display","block");
+    $("#know").on("click",function(){
+      $("#pay-box").hide();
+    })
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
 
     $("#status").text('订单提交成功');
@@ -361,7 +366,7 @@ console.log(orderState);
     $("#btnLeft").addClass("delete-btn");
     $("#btnRight").addClass("pay-btn");
 
-    $("#orderPrice").hide();
+    // $("#orderPrice").hide();
     $("#orderDiscount").hide();
     $("#orderActual").hide();
     $("#refundRecord").hide();
@@ -370,12 +375,16 @@ console.log(orderState);
     $("#payTime").hide();
     $("#cancelTime").hide();
     $("#specialPrice").hide();
-    $("#waitOrder").hide();
+    // $("#waitOrder").hide();
     $("#finishTime").hide();
-    $("#zjWorker").hide();
+    if(serviceId == ""){
+      $("#zjWorker").hide();
+    }
 
     $("#orderTime").css("marginBottom","4px");
-    $("#servicePrice").css("marginBottom","4px");
+    if(totalPrice == ""){
+      $("#servicePrice").css("marginBottom","4px");
+    }
     $(".pay-btn").on("click",function(){
 
     })
