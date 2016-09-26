@@ -38,6 +38,9 @@ ul,li {
 .mt20 {
 	margin-top: 20px;
 }
+.f15 {
+	font-size: 15px;
+}
 .f14 {
 	font-size: 14px;
 }
@@ -72,6 +75,9 @@ ul,li {
 .w30 {
 	width: 30px;
 }
+.col100 {
+	width: 100%;
+}
 .col90 {
 	width: 90%;
 }
@@ -81,6 +87,9 @@ ul,li {
 .container {
 	margin-left: auto;
 	margin-right: auto;
+}
+.h50 {
+	height: 50px;
 }
 .h30 {
 	height: 30px;
