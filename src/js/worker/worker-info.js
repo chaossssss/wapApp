@@ -249,23 +249,18 @@ $(function(){
     var token = window.localStorage.getItem("Token");
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/SystemService/GetActivity',
+        url: 'http://192.168.1.191:3003/api/v2/SystemService/GetActivity',
         dataType: 'json',
         data:{
             Token:token,
-            ServiceTypeId:"0"
+            ServiceTypeId:"45"
         },
         success:function(data){
             if(data.Body){
-                var api=data.Body.XXX;
-                if(api.length){
-                    var res="";
-                    for (var i = 0; i < api.length; i++) {
-                        res+='<div class="ac_detail"><span class="youhui_info">'+api[i].XXX+'</span></div>';
-                    }
-                    $(".ac_list").html(res);
-                }
+                var res="";
+                res='<div class="ac_detail"><span class="youhui_info">'+data.Body.PromotionTitle+'</span></div>';
 
+                $(".ac_list").html(res);
 
             }else {
                 $(".ac_cont").css("display","none");

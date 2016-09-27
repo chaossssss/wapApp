@@ -277,12 +277,12 @@ $(function(){
 
       if(data.Body.ServiceProviderType == "2"){
         console.log("工人");
-        href="../worker/worker-info.html?type=" + serviceProviderType + "&markid=" + serviceProviderId;
+        href="../worker/worker-info.html?type=1&markid=" + serviceProviderId;
         $("#goToProvider").attr("href",href);
       }
       if(data.Body.ServiceProviderType == "3"){
         console.log("商户");
-        href="../business-detail/business-detail.html?type=" + serviceProviderType + "&markid=" + serviceProviderId;
+        href="../business-detail/business-detail.html?type=2&markid=" + serviceProviderId;
         $("#goToProvider").attr("href",href);
       }
 
@@ -573,6 +573,7 @@ console.log(orderState);
       $("#payTime").hide();
       // $("#specialPrice").hide();
       $("#waitOrder").css("marginBottom","0px");
+      $("#acceptTime").css("marginBottom","4px");
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").on("click",function(){
@@ -648,6 +649,7 @@ console.log(orderState);
       $("#filling2").hide();
       $("#negotiable").hide();
       $("#optionFooter").hide();
+      $("#filling3").hide();
       $("#payTime").hide();
       $("#finishTime").hide();
       $("#cancelTime").hide();
@@ -758,7 +760,7 @@ console.log(orderState);
     $("#btnRight").addClass("confirm-btn");
 
     // $(".round").css("left","58px");  
-
+    $("#orderActual").css("marginBottom","0px");
     $("#refundRecord").hide();
     $("#filling2").hide();
     $("#negotiable").hide();
@@ -805,7 +807,7 @@ console.log(orderState);
       $("#waitOrder").hide();
 
       $("#btnRight").on("click",function(){
-        window.location.href="";
+        window.location.href="order-evaluate.html?orderId=" + orderId + "&type=" + (serviceProviderType-1) + "&markid=" + serviceProviderId;
       })
     }
 
@@ -995,6 +997,7 @@ console.log(orderState);
       $("#roundFourth").addClass("round-undone");
 
       $("#optionFooter").hide();
+      $("#filling3").hide();
       $("#negotiable").hide();
       $("#cancelTime").hide();
 

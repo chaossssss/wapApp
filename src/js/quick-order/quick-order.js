@@ -23,9 +23,14 @@ angular.module('com.wapapp.app',[])
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
-
+	// 搜索服务类型，flag条显示更多按钮
+	vm.flag0 = true; 	//热门服务
+	vm.flag168 = true;	//安装
+	vm.flag169 = true;	//便民
+	vm.flag170 = true;	//家政
+	vm.flag171 = true;	//维修
+	vm.flag172 = true;	//装修
 	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
-	vm.Total = 2;
 	// vm.unitPrice = 0;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;

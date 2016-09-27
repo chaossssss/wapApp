@@ -16,6 +16,11 @@
 
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/pay/pay.min.css">
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head> 
 <body ng-controller="payCtrl">
 <form novalidate="novalidate" name="form">
@@ -106,7 +111,7 @@
 </form>
 
 <!-- loadingToast -->
-<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true">
+<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true" ng-cloak>
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <div class="weui_loading">
@@ -128,7 +133,7 @@
 </div>
 
 <!-- dialog_alert -->
-<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
 			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>
@@ -142,7 +147,7 @@
 </div>
 
 <!-- dialog_alert -->
-<div class="weui_dialog_confirm" ng-show="vm.dialogConfirm == true">
+<div class="weui_dialog_confirm" ng-show="vm.dialogConfirm == true" ng-cloak>
     <div class="weui_mask"></div>
     <div class="weui_dialog">
         <div class="weui_dialog_hd"><strong class="weui_dialog_title">确认信息</strong></div>

@@ -15,7 +15,11 @@
  
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/point-order/point-order.min.css">
-	<!-- <link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css"> -->
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
@@ -26,6 +30,7 @@
 			</p>
 		</div>
 	</div>  -->
+	<!-- 选择地址 begin -->
 	<div class="weui_cells weui_cells_access zj_local_image" >
 		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
 			<div class="weui_cell_hd">
@@ -47,9 +52,11 @@
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a>
-		<img  class="pb2" src="/images/quick-order/local-border.png" alt="">
+		<img  class="col100" src="/images/quick-order/local-border.png" alt="">
 	</div>
+	<!-- 选择地址 end -->
 	<div class="weui_cells weui_cells_access">
+		<!-- 个人信息 begin-->
 		<div class="weui_cell" style="padding:10px;">
 			<div class="weui_cell_hd"><img ng-src="{{uc.Photo}}" src="http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/" alt="" style="width:26px;margin-right:15px;display:block;"></div>
 			<div class="weui_cell_bd weui_cell_primary">
@@ -61,6 +68,8 @@
 				<a ng-href="tel:{{uc.PhoneNumber}}"><img src="/images/quick-order/i-phone.png" alt="" style="width:26px;display:block;"></a>
 			</div>
 		</div>
+		<!-- 个人信息 end-->
+		<!-- 服务类型 begin -->
 		<a href="javascript:;" class="weui_cell weui_cell_select" style="padding:5px 0 5px 10px;">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">
@@ -72,6 +81,8 @@
 				<option value="">--请选择服务类型--</option>
 			</select>
 		</a>
+		<!-- 服务类型 end -->
+		<!-- 服务数量 begin-->
 		<div class="weui_cell no_access">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
@@ -95,6 +106,8 @@
 			</div>
 			<div>/小时</div>
 		</div>
+		<!-- 服务数量 end-->
+		<!-- 服务时间 begin -->
 		<a href="javascript:;" class="weui_cell"  ng-click="vm.datePickerShow()">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-time.png" alt="" style="width:20px;margin-right:10px;display:block">
@@ -107,6 +120,7 @@
 				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
+		<!-- 服务时间 end -->
 		<!-- 活动 满足条件 beginning -->
 		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1">	
 			<div class="weui_cell no_access" style="padding-bottom:0;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
@@ -150,16 +164,19 @@
 			</div>
 		</div>	
 		<!-- 活动 满足条件 endind -->
+		<!-- 备注 begin -->
 		<div class="weui_cell no_access">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
-				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea" ng-model="vm.ServiceContent" maxlength="200"></textarea>
+				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea h50" ng-model="vm.ServiceContent" maxlength="200"></textarea>
 				<div class="weui_textarea_counter">
 					<span ng-bind="textarea_size"></span>
 					/200
 				</div>
 			</div>
 		</div>
+		<!-- 备注 end -->
+		<!-- 图片上传 beign -->
 		<div class="weui_cell weui_cells_form no_access" ng-controller="uploaderFileCtrl">
 			<div class="weui_cell_bd weui_cell_primary no_access">
 				<div class="weui_uploader">
@@ -179,15 +196,17 @@
 					</div>
 				</div>
 			</div>
-			<div></div>
 		</div>
+		<!-- 图片上传 end -->
 	</div>
+	<!-- 服务说明 begin-->
 	<div class="weui_cell bgf mb49 fc8 lh30">
 		<div class="weui_cell_bd weui_cell_primary">
-			<p>服务说明</p>
-			<p>工人客户自行商量工人客户自行商量</p>
+			<p class="f15">服务说明</p>
+			<p class="f15">工人客户自行商量工人客户自行商量</p>
 		</div>
 	</div>
+	<!-- 服务说明 end-->
 	<div class="zj_foot webkit_box">
 		<div class="zj_foot_hd">
 			订单总价
@@ -232,7 +251,7 @@
 </div>
 
 <!-- dialog_alert -->
-<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
 			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>
