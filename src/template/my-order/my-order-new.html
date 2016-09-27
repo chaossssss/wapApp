@@ -16,6 +16,11 @@
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/my-order/my-order-new.min.css">
 	<link rel="stylesheet" href="">
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head>
 <body ng-controller="orderListCtrl">
 	
@@ -30,13 +35,13 @@
 		            <div class="weui_navbar_item" ng-init="tb.flag4=4" ng-class="{weui_bar_item_on:tb.activeTab==4}" ng-click="tb.active(tb.flag4)">待确认</div>
 		            <div class="weui_navbar_item" ng-init="tb.flag5=5" ng-class="{weui_bar_item_on:tb.activeTab==5}" ng-click="tb.active(tb.flag5)">待评价</div>
 		        </div>
-		        <div class="weui_tab_bd" ng-if="reddit.items.length == 0">
+		        <div class="weui_tab_bd" ng-show="reddit.items.length == 0" ng-cloak>
 		        	<div class="no_order">
 		        		<img src="/images/my-order/no-order.png" alt="" style="width:30%;margin-bottom:10px;">
 		        		<p class="fc8">您还没有相关的订单</p>
 		        	</div>
 	        	</div>
-		        <div class="weui_tab_bd" infinite-scroll="reddit.nextPage()" infinite-scroll-disabled="reddit.busy" infinite-scroll-distance="1">
+		        <div class="weui_tab_bd" infinite-scroll="reddit.nextPage()" infinite-scroll-disabled="reddit.busy" infinite-scroll-distance="1" ng-cloak>
 					<div class="weui_cells mt10 pt5" ng-repeat="item in reddit.items">
 			        	<div class="zj_cell zj_cell_title">
 			        		<div class="weui_cell_bd weui_cell_primary">
@@ -178,14 +183,13 @@
 				        </div>
 					</div>
 		        </div>
-		        	
 		    </div>
 		</div>
 	</div>
 </div>	
 	
 <!--BEGIN toast-->
-<div ng-if="tip.toast">
+<div ng-if="tip.toast" ng-cloak>
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <i class="weui_icon_toast"></i>
@@ -195,7 +199,7 @@
 <!--end toast-->
 
 <!--BEGIN toast-->
-<div id="toast" style="display:none;">
+<div id="toast" ng-cloak style="display:none;">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast" style="min-height:0;">
         <!-- <i class="weui_icon_toast"></i> -->
@@ -205,7 +209,7 @@
 <!--end toast-->
 
 <!-- loading toast -->
-<div id="loadingToast" class="weui_loading_toast" ng-if="tip.loading">
+<div id="loadingToast" class="weui_loading_toast" ng-if="tip.loading" ng-cloak>
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <div class="weui_loading">

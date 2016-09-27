@@ -16,6 +16,11 @@
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/quick-order/quick-order.min.css">
 	<link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css">
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
@@ -215,7 +220,7 @@
 </div>
 
 <!-- dialog_alert -->
-<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
 			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>
@@ -252,7 +257,7 @@
 </div>
 
 <!-- 服务类型 -->
-<div class="zj_service" ng-controller="serviceTypeCtrl" ng-if="vm.serviceShow === true">
+<div class="zj_service" ng-controller="serviceTypeCtrl" ng-if="vm.serviceShow === true" ng-cloak>
 	<div class="zj_mask_transition zj_fade_toggle"></div>
 	<div class="zj_actionsheet zj_actionsheet_toggle"  style="overflow:auto;height:100%;">
 		<div class="col90 container style='overflow:auto'">
