@@ -1,5 +1,4 @@
 $(function(){
-
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");

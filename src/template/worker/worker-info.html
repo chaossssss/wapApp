@@ -16,18 +16,18 @@
 </head>
 <body>
 	<div class="contain" id="container">
+		<div id="fade" class="black_overlay"></div>
+	    <div id="MyDiv" class="white_content">
+			<div class="swiper-container">
+		        <div class="swiper-wrapper"></div>
+		    </div>
+	    </div>
+
 		<div class="top-info">
 			<a href="javascript:;" id="showSlide">
-				<img src="" class="bus-img" alt="" onerror='this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png"'>
+				<img src="" class="bus-img" alt="">
 			</a>
-
-			<div id="fade" class="black_overlay"></div>
-		    <div id="MyDiv" class="white_content">
-				<div class="swiper-container">
-			        <div class="swiper-wrapper"></div>
-			    </div>
-		    </div>
-					 				
+		 				
 			<div class="name-info">
 				<h4 class="bus-name"></h4>
 				<img class="sex" src="" alt="">
@@ -175,9 +175,9 @@
    		<div class="clear"></div>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-	<script src="/js/worker/worker-info.min.js"></script>
+	<script src="/js/worker/worker-info.min.js"></script>	
+	<script src="/js/swiper.min.js"></script>
 	<script src="/js/worker/dropload.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.0.0/js/swiper.min.js"></script>
 	<script>
     $(function(){
         var Type=getUrl('type');
