@@ -129,11 +129,12 @@ textarea{resize: none;}
 .bus-jl{
 	float: right;
 	/*margin-left: 10px;*/
-	width: 90px;
+	width: 30%;
     height: 21px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+
 }
 .score{
 	position: relative;
