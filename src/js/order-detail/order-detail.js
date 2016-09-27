@@ -573,6 +573,7 @@ console.log(orderState);
       $("#payTime").hide();
       // $("#specialPrice").hide();
       $("#waitOrder").css("marginBottom","0px");
+      $("#acceptTime").css("marginBottom","4px");
       // $("#btnRight").css("left","181px");
 
       $("#btnLeft").on("click",function(){
@@ -759,7 +760,7 @@ console.log(orderState);
     $("#btnRight").addClass("confirm-btn");
 
     // $(".round").css("left","58px");  
-
+    $("#orderActual").css("marginBottom","0px");
     $("#refundRecord").hide();
     $("#filling2").hide();
     $("#negotiable").hide();
