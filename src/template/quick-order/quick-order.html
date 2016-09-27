@@ -65,22 +65,22 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
-			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == false">
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable != '1'">
 				<span ng-bind="sv.name"></span>
 				<span>¥</span>
 				<span ng-bind="sv.Min" ng-if="sv.Min !== sv.Max"></span>
 				<span ng-if="sv.Min !== sv.Max">~</span>
 				<span ng-bind="sv.Max"></span>
 				<span>/</span>
-				<span ng-bind="sv.Unit"></span>
+				<span ng-bind="sv.UnitName"></span>
 			</div>
-			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == true">
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '1'">
 				<span ng-bind="sv.name"></span>
 				&nbsp;面议
 			</div>	
 			<div class="weui_cell_ft" ng-if="!vm.ServiceTypeId"></div>
 		</a>
-		<div class="weui_cell no_access" ng-if="vm.IsNegotiable === false">
+		<div class="weui_cell no_access" ng-if="vm.IsNegotiable != '1'">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -88,19 +88,13 @@
 				<p>服务数量</p>
 			</div>
 			<div class="zj_cell_right">
-				<!-- <div>
-					<select class="zj_cell_select" name="" id="" ng-model="vm.serviceStartAt"  ng-options="item for item in vm.dateTen">
-					<option value="">--请选择--</option>
-					</select>
-					<span>/小时</span>
-				</div> -->
 				<div class="zj_select_plus">
 					<i class="zj_select_sub" ng-click="vm.sub()"></i>
 					<input class="zj_select_num" type="number" maxlength="4" ng-model="vm.Total">
 					<i class="zj_select_add" ng-click="vm.add()"></i>
 				</div>
 			</div>
-			<div>/小时</div>
+			<div ng-bind="sv.UnitName"></div>
 		</div>
 		<a href="javascript:;" class="weui_cell"  ng-click="vm.datePickerShow()">
 			<div class="weui_cell_hd">
@@ -118,15 +112,15 @@
 	<!-- 服务类型&服务数量&服务时间 end-->
 	<!-- 活动 满足条件 beginning -->
 	<div class="weui_cells weui_cells_access" ng-show="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1">
-		<div class="weui_cell">
+		<div class="weui_cell pb5" ng-if="gt.PromotionRule.length > 0">
 			<div class="weui_cell_bd weui_cell_primary">
 				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
-				<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:middle;padding-left:10px;">
+				<img src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:middle;padding-left:5px;">
 			</div>
 		</div>
-		<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box" ng-if="gt.SpecialRule.length > 0">
-			<span class="flex1 pred" ng-bind="gt.SpecialHelp"></span>
-			<img src="/images/quick-order/i-help.png" alt="" style="width:20px;vertical-align:text-top;padding-left:10px;">
+		<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="gt.SpecialRule.length > 0">
+			<span class="pred" ng-bind="gt.SpecialHelp"></span>
+			<img src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
 		</div>	
 	</div>	
 	<!-- 活动 满足条件 ending -->
@@ -169,7 +163,7 @@
 	<div class="weui_cell bgf mb49 fc8 lh30">
 		<div class="weui_cell_bd weui_cell_primary">
 			<p class="f15">服务说明</p>
-			<p class="f15">工人客户自行商量工人客户自行商量</p>
+			<p class="f15" ng-bind="fw.Description"></p>
 		</div>
 	</div>
 	<!-- 服务说明 end-->

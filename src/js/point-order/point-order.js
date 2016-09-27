@@ -17,16 +17,15 @@ angular.module('com.wapapp.app',[])
     $rootScope.addressId = getvl("id");
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService','explainService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService,explainService){
 	var vm = $scope.vm = {};		//订单
 	var addr = $scope.addr = {};	//地址
 	var uc = $scope.uc = {};	//工人，商户信息
 	var gt = $scope.gt = {};	//活动
+	var fw = $scope.fw = {};	//获取服务说明
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
-
-	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
 	
 	// vm.unitPrice = 30;
 	vm.datePickerShow = false;
@@ -46,7 +45,7 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 2;
+	vm.Total = 3;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
 	}else if(window.localStorage.getItem("_address")){
@@ -56,6 +55,15 @@ angular.module('com.wapapp.app',[])
 		$scope.addr = _address;
 	}
 	
+	//小时工服务数量不能小于3小时
+	$scope.$watch('vm.Total',function(){
+		if(vm.Total < 3 && vm.serviceTypeObj.ServiceTypeId =='5'){
+			vm.dialogshow = true;
+			vm.errorMsg = "不能小于3小时";
+			vm.Total = 3;
+		}
+	})
+
 	//取出缓存数据
 	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
 	console.log(_pointOrder);
@@ -79,18 +87,21 @@ angular.module('com.wapapp.app',[])
 		})
 
 	//拉取工人信息
-	markService.search($rootScope.ObjectType,$rootScope.ObjectId)
+	markService.search($rootScope.token,$rootScope.ObjectType,$rootScope.ObjectId)
 		.success(function(res){
 			console.log("获取工人信息",res);
 			if(res.Meta.ErrorCode === "0"){
-				uc = res.Body[0];
-				// vm.Name = res.Body.Worker.Name;
-				// vm.Gender = res.Body.Worker.Gender;
-				// vm.Photo = res.Body.Worker.Photo;
+				if(res.Body.Worker){
+					uc = $scope.uc = res.Body.Worker;
+				}
+				if(res.Body.Business){
+					uc = $scope.uc = res.Body.Business;
+				}
 			}
 			$scope.$apply();
 		})
 
+	//获取服务类型
 	if($rootScope.ObjectType == "1"){
 		typeService.searchWorkList($rootScope.ObjectId)
 			.success(function(res){
@@ -109,8 +120,7 @@ angular.module('com.wapapp.app',[])
 				}
 				$scope.$apply();
 			})
-	}
-			
+	}	
 	$scope.$watch('vm.serviceTypeObj',function(){
 		if(vm.serviceTypeObj){
 			giftService.gift($rootScope.token,vm.serviceTypeObj.ServiceTypeId)
@@ -121,9 +131,15 @@ angular.module('com.wapapp.app',[])
 					}
 					$scope.$apply();
 				})
+			explainService.event(vm.serviceTypeObj.ServiceTypeId)
+				.success(function(res){
+					console.log("获取服务说明",res);
+					if(res.Meta.ErrorCode === "0"){
+						fw = $scope.fw = res.Body;
+					}			
+				})	
 		}
 	})
-
 	//流程流向判断并跳转
 	vm.gotojudge = function(){
 		window.location.href = "/template/location/mag-location.html"+$rootScope.search;
@@ -516,8 +532,9 @@ angular.module('com.wapapp.app',[])
 .factory('markService',[function(){
 	// 根据类型和id查找工人
 	var _searchpath = "http://192.168.1.191:3003/api/v2/Provider/Detail";
-	var searchMark = function(type,id){
+	var searchMark = function(token,type,id){
 		var formData = {
+			Token:token,
 			Type: type,
 			Id: id
 		}
@@ -534,8 +551,8 @@ angular.module('com.wapapp.app',[])
 				})
 	};
 	return {
-		search:function(type,id){
-			return searchMark(type,id);
+		search:function(token,type,id){
+			return searchMark(token,type,id);
 		}
 	};
 }])
@@ -605,7 +622,35 @@ angular.module('com.wapapp.app',[])
 				})
 	}
 	return {
-		gift:getGift
+		gift:function(token,id){
+			return getGift(token,id);
+		}
+	}
+}])
+.factory('explainService',[function(){
+	// 根据服务类型，获取此类型的活动
+	var _getPath = "http://192.168.1.191:3003/api/v2/HelperInfo/GetAllDescription";
+	var getExplain = function(id){
+		var formData = {
+			Code: "Code002",
+			ServiceId:id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _getPath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		event:function(id){
+			return getExplain(id);
+		}
 	}
 }])
 

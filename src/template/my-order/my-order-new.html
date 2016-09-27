@@ -35,7 +35,7 @@
 		            <div class="weui_navbar_item" ng-init="tb.flag4=4" ng-class="{weui_bar_item_on:tb.activeTab==4}" ng-click="tb.active(tb.flag4)">待确认</div>
 		            <div class="weui_navbar_item" ng-init="tb.flag5=5" ng-class="{weui_bar_item_on:tb.activeTab==5}" ng-click="tb.active(tb.flag5)">待评价</div>
 		        </div>
-		        <div class="weui_tab_bd" ng-show="reddit.items.length == 0" ng-cloak>
+		        <div class="weui_tab_bd" ng-if="reddit.items.length == 0" ng-cloak>
 		        	<div class="no_order">
 		        		<img src="/images/my-order/no-order.png" alt="" style="width:30%;margin-bottom:10px;">
 		        		<p class="fc8">您还没有相关的订单</p>
@@ -175,7 +175,7 @@
 				        	</div>
 				        </div>
 			        </div>   
-					<div ng-show='reddit.busy'>
+					<div ng-if='reddit.busy'>
 						<div class="loader-inner ball-beat">
 				          <div></div>
 				          <div></div>

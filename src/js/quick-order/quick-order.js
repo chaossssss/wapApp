@@ -4,7 +4,7 @@ angular.module('com.wapapp.app',[])
 	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
 	FastClick.attach(document.body);
 	$rootScope.token = window.localStorage.getItem("Token");
-
+ 
 	//获取url参数
     function getvl(name) {
         var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
@@ -15,11 +15,12 @@ angular.module('com.wapapp.app',[])
     $rootScope.addressId = getvl("id");
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','giftService',function($rootScope,$scope,priceService,orderService,addrService,giftService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','giftService','explainService',function($rootScope,$scope,priceService,orderService,addrService,giftService,explainService){
 	var vm = $scope.vm = {};
 	var addr = $scope.addr = {};
 	var sv = $scope.sv = {};	//根据服务类型查找其价格
 	var gt = $scope.gt = {};	//活动
+	var fw = $scope.fw = {};	//获取服务说明
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
@@ -50,7 +51,7 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 2;
+	vm.Total = 3;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
 	}else if(window.localStorage.getItem("_address")){
@@ -59,6 +60,15 @@ angular.module('com.wapapp.app',[])
 		vm.ServiceAddressId = _address.Id;
 		$scope.addr = _address;
 	}
+
+	//小时工服务数量不能小于3小时
+	$scope.$watch('vm.Total',function(){
+		if(vm.Total < 3 && vm.ServiceTypeId =='5'){
+			vm.dialogshow = true;
+			vm.errorMsg = "不能小于3小时";
+			vm.Total = 3;
+		}
+	})
 
 	//取出缓存数据
 	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
@@ -103,6 +113,13 @@ angular.module('com.wapapp.app',[])
 				}
 				$scope.$apply();	
 			})
+		explainService.event(vm.ServiceTypeId)
+			.success(function(res){
+				console.log("获取服务说明",res);
+				if(res.Meta.ErrorCode === "0"){
+					fw = $scope.fw = res.Body;
+				}			
+			})	
 	})
 
 	$scope.$on('service-type-id',function(event,id,name){
@@ -117,6 +134,7 @@ angular.module('com.wapapp.app',[])
 				sv.Unit = res.Body.Unit;
 				sv.Min = res.Body.Min;
 				sv.Max = res.Body.Max;
+				sv.UnitName = res.Body.UnitName;
 				$scope.$apply();
 			})
 	})
@@ -554,6 +572,32 @@ angular.module('com.wapapp.app',[])
 	return {
 		event:function(token,id){
 			return getGift(token,id);
+		}
+	}
+}])
+.factory('explainService',['urlService',function(urlService){
+	// 根据服务类型，获取此类型的活动
+	var _getPath = urlService.url+"api/v2/HelperInfo/GetAllDescription";
+	var getExplain = function(id){
+		var formData = {
+			Code: "Code002",
+			ServiceId:id
+		}
+		return $.ajax({
+					method:"POST",
+					url: _getPath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	}
+	return {
+		event:function(id){
+			return getExplain(id);
 		}
 	}
 }])

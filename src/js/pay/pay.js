@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// FastClick.attach(document.body);
+	FastClick.attach(document.body);
 	$rootScope.url = "http://192.168.1.191:3003";
 	// $rootScope.token = "2494b57ed8810651fea6bd80da6b84e8";
 	// $rootScope.token = $.cookie("Token");

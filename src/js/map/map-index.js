@@ -12,7 +12,7 @@ function createMarker(workers,boss){
     remove_overlay();
 	for(var i=0,len=workers.length;i<len;i++){
 		var point = new BMap.Point(workers[i].Longitude,workers[i].Latitude);
-		var icon = new BMap.Icon(WORK_MAN,new BMap.Size(34,32));
+		var icon = new BMap.Icon(workers[i].Photo,new BMap.Size(34,32));
 		var marker = new BMap.Marker(point,{icon:icon});
 		map.addOverlay(marker);
 
@@ -164,7 +164,7 @@ function createMarker(workers,boss){
 
     for(var j=0,len=boss.length;j<len;j++){
         var point = new BMap.Point(boss[j].Longitude,boss[j].Latitude);
-        var icon = new BMap.Icon(WORK_MAN,new BMap.Size(34,32));
+        var icon = new BMap.Icon(boss[j].Photo,new BMap.Size(34,32));
         var marker = new BMap.Marker(point,{icon:icon});
         map.addOverlay(marker);
 
@@ -452,15 +452,14 @@ getHotList();
  */
 function bossControl(){
     this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
-    this.defaultOffset = new BMap.Size(10, 70);
+    this.defaultOffset = new BMap.Size(10, 20);
 }
 bossControl.prototype = new BMap.Control();
 bossControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "/images/map/btn_boss_active.svg";
+    img.src = "/images/map/btn_boss.svg";
     img.style.width = "40px";
     img.id = "boss";
-    img.className = "active";
     // 绑定事件
     img.onclick = function(e){    
         var $boss = $("#boss");   
@@ -485,16 +484,14 @@ bossControl.prototype.initialize = function(map){
  */
 function workManControl(){
     this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
-    this.defaultOffset = new BMap.Size(10, 20);
+    this.defaultOffset = new BMap.Size(10, 70);
 }  
 workManControl.prototype = new BMap.Control();    
 workManControl.prototype.initialize = function(map){
     var img = document.createElement("img");
-    img.src = "/images/map/btn_worker_active.svg";
+    img.src = "/images/map/btn_worker.svg";
     img.style.width = "40px";
     img.id = "worker";
-    img.className = "active";
-
     img.onclick = function(e){ 
         var $worker = $("#worker");   
         var yesorno = $("#worker").hasClass("active");
