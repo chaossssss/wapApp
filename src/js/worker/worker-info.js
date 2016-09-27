@@ -59,7 +59,7 @@ $(function(){
                 $(".age").text(api.Age);
                 $(".PraiseCount").text(api.PraiseCount);
                 $(".FavoriteCount").text(api.FavoriteCount);
-                //$(".wk-list").text(api.DefaultService.Name);
+                $(".wk-list").text(api.DefaultService.Name);
                 $(".wage").text(api.Wage);
                 $(".NativePlace").text(api.NativePlace);
                 $(".WorkingYears").text(api.WorkingYears);

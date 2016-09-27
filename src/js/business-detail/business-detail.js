@@ -278,11 +278,8 @@ $(function(){
 
                 }else{
                     $(".worker-tag").css("display","none");
-                }
-                
+                }               
             }
-
-
         },
         error: function(xhr, type){
            console.log('Ajax error!');
