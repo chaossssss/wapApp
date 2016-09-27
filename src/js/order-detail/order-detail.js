@@ -312,6 +312,7 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnRight").addClass("delete-btn");
 
+    $("#zjWorker").hide();
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
     $("#orderActual").hide();
@@ -325,6 +326,7 @@ console.log(orderState);
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
+    $("#finishTime").hide();
 
     $("#orderTime").css("marginBottom","4px");
     $("#servicePrice").css("marginBottom","4px");
@@ -377,10 +379,10 @@ console.log(orderState);
     $("#specialPrice").hide();
     // $("#waitOrder").hide();
     $("#finishTime").hide();
-    if(serviceId == ""){
+    if(serviceId == null){
       $("#zjWorker").hide();
     }
-
+    // $("#waitOrder").css("marginBottom","4px");
     $("#orderTime").css("marginBottom","4px");
     if(totalPrice == ""){
       $("#servicePrice").css("marginBottom","4px");
