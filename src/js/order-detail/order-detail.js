@@ -83,6 +83,14 @@ $(function(){
     }
     return ml;
   }
+  function unitSymbole(u){
+    if(u == ''){
+      var us = u;
+    }else{
+      var us = "/" + u;
+    }
+    return us;
+  }
   function multipleSymbol(t){
     if(t == ''){
       var tl = t;
@@ -215,9 +223,9 @@ $(function(){
       var notesNum = data.Body.Service.Content;
       var noteList = "<li>" + notesNum + "</li>";
       $("#remarkLists").append(noteList);
-      var unitName = "/" + data.Body.Service.UnitName;
+      var unitName = unitSymbole(data.Body.Service.UnitName);
       $("#unit").text(unitName);
-      var singlePrice = moneySymbol(data.Body.Service.Price);
+      singlePrice = moneySymbol(data.Body.Service.Price);
       $("#single").text(singlePrice);
       var q = multipleSymbol(data.Body.Service.Total);
       $("#quantity").text(q);
@@ -382,8 +390,13 @@ console.log(orderState);
     if(serviceId == null){
       $("#zjWorker").hide();
     }
+    if(singlePrice == '面议'){
+      $("#orderPrice").hide();
+      $("#waitOrder").hide();
+    }
     // $("#waitOrder").css("marginBottom","4px");
     $("#orderTime").css("marginBottom","4px");
+    $("#servicePrice").css("marginBottom","4px");
     if(totalPrice == ""){
       $("#servicePrice").css("marginBottom","4px");
     }
@@ -561,7 +574,7 @@ console.log(orderState);
       $("#roundSecond").addClass("round-complete");
       $("#roundThird").addClass("round-processing");
       $("#roundFourth").addClass("round-undone");
-      $("#wait").addClass("actual");
+      $("#total").addClass("actual");
       $("#btnLeft").addClass("delete-btn")
       $("#btnRight").addClass("pay-btn");
 
@@ -573,7 +586,7 @@ console.log(orderState);
       $("#cancelTime").hide();
       $("#finishTime").hide();
       $("#payTime").hide();
-      // $("#specialPrice").hide();
+      $("#specialPrice").hide();
       $("#waitOrder").css("marginBottom","0px");
       $("#acceptTime").css("marginBottom","4px");
       // $("#btnRight").css("left","181px");
