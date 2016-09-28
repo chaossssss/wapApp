@@ -131,6 +131,7 @@ textarea{resize: none;}
 	/*margin-left: 10px;*/
 	width: 30%;
     height: 21px;
+    text-align: right;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
