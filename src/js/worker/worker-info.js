@@ -169,8 +169,8 @@ $(function(){
                                     res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
                                 }
                             }else {
-                                var x = 5 - api[i].Score;
-                                for (var n = 0; n <= api[i].Score; n++) {
+                                var x = 5 - api[i].Score; //灰色心个数
+                                for (var n = 0; n < api[i].Score; n++) {
                                     res_xin += '<img src="../../images/worker/ic_xin_sel.svg"  class="xingx-img" alt=""/>';
                                 }
                                 for (var j = 1; j <= x; j++) {
