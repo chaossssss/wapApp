@@ -1,4 +1,5 @@
 $(function(){
+    
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");
@@ -72,7 +73,7 @@ $(function(){
                 $(".phoneNo").attr("href","tel:"+api.PhoneNumber);
                 $(".business-mes").attr("href","worker-message.html?type="+Type+"&markid="+Id);
                 $(".a-tag").attr("href","worker-tags.html?markid="+Id);
-                $(".join_now").attr("href","/template/quick-order/quick-order.html?channel=1");
+                $(".join_now").attr("href","/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id);
 
                 // 男女图标
                 if (api.Gender == "1") {
