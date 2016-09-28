@@ -320,6 +320,10 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnRight").addClass("delete-btn");
 
+    if(singlePrice == '面议'){
+      $("#unit").hide();
+      $("#multiple").hide();
+    }
     $("#zjWorker").hide();
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -393,6 +397,8 @@ console.log(orderState);
       $("#zjWorker").hide();
     }
     if(singlePrice == '面议'){
+      $("#multiple").hide();
+      $("#unit").hide();
       $("#orderPrice").hide();
       $("#waitOrder").hide();
     }
