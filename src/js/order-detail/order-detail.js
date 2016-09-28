@@ -68,9 +68,9 @@ $(function(){
     return fmt;
   }
   function clientGenderChange(g){
-    if(g == "1"){
+    if(g == "女"){
       var gn = "女士";
-    }else if(g == "0"){
+    }else if(g == "男"){
       var gn = "先生";
     }
     return gn;
@@ -399,8 +399,8 @@ console.log(orderState);
     // $("#waitOrder").css("marginBottom","4px");
     $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
-    if(totalPrice == ""){
-      $("#servicePrice").css("marginBottom","0px");
+    if(totalPrice == "面议"){
+      $("#servicePrice").css("marginBottom","4px");
     }
     $(".pay-btn").on("click",function(){
 
