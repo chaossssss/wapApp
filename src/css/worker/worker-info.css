@@ -2,7 +2,7 @@
 /*公共样式*/
 * {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
 	-webkit-tap-highlight-color: transparent;}
-body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:15px;line-height: 1.41176471;}
+body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:16px;line-height: 1.41176471;}
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
 input, select {vertical-align:middle;}
 textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
@@ -116,7 +116,7 @@ textarea{resize: none;}
 }
 .NativePlace{
 	float:left;
-	width: 18%;
+	width: 21%;
 	height: 21px;
     font-size: 15px;
 	overflow: hidden;
