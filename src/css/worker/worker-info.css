@@ -58,7 +58,7 @@ textarea{resize: none;}
 .font-style{
 	display:inline-block;
 	color:#3f3e48;
-	width:27px;
+	width:22%;
 	height:18px;
 	overflow:hidden;
     text-overflow:ellipsis;
@@ -67,6 +67,7 @@ textarea{resize: none;}
 .top-ic{
 	float: right;
 	margin-top:-4px;
+    width:30%;
 }
 .bus-work{
 	float:left;
@@ -116,7 +117,7 @@ textarea{resize: none;}
 }
 .NativePlace{
 	float:left;
-	width: 21%;
+	width: 18%;
 	height: 21px;
     font-size: 15px;
 	overflow: hidden;
