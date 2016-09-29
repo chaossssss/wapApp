@@ -169,6 +169,8 @@ $(function(){
       var orderId = data.Body.OrderId;
       isEvaluated = data.Body.IsEvaluated;
       var workHeadPic = data.Body.ServiceProviderPic;
+      minPrice = data.Body.MinPrice;
+      maxPrice = data.Body.MaxPrice;
       $("#providerHead").attr("src",workHeadPic);
       $("#orderCode").text(data.Body.OrderCode);
       if(data.Body.CreateTime != null){
@@ -225,6 +227,7 @@ $(function(){
       $("#remarkLists").append(noteList);
       var unitName = unitSymbole(data.Body.UnitName);
       $("#unit").text(unitName);
+      noSinglePrice = data.Body.Price;
       singlePrice = moneySymbol(data.Body.Price);
       $("#single").text(singlePrice);
       var q = multipleSymbol(data.Body.Total);
@@ -324,6 +327,10 @@ console.log(orderState);
       $("#unit").hide();
       $("#multiple").hide();
     }
+    if(noSinglePrice == null){
+      var single = "￥" + minPrice + "-" + maxPrice;
+      $("#single").text(single);
+    }
     $("#zjWorker").hide();
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -341,7 +348,7 @@ console.log(orderState);
     $("#finishTime").hide();
 
     $("#orderTime").css("marginBottom","0px");
-    $("#servicePrice").css("marginBottom","0px");
+    $("#servicePrice").css("marginBottom","4px");
 
     $("#btnRight").on("click",function(){
       $("#cancelOrder1").css("display","block");
