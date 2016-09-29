@@ -1,9 +1,10 @@
-/*?????¨´??*/
 body{
     margin:0;
     font-size: 16px;
-    /*font-family: "PingFang SC Regular" , "??¡¤?-?¨°" , "Helvetica Neue" , Helvetica , STHeiTi,sans-serif;*/
     font-family:"Times New Roman",Georgia,Serif;
+}
+.weui_cells{
+    font-size:16px;
 }
 /*基础样式*/
 a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
@@ -213,7 +214,7 @@ a{
     margin-right: 8px;
 }
 
-.system,.sign,.reside{
+.system,.sign,.reside,.ser-time,.ser-fw{
     width: 70px;
 }
 .Intro,.Signature,.Address{

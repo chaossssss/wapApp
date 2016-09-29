@@ -180,7 +180,7 @@ $(function(){
 
                             result  +='<div class="kehu-item"><div class="kehu-top"><img src="'+api[i].Pictures.SmallPic+'" alt="" class="kehu-img" onerror=this.src="http://www.guaiguai.com/attachments/201503/24/16/3symdnhef.png">'
                                 +'<span class="kehu-name">'+api[i].ClientName+'</span>'
-                                +'<span class="kehu-time">'+api[i].Date+'</span>'
+                                +'<span class="kehu-time">'+getTime(api[i].Date)+'</span>'
                                 +'<div class="kehu-heart">'+res_xin
                                 +'<span class="kehu-pingfen">'+api[i].Score+'</span></div></div>'
                                 +'<div class="clear"></div><div class="kehu-cont">'+api[i].Content+'</div></div>';
@@ -296,4 +296,9 @@ function getUrl(name)
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
     if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
+
+// 时间戳转换成日期格式
+function getTime(nS) { 
+    return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").substr(0,10);
 } 
