@@ -604,7 +604,7 @@ console.log(orderState);
       $("#payTime").hide();
       $("#specialPrice").hide();
       $("#waitOrder").hide();
-      $("#orderPrice").css("marginBottom","0px");
+      $("#orderPrice").css("marginBottom","4px");
       $("#acceptTime").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
