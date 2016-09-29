@@ -85,7 +85,7 @@ textarea{resize: none;}
 	font-size: 14px;
 }
 .wk-list{
-    width: 54%;
+    width: 45%;
     height: 20px;
     line-height: 19px;
     font-size: 15px;
@@ -96,9 +96,10 @@ textarea{resize: none;}
     vertical-align: bottom;
 }
 .wage{
+    float: right;
     font-size: 15px;
     margin-top: 2px;
-    color: #fa5236;
+    color: #fa5136;
 }
 .bus-work ul{
 	display: inline-block;
@@ -559,11 +560,6 @@ textarea{resize: none;}
 
 
 /*后加后改的*/
-.wage{
-    float: right;
-    margin-right: 10px;
-    color: #fa5136;
-}
 .xingx-img{
     width: 16px;
     height: 12px;
