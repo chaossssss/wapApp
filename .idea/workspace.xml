@@ -80,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/src/css/worker/worker-message.css">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.8267717">
-              <caret line="219" column="12" selection-start-line="219" selection-start-column="12" selection-end-line="219" selection-end-column="12" />
+              <caret line="220" column="12" selection-start-line="220" selection-start-column="12" selection-end-line="220" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -150,8 +150,8 @@
         <option value="$PROJECT_DIR$/src/css/worker/worker-info.css" />
         <option value="$PROJECT_DIR$/src/js/worker/worker-message.js" />
         <option value="$PROJECT_DIR$/src/js/worker/worker-info.js" />
-        <option value="$PROJECT_DIR$/src/css/worker/worker-message.css" />
         <option value="$PROJECT_DIR$/src/template/worker/worker-detail.html" />
+        <option value="$PROJECT_DIR$/src/css/worker/worker-message.css" />
       </list>
     </option>
   </component>
@@ -536,7 +536,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -951,7 +951,7 @@
     <entry file="file://$PROJECT_DIR$/src/css/worker/worker-message.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8267717">
-          <caret line="219" column="12" selection-start-line="219" selection-start-column="12" selection-end-line="219" selection-end-column="12" />
+          <caret line="220" column="12" selection-start-line="220" selection-start-column="12" selection-end-line="220" selection-end-column="12" />
           <folding />
         </state>
       </provider>
