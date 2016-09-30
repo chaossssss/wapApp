@@ -1005,6 +1005,12 @@ console.log(orderState);
       $("#btnLeft").hide();
       $("#specialPrice").hide();
 
+      if(singlePrice == '面议'){
+        $("#unit").hide();
+        $("#multiple").hide();
+        $("#waitOrder").hide();
+        $("#servicePrice").css("marginBottom","4px");
+      }
       $("#status").css("paddingTop","90px");
       $("#cancelTime").css("marginBottom","0px");
       // $("#orderTime").css("marginBottom","4px");
