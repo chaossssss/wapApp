@@ -410,6 +410,13 @@ console.log(orderState);
       $("#orderPrice").hide();
       $("#waitOrder").hide();
     }
+    if(noSinglePrice == null){
+      $("#orderPrice").hide();
+      $("#waitOrder").hide();
+      var single = "￥" + minPrice + "-" + maxPrice;
+      $("#single").text(single);
+      $("#servicePrice").css("marginBottom","4px");
+    }
     // $("#waitOrder").css("marginBottom","4px");
     $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
