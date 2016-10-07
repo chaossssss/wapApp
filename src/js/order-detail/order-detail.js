@@ -312,7 +312,8 @@ console.log(orderState);
     $("#tabSecond").text('待工人接单');
     $("#tabThird").text('待付款');
     $("#tabFourth").text('待服务');
-    $("#btnRight").text('取消订单');
+    $("#btnLeft").text('取消订单');
+    $("#btnRight").text('支付');
 
     $("#explanation").css("width","256px");
 
@@ -321,7 +322,8 @@ console.log(orderState);
     $("#roundSecond").addClass("round-processing");
     $("#roundThird").addClass("round-undone");
     $("#roundFourth").addClass("round-undone");
-    $("#btnRight").addClass("delete-btn");
+    $("#btnLeft").addClass("delete-btn");
+    $("#btnRight").addClass("pay-btn");
 
     if(singlePrice == '面议'){
       $("#unit").hide();
@@ -341,7 +343,6 @@ console.log(orderState);
     $("#filling2").hide();
     $("#acceptTime").hide();
     $("#payTime").hide();
-    $("#btnLeft").hide();
     $("#cancelTime").hide();
     $("#specialPrice").hide();
     $("#waitOrder").hide();
@@ -350,7 +351,7 @@ console.log(orderState);
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
 
-    $("#btnRight").on("click",function(){
+    $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
       $("#cancelOrderBtn").on("click",function(){
         cancelOrder(token,orderId);
@@ -358,6 +359,12 @@ console.log(orderState);
         location.reload();
       })
     });
+    $("#btnRight").on("click",function(){
+      $("#pay-box").css("display","block");
+    });
+    $("#know").on("click",function(){
+      $("#pay-box").hide();
+    })
     break;
     case "10":
     console.log("待接单");
