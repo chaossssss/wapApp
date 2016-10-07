@@ -65,6 +65,8 @@
 
 <script>
   $(function(){
+    FastClick.attach(document.body);
+
     var $height = $(window).height();
     $("#container").height($height-44);
 
@@ -85,7 +87,6 @@
     $('#wapper').on('focus', '#search_input', function () {
           // var $weuiSearchBar = $('#search_bar');
           // $weuiSearchBar.addClass('weui_search_focusing');
-
           $("#search_cancel").show();
           $("#search_text").hide();
 
@@ -101,11 +102,9 @@
             $("#search_cancel").show();
             $("#search_btn").hide();
           }
-
       }).on('blur', '#search_input', function () {
           // var $weuiSearchBar = $('#search_bar');
           // $weuiSearchBar.removeClass('weui_search_focusing');
-
           $("#search_cancel").hide();
           $("#search_text").show();
 
@@ -158,7 +157,7 @@
           //短暂显示效果
           var $search_input = $("#search_input").val();
           var point = mk.getPosition();
-          searchData(point.lng,point.lat,$search_input);
+          searchData(point.lng,point.lat);
       });
       $("#result").on('touchend','.hot-service li',function(){
         var text = $(this).text();
@@ -167,6 +166,7 @@
         $("#search_cancel").hide();
         $("#search_btn").show();
       })
+      //点击左侧图标
       $("#left").on("click",function(){
         var token = window.localStorage.getItem("Token");
         if(token != undefined){
@@ -175,6 +175,7 @@
           window.location.href = "/template/login/login.html";
         }
       })
+      //点击右侧图标
       $("#right").on("click",function(){
 
       })
@@ -187,6 +188,8 @@ var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
 map.centerAndZoom(point, 15); 	
 
 var sessionStorage = window.sessionStorage;
+$("#search_input").val('');
+
 //移动地图事件
 map.addEventListener("moveend",function(){
   console.log("地图移动结束时触发此事件");
@@ -202,7 +205,15 @@ map.addEventListener("moveend",function(){
 })
 
 //数据筛选
-function searchData(lng,lat,queryName){
+/**
+ * [searchData 数据筛选]
+ * QueryStr存在的情况下，QueryType为0,文字搜索。
+ * QueryStr不存在的情况下，QueryType为3，默认搜索
+ * @param  {[type]} lng [经度]
+ * @param  {[type]} lat [纬度]
+ * @return {[type]}     [null]
+ */
+function searchData(lng,lat){
   var $input = $("#search_input").val();
   var $worker = $("#worker").hasClass("active");
   var $boss = $("#boss").hasClass("active");
@@ -212,7 +223,7 @@ function searchData(lng,lat,queryName){
       Longitude: lng,
       Latitude: lat,
       Type: "0",
-      QueryType: "3",
+      QueryType: "0",
       QueryStr: $input
     }
     getData(testData0);
@@ -221,7 +232,7 @@ function searchData(lng,lat,queryName){
       Longitude: lng,
       Latitude: lat,
       Type: "1",
-      QueryType: "3",
+      QueryType: "0",
       QueryStr: $input
     }
     getData(testData1);
@@ -230,7 +241,7 @@ function searchData(lng,lat,queryName){
       Longitude: lng,
       Latitude: lat,
       Type: "2",
-      QueryType: "3",
+      QueryType: "0",
       QueryStr: $input
     }
     getData(testData2);
@@ -258,14 +269,23 @@ function searchData(lng,lat,queryName){
       QueryType: "3"
     }
     getData(testData5);
-  }else{
+  }else if($input && $worker==false && $boss==false){
     var testData6 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "0",
+      QueryType: "0",
+      QueryStr: $input
+    }
+    getData(testData6);
+  }else{
+    var testData7 = {
       Longitude: lng,
       Latitude: lat,
       Type: "0",
       QueryType: "3"
     }
-    getData(testData6);
+    getData(testData7);
   }
 }
 

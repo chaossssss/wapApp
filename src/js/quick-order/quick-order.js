@@ -26,7 +26,7 @@ angular.module('com.wapapp.app',[])
 	$scope.loadingToast = false;
 	// 搜索服务类型，flag条显示更多按钮
 	vm.flag0 = true; 	//热门服务
-	vm.flag168 = true;	//安装
+	vm.flag168 = true;	//安装 
 	vm.flag169 = true;	//便民
 	vm.flag170 = true;	//家政
 	vm.flag171 = true;	//维修
@@ -110,6 +110,8 @@ angular.module('com.wapapp.app',[])
 				console.log("活动",res);
 				if(res.Meta.ErrorCode === "0"){
 					gt = $scope.gt = res.Body;
+				}else{
+					gt = $scope.gt = null;
 				}
 				$scope.$apply();	
 			})
@@ -118,7 +120,10 @@ angular.module('com.wapapp.app',[])
 				console.log("获取服务说明",res);
 				if(res.Meta.ErrorCode === "0"){
 					fw = $scope.fw = res.Body;
-				}			
+				}else{
+					fw = $scope.fw = null;
+				}	
+				$scope.$apply();		
 			})	
 	})
 
@@ -246,6 +251,7 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('serviceTypeCtrl',['$scope','listService',function($scope,listService){
 	var st = $scope.st = {};
+	st.dialog = false;
 
 	listService.get()
 		.success(function(res){
@@ -254,8 +260,21 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 
-	st.getTypeName = function(typeId,typeName){
-		// console.log(typeId);
+	//获取选中的二级目录
+	st.getTypeName = function(op){
+		console.log("op",op);
+		if(op.Children !== null){
+			st.dialog = true;
+			st.title = op.TypeName;
+			st.List = op.Children;
+			console.log(st.dialog);	
+		}else{
+			$scope.$emit('service-type-id',op.TypeId,op.TypeName);
+		}
+	}
+
+	//获取选中的三级目录
+	st.getThreeTypeName = function(typeId,typeName){
 		$scope.$emit('service-type-id',typeId,typeName);
 	}
 }])

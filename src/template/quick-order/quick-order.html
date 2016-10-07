@@ -48,7 +48,10 @@
 					<span class="pl20" ng-bind="addr.PhoneNumber"></span>
 				</div>
 				<div class="zj_cell_bd">
-					<p class="f14 fc8" ng-bind="addr.Address1"></p>
+					<p class="f14 fc8">
+						<span ng-bind="addr.Address2"></span>
+						<span ng-bind="addr.Address1"></span>
+					</p>
 				</div>
 			</div>
 			<div class="weui_cell_ft"></div>
@@ -65,7 +68,7 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
-			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable != '1'">
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'">
 				<span ng-bind="sv.name"></span>
 				<span>¥</span>
 				<span ng-bind="sv.Min" ng-if="sv.Min !== sv.Max"></span>
@@ -80,7 +83,7 @@
 			</div>	
 			<div class="weui_cell_ft" ng-if="!vm.ServiceTypeId"></div>
 		</a>
-		<div class="weui_cell no_access" ng-if="vm.IsNegotiable != '1'">
+		<div class="weui_cell no_access" ng-if="vm.IsNegotiable == '0'">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -112,15 +115,17 @@
 	<!-- 服务类型&服务数量&服务时间 end-->
 	<!-- 活动 满足条件 beginning -->
 	<div class="weui_cells weui_cells_access" ng-show="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1">
-		<div class="weui_cell pb5" ng-if="gt.PromotionRule.length > 0">
+		<!-- 满返活动 -->
+		<div class="weui_cell" ng-if="gt.PromotionRule.length > 0">
 			<div class="weui_cell_bd weui_cell_primary">
 				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
-				<img src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:middle;padding-left:5px;">
+				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:middle;padding-left:5px;">
 			</div>
 		</div>
+		<!-- 满减活动 -->
 		<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="gt.SpecialRule.length > 0">
-			<span class="pred" ng-bind="gt.SpecialHelp"></span>
-			<img src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
+			<span class="pred" ng-bind="gt.SpecialAds"></span>
+			<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
 		</div>	
 	</div>	
 	<!-- 活动 满足条件 ending -->
@@ -174,15 +179,26 @@
 		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == undefined">
 			<span>--</span>
 		</div>
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == false">
+		<!-- IsNegotiable 0 有价格 定价 无活动-->
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max == sv.Min && gt && gt.SpecialRule.length == 0">
 			<span>¥</span>
-			<span ng-if="sv.Min == sv.Max && sv.Max*vm.Total<90" ng-bind="sv.Max*vm.Total | number:1"></span>
-			<span ng-if="sv.Min == sv.Max && sv.Max*vm.Total>=90" ng-bind="sv.Max*vm.Total-10 | number:1"></span>
-			<span ng-if="sv.Min != sv.Max" ng-bind="sv.Min*vm.Total | number:1"></span>
-			<span ng-if="sv.Min != sv.Max">-</span>
-			<span ng-if="sv.Min != sv.Max" ng-bind="sv.Max*vm.Total | number:1"></span>
+			<span ng-bind="sv.Max*vm.Total | number:1"></span>
 		</div>
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == true">
+		<!-- IsNegotiable 0 有价格 定价 有活动-->
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max == sv.Min && gt && gt.SpecialRule.length > 0">
+			<span>¥</span>
+			<span ng-if="sv.Max*vm.Total < gt.SpecialRule[0].Upper" ng-bind="sv.Max*vm.Total | number:1"></span>
+			<span ng-if="sv.Max*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="sv.Max*vm.Total-gt.SpecialRule[0].Minus | number:1"></span>
+		</div>
+		<!-- IsNegotiable 0 有价格 区间价 -->
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max != sv.Min">
+			<span>¥</span>
+			<span ng-bind="sv.Min*vm.Total | number:1"></span>
+			<span>-</span>
+			<span ng-bind="sv.Max*vm.Total | number:1"></span>
+		</div>
+		<!-- IsNegotiable 1 无价格(面议) -->
+		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '1'">
 			<span>面议</span>
 		</div>
 		<div class="zj_foot_ft" ng-click="vm.submitOrder()">
@@ -256,101 +272,176 @@
 	<div class="zj_actionsheet zj_actionsheet_toggle"  style="overflow:auto;height:100%;">
 		<div class="col90 container style='overflow:auto'">
 			<div ng-repeat="item in st.serviceList">
+				<!-- 热门服务 begin-->
 				<div class="title" ng-if="item.TypeId == '0'" ng-click="vm.flag0 = !vm.flag0">
 					<div class="weui_cell_hd">
-						<img class="zj_icon_img" src="/images/quick-order/i-hot.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 热门服务 -->
+						<img class="zj_icon_img" src="/images/quick-order/i-hot.png" alt="" style="width:25px;margin-right:10px;display:block;">			
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag0]"></div>
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag0]"></div>
 				</div>
-				<div class="bd blred" ng-if="item.TypeId == '0'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blred" ng-if="item.TypeId == '0' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag0 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag0 = !vm.flag0">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag0==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag0==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blred" ng-if="item.TypeId == '0' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 热门服务 end-->
+				<!-- 安装 beign-->
 				<div class="title" ng-if="item.TypeId == '168'" ng-click="vm.flag168 = !vm.flag168">
 					<div class="weui_cell_hd">
 						<img class="zj_icon_img" src="/images/quick-order/i-install.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 安装 -->
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag168]"></div>
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag168]"></div>
 				</div>
-				<div class="bd blorange" ng-if="item.TypeId == '168'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blorange" ng-if="item.TypeId == '168' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag168 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag168 = !vm.flag168">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag168==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag168==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blorange" ng-if="item.TypeId == '168' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 安装 end-->
+				<!-- 便民 begin-->
 				<div class="title" ng-if="item.TypeId == '169'" ng-click="vm.flag169 = !vm.flag169">
 					<div class="weui_cell_hd">
-						<img class="zj_icon_img" src="/images/quick-order/i-people.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 便民 -->
+						<img class="zj_icon_img" src="/images/quick-order/i-people.png" alt="" style="width:25px;margin-right:10px;display:block;">				
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag169]"></div>
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag169]"></div>
 				</div>
-				<div class="bd blred" ng-if="item.TypeId == '169'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blred" ng-if="item.TypeId == '169' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag169 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag169 = !vm.flag169">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag169==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag169==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blred" ng-if="item.TypeId == '169' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 便民 end-->
+				<!-- 家政 beign-->
 				<div class="title" ng-if="item.TypeId == '170'" ng-click="vm.flag170 = !vm.flag170">
 					<div class="weui_cell_hd">
 						<img class="zj_icon_img" src="/images/quick-order/i-broom.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 家政 -->
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag170]"></div>
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag170]"></div>
 				</div>
-				<div class="bd blgreen" ng-if="item.TypeId == '170'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blgreen" ng-if="item.TypeId == '170' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag170 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag170 = !vm.flag170">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag170==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag170==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blgreen" ng-if="item.TypeId == '170' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 家政 end-->
+				<!-- 维修 begin-->
 				<div class="title" ng-if="item.TypeId == '171'" ng-click="vm.flag171 = !vm.flag171">
 					<div class="weui_cell_hd">
-						<img class="zj_icon_img" src="/images/quick-order/i-fix.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 维修 -->
+						<img class="zj_icon_img" src="/images/quick-order/i-fix.png" alt="" style="width:25px;margin-right:10px;display:block;">						
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag171]"></div>				
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag171]"></div>				
 				</div>
-				<div class="bd blpurple" ng-if="item.TypeId == '171'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blpurple" ng-if="item.TypeId == '171' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag171 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag171 = !vm.flag171">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag171==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag171==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blpurple" ng-if="item.TypeId == '171' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 维修 end-->
+				<!-- 装修 begin-->
 				<div class="title" ng-if="item.TypeId == '172'" ng-click="vm.flag172 = !vm.flag172">
 					<div class="weui_cell_hd">
-						<img class="zj_icon_img" src="/images/quick-order/i-decoration.png" alt="" style="width:25px;margin-right:10px;display:block;">
-						<!-- 装修 -->
+						<img class="zj_icon_img" src="/images/quick-order/i-decoration.png" alt="" style="width:25px;margin-right:10px;display:block;">						
 					</div>
 					<div class="flex1" ng-bind="item.TypeName"></div>
-					<div class="zj_cell_ft" ng-class="{false:'change'}[vm.flag172]"></div>			
+					<div ng-if="item.Children.length > 6" class="zj_cell_ft" ng-class="{false:'change'}[vm.flag172]"></div>			
 				</div>
-				<div class="bd blpink mb15" ng-if="item.TypeId == '172'">
-					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+				<div class="bd blpink mb15" ng-if="item.TypeId == '172' && item.Children.length > 6">
+					<div class="cell" ng-show="$index < 5" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 					<div ng-show="vm.flag172 && item.Children.length>=5" class="cell pblue" ng-click="vm.flag172 = !vm.flag172">更多</div>
-					<div class="cell" ng-show="$index >= 5 && vm.flag172==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op.TypeId,op.TypeName)" ng-bind="op.TypeName">
+					<div class="cell" ng-show="$index >= 5 && vm.flag172==false" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
 					</div>
 				</div>
+				<div class="bd blpink" ng-if="item.TypeId == '172' && item.Children.length <= 6">
+					<div class="cell" ng-repeat="op in item.Children" ng-click="st.getTypeName(op)" ng-bind="op.TypeName">
+					</div>
+				</div>
+				<!-- 装修 end-->
+			</div>
+		</div>
+	</div>
+
+<!-- dialog 服务类型三四级类别 -->
+<div class="zj_mask_dialog" ng-show="st.dialog == true" ng-cloak></div>
+<div class="zj_dialog" ng-show="st.dialog == true" ng-cloak>
+	<div class="zj_service_dialog">
+		<p style="background-color:#27b8f3;color:#fff;padding:10px 0;" ng-bind="st.title"></p>
+		<p class="bd" ng-repeat="item in st.List" ng-bind="item.TypeName" ng-click="st.getThreeTypeName(item.TypeId,item.TypeName)"></p>
+	</div>
+</div>
+
+</div>
+
+
+
+<!-- dialog 满返服务说明 -->
+<div class="weui_dialog_alert" ng-show="vm.dialogPexplain == true" ng-cloak>
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title" ng-bind="gt.PromotionTitle"></strong>
+			</div>
+			<div class="weui_dialog_bd" ng-bind="gt.PromotionHelp"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogPexplain = false">
+					确定
+				</a>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!-- dialog 满减服务说明 -->
+<div class="weui_dialog_alert" ng-show="vm.dialogSexplain == true" ng-cloak>
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title" ng-bind="gt.SpecialTitle"></strong>
+			</div>
+			<div class="weui_dialog_bd" ng-bind="gt.SpecialHelp"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogSexplain = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>

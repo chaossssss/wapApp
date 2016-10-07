@@ -1,5 +1,5 @@
 "use strict"
-var PATH = "http://192.168.1.191:7002/";
+var PATH = "http://192.168.1.191:3003/";
 var WORK_MAN = "/images/map/test1.png";
 var Local_Img = "/images/map/ic_coordinate.svg";
 
@@ -12,7 +12,7 @@ function createMarker(workers,boss){
     remove_overlay();
 	for(var i=0,len=workers.length;i<len;i++){
 		var point = new BMap.Point(workers[i].Longitude,workers[i].Latitude);
-		var icon = new BMap.Icon(workers[i].Photo,new BMap.Size(34,32));
+		var icon = new BMap.Icon(workers[i].DefaultService.Icon1,new BMap.Size(34,32));
 		var marker = new BMap.Marker(point,{icon:icon});
 		map.addOverlay(marker);
 
@@ -164,7 +164,7 @@ function createMarker(workers,boss){
 
     for(var j=0,len=boss.length;j<len;j++){
         var point = new BMap.Point(boss[j].Longitude,boss[j].Latitude);
-        var icon = new BMap.Icon(boss[j].Photo,new BMap.Size(34,32));
+        var icon = new BMap.Icon(boss[j].DefaultService.Icon1,new BMap.Size(34,32));
         var marker = new BMap.Marker(point,{icon:icon});
         map.addOverlay(marker);
 
@@ -391,7 +391,7 @@ function getData(data){
 		url: PATH+"api/v2/Provider/IndexEx",
 		data: data,
 	}).success(function(res){
-        console.log("标符号token",$.cookie("Token"));
+        // console.log("标符号token",$.cookie("Token"));
 		console.log("获取数据",res);
         // var workers = res.Body.Workers;
         // var length = res.Body.Workers.length;

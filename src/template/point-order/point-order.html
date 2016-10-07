@@ -47,7 +47,10 @@
 					<span class="pl20" ng-bind="addr.PhoneNumber"></span>
 				</div>
 				<div class="zj_cell_bd">
-					<p class="f14 fc8" ng-bind="addr.Address1"></p>
+					<p class="f14 fc8">
+						<span ng-bind="addr.Address2"></span>
+						<span ng-bind="addr.Address1"></span>
+					</p>
 				</div>
 			</div>
 			<div class="weui_cell_ft"></div>
@@ -77,13 +80,18 @@
 			<div class="weui_cell_bd">
 				<p>服务类型</p>
 			</div>
-			<select class="weui_cell_ft weui_cell_primary weui_select rtl" name="" id="" ng-model="vm.serviceTypeObj" ng-options="(item.ServiceTypeName+' ¥'+item.Price+'/'+item.UnitName) for item in vm.serviceTypeList">
-				<option value="">--请选择服务类型--</option>
-			</select>
+			<!-- 服务类型非面议 1 PriceType-->
+			<div class="weui_cell_primary" style="text-align:right;">
+				<span style="padding-right:30px;" ng-if="vm.serviceTypeObj.fatherTypeName" ng-bind="vm.serviceTypeObj.fatherTypeName"></span>
+				<select class=" weui_select rtl" name="" id="" ng-model="vm.serviceTypeObj" ng-options="(item.ServiceTypeName+' '+item.Price+' '+item.UnitName) for item in vm.serviceTypeList">
+					<option value="">--请选择服务类型--</option>
+				</select>
+			</div>
+			
 		</a>
 		<!-- 服务类型 end -->
 		<!-- 服务数量 begin-->
-		<div class="weui_cell no_access">
+		<div class="weui_cell no_access" ng-show="vm.serviceTypeObj.PriceType == '1'">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -115,25 +123,28 @@
 		</a>
 		<!-- 服务时间 end -->
 		<!-- 活动 满足条件 beginning -->
-		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1">	
+		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1">
+			<!-- 满减活动	 -->
 			<div class="weui_cell no_access" style="padding-bottom:0;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
 				<div class="weui_cell_hd">
 					<img src="/images/quick-order/i-gift.png" alt="" style="width:16px;margin-right:10px;display:block;">
 				</div>
 				<div class="weui_cell_bd weui_cell_primary">
 					<span class="pred">特价小时工</span>
-					<img src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
+					<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
 				</div>
 				<div class="zj_cell_ft">
 					<p>-¥<span ng-bind="gt.SpecialRule[0].Minus | number:1"></span></p>
 				</div>
 			</div>
+			<!-- 满返活动 -->
 			<div style="padding:10px 10px;font-size:16px;" class="pred" ng-if="gt.PromotionRule.length>=1">
 				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
 			 	<span class="f15" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.PromotionRule[0].Upper" ng-bind="gt.PromotionName"></span>
-				<img src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
+				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
 			</div>
-			<div class="weui_cell no_access" style="padding:10px;font-size:15px;">
+			<!-- 定价才显示待支付 -->
+			<div class="weui_cell no_access" style="padding:10px;font-size:15px;" ng-if="vm.serviceTypeObj.PriceType == '1'">
 				<div class="weui_cell_bd flex2">
 					<p>订单总价&nbsp;¥
 						<span ng-bind="vm.serviceTypeObj.Price*vm.Total"></span>
@@ -143,7 +154,6 @@
 				<div class="zj_cell_right" style="color:#000" ng-if="gt.SpecialRule.length == 0">
 					<span>待支付</span>
 					<span class="pred f20 pl5 f18">¥&nbsp;<span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span></span>
-
 				</div>
 				<div class="zj_cell_right" style="color:#000" ng-if="gt.SpecialRule.length > 0">
 					<span>待支付</span>
@@ -152,8 +162,8 @@
 				</div>
 			</div>
 			<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box" ng-if="vm.serviceTypeObj.Price*vm.Total < gt.SpecialRule[0].Upper">
-				<span class="flex1 pred" ng-bind="gt.SpecialHelp"></span>
-				<img src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;padding-left:5px;">
+				<span class="flex1 pred" ng-bind="gt.SpecialAds"></span>
+				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;padding-left:5px;">
 			</div>
 		</div>	
 		<!-- 活动 满足条件 endind -->
@@ -204,17 +214,24 @@
 		<div class="zj_foot_hd">
 			订单总价
 		</div>
-		<div class="zj_foot_bd" ng-show="!vm.serviceTypeObj.Price">
+		<div class="zj_foot_bd" ng-show="!vm.serviceTypeObj.PriceType">
 			<span>--</span>
 		</div>
-		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price">
-			<span>¥</span>
-			<span ng-if="vm.serviceTypeObj.Price*vm.Total < 90" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
-			<span ng-if="vm.serviceTypeObj.Price*vm.Total >= 90" ng-bind="vm.serviceTypeObj.Price*vm.Total-10 | number:1"></span>
-		</div>
-		<!-- <div class="zj_foot_bd" ng-show="vm.IsNegotiable === true">
+		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.PriceType == '0'">
 			<span>面议</span>
-		</div> -->
+		</div>
+		<!-- 没有活动 -->
+		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && !gt">
+			<span>¥</span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total <= 0">0.00</span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total > 0" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+		</div>
+		<!-- 可以参加满减活动 -->
+		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && gt && gt.SpecialRule.length > 0">
+			<span>¥</span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total < gt.SpecialRule[0].Upper" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="vm.serviceTypeObj.Price*vm.Total-gt.SpecialRule[0].Minus | number:1"></span>
+		</div>	
 		<div class="zj_foot_ft" ng-click="vm.submitOrder()">
 			<span class="btn">提交订单</span>
 		</div>
@@ -279,6 +296,39 @@
 	</div>
 </div>
 
+<!-- dialog 满返服务说明 -->
+<div class="weui_dialog_alert" ng-show="vm.dialogPexplain == true" ng-cloak>
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title" ng-bind="gt.PromotionTitle"></strong>
+			</div>
+			<div class="weui_dialog_bd" ng-bind="gt.PromotionHelp"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogPexplain = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- dialog 满减服务说明 -->
+<div class="weui_dialog_alert" ng-show="vm.dialogSexplain == true" ng-cloak>
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			<div class="weui_dialog_hd">
+				<strong class="weui_dialog_title" ng-bind="gt.SpecialTitle"></strong>
+			</div>
+			<div class="weui_dialog_bd" ng-bind="gt.SpecialHelp"></div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogSexplain = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 
