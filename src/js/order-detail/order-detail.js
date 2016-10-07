@@ -169,6 +169,8 @@ $(function(){
       var orderId = data.Body.OrderId;
       isEvaluated = data.Body.IsEvaluated;
       var workHeadPic = data.Body.ServiceProviderPic;
+      minPrice = data.Body.MinPrice;
+      maxPrice = data.Body.MaxPrice;
       $("#providerHead").attr("src",workHeadPic);
       $("#orderCode").text(data.Body.OrderCode);
       if(data.Body.CreateTime != null){
@@ -196,9 +198,9 @@ $(function(){
       $("#clientGender").text(clientGender);
       var workName = data.Body.ServiceProviderName;
       $("#serviceProviderName").text(workName);
-      totalPrice = moneySymbol(data.Body.Service.TotalPrice);
+      totalPrice = moneySymbol(data.Body.TotalPrice);
       $("#actualMoney").text(totalPrice);
-      if(data.Body.Service.TotalPrice){
+      if(data.Body.TotalPrice){
         $("#price").text(totalPrice);
       }
       var gender = data.Body.ServiceProviderGender;
@@ -223,11 +225,12 @@ $(function(){
       var notesNum = data.Body.Service.Content;
       var noteList = "<li>" + notesNum + "</li>";
       $("#remarkLists").append(noteList);
-      var unitName = unitSymbole(data.Body.Service.UnitName);
+      var unitName = unitSymbole(data.Body.UnitName);
       $("#unit").text(unitName);
-      singlePrice = moneySymbol(data.Body.Service.Price);
+      noSinglePrice = data.Body.Price;
+      singlePrice = moneySymbol(data.Body.Price);
       $("#single").text(singlePrice);
-      var q = multipleSymbol(data.Body.Service.Total);
+      var q = multipleSymbol(data.Body.Total);
       $("#quantity").text(q);
 
       $("#serviceName").text(data.Body.Service.ServiceName);
@@ -320,6 +323,14 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnRight").addClass("delete-btn");
 
+    if(singlePrice == '面议'){
+      $("#unit").hide();
+      $("#multiple").hide();
+    }
+    if(noSinglePrice == null){
+      var single = "￥" + minPrice + "-" + maxPrice;
+      $("#single").text(single);
+    }
     $("#zjWorker").hide();
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -337,7 +348,7 @@ console.log(orderState);
     $("#finishTime").hide();
 
     $("#orderTime").css("marginBottom","0px");
-    $("#servicePrice").css("marginBottom","0px");
+    $("#servicePrice").css("marginBottom","4px");
 
     $("#btnRight").on("click",function(){
       $("#cancelOrder1").css("display","block");
@@ -393,13 +404,23 @@ console.log(orderState);
       $("#zjWorker").hide();
     }
     if(singlePrice == '面议'){
+      $("#servicePrice").css("marginBottom","4px");
+      $("#multiple").hide();
+      $("#unit").hide();
       $("#orderPrice").hide();
       $("#waitOrder").hide();
+    }
+    if(noSinglePrice == null){
+      $("#orderPrice").hide();
+      $("#waitOrder").hide();
+      var single = "￥" + minPrice + "-" + maxPrice;
+      $("#single").text(single);
+      $("#servicePrice").css("marginBottom","4px");
     }
     // $("#waitOrder").css("marginBottom","4px");
     $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
-    if(totalPrice == "面议"){
+    if(totalPrice == '面议'){
       $("#servicePrice").css("marginBottom","4px");
     }
     $(".pay-btn").on("click",function(){
@@ -590,7 +611,7 @@ console.log(orderState);
       $("#payTime").hide();
       $("#specialPrice").hide();
       $("#waitOrder").hide();
-      $("#orderPrice").css("marginBottom","0px");
+      $("#orderPrice").css("marginBottom","4px");
       $("#acceptTime").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
@@ -756,6 +777,9 @@ console.log(orderState);
     if(confirmTime > now){
     var dateDiff = DateDiff(confirmTime,now);
     var dataDiffText = "请确认服务完成，还剩" + dateDiff + "自动确认";
+    }
+    if(screen.width < 375){
+      $(".process-status").css("fontSize","13px");
     }
     console.log(dataDiffText);
     console.log(now);
@@ -981,6 +1005,12 @@ console.log(orderState);
       $("#btnLeft").hide();
       $("#specialPrice").hide();
 
+      if(singlePrice == '面议'){
+        $("#unit").hide();
+        $("#multiple").hide();
+        $("#waitOrder").hide();
+        $("#servicePrice").css("marginBottom","4px");
+      }
       $("#status").css("paddingTop","90px");
       $("#cancelTime").css("marginBottom","0px");
       // $("#orderTime").css("marginBottom","4px");

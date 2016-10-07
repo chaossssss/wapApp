@@ -3,6 +3,7 @@
  */
 
 $(function() {
+    var token = window.localStorage.getItem("Token");
     var Type = getUrl('type');
     var Id = getUrl('markid');
     $.ajax({
@@ -10,6 +11,7 @@ $(function() {
         type: "POST",
         url: "http://192.168.1.191:3001/api/v2/Provider/Detail",
         data: {
+            Token:token,
             Type:Type,
             Id:Id
         },
