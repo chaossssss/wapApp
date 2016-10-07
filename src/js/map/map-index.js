@@ -16,10 +16,12 @@ function createMarker(workers,boss){
 		var marker = new BMap.Marker(point,{icon:icon});
 		map.addOverlay(marker);
 
-        var id = workers[i].Id;
-        marker.addEventListener("click",function(){
-            goDetail("worker",id);
-        });
+        // var id = workers[i].Id;
+        addClickHandler(marker,"worker",workers[i].Id);
+        // marker.addEventListener("click",function(){
+        //     alert(id);
+        //     goDetail("worker",id);
+        // });
 
         var manOrwoman = workers[i].Gender;
         var flag = workers[i].DisplayAttribute;
@@ -45,9 +47,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                });
+                addClickLabel(label,"worker",workers[i].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // });
                 break;  
             case 2:
                 var htm2 = "<div class='bubbleInfo'>"
@@ -61,10 +64,11 @@ function createMarker(workers,boss){
                     marginLeft:"-50px",
                     marginTop:"-30px"
                 });
-                marker.setLabel(label); 
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                }); 
+                marker.setLabel(label);
+                addClickLabel(label,"worker",workers[i].Id); 
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // }); 
                 break;    
             case 3:
                 if(manOrwoman === "0"){
@@ -86,10 +90,11 @@ function createMarker(workers,boss){
                     marginLeft:"-50px",
                     marginTop:"-30px"
                 });
-                marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                });
+                marker.setLabel(label); 
+                addClickLabel(label,"worker",workers[i].Id); 
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // });
                 break; 
             case 4:
                 var htm4 = "<div class='bubbleInfo'>"
@@ -103,10 +108,11 @@ function createMarker(workers,boss){
                     marginLeft:"-50px",
                     marginTop:"-30px"
                 });
-                marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                });
+                marker.setLabel(label); 
+                addClickLabel(label,"worker",workers[i].Id); 
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // });
                 break; 
             case 5:
                 var htm5 = "<div class='bubbleInfo'>"
@@ -120,10 +126,11 @@ function createMarker(workers,boss){
                     marginLeft:"-50px",
                     marginTop:"-30px"
                 });
-                marker.setLabel(label); 
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                }); 
+                marker.setLabel(label);
+                addClickLabel(label,"worker",workers[i].Id); 
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // }); 
                 break;  
             case 6:
                 var htm6 = "<div class='bubbleInfo'>"
@@ -138,9 +145,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                });
+                addClickLabel(label,"worker",workers[i].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // });
                 break;
             default :
                 var htm0 = "<div class='bubbleInfo'>"
@@ -155,9 +163,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);
-                label.addEventListener("click",function(){
-                    goDetail("worker",id);
-                });
+                addClickLabel(label,"worker",workers[i].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("worker",id);
+                // });
                 break;  
         }
 	}
@@ -168,10 +177,11 @@ function createMarker(workers,boss){
         var marker = new BMap.Marker(point,{icon:icon});
         map.addOverlay(marker);
 
-        var id = boss[j].Id;
-        marker.addEventListener("click",function(){
-            goDetail("boss",id);
-        });
+        // var bossId = boss[j].Id;
+        // marker.addEventListener("click",function(){
+        //     goDetail("boss",bossId);
+        // });
+        addClickHandler(marker,"boss",boss[j].Id);
 
         var flag = boss[j].DisplayAttribute;
 
@@ -193,9 +203,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                });
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // });
                 break;  
             case 2:
                 var htm2 = "<div class='bubbleInfo'>"
@@ -210,9 +221,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label); 
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                }); 
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // }); 
                 break;    
             case 3:
                 if(manOrwoman === "0"){
@@ -234,9 +246,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                });
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // });
                 break; 
             case 4:
                 var htm4 = "<div class='bubbleInfo'>"
@@ -250,10 +263,11 @@ function createMarker(workers,boss){
                     marginLeft:"-50px",
                     marginTop:"-30px"
                 });
-                marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                });
+                marker.setLabel(label); 
+                addClickLabel(label,"boss",boss[j].Id); 
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // });
                 break; 
             case 5:
                 var htm5 = "<div class='bubbleInfo'>"
@@ -268,9 +282,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label); 
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                }); 
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // }); 
                 break;  
             case 6:
                 var htm6 = "<div class='bubbleInfo'>"
@@ -285,9 +300,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);  
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                });
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // });
                 break;
             default :
                 var htm0 = "<div class='bubbleInfo'>"
@@ -302,9 +318,10 @@ function createMarker(workers,boss){
                     marginTop:"-30px"
                 });
                 marker.setLabel(label);
-                label.addEventListener("click",function(){
-                    goDetail("boss",id);
-                });
+                addClickLabel(label,"boss",boss[j].Id);
+                // label.addEventListener("click",function(){
+                //     goDetail("boss",bossId);
+                // });
                 break;  
         }
     }
@@ -356,6 +373,20 @@ function createMarker(workers,boss){
 //         });
 //     }
 // }
+
+function addClickHandler(marker,type,id){
+    marker.addEventListener("click",function(){
+        // alert(id);
+        goDetail(type,id);
+    });
+}
+
+function addClickLabel(label,type,id){
+    label.addEventListener("click",function(){
+        // alert(id);
+        goDetail(type,id);
+    });
+}
 
 /**
  * 跳转到详情页面

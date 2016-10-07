@@ -3,6 +3,18 @@ a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,2
 body {
 	background-color: rgb(238,238,238);
 }
+.f20 {
+	font-size: 20px;
+}
+.pred {
+	color: #f43530;
+}
+.ml5 {
+	margin-left: 5px;
+}
+.ml20 {
+	margin-left: 20px;
+}
 .mt10 {
 	margin-top: 10px;
 }

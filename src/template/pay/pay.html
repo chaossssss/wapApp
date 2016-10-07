@@ -2,7 +2,6 @@
 <html lang="en" ng-app="com.wapapp.app">
 <head> 
 	<meta charset="UTF-8">
-	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- 为移动设备添加 viewport -->
@@ -30,37 +29,48 @@
 				<img src="/images/emt.jpg" alt="" style="width:30px;margin-right:5px;display:block;border-radius:15px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<span ng-bind="vm.ServiceProviderName"></span>
-				<span ng-if="vm.ServiceProviderGender === '0'">师傅</span>
-				<span ng-if="vm.ServiceProviderGender === '1'">阿姨</span>
+				<span class="ml5" ng-bind="od.ServiceProviderName"></span>
+				<span ng-if="od.ServiceProviderGender === '0'">师傅</span>
+				<span ng-if="od.ServiceProviderGender === '1'">阿姨</span>
 			</div>
 		</div>
 	</div>
-	<div class="weui_cells mt10">
+	<div class="weui_cells mt10 weui_cells_access">
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务价格</p>
 			</div>
-			<div class="weui_cell_ft">
-				<span ng-bind="vm.Service.ServiceName">x2</span>
-				¥30.0/小时
+			<div class="zj_cell_ft">
+				<span>
+					¥<span ng-bind="od.Price"></span>
+					/<span ng-bind="od.UnitName"></span>	
+				</span>
+				<span class="ml20">
+					x<span ng-bind="od.Total"></span>
+				</span>
 			</div>
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>待支付</p>
+				<p>特价小时工</p>
 			</div>
-			<div class="weui_cell_ft" ng-bind="vm.Price">¥60.0</div>
+			<div class="zj_cell_ft">¥60.0</div>
 		</div>
-	</div>
-	<!-- <div class="weui_cells weui_cells_access mt10">
 		<a href="javascript:;" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>优惠券</p>
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a>
-	</div> -->
+		<div class="weui_cell no_access">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>待支付</p>
+            </div>
+            <div class="zj_cell_ft pred f20">
+            	¥<span ng-bind="od.TotalPrice"></span>
+            </div>
+        </div>
+	</div>
 	<div class="weui_cells weui_cells_checkbox mt10">
 		<div class="weui_cell">请选择支付方式</div>
 		<label for='s11' class="weui_cell weui_check_label">
@@ -68,7 +78,7 @@
 				<img src="/images/pay/yue.png" alt="" style="width:20px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>账户余额支付 余额<span ng-bind="vm.Balance"></span>元</p>
+				<p>账户余额支付 余额<span ng-bind="uc.Balance"></span>元</p>
 			</div>
 			<div class="weui_cell_ft">
 				<input type="checkbox" name="checkbox" id="s11" class="weui_check" ng-model="vm.yeradio">
@@ -132,7 +142,7 @@
     </div>
 </div>
 
-<!-- dialog_alert -->
+<!-- dialog_alert error-->
 <div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
@@ -146,7 +156,7 @@
 	</div>
 </div>
 
-<!-- dialog_alert -->
+<!-- dialog_alert confirm-->
 <div class="weui_dialog_confirm" ng-show="vm.dialogConfirm == true" ng-cloak>
     <div class="weui_mask"></div>
     <div class="weui_dialog">
