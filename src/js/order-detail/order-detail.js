@@ -230,6 +230,7 @@ $(function(){
       noSinglePrice = data.Body.Price;
       singlePrice = moneySymbol(data.Body.Price);
       $("#single").text(singlePrice);
+      total = data.Body.Total;
       var q = multipleSymbol(data.Body.Total);
       $("#quantity").text(q);
 
@@ -329,10 +330,7 @@ console.log(orderState);
       $("#unit").hide();
       $("#multiple").hide();
     }
-    if(noSinglePrice == null){
-      var single = "￥" + minPrice + "-" + maxPrice;
-      $("#single").text(single);
-    }
+    
     $("#zjWorker").hide();
     $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -347,7 +345,14 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#finishTime").hide();
-
+    if(noSinglePrice == null){
+      var single = "￥" + minPrice + "-" + maxPrice;
+      $("#single").text(single);
+      var price = "￥" + minPrice*total + "-￥" + maxPrice*total; 
+      $("#orderPrice").show();
+      $("#price").text(price);
+      $("#price").addClass("actual");
+    }
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
 
@@ -422,6 +427,10 @@ console.log(orderState);
       $("#waitOrder").hide();
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
+      var price = "￥" + minPrice*total + "-￥" + maxPrice*total; 
+      $("#orderPrice").show();
+      $("#price").text(price);
+      $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","4px");
     }
     // $("#waitOrder").css("marginBottom","4px");
