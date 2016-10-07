@@ -51,7 +51,7 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 3;
+	vm.Total = 1;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
 	}else if(window.localStorage.getItem("_address")){
@@ -60,6 +60,17 @@ angular.module('com.wapapp.app',[])
 		vm.ServiceAddressId = _address.Id;
 		$scope.addr = _address;
 	}
+
+	//小时工服务数量不能小于3小时
+	$scope.$watch('vm.ServiceTypeId',function(){
+		if(vm.ServiceTypeId){
+			if(vm.Total < 3 && vm.ServiceTypeId =='5'){
+				vm.Total = 3;
+			}else{
+				vm.Total = 1;
+			}
+		}
+	})
 
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.Total',function(){

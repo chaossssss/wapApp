@@ -27,8 +27,6 @@ angular.module('com.wapapp.app',[])
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
 	
-	// vm.unitPrice = 30;
-	vm.Total = 1;
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
 	vm.sub = function(){
@@ -46,7 +44,7 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 3;
+	vm.Total = 1;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
 	}else if(window.localStorage.getItem("_address")){
@@ -56,6 +54,17 @@ angular.module('com.wapapp.app',[])
 		$scope.addr = _address;
 	}
 	
+	//小时工服务数量不能小于3小时
+	$scope.$watch('vm.serviceTypeObj',function(){
+		if(vm.serviceTypeObj){
+			if(vm.Total < 3 && vm.serviceTypeObj.ServiceTypeId =='5'){
+				vm.Total = 3;
+			}else{
+				vm.Total = 1;
+			}
+		}
+	})
+
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.Total',function(){
 		if(vm.serviceTypeObj){
@@ -134,7 +143,7 @@ angular.module('com.wapapp.app',[])
 						}
 					}
 					// console.log(serviceTypeList);
-					//PriceType 为 0 面议； 为 1 定价
+					//PriceType  0 面议；  1 定价；
 					for(var j=0,leng=serviceTypeList.length;j<leng;j++){
 						if(serviceTypeList[j].PriceType === '0'){
 							serviceTypeList[j].Price = '面议';
@@ -146,6 +155,7 @@ angular.module('com.wapapp.app',[])
 							if(serviceTypeList[j].UnitName){
 								serviceTypeList[j].UnitName = '/'+serviceTypeList[j].UnitName;
 							}
+							serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
 						}
 					}
 					vm.serviceTypeList = serviceTypeList;

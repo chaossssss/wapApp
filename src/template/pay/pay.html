@@ -50,19 +50,34 @@
 				</span>
 			</div>
 		</div>
-		<div class="weui_cell">
+		<!-- 满足活动情况 -->
+		<div class="weui_cell" ng-show="od.Activity" ng-cloak>
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>特价小时工</p>
+				<p ng-bind="od.Activity.SpecialTitle"></p>
 			</div>
-			<div class="zj_cell_ft">¥60.0</div>
+			<div class="zj_cell_ft">
+				<span>-¥
+					<span ng-bind="od.Activity.SpecialRule[0].Minus"></span>
+				</span>
+			</div>
 		</div>
-		<a href="javascript:;" class="weui_cell">
+		<!-- <a href="javascript:;" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>优惠券</p>
 			</div>
 			<div class="weui_cell_ft"></div>
-		</a>
-		<div class="weui_cell no_access">
+		</a> -->
+		<!-- 参加活动&没有使用优惠券 -->
+		<div class="weui_cell no_access" ng-show="od.Activity" ng-cloak>
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>待支付</p>
+            </div>
+            <div class="zj_cell_ft pred f20">
+            	¥<span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
+            </div>
+        </div>
+		<!-- 没有参加活动&没有使用优惠券 -->
+		<div class="weui_cell no_access" ng-hide="od.Activity" ng-cloak>
             <div class="weui_cell_bd weui_cell_primary">
                 <p>待支付</p>
             </div>

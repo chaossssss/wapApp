@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// FastClick.attach(document.body);
+	FastClick.attach(document.body);
 	$rootScope.url = "http://192.168.1.191:3003";
 	$rootScope.token = window.localStorage.getItem("Token");
 	// $rootScope.token = $.cookie("Token");
@@ -45,19 +45,25 @@ angular.module('com.wapapp.app',[])
  
  	vm.payOrder = function(){
  		console.log("余额",vm.yeradio,"支付宝or微信",vm.wxOrzfb);
+ 		//金额换算
+ 		vm.Price = od.TotalPrice;
+ 		vm.otherPrice = Math.abs(parseInt(vm.Price) - parseInt(uc.Balance));
+ 		console.log("另外需要付款:",vm.otherPrice);
+
  		// 余额＋支付宝
  		if(vm.yeradio == true && vm.wxOrzfb === "zhifubao"){
- 			// $scope.loadingToast = true;
- 			console.log(vm.radioBox);
+ 			$scope.loadingToast = true;
+ 			vm.Price = od.TotalPrice;
 			payForService.zhifubao({
 				Token : $rootScope.token,
 	            OrderId : $rootScope.orderId,
 	            CouponId: "",
-	            Alipay : od.TotalPrice,
-	            BalancePay : 0
+	            Alipay : vm.otherPrice,
+	            BalancePay : uc.Balance
 			}).success(function(res){
+				$scope.loadingToast = false;
 				console.log(res);
-				// aplipayTradePay();
+				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
 					// window.location.href = "";
 				}else{
@@ -69,14 +75,29 @@ angular.module('com.wapapp.app',[])
  		}
  		//余额＋微信
  		if(vm.yeradio == true && vm.wxOrzfb === "weixin"){
-
+ 			$scope.loadingToast = true;
+ 			payForService.weixin({
+ 				Token: $rootScope.token,
+	            OrderId: $rootScope.orderId,
+	            CouponId: "",
+	            WxPay: vm.otherPrice,
+	            BalancePay: uc.Balance
+ 			}).success(function(res){
+				console.log(res);
+				$scope.loadingToast = false;
+				if(res.Meta.ErrorCode === "0"){
+					// window.location.href = "";
+				}else{
+					vm.dialogshow = true;
+					vm.errorMsg = res.Meta.ErrorMsg;
+				}
+				$scope.$apply();
+			})
  		}
 
  		//余额
  		if(vm.yeradio == true && vm.wxOrzfb !=='zhifubao' && vm.wxOrzfb !=='weixin'){
  			$scope.loadingToast = true;
- 			vm.Price = od.TotalPrice;
- 			console.log(vm.Price);
 			payForService.account({
 				Token: $rootScope.token,
 	            OrderId: $rootScope.orderId,
@@ -96,7 +117,7 @@ angular.module('com.wapapp.app',[])
  		}
  		// 支付宝
  		if(vm.wxOrzfb == "zhifubao" && vm.yeradio === false ||  vm.yeradio === undefined){
- 			vm.Price = od.TotalPrice;
+ 			$scope.loadingToast = true;
 			payForService.zhifubao({
 				Token : $rootScope.token,
 	            OrderId : $rootScope.orderId,
@@ -105,6 +126,7 @@ angular.module('com.wapapp.app',[])
 	            BalancePay : 0
 			}).success(function(res){
 				console.log(res);
+				$scope.loadingToast = false;
 				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
 					// window.location.href = "";
@@ -116,33 +138,34 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		// 微信
- 		// if(vm.wxOrzfb === "weixin" && vm.yeradio === false ||  vm.yeradio === undefined){
- 		// 	console.log(vm.radioBox);
- 		// 	payForService.weixin({
- 		// 		Token: $rootScope.token,
-	  //           OrderId: $rootScope.orderId,
-	  //           CouponId: "",
-	  //           WxPay: vm.Price,
-	  //           BalancePay: 0
- 		// 	}).success(function(res){
-			// 	console.log(res);
-			// 	if(res.Meta.ErrorCode === "0"){
-			// 		// window.location.href = "";
-			// 	}else{
-			// 		vm.dialogshow = true;
-			// 		vm.errorMsg = res.Meta.ErrorMsg;
-			// 	}
-			// 	$scope.$apply();
-			// })
- 		// }
+ 		if(vm.wxOrzfb === "weixin" && vm.yeradio === false ||  vm.yeradio === undefined){
+ 			$scope.loadingToast = true;
+ 			payForService.weixin({
+ 				Token: $rootScope.token,
+	            OrderId: $rootScope.orderId,
+	            CouponId: "",
+	            WxPay: vm.Price,
+	            BalancePay: 0
+ 			}).success(function(res){
+				console.log(res);
+				$scope.loadingToast = false;
+				if(res.Meta.ErrorCode === "0"){
+					// window.location.href = "";
+				}else{
+					vm.dialogshow = true;
+					vm.errorMsg = res.Meta.ErrorMsg;
+				}
+				$scope.$apply();
+			})
+ 		}
  			
  	}
 
  	//支付宝支付
     function aplipayTradePay(GATEWAY_NEW,aplipaySign){
-        console.log("进来");
         var aplipayUrl = GATEWAY_NEW + aplipaySign;
-        window.location.href= aplipayUrl;
+		window.sessionStorage.setItem("AlipayUrl",aplipayUrl);
+        window.location.href= "/template/pay/alipay.html";
     }
 }])
 .factory('getMyInfo',['$rootScope',function($rootScope){
@@ -225,7 +248,7 @@ angular.module('com.wapapp.app',[])
 				alert("服务器连接失败，请检查网络设置");
 			})
 	}
-	var weixin = function(data){
+	var weixinPay = function(data){
 		return $.ajax({
 				method:"POST",
 				url: _weixinPath,

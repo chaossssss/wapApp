@@ -34,12 +34,14 @@
     <iframe id="loadUrl" src="" frameborder="0"></iframe>
   </div>
 
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>  
 <script>
 $(function(){
+  var payUrl = window.sessionStorage.getItem("AlipayUrl");
   $("#loadUrl").attr("src",payUrl);
 })
 </script>
-<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>  
+
 </body>
 </html>
 
