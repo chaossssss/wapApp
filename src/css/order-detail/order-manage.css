@@ -6,8 +6,8 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail{ width: 100%; margin: 0 auto; background: #f8f8f8; }
 .order-detail .order-status{ height: 148px; width: 100%; text-align: center; background: #eefaff no-repeat center 10px; background-size: 250px 50%; }
 .order-detail .order-status .status{ color: #3fbef9; font-size: 18px; padding-top: 86px; }
-.order-detail .process{ width: 100%; height: 42.5px; display: flex; display: -webkit-flex; display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox; background: #fff; border-top: 0.5px solid #3fbef9; margin-bottom: 13px; border-bottom: 0.5px #ccc solid; }
-.order-detail .process:after{ border-bottom: 0.5px solid #ccc; transform: scaleY(.5); }
+.order-detail .process{ width: 100%; height: 42.5px; display: flex; display: -webkit-flex; display: box; display: -webkit-box; display: -moz-box; display: -ms-flexbox; background: #fff; border-top: 1px solid #3fbef9; margin-bottom: 13px; border-bottom: 1px #ccc solid; }
+.order-detail .process:after{ border-bottom: 1px solid #ccc; transform: scaleY(.5); }
 .order-detail .process .process-status{ flex: 1; -webkit-box-flex: 1; -webkit-flex: 1; -moz-box-flex: 1; -ms-flex: 1; text-align: center; line-height: 20px; font-size: 14px; }
 .order-detail .explanation{ color: #666; font-size: 12px; margin: 0 auto; width: 200px; }
 
@@ -19,8 +19,8 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail .zj-mark{ padding-bottom: 8px; }
 .order-detail .remark-box{ border: 0; outline: 0; }
 
-.order-detail .zj-cell-border:before{ border-top: 0.5px solid #ccc; transform: scaleY(.5); }
-.order-detail .zj-cell-border:after{ border-bottom: 0.5px solid #ccc; transform: scaleY(.5); }
+.order-detail .zj-cell-border:before{ border-top: 1px solid #ccc; transform: scaleY(.5); }
+.order-detail .zj-cell-border:after{ border-bottom: 1px solid #ccc; transform: scaleY(.5); }
 .order-detail .zj-cells:before{ left: 10px; }
 .order-detail .zj-cells:after{ border-bottom: 0; }
 .order-detail .filling{ height: 12.5px; width: 100%; background: #f8f8f8;}
@@ -34,7 +34,7 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail .zj-arrow{ background: url(../../images/order-detail/arrow.png) no-repeat; height: 18px; width: 11px; display: inline-block; position: relative; top: -5px; left: 17px; }
 .order-detail .zj-cell-left{ color: #333; }
 .order-detail .zj-cell-right{ color: #666; }
-.order-detail .contact{ border-left: 0.5px #cccccc solid; height: 27px; width: 36.5px; padding-left: 5px; background: url(../../images/order-detail/phone.png) no-repeat 12px 1px; background-size: 26px 26px; }
+.order-detail .contact{ border-left: 1px #cccccc solid; height: 27px; width: 36.5px; padding-left: 5px; background: url(../../images/order-detail/phone.png) no-repeat 12px 1px; background-size: 26px 26px; }
 .order-detail .zj-worker{ padding-bottom: 4px; padding-top: 9px; }
 
 .order-detail .money{ float: right; color: #666; }
@@ -42,7 +42,7 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail .actual{ color: #ff5000; font-size: 18px; }
 .order-detail .spacing{ margin-bottom: 12px; color: #333; }
 /*.order-detail .zj-pay:before{ border-top: 0; }*/
-.order-detail .zj-pay{ padding-bottom: 10px; border-bottom: 0.5px #ccc solid; }
+.order-detail .zj-pay{ padding-bottom: 10px; border-bottom: 1px #ccc solid; }
 .order-detail .zj-pay:before{ left: 10px; }
 
 .order-detail .refund{ display: inline-block; }
@@ -66,11 +66,11 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .round{ width: 11px; height: 11px; border-radius: 50%; position: relative; top: -6px; left: 50%; }
 .round-complete{ background: #3fbef9; }
 .round-processing{ background: #3fbef9; width: 7px; height: 7px; border: 2px solid #88d7fc; }
-.round-undone{ background: #fff; width: 9px; height: 9px; border: 0.5px solid #88d7fc; }
+.round-undone{ background: #fff; width: 9px; height: 9px; border: 1px solid #88d7fc; }
 
 /*--最下面按钮状态--*/
-.order-detail .delete-order{ width: 100%; height: 48.5px; border-top: 0.5px solid #ccc; background: #fff; margin-top: 8.5px; position: fixed; bottom: 0px; }
-.order-detail .delete-btn{ color: #333; border: 0.5px #999 solid; font-size: 13px; border-radius: 3px; }
+.order-detail .delete-order{ width: 100%; height: 48.5px; border-top: 1px solid #ccc; background: #fff; margin-top: 8.5px; position: fixed; bottom: 0px; }
+.order-detail .delete-btn{ color: #333; border: 1px #999 solid; font-size: 13px; border-radius: 3px; }
 .order-detail .pay-btn{ border: 0.5px #ff5000 solid; color: #ff5000; font-size: 13px; border-radius: 3px; }
 .order-detail .confirm-btn{ border: 0.5px #3fbef9 solid; color: #3fbef9; font-size: 13px; border-radius: 3px; }
 .order-detail .left-btn{ width: 85px; height: 29px; line-height: 30px; text-align: center; display: inline-block; position: relative; left: 174px; top: 8.5px; }
