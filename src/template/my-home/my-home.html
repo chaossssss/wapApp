@@ -14,7 +14,7 @@
     <meta name="author" content="zxh">
 	<title>个人中心</title>
 
-	<link rel="stylesheet" href="../../css/weui.min.css">
+	<link rel="stylesheet" href="/css/weui.min.css">
 	<style>
 		/*基础样式*/
 		a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
@@ -60,8 +60,8 @@
 				<p ng-bind="vm.NickName"></p>
 				<p ng-bind="vm.PhoneNumber"></p>
 			</div>
-			<div class="weui_cell_ft">
-				<img class="qr_code" ng-src="{{vm.QrCode}}" src="/images/emt.jpg" alt="">
+			<div class="zj_cell_ft" id="code">
+				<!-- <img class="qr_code" ng-src="{{vm.QrCode}}" src="/images/emt.jpg" alt=""> -->
 			</div>
 		</div>
 	</div>
@@ -98,8 +98,12 @@
 	</div>
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="/js/my-home/jquery.qrcode.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="/js/my-home/my-home.min.js"></script>
+<script>
+
+</script>
 </body>
 </html>

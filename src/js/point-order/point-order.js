@@ -209,8 +209,11 @@ angular.module('com.wapapp.app',[])
 
 	$scope.$on('service-time-date',function(event,date){
 		console.log("父亲接收时间",date);
-		vm.ServiceStartAt = date;
-	})
+		vm.ServiceStartAt = date.serviceStartAt;
+		var serviceDay = date.serviceDay;
+		var serviceTime = date.serviceTime;
+		vm.ServiceStartAtCut = serviceDay.slice(0,10)+ " " +serviceTime;
+	}) 
 
 	vm.datePickerShow = function(){
 		if(vm.serviceTypeObj){
@@ -238,7 +241,7 @@ angular.module('com.wapapp.app',[])
 			vm.dialogshow = true;
 			vm.errorMsg = "请先选择服务类型";
 		}else{
-			$scope.loadingToast = true;
+			$scope.loadingToast = true; 
 			console.log("img",img);
 			console.log("Token",$rootScope.token);
 			console.log("ObjectType",$rootScope.ObjectType);
@@ -247,7 +250,7 @@ angular.module('com.wapapp.app',[])
 			console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
 			console.log("ServiceContent",vm.ServiceContent);
 			console.log("Total",vm.Total);
-			console.log("ServiceStartAt",vm.ServiceStartAt);
+			console.log("ServiceStartAt",vm.ServiceStartAtCut);
 			console.log("ServiceAddressId",vm.ServiceAddressId);
 
 			var Json_data = {
@@ -258,7 +261,7 @@ angular.module('com.wapapp.app',[])
 	            "ServiceContent": vm.ServiceContent,
 	            "Total": vm.Total,
 	            "OrderFrom": "1",
-	            "ServiceStartAt": vm.ServiceStartAt,
+	            "ServiceStartAt": vm.ServiceStartAtCut,
 	            "ServiceAddressId": vm.ServiceAddressId
 	        };
 	        Json_data = JSON.stringify(Json_data);
@@ -271,7 +274,7 @@ angular.module('com.wapapp.app',[])
 	        formdata.append("ServiceContent", vm.ServiceContent);   
 	        formdata.append("Total", vm.Total);    
 	        formdata.append("OrderForm", "1");   
-	        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+	        formdata.append("ServiceStartAt", vm.ServiceStartAtCut);  
 	        formdata.append("ServiceAddressId", vm.ServiceAddressId); 
 
 	        for(var i=0,leng=img.length;i<leng;i++){
@@ -299,19 +302,25 @@ angular.module('com.wapapp.app',[])
 .controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
 	var dp = $scope.dp = {};
 	dp.show =false;
+	//获得天
 	dp.getdpDay = function(item){
 		// console.log(item.TimeRange);
 		dp.timeItem = item.TimeRange;
 		dp.serviceDay = item.Date;
 	}
+	//获得时间
 	dp.getdpTime = function(item){
 		// console.log(item);
 		dp.serviceTime = item;
 		console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
 		//选中
-		var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
+		var serviceStartAt = dp.serviceDay +" "+ dp.serviceTime +"";
 		dp.show = false;
-		$scope.$emit("service-time-date",serviceStartAt);
+		var tofather = {};
+		tofather.serviceStartAt = serviceStartAt;
+		tofather.serviceDay = dp.serviceDay;
+		tofather.serviceTime = dp.serviceTime;
+		$scope.$emit("service-time-date",tofather);
 	}
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;

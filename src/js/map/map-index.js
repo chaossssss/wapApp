@@ -13,6 +13,7 @@ function createMarker(workers,boss){
 	for(var i=0,len=workers.length;i<len;i++){
 		var point = new BMap.Point(workers[i].Longitude,workers[i].Latitude);
 		var icon = new BMap.Icon(workers[i].DefaultService.Icon1,new BMap.Size(34,32));
+        icon.setImageSize(new BMap.Size(34,32));
 		var marker = new BMap.Marker(point,{icon:icon});
 		map.addOverlay(marker);
 
@@ -174,6 +175,7 @@ function createMarker(workers,boss){
     for(var j=0,len=boss.length;j<len;j++){
         var point = new BMap.Point(boss[j].Longitude,boss[j].Latitude);
         var icon = new BMap.Icon(boss[j].DefaultService.Icon1,new BMap.Size(34,32));
+        icon.setImageSize(new BMap.Size(34,32));
         var marker = new BMap.Marker(point,{icon:icon});
         map.addOverlay(marker);
 

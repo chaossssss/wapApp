@@ -5,7 +5,7 @@ angular.module('com.wapapp.app',[])
 	FastClick.attach(document.body);
 	$rootScope.token = window.localStorage.getItem("Token");
  
-	//获取url参数
+	//获取url参数 
     function getvl(name) {
         var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
         if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
@@ -157,8 +157,10 @@ angular.module('com.wapapp.app',[])
 
 	$scope.$on('service-time-date',function(event,date){
 		console.log("父亲接收时间",date);
-		vm.ServiceStartAt = date;
-
+		vm.ServiceStartAt = date.serviceStartAt;
+		var serviceDay = date.serviceDay;
+		var serviceTime = date.serviceTime;
+		vm.ServiceStartAtCut = serviceDay.slice(0,10)+ " " +serviceTime;
 	})
 
 	vm.datePickerShow = function(){
@@ -189,7 +191,7 @@ angular.module('com.wapapp.app',[])
 		console.log("ServiceTypeId",vm.ServiceTypeId);
 		console.log("ServiceContent",vm.ServiceContent);
 		console.log("Total",vm.Total);
-		console.log("ServiceStartAt",vm.ServiceStartAt);
+		console.log("ServiceStartAt",vm.ServiceStartAtCut);
 		console.log("ServiceAddressId",vm.ServiceAddressId);
 
 		var Json_data = {
@@ -198,7 +200,7 @@ angular.module('com.wapapp.app',[])
             "ServiceContent": vm.ServiceContent,
             "Total": vm.Total,
             "OrderFrom": "1",
-            "ServiceStartAt": vm.ServiceStartAt,
+            "ServiceStartAt": vm.ServiceStartAtCut,
             "ServiceAddressId": vm.ServiceAddressId
         };
         Json_data = JSON.stringify(Json_data);
@@ -209,7 +211,7 @@ angular.module('com.wapapp.app',[])
         formdata.append("ServiceContent", vm.ServiceContent);   
         formdata.append("Total", vm.Total);    
         formdata.append("OrderForm", "1");   
-        formdata.append("ServiceStartAt", vm.ServiceStartAt);  
+        formdata.append("ServiceStartAt", vm.ServiceStartAtCut);  
         formdata.append("ServiceAddressId", vm.ServiceAddressId); 
 
         for(var i=0,leng=img.length;i<leng;i++){
@@ -247,7 +249,11 @@ angular.module('com.wapapp.app',[])
 		//选中
 		var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
 		dp.show = false;
-		$scope.$emit("service-time-date",serviceStartAt);
+		var tofather = {};
+		tofather.serviceStartAt = serviceStartAt;
+		tofather.serviceDay = dp.serviceDay;
+		tofather.serviceTime = dp.serviceTime;
+		$scope.$emit("service-time-date",tofather);
 	}
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;
@@ -267,9 +273,24 @@ angular.module('com.wapapp.app',[])
 	listService.get()
 		.success(function(res){
 			console.log("服务类型",res);
-			st.serviceList = res.Body;
+			var list = res.Body;
+			for(var i=0,len=list.length;i<len;i++){
+				for(var j=0,leng=list[i].Children.length;j<leng;j++){
+					if(list[i].Children[j].Children){
+						for(var k=0,lengt=list[i].Children[j].Children.length;k<lengt;k++){
+							if(list[i].Children[j].Children[k].Children){
+								var a = list[i].Children[j].Children.concat(list[i].Children[j].Children[k].Children);
+								a.splice(j,1);
+								list[i].Children[j].Children = a;
+							}
+						}
+					}
+				}
+			}
+			// console.log("数组操作后1",list);
+			st.serviceList = list;
 			$scope.$apply();
-		})
+		}) 
 
 	//获取选中的二级目录
 	st.getTypeName = function(op){

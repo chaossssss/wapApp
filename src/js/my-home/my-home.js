@@ -2,8 +2,6 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	// $rootScope.token = "61517f53ac915b617b41a201c55d9ae3";
-	// $rootScope.token = $.cookie("Token");
 	$rootScope.token = window.localStorage.getItem("Token");
 	
 }])
@@ -14,9 +12,14 @@ angular.module('com.wapapp.app',[])
 		.success(function(res){
 			console.log(res);
 			$scope.vm = res.Body.Info;
+			 $("#code").qrcode({
+			 	width:"25",
+			 	height:"25",
+			 	text:res.Body.Info.QrCode
+			 });
 			$scope.$apply();
 		})
-	
+
 
 	$scope.loginOut = function(){
 		console.log("1");

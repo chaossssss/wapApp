@@ -328,7 +328,7 @@ ul,li {
 .zj_dialog .zj_service_dialog {
 	background-color: #fff;
 	position: fixed;
-	top: 40%;
+	top: 50%;
 	left: 50%;
 	width: 65%;
 	z-index:7000;

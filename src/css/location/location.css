@@ -168,6 +168,9 @@ body {
 	line-height: 24px;
 	color: #ef4f4f;
 }
+.zj_cell_left {
+	max-width: 270px;
+}
 .zj_cell_right {
 	text-align: right;
 	color: #888;

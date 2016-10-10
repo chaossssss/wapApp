@@ -12,6 +12,12 @@ angular.module('com.wapapp.app',[])
 		.success(function(res){
 			console.log(res);
 			$scope.vm = res.Body.Info;
+			var codeUrl = res.Body.Info.QrCode;
+			$("#code").qrcode({
+			 	width:"200",
+			 	height:"200",
+			 	text:codeUrl
+			 });
 			$scope.$apply();
 		})
 }])
