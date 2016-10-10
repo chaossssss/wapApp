@@ -345,6 +345,8 @@ console.log(orderState);
     $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#finishTime").hide();
+    $("#orderTime").css("marginBottom","0px");
+    $("#servicePrice").css("marginBottom","4px");
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
@@ -352,9 +354,9 @@ console.log(orderState);
       $("#orderPrice").show();
       $("#price").text(price);
       $("#price").addClass("actual");
+      $("#servicePrice").css("marginBottom","12px");
+      $("#orderPrice").css("marginBottom","4px");
     }
-    $("#orderTime").css("marginBottom","0px");
-    $("#servicePrice").css("marginBottom","4px");
 
     $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
@@ -641,7 +643,7 @@ console.log(orderState);
         })
       })
       $(".pay-btn").on("click",function(){
-        window.location.href="../pay/pay.html?orderId" + orderId;
+        window.location.href="../pay/pay.html?orderId=" + orderId;
       })
     }
 
