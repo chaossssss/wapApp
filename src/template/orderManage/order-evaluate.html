@@ -22,56 +22,77 @@
 <body>
   <div class="main">
     <div class="provider-message">
-      <img class="provider-pic" src="" alt="">
-      <div class="provider-name">住家生活</div>
-      <div class="zj-flower">5.0</div>
-      <div class="zj-hand">42</div>
-      <div class="zj-star">200</div>
+      <img id="providerPic" class="provider-pic" src="" alt="">
+      <!-- <div id="providerPic" class="provider-pic"></div> -->
+      <div class="provider-status">
+        <div class="provider"><span id="providerName"></span></div><br>
+        <div class="zj-flower"><span id="grade"></span></div>
+        <div class="zj-hand"><span id="praiseCount"></span></div>
+        <div class="zj-star"><span id="favoriteCount"></span></div>
+      </div>
       <div class="provider-detail"></div>
     </div>
+<!--     <div class="weui_panel_bd">
+      <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+        <div class="weui_media_hd">
+          <img id="providerPic" class="provider-pic" src="" alt="">             
+        </div>
+        <div class="weui_media_bd">
+          <h4 class="weui_media_title">
+            <div class="provider">
+              <span id="providerName"></span>
+            </div>
+          </h4>
+          <p class="weui_media_desc">
+           <div class="provider"><span id="providerName"></span></div>
+           <div class="zj-flower"><span id="grade"></span></div>
+           <div class="zj-hand"><span id="praiseCount"></span></div>
+           <div class="zj-star"><span id="favoriteCount"></span></div>
+           <div class="provider-detail"></div>
+          </p>
+        </div>
+      </a>
+    </div> -->
     <div class="weui_cells">
       <div class="weui_cell zj-marks">
         <div class="weui_cell_bd weui_cell_primary">
           <div>
             <span class="score-title">评分</span>
             <ul class="rate">
-              <li><img src="../../images/order-detail/darkLove.png"></li>
-              <li><img src="../../images/order-detail/darkLove.png"></li>
-              <li><img src="../../images/order-detail/darkLove.png"></li>
-              <li><img src="../../images/order-detail/darkLove.png"></li>
-              <li><img src="../../images/order-detail/darkLove.png"></li>
+              <li><img class="love-rate" src="../../images/order-detail/darkLove.png"></li>
+              <li><img class="love-rate" src="../../images/order-detail/darkLove.png"></li>
+              <li><img class="love-rate" src="../../images/order-detail/darkLove.png"></li>
+              <li><img class="love-rate" src="../../images/order-detail/darkLove.png"></li>
+              <li><img class="love-rate" src="../../images/order-detail/darkLove.png"></li>
             </ul>
           </div>
         </div>
         <div class="weui_cell_ft"><span id="score">5</span>.0分</div>
       </div>
     </div>
-    <div class="weui_cells weui_cells_form zj-eva">
-      <div class="weui_cell">
-        <div class="weui_cell_bd weui_cell_primary">
-          <textarea id="zj-textarea" class="weui_textarea" placeholder="再次输入我的评价" rows="3"></textarea>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+      <div class="weui_cells weui_cells_form zj-eva">
+        <div class="weui_cell">
+          <div class="weui_cell_bd weui_cell_primary">
+            <textarea id="zj-textarea" class="weui_textarea" placeholder="再次输入我的评价" rows="3"></textarea>
+          </div>
         </div>
-      </div>
-      <div class="weui_cell zj-eva-pic">
-        <div class="weui_cell_bd weui_cell_primary">
-          <div class="weui_uploader">
-              <div class="weui_uploader_hd weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">图片上传</div>
-                <div class="weui_cell_ft">0/2</div>
-              </div>
+        <div class="weui_cell zj-eva-pic">
+          <div class="weui_cell_bd weui_cell_primary">
+            <div class="weui_uploader">
               <div class="weui_uploader_bd">
-                <ul class="weui_uploader_files">
-                  <li class="weui_uploader_file" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
-                  <li class="weui_uploader_file" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/)"></li>
+                <ul id="preview" class="weui_uploader_files zj-preview">
+                  <div class="clear"></div>
                 </ul>
-                <div class="weui_uploader_input_wrp">
-                  <input class="weui_uploader_input" type="file" accept="image/*" multiple="">
+                <div class="weui_uploader_input_wrp zj-add-pic">
+                  <input id="fileImage" class="weui_uploader_input" type="file" accept="image/*" multiple="">
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
     <a id="sendEva" href="" disabled="disabled">
       <div id="submitBtn" class="submit-eva">提交评价</div>
     </a>

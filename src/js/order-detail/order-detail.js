@@ -164,7 +164,7 @@ $(function(){
       isPayOff = data.Body.IsPayOff;
       console.log(isPayOff);
 
-      orderIsGeted = data.Body.ServiceProviderId;
+      orderIsGeted = data.Body.AcceptTime;
 
       var orderId = data.Body.OrderId;
       isEvaluated = data.Body.IsEvaluated;
@@ -177,6 +177,7 @@ $(function(){
         var createTime = new Date(data.Body.CreateTime);
       $("#createTime").text(createTime.Format("yyyy-MM-dd hh:mm"));
       }
+
       if(data.Body.AcceptTime != null){
         var acceptAt = new Date(data.Body.AcceptTime);
         $("#acceptAt").text(acceptAt.Format("yyyy-MM-dd hh:mm"));
@@ -401,7 +402,7 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnLeft").addClass("delete-btn");
     $("#btnRight").addClass("pay-btn");
-    $("#wait").addClass("actual");
+    $("#price").addClass("actual");
 
     // $("#orderPrice").hide();
     $("#orderDiscount").hide();
@@ -412,7 +413,7 @@ console.log(orderState);
     $("#payTime").hide();
     $("#cancelTime").hide();
     $("#specialPrice").hide();
-    // $("#waitOrder").hide();
+    $("#waitOrder").hide();
     $("#finishTime").hide();
     if(serviceProviderId == null){
       $("#zjWorker").hide();
@@ -436,14 +437,12 @@ console.log(orderState);
       $("#servicePrice").css("marginBottom","4px");
     }
     // $("#waitOrder").css("marginBottom","4px");
+    $("#orderPrice").css("marginBottom","0px");
     $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
     if(totalPrice == '面议'){
       $("#servicePrice").css("marginBottom","4px");
     }
-    $(".pay-btn").on("click",function(){
-
-    })
     $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
       $("#cancelOrderBtn").on("click",function(){
@@ -972,7 +971,10 @@ console.log(orderState);
      $("#finishTime").hide();
      $("#btnLeft").hide();
      $("#cancelTime").hide();
-
+     if(singlePrice == '面议'){
+       $("#unit").hide();
+       $("#multiple").hide();
+     }
      $("#servicePrice").css("marginBottom","4px");
      $("#status").css("paddingTop","90px");
      $("#orderTime").css("marginBottom","0px");
