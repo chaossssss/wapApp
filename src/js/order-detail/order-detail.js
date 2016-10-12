@@ -167,7 +167,7 @@ $(function(){
       orderIsGeted = data.Body.AcceptTime;
 
       var orderId = data.Body.OrderId;
-      isEvaluated = data.Body.IsEvaluated;
+      isEvaluated = data.Body.IsEvaluation;
       var workHeadPic = data.Body.ServiceProviderPic;
       minPrice = data.Body.MinPrice;
       maxPrice = data.Body.MaxPrice;
@@ -351,7 +351,7 @@ console.log(orderState);
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
-      var price = "￥" + minPrice*total + "-￥" + maxPrice*total; 
+      var price = "￥" + minPrice*total + "-" + maxPrice*total; 
       $("#orderPrice").show();
       $("#price").text(price);
       $("#price").addClass("actual");
@@ -430,7 +430,7 @@ console.log(orderState);
       $("#waitOrder").hide();
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
-      var price = "￥" + minPrice*total + "-￥" + maxPrice*total; 
+      var price = "￥" + minPrice*total + "-" + maxPrice*total; 
       $("#orderPrice").show();
       $("#price").text(price);
       $("#price").addClass("actual");
@@ -837,7 +837,7 @@ console.log(orderState);
     case "40":
     console.log("客户确认完成，待评价");
 
-    if(isEvaluated == null){
+    if(isEvaluated == "0"){
 
       $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
@@ -870,7 +870,7 @@ console.log(orderState);
       })
     }
 
-    if(isEvaluated != null){
+    if(isEvaluated == "1"){
       $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
 
       $("#status").text('服务已完成');
@@ -887,6 +887,7 @@ console.log(orderState);
       $("#btnRight").addClass("confirm-btn");
 
       // $(".round").css("left","58px");  
+      $("#orderActual").css("marginBottom","0px");
 
       $("#proFourth").hide();
       $("#refundRecord").hide();

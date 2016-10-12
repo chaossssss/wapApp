@@ -1,15 +1,17 @@
 *{ margin:0; padding:0; list-style:none;}
-body{ font-size: 15px;}
+body{ font-size: 15px; background: #f6f6f6; }
 div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 li{ float: left; list-style: none; }
-.main{ width: 100%; height: 667px; background: #f6f6f6; }
+.clear{clear:both; height: 0; line-height: 0; font-size: 0}
+.main{ width: 100%; background: #f6f6f6; }
 .provider-message{ width: 100%; height: 87px; border-bottom: #e4e4e4 1px solid; background: #fff; margin-bottom: 10px; }
-.provider-message .provider-pic{ height: 62px; width: 62px; border: 1px #e4e4e4 solid; border-radius: 3px; margin-top: 14px; margin-left: 14px; }
-.provider-name{ display: inline-block; font-size: 17px; position: relative; top: -40px; left: 12px; }
-.zj-flower,.zj-hand,.zj-star{ font-size: 15px; color: #999999; display: inline-block; height: 15px;  position: relative; padding-left: 20px; line-height: 15px; }
-.zj-flower{ background: url(../../images/order-detail/flower.png) no-repeat; background-size: 14px 15px; left: -57px; top: -10px; }
-.zj-hand{ background: url(../../images/order-detail/hand.png) no-repeat; background-size: 14px 15px; left: -47px; top: -10px; }
-.zj-star{ background: url(../../images/order-detail/star.png) no-repeat; background-size: 14px 15px; left: -36px; top: -10px; }
+.provider-message .provider-pic{ height: 62px; width: 62px; border: 1px #e4e4e4 solid; border-radius: 3px; margin-top: 14px; margin-left: 14px; float: left; }
+.provider{ font-size: 17px; display: inline-block; margin-left: 10px; margin-top: 10px; }
+.provider-status{ float: left; margin-top: 10px; }
+.zj-flower,.zj-hand,.zj-star{ font-size: 15px; color: #999999; display: inline-block; height: 15px; padding-left: 20px; line-height: 15px; margin-left: 12px; margin-top: 10px; }
+.zj-flower{ background: url(../../images/order-detail/flower.png) no-repeat; background-size: 14px 15px; }
+.zj-hand{ background: url(../../images/order-detail/hand.png) no-repeat; background-size: 14px 15px;  }
+.zj-star{ background: url(../../images/order-detail/star.png) no-repeat; background-size: 14px 15px; }
 .provider-detail{ background: url(../../images/order-detail/right-arrow.png) no-repeat 0px 40px; background-size: 5px 9px; margin-right: 25px; float: right; height: 88px; width: 10px; }
 .main .zj-marks{ padding-top: 7px; padding-bottom: 7px; font-size: 15px; }
 .main .zj-eva{ margin-top: 5px; }
@@ -18,3 +20,10 @@ li{ float: left; list-style: none; }
 .main .send-eva{ background: #00afff; color: #fff; height: 27px; line-height: 27px; width: 90%; text-align: center; margin: 0 auto; margin-top: 197px; }
 .main .rate{ float: left; }
 .score-title{ float: left; }
+.love-rate{ width: 18px; height: 15px; padding-top: 3px; padding-left: 2px; }
+/*--提交图片样式--*/
+.upload_delete{ display: inline-block; border-radius: 50%; background: #fd552e; color: #fff; width: 14px; height: 14px; text-align: center; line-height: 14px; position: relative; left: 55px; top: -41px; }
+.zj-preview{ padding-top: 3px; float: left; }
+.upload_pic{ width: 50px; height: 50px; }
+.zj-add-pic{ margin-top: 3px; width: 50px; height: 50px; margin-left: 14px; }
+.upload_append_list{ float: left; }
