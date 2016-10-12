@@ -57,7 +57,7 @@
 			<div class="weui_cell_ft"></div>
 		</a>
 		<img class="col100" src="/images/quick-order/local-border.png" alt="">
-	</div>
+	</div> 
 	<!-- 选择地址 end -->
 	<!-- 服务类型&服务数量&服务时间 begin-->
 	<div class="weui_cells weui_cells_access">
@@ -68,8 +68,8 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
-			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'">
-				<span ng-bind="sv.name"></span>
+			<div class="zj_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'">
+				<div class="tr" ng-bind="sv.name"></div>
 				<span>¥</span>
 				<span ng-bind="sv.Min" ng-if="sv.Min !== sv.Max"></span>
 				<span ng-if="sv.Min !== sv.Max">~</span>

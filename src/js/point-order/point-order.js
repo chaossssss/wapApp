@@ -17,7 +17,7 @@ angular.module('com.wapapp.app',[])
     $rootScope.addressId = getvl("id");
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService','explainService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService,explainService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService','explainService','qtyService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService,explainService,qtyService){
 	var vm = $scope.vm = {};		//订单
 	var addr = $scope.addr = {};	//地址
 	var uc = $scope.uc = {};	//工人，商户信息
@@ -57,22 +57,51 @@ angular.module('com.wapapp.app',[])
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.serviceTypeObj',function(){
 		if(vm.serviceTypeObj){
-			if(vm.Total < 3 && vm.serviceTypeObj.ServiceTypeId =='5'){
+			if(vm.Total < 3 && (vm.serviceTypeObj.ServiceTypeId =='5' || vm.serviceTypeObj.ServiceTypeId == '707')){
 				vm.Total = 3;
-			}else{
-				vm.Total = 1;
 			}
 		}
+		// if(vm.serviceTypeObj){
+		// 	console.log("服务类型id",vm.serviceTypeObj.ServiceTypeId);
+			
+		// 	qtyService.event(vm.serviceTypeObj.ServiceTypeId)
+		// 		.success(function(res){
+		// 			console.log("服务数量",res);
+		// 			if(res.Meta.ErrorCode === "0"){
+		// 				if(res.Body){
+		// 					if(vm.Total < 3){
+		// 						vm.Total = 3;
+		// 					}else{
+		// 						vm.Total = 1;
+		// 					}
+		// 				}
+		// 			}
+		// 			$scope.$apply();
+		// 		})
+		// }
 	})
 
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.Total',function(){
+		// console.log("vm.total",vm.Total);
 		if(vm.serviceTypeObj){
-			if(vm.Total < 3 && vm.serviceTypeObj.ServiceTypeId =='5'){
+			if(vm.Total < 3 && (vm.serviceTypeObj.ServiceTypeId =='5' || vm.serviceTypeObj.ServiceTypeId == '707')){
 				vm.dialogshow = true;
 				vm.errorMsg = "不能小于3小时";
 				vm.Total = 3;
 			}
+			// qtyService.event(vm.serviceTypeObj.ServiceTypeId)
+			// 	.success(function(res){
+			// 		console.log("服务数量",res);
+			// 		if(res.Meta.ErrorCode === "0"){
+			// 			if(vm.Total < 3){
+			// 				vm.Total = 3;
+			// 			}else{
+			// 				vm.Total = 1;
+			// 			}
+			// 		}
+			// 		$scope.$apply();
+			// 	})
 		}
 	})
 
@@ -148,7 +177,7 @@ angular.module('com.wapapp.app',[])
 						if(serviceTypeList[j].PriceType === '0'){
 							serviceTypeList[j].Price = '面议';
 							if(serviceTypeList[j].UnitName){
-								serviceTypeList[j].UnitName = '/'+serviceTypeList[j].UnitName;
+								serviceTypeList[j].UnitName = '';
 							}
 						}
 						if(serviceTypeList[j].PriceType === '1'){
@@ -718,7 +747,30 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-
+.factory('qtyService',[function(){
+	//获取次服务类型可选的数量
+	var _getPath = "http://192.168.1.191:3003/api/v2/SystemService/GetServiceQty";
+	var getQty = function(id){
+		return $.ajax({
+					method:"POST",
+					url: _getPath,
+					data: {
+						"ServiceId":id
+					}
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	} 
+	return {
+		event:function(id){
+			return getQty(id);
+		}
+	}
+}])
 
 
 

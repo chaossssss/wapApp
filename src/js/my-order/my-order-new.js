@@ -12,7 +12,6 @@ angular.module('com.wapapp.app',['infinite-scroll'])
         return "";
     } 
     $rootScope.flag = getvl("flag");
-
 }]) 
 .controller('orderListCtrl',['$rootScope','$scope','orderService',function($rootScope,$scope,orderService){
 	var tb = $scope.tb = {};	//tab标签点击
@@ -29,6 +28,11 @@ angular.module('com.wapapp.app',['infinite-scroll'])
             $('#toast').hide();
         }, 2000);
     })
+
+
+	/**
+	 * 	OrderStatus
+	 */
 
 
 	//跳转到订单详情页面

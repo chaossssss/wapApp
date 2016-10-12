@@ -18,6 +18,12 @@ angular.module('com.wapapp.app',[])
 			 	height:"200",
 			 	text:codeUrl
 			 });
+			$("canvas").css({
+				"display":"block",
+				"margin-left":"auto",
+				"margin-right":"auto",
+				"z-index":"6000"
+			})
 			$scope.$apply();
 		})
 }])

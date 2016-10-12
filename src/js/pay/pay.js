@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	FastClick.attach(document.body);
+	// FastClick.attach(document.body);
 	$rootScope.url = "http://192.168.1.191:3003";
 	$rootScope.token = window.localStorage.getItem("Token");
 	// $rootScope.token = $.cookie("Token");
@@ -65,7 +65,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					// window.location.href = "/template/pay/success.html";
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -86,7 +86,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					// window.location.href = "/template/pay/success.html";
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -96,7 +96,7 @@ angular.module('com.wapapp.app',[])
  		}
 
  		//余额
- 		if(vm.yeradio == true && vm.wxOrzfb !=='zhifubao' && vm.wxOrzfb !=='weixin'){
+ 		if(vm.yeradio == true && (vm.wxOrzfb !=='zhifubao' && vm.wxOrzfb !=='weixin')){
  			$scope.loadingToast = true;
 			payForService.account({
 				Token: $rootScope.token,
@@ -107,7 +107,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					window.location.href = "/template/pay/success.html";
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -116,7 +116,9 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		// 支付宝
- 		if(vm.wxOrzfb == "zhifubao" && vm.yeradio === false ||  vm.yeradio === undefined){
+ 		if(vm.wxOrzfb === "zhifubao" && (vm.yeradio === false ||  vm.yeradio === undefined)){
+ 			console.log("支付宝支付:");
+ 			console.log(vm.wxOrzfb === "zhifubao");
  			$scope.loadingToast = true;
 			payForService.zhifubao({
 				Token : $rootScope.token,
@@ -129,7 +131,7 @@ angular.module('com.wapapp.app',[])
 				$scope.loadingToast = false;
 				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					// window.location.href = "/template/pay/success.html";
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -138,7 +140,9 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		// 微信
- 		if(vm.wxOrzfb === "weixin" && vm.yeradio === false ||  vm.yeradio === undefined){
+ 		if(vm.wxOrzfb === "weixin" && (vm.yeradio === false ||  vm.yeradio === undefined)){
+ 			console.log("微信支付:");
+ 			console.log(vm.wxOrzfb === "weixin");
  			$scope.loadingToast = true;
  			payForService.weixin({
  				Token: $rootScope.token,
@@ -150,7 +154,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "";
+					// window.location.href = "/template/pay/success.html";
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;

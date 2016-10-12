@@ -83,12 +83,14 @@
 					        	</div>
 					        	<div class="weui_cell_ft" style="max-width:230px;" ng-bind="item.ServiceAddress"></div>
 					        </div>
+					        <!-- 服务价格的显示 面议 -->
 					        <div class="zj_cell plr10" ng-if="item.Price === '面议'">
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
 					        	<div class="weui_cell_ft" ng-bind="item.TotalPrice"></div>
 					        </div>
+					        <!-- 服务价格的显示 定价 -->
 					        <div class="zj_cell plr10" ng-if="item.Price !== '面议'">
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
@@ -102,7 +104,16 @@
 					        	</div>
 					        </div>
 					    </div>    
-				        <div class="zj_cell plr10" ng-if="item.OrderStatus === '20' || item.OrderStatus === '30' || item.OrderStatus === '40'">
+					    <div class="zj_cell plr10 f17" ng-if="item.Price !== '面议' && (item.OrderStatus === '1' || item.OrderStatus === '10')">
+				        	<div class="weui_cell_bd weui_cell_primary"></div>
+				        	<div class="weui_cell_ft">
+				        		<span>待支付：</span>
+				        		<span class="pred">¥
+				        			<span ng-bind="item.TotalPrice"></span>
+				        		</span>
+				        	</div>
+				        </div>
+				        <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '20' || item.OrderStatus === '30' || item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
 				        		<span>订单总价：</span>
@@ -111,7 +122,7 @@
 				        		</span>
 				        	</div>
 				        </div>
-				         <div class="zj_cell plr10" ng-if="item.OrderStatus === '50' && item.TotalPrice !=='面议'">
+				         <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '50' && item.TotalPrice !=='面议'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
 				        		<span>实付：</span>
@@ -120,15 +131,19 @@
 				        		</span>
 				        	</div>
 				        </div>
+				        <!-- 按钮状态 -->
 				        <div class="weui_cell" ng-if="item.OrderStatus === '1' || item.OrderStatus === '10'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
 				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.cancel(item.OrderId)">
 				        			取消订单
 				        		</a>
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)">
+				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.dialogshow = true" >
 				        			支付
 				        		</a>
+				        		<!-- <a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)" >
+				        			支付
+				        		</a> -->
 				        	</div>
 				        </div>
 				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='0'">
@@ -175,7 +190,7 @@
 				        	</div>
 				        </div>
 			        </div>   
-					<div ng-if='reddit.busy'>
+					<div ng-if='reddit.busy' ng-cloak>
 						<div class="loader-inner ball-beat">
 				          <div></div>
 				          <div></div>
@@ -188,6 +203,22 @@
 	</div>
 </div>	
 	
+<!-- dialog_alert error-->
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
+	<div class="weui_mask">
+		<div class="weui_dialog">
+			 <div class="weui_dialog_hd"><strong class="weui_dialog_title">温馨提示</strong></div>
+        	<div class="weui_dialog_bd">请耐心等待工人接单后再付款！</div>
+			<div class="weui_dialog_ft">
+				<a href="javascript:;" class="weui_btn_dialog_primary" ng-click="vm.dialogshow = false">
+					确定
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!--BEGIN toast-->
 <div ng-if="tip.toast" ng-cloak>
     <div class="weui_mask_transparent"></div>
@@ -209,7 +240,7 @@
 <!--end toast-->
 
 <!-- loading toast -->
-<div id="loadingToast" class="weui_loading_toast" ng-if="tip.loading" ng-cloak>
+<div id="loadingToast" class="weui_loading_toast" ng-if="tip.loading">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <div class="weui_loading">

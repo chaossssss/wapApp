@@ -20,9 +20,7 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 
-
 	$scope.loginOut = function(){
-		console.log("1");
 		loginOut.event()
 			.success(function(res){
 				console.log(res);
@@ -30,7 +28,6 @@ angular.module('com.wapapp.app',[])
 				window.location.href = "/template/login/login.html";
 			})
 	}
-
 }])
 .factory('getMyInfo',[function(){
 	var _getInfo = "http://192.168.1.191:3003/api/v1/ClientInfo/Index";
@@ -42,9 +39,6 @@ angular.module('com.wapapp.app',[])
 						Token:token
 					}
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -65,9 +59,6 @@ angular.module('com.wapapp.app',[])
 					method:"POST",
 					url: _loginOut
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}

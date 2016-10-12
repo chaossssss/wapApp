@@ -114,6 +114,9 @@ ul,li {
 	margin-left: auto;
 	margin-right: auto;
 }
+.tr {
+	text-align: right;
+}
 .h50 {
 	height: 50px;
 }
@@ -454,8 +457,11 @@ ul,li {
 	background-color: #27b8f3;
 }
 /*服务类型选择*/
+.zj_cell_ft {
+	color: #888;
+}
 .zj_service {
-	font-size: 15px;
+	font-size: 13px;
 }
 .zj_service .title {
 	display: -webkit-box-flex;

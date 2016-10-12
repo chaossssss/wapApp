@@ -34,19 +34,26 @@
 				<span ng-if="od.ServiceProviderGender === '1'">阿姨</span>
 			</div>
 		</div>
-	</div>
+	</div> 
 	<div class="weui_cells mt10 weui_cells_access">
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务价格</p>
 			</div>
-			<div class="zj_cell_ft">
+			<!-- 服务价格非面议 -->
+			<div class="zj_cell_ft" ng-if="od.TotalPrice !== '面议'" ng-cloak>
 				<span>
-					¥<span ng-bind="od.Price"></span>
+					¥ <span ng-bind="od.Price"></span>
 					/<span ng-bind="od.UnitName"></span>	
 				</span>
 				<span class="ml20">
 					x<span ng-bind="od.Total"></span>
+				</span>
+			</div>
+			<!-- 服务价格面议 -->
+			<div class="zj_cell_ft" ng-if="od.TotalPrice === '面议'" ng-cloak>
+				<span class="ml20">
+					<span ng-bind="od.TotalPrice"></span>
 				</span>
 			</div>
 		</div>
@@ -67,22 +74,18 @@
 			</div>
 			<div class="weui_cell_ft"></div>
 		</a> -->
-		<!-- 参加活动&没有使用优惠券 -->
-		<div class="weui_cell no_access" ng-show="od.Activity" ng-cloak>
+		
+		<div class="weui_cell no_access" ng-if="od.TotalPrice !== '面议'" ng-cloak>
             <div class="weui_cell_bd weui_cell_primary">
                 <p>待支付</p>
             </div>
-            <div class="zj_cell_ft pred f20">
-            	¥<span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
+            <!-- 参加活动&没有使用优惠券 -->
+            <div class="zj_cell_ft pred f20" ng-show="od.Activity" ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
             </div>
-        </div>
-		<!-- 没有参加活动&没有使用优惠券 -->
-		<div class="weui_cell no_access" ng-hide="od.Activity" ng-cloak>
-            <div class="weui_cell_bd weui_cell_primary">
-                <p>待支付</p>
-            </div>
-            <div class="zj_cell_ft pred f20">
-            	¥<span ng-bind="od.TotalPrice"></span>
+            <!-- 没有参加活动&没有使用优惠券 -->
+             <div class="zj_cell_ft pred f20" ng-hide="od.Activity" ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice"></span>
             </div>
         </div>
 	</div>
@@ -129,9 +132,9 @@
 		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()">
 			确认支付
 		</a>
-		<a href="javascript:;" class="weui_btn weui_btn_plain_primary" ng-click="vm.hasPayOrder()">
+		<!-- <a href="javascript:;" class="weui_btn weui_btn_plain_primary" ng-click="vm.hasPayOrder()">
 			我已现金支付
-		</a>
+		</a> -->
 	</div>
 </form>
 

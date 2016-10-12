@@ -273,21 +273,39 @@ angular.module('com.wapapp.app',[])
 	listService.get()
 		.success(function(res){
 			console.log("服务类型",res);
-			var list = res.Body;
+			// 有四级分类的，将三级拿出，放到二级中，并删掉此在三级中的值
+			var parse = function(obj){
+				obj = obj.Body;
+				obj.map(function(v,i){
+					v.Children.map(function(v1,j){
+						if(v1 && v1.Children){
+							v1.Children.map(function(v2,k){
+								if(v2.Children){
+									var copy = JSON.parse(JSON.stringify(v2));
+									obj[i].Children.push(copy);
+									obj[i].Children[j] = undefined;
+								}
+							});
+						}
+
+					});
+				});
+				return obj;
+			}
+			var list = parse(res);
 			for(var i=0,len=list.length;i<len;i++){
-				for(var j=0,leng=list[i].Children.length;j<leng;j++){
-					if(list[i].Children[j].Children){
-						for(var k=0,lengt=list[i].Children[j].Children.length;k<lengt;k++){
-							if(list[i].Children[j].Children[k].Children){
-								var a = list[i].Children[j].Children.concat(list[i].Children[j].Children[k].Children);
-								a.splice(j,1);
-								list[i].Children[j].Children = a;
-							}
+				if(list[i].Children){
+					var apass = [];
+					for(var j=0,leng=list[i].Children.length;j<leng;j++){
+						if(list[i].Children[j] !== undefined){
+							apass.push(list[i].Children[j]);
 						}
 					}
+					list[i].Children = apass;
 				}
 			}
-			// console.log("数组操作后1",list);
+
+			console.log("数组操作后2",list);
 			st.serviceList = list;
 			$scope.$apply();
 		}) 
