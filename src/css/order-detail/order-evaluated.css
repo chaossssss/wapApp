@@ -1,0 +1,46 @@
+*{ margin:0; padding:0; list-style:none;}
+body{ font-size: 14px; background: #fff; }
+div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+li{ float: left; list-style: none; }
+a:link,a:active,a:visited{ color: #000; }
+.clear{clear:both; height: 0; line-height: 0; font-size: 0}
+.main{ width: 100%; background: #f6f6f6; }
+.to-top{ border: 1px #b5b4c1 solid; border-radius: 2px; width: 33px; height: 33px; background: rgba(228,228,228,0.8) url(../../images/order-detail/top.png) no-repeat 9px 11px; background-size: 14px 9px; position: fixed; bottom: 103px; right: 15px; z-index: 99999; }
+.to-home{ border: 1px #b5b4c1 solid; border-radius: 2px; width: 33px; height: 33px; background: rgba(228,228,228,0.8) url(../../images/order-detail/home.png) no-repeat 8px 9px; background-size: 18px 15px; position: fixed; bottom: 64px; right: 15px; z-index: 99999; }
+.provider-message{ width: 100%; height: 87px; border-bottom: #e4e4e4 1px solid; background: #fff; }
+.provider-message .provider-pic{ height: 62px; width: 62px; border: 1px #e4e4e4 solid; border-radius: 3px; margin-top: 14px; margin-left: 14px; float: left; }
+.provider{ font-size: 17px; display: inline-block; margin-left: 10px; margin-top: 10px; }
+.provider-status{ float: left; margin-top: 10px; }
+.zj-flower,.zj-hand,.zj-star{ font-size: 15px; color: #999999; display: inline-block; height: 15px; padding-left: 20px; line-height: 15px; margin-left: 12px; margin-top: 10px; }
+.zj-flower{ background: url(../../images/order-detail/flower.png) no-repeat; background-size: 14px 15px; }
+.zj-hand{ background: url(../../images/order-detail/hand.png) no-repeat; background-size: 14px 15px;  }
+.zj-star{ background: url(../../images/order-detail/star.png) no-repeat; background-size: 14px 15px; }
+.provider-detail{ background: url(../../images/order-detail/right-arrow.png) no-repeat 0px 40px; background-size: 5px 9px; margin-right: 25px; float: right; height: 88px; width: 10px; }
+
+.contact-box{ height: 34px; width: 100%; background: #fff; text-align: center; border-bottom: 1px solid #e4e4e4; }
+.contact-bussiness{ display: inline-block; float:left; height: 34px; width: 50%; line-height: 34px; }
+.con-bus{ background: url(../../images/order-detail/contact-bussiness.png) no-repeat ; background-size: 20px 18px; padding-left: 25px; }
+.contact-customer-service{ height: 34px; width: 50%; float: left; line-height: 34px; background: url(../../images/order-detail/ver-bar.png) no-repeat 0px 3px; background-size: 1px 27px;  }
+.con-ser{ background: url(../../images/order-detail/contact-service.png) no-repeat ; background-size: 20px 18px; padding-left: 25px; }
+.page_bd .zj-eva-cell:after{ border: 0px; }
+.service{ background: #fff; border-top: 1px #e4e4e4 solid; padding-bottom: 13px; margin: 5px 0 0; }
+.service .service-title{ padding: 10px 10px 6px; font-size: 15px; }
+.service-content{ padding: 0 10px; }
+.service-price{ color: #fa5236; font-size: 17px; }
+.weui_panel .zj-titlewords{ font-size: 15px; }
+.weui_panel .zj-fontsize{ font-size: 14px; }
+.weui_panel .contacts{ margin-bottom: 11px; }
+.weui_cells .zj-cell{ padding-top: 11px; padding-bottom: 11px; }
+.fill{ width: 100%; height: 6px; background: #f6f6f6; }
+.zj-bluecol{ color: #00afff; }
+.eva{ background: #fff; width: 100%; margin-top: 10px; border-top: 1px #e4e4e4 solid; border-bottom: 1px #e4e4e4 solid; }
+.eva .eva-title{ padding: 10px 10px 6px; font-size: 15px; }
+.eva-rate .zj-marks:before{ border: 0; }
+.eva-rate .zj-marks:after{ border: 0; }
+.weui_panel .zj-titlewords{ padding-bottom: 0; }
+.weui_panel .zj-titlewords:after{ border: 0; }
+.weui_panel_bd .zj-cell-border{ padding-top: 5px; }
+.zj-marks .zj-score{ padding-bottom: 3px; padding-top: 3px; }
+.love-rate{ width: 18px; height: 15px; padding-top: 3px; padding-left: 2px; }
+.score{ color: #fd552e; margin-left: 4px; }
+.photo-show{ width: 47px; height: 47px; }

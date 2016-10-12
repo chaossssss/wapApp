@@ -971,10 +971,20 @@ console.log(orderState);
      $("#payTime").hide();
      $("#finishTime").hide();
      $("#btnLeft").hide();
-     $("#cancelTime").hide();
+     // $("#cancelTime").hide();
      if(singlePrice == '面议'){
        $("#unit").hide();
        $("#multiple").hide();
+     }
+     if(noSinglePrice == null){
+       var single = "￥" + minPrice + "-" + maxPrice;
+       $("#single").text(single);
+       var price = "￥" + minPrice*total + "-" + maxPrice*total; 
+       $("#orderPrice").show();
+       $("#price").text(price);
+       $("#price").addClass("actual");
+       $("#servicePrice").css("marginBottom","12px");
+       $("#orderPrice").css("marginBottom","4px");
      }
      $("#servicePrice").css("marginBottom","4px");
      $("#status").css("paddingTop","90px");
