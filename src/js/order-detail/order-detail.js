@@ -988,7 +988,7 @@ console.log(orderState);
      }
      $("#servicePrice").css("marginBottom","4px");
      $("#status").css("paddingTop","90px");
-     $("#orderTime").css("marginBottom","0px");
+     $("#cancelTime").css("marginBottom","0px");
      // $("#servicePrice").css("marginBottom","4px"); 
 
     $("#btnRight").on("click",function(){
