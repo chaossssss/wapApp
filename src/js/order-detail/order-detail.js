@@ -671,6 +671,7 @@ console.log(orderState);
       $("#negotiable").hide();
       $("#btnLeft").hide();
       $("#cancelTime").hide();
+      $("#finishTime").hide();
 
       $("#btnRight").on("click",function(){
         $("#cancelOrder1").css("display","block");
