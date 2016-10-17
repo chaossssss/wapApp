@@ -199,6 +199,7 @@ $(function(){
       $("#clientGender").text(clientGender);
       var workName = data.Body.ServiceProviderName;
       $("#serviceProviderName").text(workName);
+      tp = data.Body.TotalPrice;
       totalPrice = moneySymbol(data.Body.TotalPrice);
       $("#actualMoney").text(totalPrice);
       if(data.Body.TotalPrice){
@@ -262,8 +263,7 @@ $(function(){
           $("#refundAmount").text(data.Body.Service[i].TotalPrice);
         }
       }
-      var activity = data.Body.Activity;
-      $("#hourly").text("-￥" + activity);
+      
       $("#toBePaid").text(totalPrice);
       if( data.Body.DiscountAmount != null || data.Body.Activity != null){
         var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
@@ -298,7 +298,40 @@ $(function(){
         href="../business-detail/business-detail.html?type=2&markid=" + serviceProviderId;
         $("#goToProvider").attr("href",href);
       }
-
+      activity = data.Body.Activity;
+      if(data.Body.Activity){
+        var specialTitle = data.Body.Activity.SpecialTitle;
+        $("#specialTitle").text(specialTitle);
+        // $("#hourly").text("-￥" + activity);
+        var rules = data.Body.Activity.SpecialRule;
+        var rulesNum = data.Body.Activity.SpecialRule.length;
+        for(var i =0; i < rulesNum; i++){
+          if(minPrice*total >= rules[i].Upper){
+            var hourly = rules[i].Minus;
+            $("#hourly").text("-￥" + hourly);
+            minPriceNum = parseFloat(minPrice);
+            maxPriceNum = parseFloat(maxPrice);
+            totalNum = parseFloat(total);
+            hourlyNum = parseFloat(hourly);
+            minTotal = minPriceNum*totalNum-hourlyNum;
+            maxTotal = maxPriceNum*totalNum-hourlyNum;
+            var toBePaid = "￥" + minTotal + "-" + maxTotal;
+            $("#toBePaid").text(toBePaid);
+            $("#toBePaid").addClass("actual");
+          }
+          if(tp >= rules[i].Upper){
+            var hourly = rules[i].Minus;
+            $("#hourly").text("-￥" + hourly);
+            var toBePaid = parseInt(tp) - hourly;
+            $("#toBePaid").text("￥" + toBePaid);
+            $("#toBePaid").addClass("actual");
+            tpNum = parseFloat(tp);
+            hourlyNum = parseFloat(hourly);
+            actualMoney = tpNum - hourlyNum;
+            $("#actualMoney").text("￥" + actualMoney);
+          }
+        }
+      }
      }
    });
 
@@ -334,7 +367,7 @@ console.log(orderState);
     
     $("#zjWorker").hide();
     $("#orderPrice").hide();
-    $("#orderDiscount").hide();
+    // $("#orderDiscount").hide();
     $("#orderActual").hide();
     // $("#unitPrice").hide();
     // $("#multiple").hide();
@@ -343,8 +376,8 @@ console.log(orderState);
     $("#acceptTime").hide();
     $("#payTime").hide();
     $("#cancelTime").hide();
-    $("#specialPrice").hide();
-    $("#waitOrder").hide();
+    // $("#specialPrice").hide();
+    // $("#waitOrder").hide();
     $("#finishTime").hide();
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
@@ -354,9 +387,12 @@ console.log(orderState);
       var price = "￥" + minPrice*total + "-" + maxPrice*total; 
       $("#orderPrice").show();
       $("#price").text(price);
-      $("#price").addClass("actual");
+      // $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","12px");
       $("#orderPrice").css("marginBottom","4px");
+      if(activity != null){
+        $("#orderPrice").css("marginBottom","12px");
+      }
     }
 
     $("#btnLeft").on("click",function(){
@@ -402,24 +438,24 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnLeft").addClass("delete-btn");
     $("#btnRight").addClass("pay-btn");
-    $("#price").addClass("actual");
+    // $("#price").addClass("actual");
 
     // $("#orderPrice").hide();
-    $("#orderDiscount").hide();
+    // $("#orderDiscount").hide();
     $("#orderActual").hide();
     $("#refundRecord").hide();
     $("#filling2").hide();
     $("#acceptTime").hide();
     $("#payTime").hide();
     $("#cancelTime").hide();
-    $("#specialPrice").hide();
-    $("#waitOrder").hide();
+    // $("#specialPrice").hide();
+    // $("#waitOrder").hide();
     $("#finishTime").hide();
     if(serviceProviderId == null){
       $("#zjWorker").hide();
     }
     if(singlePrice == '面议'){
-      $("#servicePrice").css("marginBottom","4px");
+      $("#servicePrice").css("marginBottom","0px");
       $("#multiple").hide();
       $("#unit").hide();
       $("#orderPrice").hide();
@@ -433,15 +469,15 @@ console.log(orderState);
       var price = "￥" + minPrice*total + "-" + maxPrice*total; 
       $("#orderPrice").show();
       $("#price").text(price);
-      $("#price").addClass("actual");
+      // $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","4px");
     }
     // $("#waitOrder").css("marginBottom","4px");
-    $("#orderPrice").css("marginBottom","0px");
+    // $("#orderPrice").css("marginBottom","0px");
     $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
     if(totalPrice == '面议'){
-      $("#servicePrice").css("marginBottom","4px");
+      $("#servicePrice").css("marginBottom","0px");
     }
     $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
@@ -614,11 +650,11 @@ console.log(orderState);
       $("#roundSecond").addClass("round-complete");
       $("#roundThird").addClass("round-processing");
       $("#roundFourth").addClass("round-undone");
-      $("#total").addClass("actual");
+      // $("#total").addClass("actual");
       $("#btnLeft").addClass("delete-btn")
       $("#btnRight").addClass("pay-btn");
 
-      $("#orderDiscount").hide();
+      // $("#orderDiscount").hide();
       $("#orderActual").hide();
       $("#refundRecord").hide();
       $("#filling2").hide();
@@ -626,9 +662,9 @@ console.log(orderState);
       $("#cancelTime").hide();
       $("#finishTime").hide();
       $("#payTime").hide();
-      $("#specialPrice").hide();
-      $("#waitOrder").hide();
-      $("#orderPrice").css("marginBottom","4px");
+      // $("#specialPrice").hide();
+      // $("#waitOrder").hide();
+      // $("#orderPrice").css("marginBottom","4px");
       $("#acceptTime").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
 
@@ -710,7 +746,7 @@ console.log(orderState);
       $("#payTime").hide();
       $("#finishTime").hide();
       $("#cancelTime").hide();
-      $("#specialPrice").hide();
+      // $("#specialPrice").hide();
 
       $("#acceptTime").css("marginBottom","0px");
     }    
@@ -826,7 +862,7 @@ console.log(orderState);
     $("#negotiable").hide();
     $("#btnLeft").hide();
     $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
       confirmOrder(token,orderId);
@@ -863,7 +899,7 @@ console.log(orderState);
       $("#negotiable").hide();
       $("#btnLeft").hide();
       $("#cancelTime").hide();
-      $("#specialPrice").hide();
+      // $("#specialPrice").hide();
       $("#waitOrder").hide();
 
       $("#btnRight").on("click",function(){
@@ -896,7 +932,7 @@ console.log(orderState);
       $("#negotiable").hide();
       $("#btnLeft").hide();
       $("#cancelTime").hide();
-      $("#specialPrice").hide();
+      // $("#specialPrice").hide();
       $("#waitOrder").hide();
 
       $("#btnRight").on("click",function(){
@@ -966,7 +1002,7 @@ console.log(orderState);
      $("#waitOrder").hide();
      $("#multiple").hide();
      $("#orderPrice").hide();
-     $("#orderDiscount").hide();
+     // $("#orderDiscount").hide();
      $("#orderActual").hide();
      $("#acceptTime").hide();
      $("#payTime").hide();
@@ -983,7 +1019,7 @@ console.log(orderState);
        var price = "￥" + minPrice*total + "-" + maxPrice*total; 
        $("#orderPrice").show();
        $("#price").text(price);
-       $("#price").addClass("actual");
+       // $("#price").addClass("actual");
        $("#servicePrice").css("marginBottom","12px");
        $("#orderPrice").css("marginBottom","4px");
      }
@@ -1016,7 +1052,7 @@ console.log(orderState);
       $("#roundSecond").addClass("round-undone");
       $("#roundThird").addClass("round-undone");
       $("#btnRight").addClass("delete-btn");
-      $("#toBePaid").addClass("actual");
+      // $("#toBePaid").addClass("actual");
 
       // $(".round").css("left","60px");
 
@@ -1029,13 +1065,13 @@ console.log(orderState);
       // $("#unitPrice").hide();
       // $("#multiple").hide();
       $("#orderPrice").hide();
-      $("#orderDiscount").hide();
+      // $("#orderDiscount").hide();
       $("#orderActual").hide();
       $("#acceptTime").hide();
       $("#payTime").hide();
       $("#finishTime").hide();
       $("#btnLeft").hide();
-      $("#specialPrice").hide();
+      // $("#specialPrice").hide();
 
       if(singlePrice == '面议'){
         $("#unit").hide();
