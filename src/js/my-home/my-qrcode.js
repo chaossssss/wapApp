@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// $rootScope.token = "d803769104f565854438336f131ca1d5";
 	// $rootScope.token = $.cookie("Token");
-	$rootScope.token = window.localStorage.getItem("Token");
+	$rootScope.token = window.sessionStorage.getItem("Token");
 	
 }])
 .controller('qrCodeCtrl',['$rootScope','$scope','getMyInfo',function($rootScope,$scope,getMyInfo){

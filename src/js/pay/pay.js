@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// FastClick.attach(document.body);
 	$rootScope.url = "http://192.168.1.191:3003";
-	$rootScope.token = window.localStorage.getItem("Token");
+	$rootScope.token = window.sessionStorage.getItem("Token");
 	// $rootScope.token = $.cookie("Token");
 
 	//获取url参数

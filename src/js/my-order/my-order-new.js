@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',['infinite-scroll'])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	$rootScope.token = window.localStorage.getItem("Token");
+	$rootScope.token = window.sessionStorage.getItem("Token");
 	$rootScope.url = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
 
 	//获取url参数
@@ -163,7 +163,7 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 }]) 
 .factory('Reddit',[function(){
 	var _getPath = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
-	var token = window.localStorage.getItem("Token");
+	var token = window.sessionStorage.getItem("Token");
 
 	var Reddit = function() {
          this.items = [];

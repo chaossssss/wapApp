@@ -70,13 +70,13 @@
     var $height = $(window).height();
     $("#container").height($height-44);
 
-    var token = window.localStorage.getItem("Token");
+    var token = window.sessionStorage.getItem("Token");
     if(token){
       $("#leftImg").attr("src","/images/map/btn_personal_active.png");
     }
     // $("#leftImg").on("click",function(){
     //   alert("1");
-    //   var a = window.localStorage.getItem("Token");
+    //   var a = window.sessionStorage.getItem("Token");
     //   if(a != undefined){
     //     window.location.href = "/template/my-home/my-home.html";
     //   }
@@ -168,7 +168,7 @@
       })
       //点击左侧图标
       $("#left").on("click",function(){
-        var token = window.localStorage.getItem("Token");
+        var token = window.sessionStorage.getItem("Token");
         if(token != undefined){
           window.location.href = "/template/my-home/my-home.html";
         }else{

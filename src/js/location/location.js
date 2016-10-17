@@ -5,7 +5,7 @@ angular.module('com.wapapp.app',[])
 	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
 	// $rootScope.token = $.cookie("Token");
 	
-	$rootScope.token = window.localStorage.getItem("Token");
+	$rootScope.token = window.sessionStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {

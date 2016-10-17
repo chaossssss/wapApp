@@ -15,7 +15,6 @@
 
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/quick-order/quick-order.min.css">
-	<link rel="stylesheet" href="/lib/jquery-scroll/perfect-scrollbar.min.css">
 	<style>
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
         display: none !important;
@@ -397,7 +396,7 @@
 	</div>
 
 <!-- dialog 服务类型三四级类别 -->
-<div class="zj_mask_dialog" ng-show="st.dialog == true" ng-cloak></div>
+<div class="zj_mask_dialog" ng-show="st.dialog == true" ng-cloak ng-click="st.dialog = false"></div>
 <div class="zj_dialog" ng-show="st.dialog == true" ng-cloak>
 	<div class="zj_service_dialog">
 		<p style="background-color:#27b8f3;color:#fff;padding:10px 0;" ng-bind="st.title"></p>

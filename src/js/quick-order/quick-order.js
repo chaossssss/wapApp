@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
 	FastClick.attach(document.body);
-	$rootScope.token = window.localStorage.getItem("Token");
+	$rootScope.token = window.sessionStorage.getItem("Token");
  
 	//获取url参数 
     function getvl(name) {
@@ -51,12 +51,12 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 1;
+	vm.Total = 3;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
-	}else if(window.localStorage.getItem("_address")){
+	}else if(window.sessionStorage.getItem("_address")){
 		//未选择过地址，取出上次缓存的地址
-		var _address = JSON.parse(window.localStorage.getItem("_address"));
+		var _address = JSON.parse(window.sessionStorage.getItem("_address"));
 		vm.ServiceAddressId = _address.Id;
 		$scope.addr = _address;
 	}
@@ -64,7 +64,7 @@ angular.module('com.wapapp.app',[])
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.ServiceTypeId',function(){
 		if(vm.ServiceTypeId){
-			if(vm.Total < 3 && vm.ServiceTypeId =='5'){
+			if(vm.Total < 3 && (vm.ServiceTypeId =='5' || vm.ServiceTypeId == '707')){
 				vm.Total = 3;
 			}else{
 				vm.Total = 1;
@@ -74,7 +74,7 @@ angular.module('com.wapapp.app',[])
 
 	//小时工服务数量不能小于3小时
 	$scope.$watch('vm.Total',function(){
-		if(vm.Total < 3 && vm.ServiceTypeId =='5'){
+		if(vm.Total < 3 && (vm.ServiceTypeId =='5' || vm.ServiceTypeId == '707')){
 			vm.dialogshow = true;
 			vm.errorMsg = "不能小于3小时";
 			vm.Total = 3;
@@ -97,7 +97,7 @@ angular.module('com.wapapp.app',[])
 			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
 				//地址数据永久缓存
-				window.localStorage.setItem("_address",JSON.stringify(res.Body[0]));
+				window.sessionStorage.setItem("_address",JSON.stringify(res.Body[0]));
 			}
 			$scope.$apply();
 		})
