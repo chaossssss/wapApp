@@ -75,7 +75,7 @@
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务时间</p>
 					        	</div>
-					        	<div class="weui_cell_ft"></div>
+					        	<div class="weui_cell_ft" ng-bind="item.Service.ServiceStartAt"></div>
 					        </div>
 					        <div class="zj_cell plr10">
 					        	<div class="weui_cell_bd weui_cell_primary">
@@ -176,9 +176,9 @@
 				        <div class="weui_cell" ng-if="item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.pay(item.OrderId)">
+				        		<!-- <a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.pay(item.OrderId)">
 				        			评价
-				        		</a>
+				        		</a> -->
 				        	</div>
 				        </div>
 				        <div class="weui_cell" ng-if="item.OrderStatus === '50'">
