@@ -2,7 +2,7 @@
 /*公共样式*/
 * {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
 	-webkit-tap-highlight-color: transparent;}
-body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:15px;line-height: 1.41176471;}
+body {color:#000; background:#fff; font-family:"Microsoft YaHei";font-size:14px;line-height: 1.41176471;}
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
 input, select {vertical-align:middle;}
 textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
@@ -26,7 +26,7 @@ textarea{resize: none;}
 }
 .yewu{
 	height: 25px;
-	font-size: 16px;
+	font-size: 14px;
 	margin-top:8px;
 }
 .bus-img{
@@ -48,7 +48,7 @@ textarea{resize: none;}
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; 
-    font-size: 17px;
+    font-size: 14px;
       
 }
 .dianzan{
@@ -82,13 +82,13 @@ textarea{resize: none;}
 	width: 27px;
 	height: 11px;
 	border-radius: 5px;
-	font-size: 14px;
+	font-size: 12px;
 }
 .wk-list{
     width: 74%;
     height: 20px;
     line-height: 19px;
-    font-size: 15px;
+    font-size: 14px;
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
@@ -104,14 +104,14 @@ textarea{resize: none;}
 .bus-add{
 	margin-left: 12px;
     margin-top: 2px;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 7px;
 }
 .address{
 	float:left;
 	width: 34%;
 	height: 21px;
-    font-size: 15px;
+    font-size: 14px;
 	overflow: hidden;
     padding-left: 10px;
     text-overflow:ellipsis;
@@ -122,7 +122,7 @@ textarea{resize: none;}
 	margin-left: 10px;
 	width: 90px;
     height: 21px;
-    font-size: 15px;
+    font-size: 14px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
@@ -437,10 +437,10 @@ textarea{resize: none;}
 }
 .weui_media_box .weui_media_title{
     color: #3f3148;
-	font-size: 16px;
+	font-size: 14px;
 }
 .weui_media_box .weui_media_desc{
-	font-size: 14px;
+	font-size: 12px;
 }
 
 /*工人标签*/
@@ -484,7 +484,7 @@ textarea{resize: none;}
 }
 .font-alltag{
 	text-align: center;
-	font-size: 16px;
+	font-size: 14px;
 	padding:6px;
 }
 .blue-jiantou{
@@ -531,7 +531,7 @@ textarea{resize: none;}
 	display: inline-block;
     position: relative;
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
     margin-left: 10px;
     background: url(/images/business-detail/ac_bg.png);
     background-repeat: no-repeat;
