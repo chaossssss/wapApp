@@ -325,7 +325,7 @@ $(function(){
           if(tp >= rules[i].Upper){
             var hourly = rules[i].Minus;
             $("#hourly").text("-￥" + hourly);
-            var toBePaid = parseInt(tp) - hourly;
+            var toBePaid = parseFloat(tp) - hourly;
             $("#toBePaid").text("￥" + toBePaid);
             $("#toBePaid").addClass("actual");
             tpNum = parseFloat(tp);
@@ -383,7 +383,7 @@ console.log(orderState);
       $("#unit").hide();
       $("#multiple").hide();
       $("#waitOrder").hide();
-      $("#servicePrice").css("marginBottom","0px");
+      $("#servicePrice").css("marginBottom","4px");
     }
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
