@@ -359,11 +359,6 @@ console.log(orderState);
     $("#roundFourth").addClass("round-undone");
     $("#btnLeft").addClass("delete-btn");
     $("#btnRight").addClass("pay-btn");
-
-    if(singlePrice == '面议'){
-      $("#unit").hide();
-      $("#multiple").hide();
-    }
     
     $("#zjWorker").hide();
     $("#orderPrice").hide();
@@ -381,6 +376,12 @@ console.log(orderState);
     $("#finishTime").hide();
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
+    if(singlePrice == '面议'){
+      $("#unit").hide();
+      $("#multiple").hide();
+      $("#waitOrder").hide();
+      $("#servicePrice").css("marginBottom","0px");
+    }
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
