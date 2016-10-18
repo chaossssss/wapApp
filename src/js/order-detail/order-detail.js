@@ -305,6 +305,9 @@ $(function(){
         // $("#hourly").text("-￥" + activity);
         var rules = data.Body.Activity.SpecialRule;
         var rulesNum = data.Body.Activity.SpecialRule.length;
+        if(rulesNum == 0){
+          $("#specialPrice").hide();
+        }
         for(var i =0; i < rulesNum; i++){
           if(minPrice*total >= rules[i].Upper){
             var hourly = rules[i].Minus;
@@ -663,6 +666,11 @@ console.log(orderState);
       $("#cancelTime").hide();
       $("#finishTime").hide();
       $("#payTime").hide();
+      if(activity == null){
+        $("#waitOrder").hide();
+        $("#price").addClass("actual");
+        $("#orderPrice").css("marginBottom","4px");
+      }
       // $("#specialPrice").hide();
       // $("#waitOrder").hide();
       // $("#orderPrice").css("marginBottom","4px");
@@ -709,7 +717,10 @@ console.log(orderState);
       $("#btnLeft").hide();
       $("#cancelTime").hide();
       $("#finishTime").hide();
-
+      if(activity == null){
+        $("#waitOrder").hide();
+        $("#orderPrice").css("marginBottom","4px");
+      }
       $("#btnRight").on("click",function(){
         $("#cancelOrder1").css("display","block");
         $("#cancelOrderBtn").on("click",function(){
