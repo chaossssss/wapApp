@@ -303,10 +303,11 @@ $(function(){
         var specialTitle = data.Body.Activity.SpecialTitle;
         $("#specialTitle").text(specialTitle);
         // $("#hourly").text("-￥" + activity);
-        var rules = data.Body.Activity.SpecialRule;
-        var rulesNum = data.Body.Activity.SpecialRule.length;
+        rules = data.Body.Activity.SpecialRule;
+        rulesNum = data.Body.Activity.SpecialRule.length;
         if(rulesNum == 0){
           $("#specialPrice").hide();
+          $("#waitOrder").hide();
         }
         for(var i =0; i < rulesNum; i++){
           if(minPrice*total >= rules[i].Upper){
@@ -374,9 +375,7 @@ console.log(orderState);
     $("#acceptTime").hide();
     $("#payTime").hide();
     $("#cancelTime").hide();
-    // $("#specialPrice").hide();
-    // $("#waitOrder").hide();
-    $("#finishTime").hide();
+    $("#specialPrice").hide();
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
     if(singlePrice == '面议'){
@@ -391,9 +390,11 @@ console.log(orderState);
       var price = "￥" + minPrice*total + "-" + maxPrice*total; 
       $("#orderPrice").show();
       $("#price").text(price);
-      // $("#price").addClass("actual");
+      $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","12px");
       $("#orderPrice").css("marginBottom","4px");
+      $("#waitOrder").hide();
+      $("#finishTime").hide();
       if(activity != null){
         $("#orderPrice").css("marginBottom","12px");
       }
@@ -475,6 +476,8 @@ console.log(orderState);
       $("#price").text(price);
       // $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","4px");
+      $("#specialPrice").hide();
+      $("#waitOrder").hide();
     }
     // $("#waitOrder").css("marginBottom","4px");
     // $("#orderPrice").css("marginBottom","0px");
@@ -676,7 +679,9 @@ console.log(orderState);
       // $("#orderPrice").css("marginBottom","4px");
       $("#acceptTime").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
-
+      if(rulesNum == 0){
+        $("#price").addClass("actual");
+      }
       $("#btnLeft").on("click",function(){
         $("#cancelOrder2").css("display","block");
         $("#contactWorkerBtn").on("click",function(){
