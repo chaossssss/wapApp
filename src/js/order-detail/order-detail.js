@@ -383,6 +383,7 @@ console.log(orderState);
       $("#multiple").hide();
       $("#waitOrder").hide();
       $("#servicePrice").css("marginBottom","4px");
+      $("#specialPrice").hide();
     }
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
@@ -465,6 +466,7 @@ console.log(orderState);
       $("#unit").hide();
       $("#orderPrice").hide();
       $("#waitOrder").hide();
+      $("#specialPrice").hide();
     }
     if(noSinglePrice == null){
       $("#orderPrice").hide();
@@ -485,6 +487,7 @@ console.log(orderState);
     // $("#servicePrice").css("marginBottom","4px");
     if(totalPrice == '面议'){
       $("#servicePrice").css("marginBottom","0px");
+      $("#specialPrice").hide();
     }
     $("#btnLeft").on("click",function(){
       $("#cancelOrder1").css("display","block");
