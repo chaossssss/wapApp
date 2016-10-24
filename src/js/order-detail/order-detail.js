@@ -376,6 +376,7 @@ console.log(orderState);
     $("#payTime").hide();
     $("#cancelTime").hide();
     $("#specialPrice").hide();
+    $("#finishTime").hide();
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
     if(singlePrice == '面议'){
@@ -725,6 +726,7 @@ console.log(orderState);
       $("#btnLeft").hide();
       $("#cancelTime").hide();
       $("#finishTime").hide();
+      $("#waitOrder").hide();
       if(activity == null){
         $("#waitOrder").hide();
         $("#orderPrice").css("marginBottom","4px");
