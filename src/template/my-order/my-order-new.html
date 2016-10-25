@@ -95,7 +95,16 @@
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
-					        	<div class="weui_cell_ft">
+					        	<!-- 区间价格 -->
+								<div class="weui_cell_ft" ng-show="item.MinPrice">
+					        		¥ <span ng-bind="item.MinPrice"></span>-<span ng-bind="item.MaxPrice"></span>/<span ng-bind="item.UnitName"></span>
+					        		<span class="ml30">
+					        			x
+					        			<span ng-bind="item.TotalCount"></span>
+					        		</span>
+					        	</div>
+					        	<!-- 定价价格 -->
+					        	<div class="weui_cell_ft" ng-hide="item.MinPrice">
 					        		¥ <span ng-bind="item.Price"></span>/<span ng-bind="item.UnitName"></span>
 					        		<span class="ml30">
 					        			x
@@ -108,13 +117,24 @@
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
 				        		<span>待支付：</span>
-				        		<span class="pred">¥
-				        			<span ng-bind="item.TotalPrice"></span>
+				        		<!-- 区间价格 -->
+								<span class="pred" ng-if="item.MinPrice">
+				        			¥ <span ng-bind="item.MinPrice * item.TotalCount"></span> - 
+				        			<span ng-bind="item.MaxPrice * item.TotalCount"></span>
+				        		</span>
+				        		<!-- 定价价格 没有活动 -->
+				        		<span class="pred" ng-if="!item.MinPrice && item.Activity && (item.TotalPrice < item.Activity.SpecialRule[0].Upper)">
+				        			¥ <span ng-bind="item.TotalPrice"></span>
+				        		</span>
+			        		 	<!-- 定价价格 有活动 -->
+								<span class="pred" ng-if="!item.MinPrice && item.Activity && (item.TotalPrice >= item.Activity.SpecialRule[0].Upper)">
+				        			¥ <span ng-bind="item.TotalPrice - item.Activity.SpecialRule[0].Minus"></span>
 				        		</span>
 				        	</div>
 				        </div>
 				        <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '20' || item.OrderStatus === '30' || item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
+
 				        	<div class="weui_cell_ft">
 				        		<span>订单总价：</span>
 				        		<span class="pred">¥

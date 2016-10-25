@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<!-- 满足活动情况 -->
-		<div class="weui_cell" ng-show="od.Activity" ng-cloak>
+		<div class="weui_cell" ng-show="od.Activity && od.Activity.SpecialRule.length > 0" ng-cloak>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p ng-bind="od.Activity.SpecialTitle"></p>
 			</div>
@@ -68,6 +68,12 @@
 				</span>
 			</div>
 		</div>
+		<!-- <div class="weui_cell" ng-show="od.Activity && od.Activity.PromotionRule.length > 0" ng-cloak>
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>优惠券</p>
+			</div>
+			<div class="zj_cell_ft" ng-bind="od.Activity.PromotionName"></div>
+		</div> -->
 		<!-- <a href="javascript:;" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>优惠券</p>

@@ -15,6 +15,11 @@
 
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/login/login.min.css">
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head>
 <body ng-controller="loginCtrl">
 
@@ -60,7 +65,7 @@
 		</div>
 	</div>
 </form>	
-<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
 			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>

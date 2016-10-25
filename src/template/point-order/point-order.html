@@ -19,7 +19,7 @@
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
         display: none !important;
     }
-	</style>
+	</style> 
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
@@ -87,7 +87,6 @@
 					<option value="">--请选择服务类型--</option>
 				</select>
 			</div>
-			
 		</a>
 		<!-- 服务类型 end -->
 		<!-- 服务数量 begin-->
@@ -137,13 +136,18 @@
 					<p>-¥<span ng-bind="gt.SpecialRule[0].Minus | number:1"></span></p>
 				</div>
 			</div>
-			<!-- 满返活动 -->
+			<!-- 满返活动 无论是面议还是定价-->
 			<div style="padding:10px 10px;font-size:16px;" class="pred" ng-if="gt.PromotionRule.length>=1">
 				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
 			 	<span class="f15" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.PromotionRule[0].Upper" ng-bind="gt.PromotionName"></span>
 				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
 			</div>
-			<!-- 定价才显示待支付 -->
+			<!-- 满减活动  面议情况 -->
+			<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="vm.serviceTypeObj.PriceType == '0' && gt.SpecialRule.length > 0">
+				<span class="pred" ng-bind="gt.SpecialAds"></span>
+				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
+			</div>	
+			<!-- 定价才显示待支付 定价情况-->
 			<div class="weui_cell no_access" style="padding:10px;font-size:15px;" ng-if="vm.serviceTypeObj.PriceType == '1'">
 				<div class="weui_cell_bd flex2">
 					<p>订单总价&nbsp;¥
@@ -210,6 +214,7 @@
 		</div>
 	</div>
 	<!-- 服务说明 end-->
+	<!-- PriceType 0 面议 ； 1 定价 -->
 	<div class="zj_foot webkit_box">
 		<div class="zj_foot_hd">
 			订单总价
@@ -221,12 +226,18 @@
 			<span>面议</span>
 		</div>
 		<!-- 没有活动 -->
-		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && !gt">
+		<div class="zj_foot_bd" ng-if="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && !gt">
 			<span>¥</span>
 			<span ng-if="vm.serviceTypeObj.Price*vm.Total <= 0">0.00</span>
 			<span ng-if="vm.serviceTypeObj.Price*vm.Total > 0" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
 		</div>
-		<!-- 可以参加满减活动 -->
+		<!-- 有活动 有满返活动，没有满减活动 -->
+		<div class="zj_foot_bd" ng-if="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && gt && gt.SpecialRule.length == 0">
+			<span>¥</span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total <= 0">0.00</span>
+			<span ng-if="vm.serviceTypeObj.Price*vm.Total > 0" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+		</div>
+		<!-- 有活动 可以参加满减活动 -->
 		<div class="zj_foot_bd" ng-show="vm.serviceTypeObj.Price && vm.serviceTypeObj.PriceType == '1' && gt && gt.SpecialRule.length > 0">
 			<span>¥</span>
 			<span ng-if="vm.serviceTypeObj.Price*vm.Total < gt.SpecialRule[0].Upper" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>

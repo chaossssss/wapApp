@@ -29,6 +29,17 @@ var paths = {
   src       :  "src" 
 }
 
+/* 基础路径 */
+var formalpaths = {
+  css       :  "formalsrc/css",
+  less      :  "formalsrc/less/",
+  js        :  "formalsrc/js",
+  img       :  "formalsrc/images",
+  template  :  "formalsrc/template/", 
+  build     :  "formaldist",
+  src       :  "formalsrc" 
+}
+
 // var resProxy = "项目的真实路径";
 // var prefix = "项目的真实路径"+jsonObj.name;
 var resProxy = "";  //代理服务器

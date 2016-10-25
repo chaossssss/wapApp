@@ -82,14 +82,14 @@ angular.module('com.wapapp.app',[])
 	})
 
 	//取出缓存数据
-	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
-	console.log(_pointOrder);
-	if(_pointOrder){
-		vm.ServiceTypeId = _pointOrder.ServiceTypeId;
-		vm.Total = _pointOrder.Total;
-		vm.ServiceStartAt = _pointOrder.ServiceStartAt;
-		vm.ServiceContent = _pointOrder.ServiceContent;
-	}
+	// var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
+	// console.log(_pointOrder);
+	// if(_pointOrder){
+	// 	vm.ServiceTypeId = _pointOrder.ServiceTypeId;
+	// 	vm.Total = _pointOrder.Total;
+	// 	vm.ServiceStartAt = _pointOrder.ServiceStartAt;
+	// 	vm.ServiceContent = _pointOrder.ServiceContent;
+	// }
 
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
@@ -148,8 +148,8 @@ angular.module('com.wapapp.app',[])
 				console.log("获取服务价格",res);
 				vm.IsNegotiable = res.Body.IsNegotiable;
 				sv.Unit = res.Body.Unit;
-				sv.Min = res.Body.Min;
-				sv.Max = res.Body.Max;
+				sv.Min = parseInt(res.Body.Min,10);
+				sv.Max = parseInt(res.Body.Max,10);
 				sv.UnitName = res.Body.UnitName;
 				$scope.$apply();
 			})
@@ -274,39 +274,40 @@ angular.module('com.wapapp.app',[])
 		.success(function(res){
 			console.log("服务类型",res);
 			// 有四级分类的，将三级拿出，放到二级中，并删掉此在三级中的值
-			var parse = function(obj){
-				obj = obj.Body;
-				obj.map(function(v,i){
-					v.Children.map(function(v1,j){
-						if(v1 && v1.Children){
-							v1.Children.map(function(v2,k){
-								if(v2.Children){
-									var copy = JSON.parse(JSON.stringify(v2));
-									obj[i].Children.push(copy);
-									obj[i].Children[j] = undefined;
-								}
-							});
-						}
+			// var parse = function(obj){
+			// 	obj = obj.Body;
+			// 	obj.map(function(v,i){
+			// 		v.Children.map(function(v1,j){
+			// 			if(v1 && v1.Children){
+			// 				v1.Children.map(function(v2,k){
+			// 					if(v2.Children){
+			// 						var copy = JSON.parse(JSON.stringify(v2));
+			// 						obj[i].Children.push(copy);
+			// 						obj[i].Children[j] = undefined;
+			// 					}
+			// 				});
+			// 			}
 
-					});
-				});
-				return obj;
-			}
-			var list = parse(res);
-			for(var i=0,len=list.length;i<len;i++){
-				if(list[i].Children){
-					var apass = [];
-					for(var j=0,leng=list[i].Children.length;j<leng;j++){
-						if(list[i].Children[j] !== undefined){
-							apass.push(list[i].Children[j]);
-						}
-					}
-					list[i].Children = apass;
-				}
-			}
+			// 		});
+			// 	});
+			// 	return obj;
+			// }
+			// var list = parse(res);
+			// for(var i=0,len=list.length;i<len;i++){
+			// 	if(list[i].Children){
+			// 		var apass = [];
+			// 		for(var j=0,leng=list[i].Children.length;j<leng;j++){
+			// 			if(list[i].Children[j] !== undefined){
+			// 				apass.push(list[i].Children[j]);
+			// 			}
+			// 		}
+			// 		list[i].Children = apass;
+			// 	}
+			// }
 
-			console.log("数组操作后2",list);
-			st.serviceList = list;
+			// console.log("数组操作后2",list);
+			// st.serviceList = list;
+			st.serviceList = res.Body;
 			$scope.$apply();
 		}) 
 
@@ -498,9 +499,6 @@ angular.module('com.wapapp.app',[])
 	                processData: false,  // 告诉jQuery不要去处理发送的数据
 	                contentType: false  // 告诉jQuery不要去设置Content-Type请求头
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg);
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						// window.location.href = "/template/login/login.html";
 					}
@@ -522,9 +520,6 @@ angular.module('com.wapapp.app',[])
 					method:"POST",
 					url: _getpath
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}
@@ -552,9 +547,6 @@ angular.module('com.wapapp.app',[])
 					url: _getpath,
 					data: formData
 				}).success(function(res){
-					if(res.Meta.ErrorCode !== "0"){
-						// alert(res.Meta.ErrorMsg)
-					}
 					if(res.Meta.ErrorCode === "2004"){
 						window.location.href = "/template/login/login.html";
 					}

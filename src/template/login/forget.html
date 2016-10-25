@@ -16,6 +16,11 @@
 
 	<link rel="stylesheet" href="/css/weui.min.css">
 	<link rel="stylesheet" href="/css/login/regist.min.css">
+	<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+	</style>
 </head>
 <body ng-controller="forgetCtrl">
 
@@ -69,7 +74,7 @@
 		<!-- <a href="javascript:;" class="weui_btn weui_btn_primary" ng-disabled="false" ng-class="{false:'weui_btn_disabled'}[form.$valid]" ng-click="vm.submitRegist()">注册</a> -->
 	</div>
 </form>	
-<div class="weui_dialog_alert" ng-show="vm.dialogshow == true">
+<div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
 			<div class="weui_dialog_bd mt20" ng-bind="vm.errorMsg"></div>

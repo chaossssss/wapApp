@@ -106,14 +106,15 @@ angular.module('com.wapapp.app',[])
 	})
 
 	//取出缓存数据
-	var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
-	console.log(_pointOrder);
-	if(_pointOrder){
-		vm.serviceTypeObj = _pointOrder.serviceTypeObj;
-		vm.Total = _pointOrder.Total;
-		vm.ServiceStartAt = _pointOrder.ServiceStartAt;
-		vm.ServiceContent = _pointOrder.ServiceContent;
-	}
+	// var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
+	// console.log(_pointOrder);
+	// if(_pointOrder){
+	// 	vm.serviceTypeObj = _pointOrder.serviceTypeObj;
+	// 	vm.Total = _pointOrder.Total;
+	// 	vm.ServiceStartAt = _pointOrder.ServiceStartAt;
+	// 	vm.ServiceContent = _pointOrder.ServiceContent;
+	// }
+	
 
 	//拉取地址
 	addrService.search($rootScope.token,$rootScope.addressId)
@@ -316,7 +317,7 @@ angular.module('com.wapapp.app',[])
 					console.log(res);
 					$scope.loadingToast = false;
 					if(res.Meta.ErrorCode === "0"){
-						window.sessionStorage.removeItem("point-order");
+						// window.sessionStorage.removeItem("point-order");
 						window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
 					}else{
 						vm.dialogshow = true;
@@ -529,7 +530,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 
@@ -559,7 +560,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 	return {
@@ -586,7 +587,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 
@@ -613,7 +614,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	};
 
@@ -641,7 +642,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	};
 	return {
@@ -667,7 +668,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 	var bossWork = function(id){
@@ -683,7 +684,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 	return {
@@ -712,7 +713,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 	return {
@@ -738,7 +739,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	}
 	return {
@@ -762,7 +763,7 @@ angular.module('com.wapapp.app',[])
 						window.location.href = "/template/login/login.html";
 					}
 				}).error(function(res){
-					alert("服务器连接失败，请检查网络设置");
+					// alert("服务器连接失败，请检查网络设置");
 				})
 	} 
 	return {
