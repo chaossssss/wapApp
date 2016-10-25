@@ -260,7 +260,7 @@ $(function(){
         for(var i = 0; i < refundsNum; i++){      
           $("#refundAt").text(data.Body.Refunds[i].RefundTime);
           $("#lostIncome").text(data.Body.Refunds[i].LostIncome);
-          $("#refundAmount").text(data.Body.Service[i].TotalPrice);
+          $("#refundAmount").text(data.Body.TotalPrice);
         }
       }
       
@@ -1011,7 +1011,7 @@ console.log(orderState);
      $("#roundFirst").addClass("round-undone");
      $("#roundSecond").addClass("round-undone");
      $("#btnRight").addClass("delete-btn");
-
+     $("#price").addClass("actual");
      // $(".round").css("left","89px");
 
      $("#proThird").hide();
@@ -1020,10 +1020,7 @@ console.log(orderState);
      $("#addRemark").hide();
      $("#refundRecord").hide();
      $("#filling2").hide();
-     // $("#unitPrice").hide();
      $("#waitOrder").hide();
-     $("#multiple").hide();
-     $("#orderPrice").hide();
      // $("#orderDiscount").hide();
      $("#orderActual").hide();
      $("#acceptTime").hide();
@@ -1041,11 +1038,10 @@ console.log(orderState);
        var price = "￥" + minPrice*total + "-" + maxPrice*total; 
        $("#orderPrice").show();
        $("#price").text(price);
-       // $("#price").addClass("actual");
+       
        $("#servicePrice").css("marginBottom","12px");
        $("#orderPrice").css("marginBottom","4px");
      }
-     $("#servicePrice").css("marginBottom","4px");
      $("#status").css("paddingTop","90px");
      $("#cancelTime").css("marginBottom","0px");
      // $("#servicePrice").css("marginBottom","4px"); 
@@ -1084,17 +1080,16 @@ console.log(orderState);
       $("#addRemark").hide();
       $("#refundRecord").hide();
       $("#filling2").hide();
-      // $("#unitPrice").hide();
-      // $("#multiple").hide();
       $("#orderPrice").hide();
       // $("#orderDiscount").hide();
       $("#orderActual").hide();
-      $("#acceptTime").hide();
       $("#payTime").hide();
       $("#finishTime").hide();
       $("#btnLeft").hide();
-      // $("#specialPrice").hide();
-
+      if(activity != null){
+        $("#specialPrice").hide();
+        $("#orderPrice").css("marginBottom","12px");
+      }
       if(singlePrice == '面议'){
         $("#unit").hide();
         $("#multiple").hide();
