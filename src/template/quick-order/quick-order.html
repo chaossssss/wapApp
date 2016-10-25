@@ -137,7 +137,7 @@
 				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
 			</div>
 			<!-- 满减活动  面议情况 -->
-			<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="vm.serviceTypeObj.PriceType == '0' && gt.SpecialRule.length > 0">
+			<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="vm.IsNegotiable == '1' && gt.SpecialRule.length > 0">
 				<span class="pred" ng-bind="gt.SpecialAds"></span>
 				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
 			</div>	

@@ -45,9 +45,13 @@ angular.module('com.wapapp.app',[])
  
  	vm.payOrder = function(){
  		console.log("余额",vm.yeradio,"支付宝or微信",vm.wxOrzfb);
- 		//金额换算
+ 		//金额换算 od.TotalPrice 需付款
  		vm.Price = od.TotalPrice;
- 		vm.otherPrice = Math.abs(parseInt(vm.Price) - parseInt(uc.Balance));
+ 		if(parseInt(vm.Price) < parseInt(uc.Balance)){
+ 			vm.otherPrice = 0;	
+ 		}else{
+ 			vm.otherPrice = Math.abs(parseInt(vm.Price) - parseInt(uc.Balance));
+ 		}
  		console.log("另外需要付款:",vm.otherPrice);
 
  		// 余额＋支付宝
@@ -59,7 +63,7 @@ angular.module('com.wapapp.app',[])
 	            OrderId : $rootScope.orderId,
 	            CouponId: "",
 	            Alipay : vm.otherPrice,
-	            BalancePay : uc.Balance
+	            BalancePay : vm.Price
 			}).success(function(res){
 				$scope.loadingToast = false;
 				console.log(res);
@@ -81,7 +85,7 @@ angular.module('com.wapapp.app',[])
 	            OrderId: $rootScope.orderId,
 	            CouponId: "",
 	            WxPay: vm.otherPrice,
-	            BalancePay: uc.Balance
+	            BalancePay: vm.Price
  			}).success(function(res){
 				console.log(res);
 				$scope.loadingToast = false;
