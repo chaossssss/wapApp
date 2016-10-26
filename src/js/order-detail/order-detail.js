@@ -887,8 +887,8 @@ console.log(orderState);
     // $("#specialPrice").hide();
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
-      confirmOrder(token,orderId);
-      location.reload();
+      completeOrder(token,orderId);
+      // location.reload();
     })
 
     break;
@@ -1217,7 +1217,7 @@ console.log(orderState);
     console.log("更新订单");
     $.ajax({
         type:"POST",
-        url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+        url:"http://192.168.1.191:3003/api/v2/OrderInfo/UpdateOrderEx",
         data:{
           Token:token,
           OrderId:orderId
@@ -1245,7 +1245,7 @@ console.log(orderState);
     console.log("确认订单");
     $.ajax({
       type:"POST",
-      url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      url:"http://192.168.1.191:3003/api/v2/OrderInfo/ConfirmOrderEx",
       data:{
         Token:token,
         OrderId:orderId

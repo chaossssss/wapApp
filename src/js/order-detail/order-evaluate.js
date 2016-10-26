@@ -313,7 +313,7 @@ $("#submitBtn").on("click",function(){
   // fileinfo = document.getElementById('uploadForm').files[0];
   // formData.append("img",fileinfo);
   // console.log(GetJsonData());
-  alert(formData);
+  console.log(formData);
   $.ajax({
     type:"POST",
     url:"http://192.168.1.191:3003/api/v2/Evaluation/EvaluateOrder",
@@ -325,10 +325,9 @@ $("#submitBtn").on("click",function(){
     success:function(data){
       console.log(data.Meta.ErrorMsg);
       alert(data.Meta.ErrorMsg);
-      
     }
   })
-  window.location.href="order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id;
+      window.location.href="order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id;
 })
 
 })
