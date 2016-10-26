@@ -109,7 +109,7 @@ $(function(){
   }
   var orderId = getQueryString("orderId");
   console.log(orderId);
-  var token = localStorage.getItem("Token");
+  var token = window.sessionStorage.getItem("Token");
   console.log(token);
   $cancelBtn.on('click',function(){
     $workerPhone.hide();
@@ -888,7 +888,7 @@ console.log(orderState);
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
       completeOrder(token,orderId);
-      // location.reload();
+      location.reload();
     })
 
     break;

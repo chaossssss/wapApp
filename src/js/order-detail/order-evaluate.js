@@ -1,5 +1,5 @@
 $(function(){
-  var token = localStorage.getItem("Token");
+  var token = sessionStorage.getItem("Token");
   var orderId = getQueryString("orderId");
   var type = getQueryString("type");
   var id = getQueryString("markid");
@@ -285,14 +285,13 @@ FILE.init();
 $("#fileImage").on("click",function(){
   console.log($("#fileImage")[0].files[0]);
   var imgData = new FormData();
-  imgData.append("user","1111");
   var img = $("#fileImage")[0].files;
   for(i = 0; i < img.length; i++){
     imgData.append("img"+i,img[i]);
   }
   console.log(imgData);
 })
-
+console.log(token);
 $("#submitBtn").on("click",function(){
   function GetJsonData(){
     var json_data = {
@@ -325,9 +324,9 @@ $("#submitBtn").on("click",function(){
     success:function(data){
       console.log(data.Meta.ErrorMsg);
       alert(data.Meta.ErrorMsg);
+      window.location.href="order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id;
     }
   })
-      window.location.href="order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id;
 })
 
 })
