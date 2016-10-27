@@ -324,7 +324,7 @@ $("#submitBtn").on("click",function(){
     success:function(data){
       console.log(data.Meta.ErrorMsg);
       alert(data.Meta.ErrorMsg);
-      window.location.href="order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id;
+      $("#sendEva").attr("href","order-evaluated.html?orderId=" + orderId + "&type=" + type + "&markid=" + id);
     }
   })
 })
