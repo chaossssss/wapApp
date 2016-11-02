@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/activity/activity.min.css">
     <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
     <script type="text/javascript" src="/js/activity/flexible.min.js"></script>
-	<script type="text/javascript" src="/js/activity/flexible_css.min.js"></script>
+    <script type="text/javascript" src="/js/activity/flexible_css.min.js"></script>
     <script type="text/javascript" src="/js/activity/browser.min.js"></script>
 </head>
 <body>
@@ -18,20 +18,23 @@
         <div id="close">
             <img src="/images/activity/close.png" alt="">
         </div>
-		<div class="logo"><img src="/images/activity/logo.png" alt=""></div>
-		<div class="top_title"><img src="/images/activity/top_title.png" alt=""></div>
+        <div class="top_title"><img src="/images/activity/top_title.png" alt=""></div>
+        <div class="top_title">
+            <img src="/images/activity/red_b.png" alt="">
+            <img src="/images/activity/get_now.png" alt="" class="get_now">
+        </div>
         <div class="item_list">
             <div class="item">
                 <img src="/images/activity/img1.png" alt="">
-                <a href="javascript:;" typeid="5" typename="小时工"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+                <a href="javascript:;" typeid="5" typename="小时工"><img src="/images/activity/btn_order.png" alt="" class="btn_order" style="bottom: 0.5rem;"></a>
             </div>
             <div class="item">
                 <img src="/images/activity/img2.png" alt="">
-                <a href="javascript:;" typeid="160" typename="新房开荒"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+                <a href="javascript:;" typeid="163" typename="油烟机清洗"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
             </div>
             <div class="item">
                 <img src="/images/activity/img3.png" alt="">
-                <a href="javascript:;" typeid="163" typename="油烟机清洗"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+                <a href="javascript:;" typeid="171" typename="维修"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
             </div>
             <div class="item">
                 <img src="/images/activity/img4.png" alt="">
@@ -39,25 +42,12 @@
             </div>
             <div class="item">
                 <img src="/images/activity/img5.png" alt="">
-                <a href="javascript:;" typeid="168" typename="安装"><img src="/images/activity/btn_order.png" alt="" class="btn_order"></a>
+                <a href="javascript:;" typeid="22" typename="开锁换锁"><img src="/images/activity/btn_order.png" alt="" class="btn_order" style="bottom: 1.7rem;"></a>
             </div>
             <div class="item">
-                <img src="/images/activity/img6.png" alt="">
-                <a href="javascript:;" typeid="" typename=""><img src="/images/activity/shou.png" alt="" class="shou"></a>
-            </div>
-            <div class="item">
-                <img src="/images/activity/rule.png" alt="">
-                <div class="rule_list">
-                    <p>1.<span class="pink_font">特价</span>小时工，每个账户仅享1单此优惠。</p>
-                    <p>2.<span class="pink_font">满返</span>实付满80元返20元,每个账户仅享1单此优惠。</p>
-                    <p>3.活动优惠仅限使用下单功能<span class="pink_font">一键下单，指定下单</span></p>
-                    <p>4.返充金额会在服务确认完成后自动打入您的账户余额。</p>
-                    <p>5.该活动解释权归杭州芸瑾网络科技有限公司所有。</p>
-                </div>
-                
+                <img src="/images/activity/rule.png" alt="">                
             </div>
         </div>
-        <div class="phone">客服热线：4008-262-056</div>
 	</div>
 </body>
 </html>
@@ -113,6 +103,22 @@
                         function(response){
                     });
                 })
+
+                // IOS注册
+                $(".get_now").click(function(){
+                    var resultData = {
+                        "status": {
+                            "code": "801",
+                            "msg": "跳转到注册界面"
+                        },
+                        "Body": {
+                            "url":""
+                        }
+                    };
+                    bridge.callHandler('openIosRegist',resultData,
+                        function(response){
+                    }); 
+                });
             })
         }); 
     }
@@ -147,24 +153,20 @@ $(function(){
             var data = JSON.stringify(resultData);
             javascript:android.closeAndroidWebView(data);
         })
+
+        //Android跳转注册页面
+        $(".get_now").click(function(){
+            var resultData = {
+                "status": {
+                    "code": "801",
+                    "msg": "跳转到注册界面"
+                },
+                "data": {}
+            };
+            var data = JSON.stringify(resultData);
+            javascript:android.openAndroidRegist(data);
+        });
     }
 
-    //点击次数统计
-    $(".item a").each(function(){
-        $(this).click(function(){
-            $.ajax({
-                type: 'POST',
-                url: 'http://192.168.1.191:3001/api/v2/SystemService/ClickCount',
-                dataType: 'json',
-                data:{
-                    Target:"7",
-                    DeviceType:"2"
-                }
-            });
-
-            // 列表页点击下单按钮后禁用
-            $(this).attr("href","javascript:void(0)");
-        })
-    });
 })
 </script>

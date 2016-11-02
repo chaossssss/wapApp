@@ -2,7 +2,6 @@
 /*公共样式*/
 * {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
 	-webkit-tap-highlight-color: transparent;}
-html{background:#51d5df !important;background-image: url(../images/bg.png);}
 body {font-family:"Microsoft YaHei";}
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
 input, select {vertical-align:middle;}
@@ -18,80 +17,47 @@ button{outline: none;cursor: pointer;border:none;}
 /*-------------------*/
 .contain{
 	position: relative;
-	background-image: url(../../images/activity/bg_light.png);
-	background-size: 100%;
-	background-repeat: no-repeat;
 }
-.logo{
-	float: left;
-	width: 2.25rem;
-	height: 0.64rem;
-	margin:0.27rem;
-}
-.logo img{
-	width:2.53rem;
-}
-.top_title{
-	padding: 0.5rem;
-    padding-top: 1.6rem;
-}
-.ad{
-	text-align: center;
-	padding:0.3rem;
-}
+
 .btn_detail{
-	text-align: center;
-	margin-top: 0.5rem;
+    position: absolute;
+    text-align: center;
+    top: 80%;
+    width: 100%;
 }
 .btn_detail img{
 	width: 5.7rem;
     height: 1.7rem;
 }
-
+.top_title {
+	position: relative;
+}
+.top_title img{
+	display: block;
+	margin-top: -1px;
+}
 
 /*服务列表页*/
-.item_list{
-	margin-top: 0.6rem;
-}
+
 .item{
 	position: relative;
 	text-align: center;
-	padding:0 0.4rem 0 0.4rem;
 }
 .item img{
 	display: block;
+	margin-top: -1px;
 }
 .btn_order{
-	position: absolute;
-	width: 1.67rem;
-	height: 1.81rem;
-	right:1.17rem;
-	bottom: 1rem
-}
-.shou{
     position: absolute;
-    right: 15%;
-    bottom: 11%;
-    width: 5.44rem;
-    height: 2.2rem;
+    width: 2.2rem;
+    right: 1.3rem;
+    bottom: 0.9rem;
 }
-.rule_list{
+.get_now{
     position: absolute;
-    font-size: 0.37rem;
-    text-align: left;
-    bottom: 0;
-    left: 1.25rem;
-    width: 77%;
-    line-height: 0.5rem;
-    height: 78%;
-}
-.pink_font{
-	color: #ff6b81;
-}
-.phone{
-	padding:0.6rem;
-	text-align: center;
-	font-size: 0.37rem;
+    left: 3rem;
+    bottom: 4.5rem;
+    width: 4rem;
 }
 #close{
 	position: absolute;
@@ -99,14 +65,14 @@ button{outline: none;cursor: pointer;border:none;}
 	right: 0.3333rem;
 	width: 0.7406rem;
 	overflow: auto;
+	z-index: 999;
 }
 /*下载页*/
 .btn_down{
 	position: absolute;
-	width:2.2rem;
-	height: 2.39rem;
-	top: 50%;
-    left: 38%;
+    width: 4.5rem;
+    bottom: 3rem;
+    left: 3rem;
 }
 #weixin-tip {
 	position: absolute;
