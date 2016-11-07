@@ -107,6 +107,21 @@ $(function(){
     }
     return mn;
   }
+  function ShowDiv(show_div,bg_div){
+    document.getElementById(show_div).style.display='block';
+    document.getElementById(bg_div).style.display='block' ;
+    var bgdiv = document.getElementById(bg_div);
+    bgdiv.style.width = document.body.scrollWidth; 
+    // bgdiv.style.height = $(document).height();
+    $("#"+bg_div).height($(document).height());
+  };
+
+  //关闭弹出层
+  function CloseDiv(show_div,bg_div)
+  {
+    $('#'+show_div).hide();
+    $('#'+bg_div).hide();
+  };
   var orderId = getQueryString("orderId");
   console.log(orderId);
   var token = window.sessionStorage.getItem("Token");
@@ -221,9 +236,28 @@ $(function(){
         for(i = 0; i < picNum; i++ ){
           var html = "<li class=" + "'zj-show-pic'" + "style=" + "'background-image:url(" + picData[i].SmallPIc + ")'>"
           + "</li>";
+          var imgs_res='<div class="swiper-slide"><img src="'+picData[i].SmallPIc+'" class="swiper-img" alt=""></div>';
           $("#showPics").append(html);
         }
       }
+      /*--图片弹出滑动开始--*/
+      var swiper = new Swiper('.swiper-container', {
+        //pagination: '.swiper-pagination',
+        initialSlide :0,
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 0,
+        touchRatio:1,
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        observeParents:true//修改swiper的父元素时，自动初始化swiper
+      });
+      $(".zj-show-pic").click(function(){
+        ShowDiv('MyDiv','fade');
+      });
+      $(".black_overlay").click(function(){
+        CloseDiv('MyDiv','fade');
+      });
+      /*--图片弹出滑动结束--*/
       var notesNum = data.Body.Service.Content;
       var noteList = "<li>" + notesNum + "</li>";
       $("#remarkLists").append(noteList);
@@ -263,16 +297,17 @@ $(function(){
           $("#refundAmount").text(data.Body.TotalPrice);
         }
       }
-      
+      isNegotiable = data.Body.IsNegotiable;
+      startingPrice = data.Body.StartingPrice;
       $("#toBePaid").text(totalPrice);
-      if( data.Body.DiscountAmount != null || data.Body.Activity != null){
+      if( data.Body.DiscountAmount != null || data.Body.Activity.SpecialRule != null){
         var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
         $("#toBePaid").text(toBePaid);
       }
       if(totalPrice == null){
         $("toBePaid").hide();
       }
-      if(data.Body.Activity == null){
+      if(data.Body.Activity.SpecialRule == null){
         $("#specialPrice").hide();
       }
 
@@ -280,13 +315,28 @@ $(function(){
         $("#orderDiscount").hide();
       }
       var serviceProviderPhone = "tel:" + data.Body.ServiceProviderPhone;
-      $("#serviceProviderPhone").attr("href",serviceProviderPhone);
+      // $("#serviceProviderPhone").attr("href",serviceProviderPhone);
       if(data.Body.ServiceProviderPhone == ""){
         $contactWorker.on('click',function(){
           $workerPhone.css('display','block');
         });
+      }else{
+        $("#contactWorker").on("click",function(){
+          $("#callWorkerPhone").show();
+          $("#workerPhoneNum").text(data.Body.ServiceProviderPhone);
+          $("#callWorker").attr("href",serviceProviderPhone);
+        })
+        $("#cancelCallBtn").on("click",function(){
+          $("#callWorkerPhone").hide();
+        })
+        $("#callWorker").on("click",function(){
+          $("#callWorkerPhone").hide();
+        })
       }
-      
+      if(data.Body.Service.Content == ""){
+        $("#zjRemarks").hide();
+        $("#remarkLists").hide();
+      }
 
       if(data.Body.ServiceProviderType == "2"){
         console.log("工人");
@@ -299,6 +349,7 @@ $(function(){
         $("#goToProvider").attr("href",href);
       }
       activity = data.Body.Activity;
+
       if(data.Body.Activity){
         var specialTitle = data.Body.Activity.SpecialTitle;
         $("#specialTitle").text(specialTitle);
@@ -306,6 +357,10 @@ $(function(){
         rules = data.Body.Activity.SpecialRule;
         rulesNum = data.Body.Activity.SpecialRule.length;
         if(rulesNum == 0){
+          $("#specialPrice").hide();
+          $("#waitOrder").hide();
+        }
+        if(rules == null){
           $("#specialPrice").hide();
           $("#waitOrder").hide();
         }
@@ -323,7 +378,8 @@ $(function(){
             $("#toBePaid").text(toBePaid);
             $("#toBePaid").addClass("actual");
           }
-          if(tp >= rules[i].Upper){
+
+          if(tp <= rules[i].Upper){
             var hourly = rules[i].Minus;
             $("#hourly").text("-￥" + hourly);
             var toBePaid = parseFloat(tp) - hourly;
@@ -335,6 +391,9 @@ $(function(){
             $("#actualMoney").text("￥" + actualMoney);
           }
         }
+      }
+      if(activity == null){
+        $("#specialPrice").hide();
       }
      }
    });
@@ -379,13 +438,14 @@ console.log(orderState);
     $("#finishTime").hide();
     $("#orderTime").css("marginBottom","0px");
     $("#servicePrice").css("marginBottom","4px");
-    if(singlePrice == '面议'){
-      $("#unit").hide();
-      $("#multiple").hide();
-      $("#waitOrder").hide();
-      $("#servicePrice").css("marginBottom","4px");
-      $("#specialPrice").hide();
-    }
+    // if(singlePrice == '面议'){
+    //   $("#unit").hide();
+    //   $("#multiple").hide();
+    //   $("#waitOrder").hide();
+    //   $("#servicePrice").css("marginBottom","4px");
+    //   $("#specialPrice").hide();
+    // }
+    
     if(noSinglePrice == null){
       var single = "￥" + minPrice + "-" + maxPrice;
       $("#single").text(single);
@@ -397,9 +457,9 @@ console.log(orderState);
       $("#orderPrice").css("marginBottom","4px");
       $("#waitOrder").hide();
       $("#finishTime").hide();
-      if(activity != null){
-        $("#orderPrice").css("marginBottom","12px");
-      }
+      // if(activity != null){
+      //   $("#orderPrice").css("marginBottom","12px");
+      // }
     }
 
     $("#btnLeft").on("click",function(){
@@ -416,13 +476,24 @@ console.log(orderState);
     $("#know").on("click",function(){
       $("#pay-box").hide();
     })
+    if(isNegotiable == "0"){
+      $("#btnRight").on("click",function(){
+        window.location.href="../pay/pay.html?orderId=" + orderId;
+      })
+    }
+    if(isNegotiable == '1'){
+      $("#single").text("￥" + startingPrice);
+      $("#single").addClass("actual");
+      $("#price").removeClass("actual");
+      $("#price").text("请与工人协商，并确定价格");
+      $("#unit").text("起");
+      $("#multiple").hide();
+      $("#waitOrder").hide();
+      $("#specialPrice").hide();
+    }
     break;
     case "10":
     console.log("待接单");
-    $("#pay-box").css("display","block");
-    $("#know").on("click",function(){
-      $("#pay-box").hide();
-    })
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
 
     $("#status").text('订单提交成功');
@@ -436,7 +507,7 @@ console.log(orderState);
 
     $("#explanation").css("width","266px");
     $("#orderStatus").css("height","169px");
-    $("#waitOrder").css("marginBottom","0px");
+    $("#waitOrder").css("marginBottom","4px");
 
     $("#tabSecond").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -461,14 +532,15 @@ console.log(orderState);
     if(serviceProviderId == null){
       $("#zjWorker").hide();
     }
-    if(singlePrice == '面议'){
-      $("#servicePrice").css("marginBottom","0px");
-      $("#multiple").hide();
-      $("#unit").hide();
-      $("#orderPrice").hide();
-      $("#waitOrder").hide();
-      $("#specialPrice").hide();
-    }
+    // if(singlePrice == '面议'){
+    //   $("#servicePrice").css("marginBottom","0px");
+    //   $("#multiple").hide();
+    //   $("#unit").hide();
+    //   $("#orderPrice").hide();
+    //   $("#waitOrder").hide();
+    //   $("#specialPrice").hide();
+    // }
+
     if(noSinglePrice == null){
       $("#orderPrice").hide();
       $("#waitOrder").hide();
@@ -478,7 +550,6 @@ console.log(orderState);
       $("#orderPrice").show();
       $("#price").text(price);
       // $("#price").addClass("actual");
-      $("#servicePrice").css("marginBottom","4px");
       $("#specialPrice").hide();
       $("#waitOrder").hide();
     }
@@ -498,15 +569,27 @@ console.log(orderState);
         location.reload();
       })
     });
-    $("#btnRight").on("click",function(){
-      // $("#prompt").css("display","block");
-      $("#prompt").addClass("prompt-animation");
-      setTimeout(function(){
-      $("#prompt").removeClass("prompt-animation");
-      },2500);
-    })
 
-
+    if(isNegotiable == "0"){
+      $("#btnRight").on("click",function(){
+        window.location.href="../pay/pay.html?orderId=" + orderId;
+      })
+    }
+    if(isNegotiable == "1"){
+      $("#single").text("￥" + startingPrice);
+      $("#single").addClass("actual");
+      $("#price").text("请与工人协商，并确定价格");
+      $("#multiple").hide();
+      $("#unit").text("起");
+      $("#waitOrder").hide();
+      $("#specialPrice").hide();
+      $("#btnRight").on("click",function(){
+        $("#pay-box").show();
+        $("#know").on("click",function(){
+          $("#pay-box").hide();
+        })
+      })
+    }
     break;
     
     // case "11":
@@ -676,16 +759,15 @@ console.log(orderState);
       if(activity == null){
         $("#waitOrder").hide();
         $("#price").addClass("actual");
-        $("#orderPrice").css("marginBottom","4px");
       }
       // $("#specialPrice").hide();
       // $("#waitOrder").hide();
       // $("#orderPrice").css("marginBottom","4px");
       $("#acceptTime").css("marginBottom","0px");
       // $("#btnRight").css("left","181px");
-      if(rulesNum == 0){
-        $("#price").addClass("actual");
-      }
+      // if(rulesNum == 0){
+      //   $("#price").addClass("actual");
+      // }
       $("#btnLeft").on("click",function(){
         $("#cancelOrder2").css("display","block");
         $("#contactWorkerBtn").on("click",function(){
@@ -695,7 +777,26 @@ console.log(orderState);
           // location.reload();
         })
       })
-      $(".pay-btn").on("click",function(){
+      if(isNegotiable == '0'){
+        $("#toBePaid").addClass("actual");
+      }
+      if(isNegotiable == '1'){
+        $("#single").text("￥" + startingPrice);
+        $("#single").addClass("actual");
+        $("#price").removeClass("actual");
+        $("#price").text("请与工人协商，并确定价格");
+        $("#unit").text("起");
+        $("#multiple").hide();
+        $("#waitOrder").hide();
+        $("#specialPrice").hide();
+        $("#btnRight").on("click",function(){
+          $("#pay-box").show();
+          $("#know").on("click",function(){
+            $("#pay-box").hide();
+          })
+        })
+      }
+      $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
     }
@@ -729,7 +830,7 @@ console.log(orderState);
       $("#waitOrder").hide();
       if(activity == null){
         $("#waitOrder").hide();
-        $("#orderPrice").css("marginBottom","4px");
+        // $("#orderPrice").css("marginBottom","4px");
       }
       $("#btnRight").on("click",function(){
         $("#cancelOrder1").css("display","block");
@@ -1032,6 +1133,10 @@ console.log(orderState);
        $("#unit").hide();
        $("#multiple").hide();
      }
+     if(isNegotiable == '1'){
+       $("#unit").hide();
+       $("#multiple").hide();
+     }
      if(noSinglePrice == null){
        var single = "￥" + minPrice + "-" + maxPrice;
        $("#single").text(single);
@@ -1091,6 +1196,12 @@ console.log(orderState);
         $("#orderPrice").css("marginBottom","12px");
       }
       if(singlePrice == '面议'){
+        $("#unit").hide();
+        $("#multiple").hide();
+        $("#waitOrder").hide();
+        $("#servicePrice").css("marginBottom","4px");
+      }
+      if(isNegotiable == '1'){
         $("#unit").hide();
         $("#multiple").hide();
         $("#waitOrder").hide();
