@@ -2,9 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
-	// $rootScope.token = $.cookie("Token");
-	
+
 	$rootScope.token = window.sessionStorage.getItem("Token");
 
 	//获取url参数

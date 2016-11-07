@@ -36,14 +36,14 @@
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/local.png" alt="" style="width:15px;margin-right:18px;display:block">
 			</div>
-			<div class="weui_cell_bd weui_cell_primary" ng-if="!vm.ServiceAddressId">
+			<div class="weui_cell_bd weui_cell_primary" ng-if="!vm.ServiceAddressId" ng-cloak>
 				<p class="pblue">请选择服务地址</p>
 			</div>
-			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId">
+			<div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId" ng-cloak>
 				<div class="zj_cell_hd">
 					<span class="f12" ng-bind="addr.Contact"></span>
-					<span ng-if="addr.Gender == 0">男士</span>
-					<span ng-if="addr.Gender == 1">女士</span>
+					<span ng-if="addr.Gender == 0" ng-cloak>男士</span>
+					<span ng-if="addr.Gender == 1" ng-cloak>女士</span>
 					<span class="pl20" ng-bind="addr.PhoneNumber"></span>
 				</div>
 				<div class="zj_cell_bd">
@@ -60,14 +60,14 @@
 	<!-- 选择地址 end -->
 	<!-- 服务类型&服务数量&服务时间 begin-->
 	<div class="weui_cells weui_cells_access">
-		<a href="javascript:;" class="weui_cell" ng-click="vm.serviceShow = true">
+		<!-- <a href="javascript:;" class="weui_cell" ng-click="vm.serviceShow = true">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">	
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务类型</p>
 			</div>
-			<div class="zj_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'">
+			<div class="zj_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'" ng-cloak>
 				<div class="tr" ng-bind="sv.name"></div>
 				<span>¥</span>
 				<span ng-bind="sv.Min" ng-if="sv.Min !== sv.Max"></span>
@@ -76,13 +76,52 @@
 				<span>/</span>
 				<span ng-bind="sv.UnitName"></span>
 			</div>
-			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '1'">
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '1'" ng-cloak>
+				<span ng-bind="sv.name"></span>
+				&nbsp;面议
+			</div>	
+			<div class="weui_cell_ft" ng-if="!vm.ServiceTypeId"></div>
+		</a> -->
+		<a href="javascript:;" class="weui_cell" ng-click="vm.serviceShow = true">
+			<div class="weui_cell_hd">
+				<img src="/images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">	
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>服务类型</p>
+			</div>
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'" ng-cloak>
+				<span ng-bind="sv.name"></span>
+			</div>
+			<div class="weui_cell_ft" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '1'" ng-cloak>
 				<span ng-bind="sv.name"></span>
 				&nbsp;面议
 			</div>	
 			<div class="weui_cell_ft" ng-if="!vm.ServiceTypeId"></div>
 		</a>
-		<div class="weui_cell no_access" ng-if="vm.IsNegotiable == '0'">
+		<div class="weui_cell" style="padding:10px;" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'" ng-cloak>
+            <div class="weui_cell_bd weui_cell_primary">
+                <p></p>
+            </div>
+            <div class="zj_cell_ft">
+            	<span>小时工 价格范围 
+            		{{sv.Min | number:1}}-{{sv.Max | number:1}}/{{sv.UnitName}}
+        		</span>
+            </div>
+        </div>
+		<a href="javascript:;" class="weui_cell weui_cell_select" style="padding:5px 0 5px 10px;" ng-if="vm.ServiceTypeId && vm.IsNegotiable == '0'" ng-cloak>
+			<div class="weui_cell_hd">
+				<img src="/images/quick-order/i-type.png" alt="" style="width:20px;margin-right:10px;display:block">
+			</div>
+			<div class="weui_cell_bd">
+				<p>服务价格</p>
+			</div>
+			<div class="weui_cell_primary" style="text-align:right;">
+				<select class=" weui_select rtl fc8" name="" id="" ng-model="vm.surePrice" ng-options="('¥'+item+'小时') for item in sv.PriceList">
+					<option value="">--请选择服务价格--</option>
+				</select>
+			</div>
+		</a>
+		<div class="weui_cell no_access" ng-if="vm.IsNegotiable == '0'" ng-cloak>
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -105,8 +144,8 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>服务时间</p>
 			</div>
-			<div ng-if="!vm.ServiceStartAt" class="weui_cell_ft pblue" >请选择服务时间</div>
-			<div ng-if="vm.ServiceStartAt" class="weui_cell_ft pblue">
+			<div ng-if="!vm.ServiceStartAt" class="weui_cell_ft pblue" ng-cloak>请选择服务时间</div>
+			<div ng-if="vm.ServiceStartAt" class="weui_cell_ft pblue" ng-cloak>
 				<span ng-bind="vm.ServiceStartAt"></span>
 			</div>
 		</a>
@@ -116,7 +155,7 @@
 	<!-- 判断3个条件 最高价与最低价是否一致 sv.Max sv.Min -->
 	<!-- 判断3个条件 活动是否存在 gt.PromotionRule.length   gt.SpecialRule.length -->
 	<!-- 活动 满足条件 beginning -->
-		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length >0  || gt.SpecialRule.length > 0">
+		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length >0  || gt.SpecialRule.length > 0" ng-cloak>
 			<!-- 满减活动	 -->
 			<div class="weui_cell no_access" style="padding-bottom:0;" ng-if="vm.IsNegotiable == '0' && (sv.Max ==sv.Min) && (sv.Max * vm.Total >= gt.SpecialRule[0].Upper)">
 				<div class="weui_cell_hd">
@@ -257,32 +296,29 @@
 	<!-- 服务说明 end-->
 	<div class="zj_foot webkit_box">
 		<div class="zj_foot_hd">
-			订单总价
+			服务价格
 		</div>
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == undefined">
+		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == null || vm.IsNegotiable == undefined" ng-cloak>
 			<span>--</span>
 		</div>
-		<!-- IsNegotiable 0 有价格 定价 无活动-->
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max == sv.Min && gt && gt.SpecialRule.length == 0">
-			<span>¥</span>
-			<span ng-bind="sv.Max*vm.Total | number:1"></span>
+		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == '0' && (vm.surePrice == null || vm.surePrice == undefined)" ng-cloak>
+			¥ <span ng-bind="sv.Min"></span>-<span ng-bind="sv.Max"></span>
 		</div>
-		<!-- IsNegotiable 0 有价格 定价 有活动-->
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max == sv.Min && gt && gt.SpecialRule.length > 0">
+		<!--IsNegotiable 0 无活动 -->
+		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == '0' && vm.surePrice && gt && (gt.SpecialRule == null || gt.SpecialRule.length == 0) && (vm.surePrice != null || vm.surePrice != undefined)" ng-cloak>
 			<span>¥</span>
-			<span ng-if="sv.Max*vm.Total < gt.SpecialRule[0].Upper" ng-bind="sv.Max*vm.Total | number:1"></span>
-			<span ng-if="sv.Max*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="sv.Max*vm.Total-gt.SpecialRule[0].Minus | number:1"></span>
+			<span ng-bind="sv.surePrice*vm.Total | number:1"></span>
 		</div>
-		<!-- IsNegotiable 0 有价格 区间价 -->
-		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '0' && sv.Max != sv.Min">
-			<span>¥</span>
-			<span ng-bind="sv.Min*vm.Total | number:1"></span>
-			<span>-</span>
-			<span ng-bind="sv.Max*vm.Total | number:1"></span>
+		<!--IsNegotiable 0 满减活动 -->
+		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == '0' && gt && gt.SpecialRule.length > 0 && (vm.surePrice != null || vm.surePrice != undefined)" ng-cloak>
+			<span ng-if="vm.surePrice">¥</span>
+			<span ng-if="vm.surePrice*vm.Total < gt.SpecialRule[0].Upper" ng-bind="vm.surePrice*vm.Total | number:1"></span>
+			<span ng-if="vm.surePrice*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="vm.surePrice*vm.Total-gt.SpecialRule[0].Minus | number:1"></span>
 		</div>
 		<!-- IsNegotiable 1 无价格(面议) -->
 		<div class="zj_foot_bd" ng-show="vm.IsNegotiable == '1'">
-			<span>面议</span>
+			<span ng-bind="sv.StartingPrice | number:1"></span>
+			<span class="f14 fc8">起</span>
 		</div>
 		<div class="zj_foot_ft" ng-click="vm.submitOrder()">
 			<span class="btn">提交订单</span>
@@ -291,7 +327,7 @@
 </form>
 
 <!-- loadingToast -->
-<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true">
+<div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true" ng-cloak>
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
         <div class="weui_loading">
@@ -312,7 +348,7 @@
     </div>
 </div>
 
-<!-- dialog_alert -->
+<!-- error dialog_alert -->
 <div class="weui_dialog_alert" ng-show="vm.dialogshow == true" ng-cloak>
 	<div class="weui_mask">
 		<div class="weui_dialog">
@@ -324,6 +360,19 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- info dialog_alert -->
+<div class="weui_dialog_confirm" ng-show="vm.dialogInfoShow == true" ng-cloak>
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+    	<div class="weui_dialog_hd"><strong class="weui_dialog_title">提示信息</strong></div>
+    	<div class="tc fc8">请您确认服务信息填写正确再提交订单</div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default" ng-click="vm.dialogInfoShow = false">我再想想</a>
+            <a href="javascript:;" class="weui_btn_dialog primary" ng-click="vm.submitOrderSure()">我已确认</a>
+        </div>
+    </div>
 </div>
 
 <!-- date_picker -->
@@ -479,18 +528,15 @@
 		</div>
 	</div>
 
-<!-- dialog 服务类型三四级类别 -->
-<div class="zj_mask_dialog" ng-show="st.dialog == true" ng-cloak ng-click="st.dialog = false"></div>
-<div class="zj_dialog" ng-show="st.dialog == true" ng-cloak>
-	<div class="zj_service_dialog">
-		<p style="background-color:#27b8f3;color:#fff;padding:10px 0;" ng-bind="st.title"></p>
-		<p class="bd" ng-repeat="item in st.List" ng-bind="item.TypeName" ng-click="st.getThreeTypeName(item.TypeId,item.TypeName)"></p>
+	<!-- dialog 服务类型三四级类别 -->
+	<div class="zj_mask_dialog" ng-show="st.dialog == true" ng-cloak ng-click="st.dialog = false"></div>
+	<div class="zj_dialog" ng-show="st.dialog == true" ng-cloak>
+		<div class="zj_service_dialog">
+			<p style="background-color:#27b8f3;color:#fff;padding:10px 0;" ng-bind="st.title"></p>
+			<p class="bd" ng-repeat="item in st.List" ng-bind="item.TypeName" ng-click="st.getThreeTypeName(item.TypeId,item.TypeName)"></p>
+		</div>
 	</div>
 </div>
-
-</div>
-
-
 
 <!-- dialog 满返服务说明 -->
 <div class="weui_dialog_alert" ng-show="vm.dialogPexplain == true" ng-cloak>
@@ -525,7 +571,6 @@
 		</div>
 	</div>
 </div>
-
 
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>

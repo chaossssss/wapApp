@@ -18,7 +18,7 @@ angular.module('com.wapapp.app',[])
 .controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','giftService','explainService',function($rootScope,$scope,priceService,orderService,addrService,giftService,explainService){
 	var vm = $scope.vm = {};
 	var addr = $scope.addr = {};
-	var sv = $scope.sv = {};	//根据服务类型查找其价格
+	var sv = $scope.sv = {};	//根据服务类型查找其价格(获取服务价格)
 	var gt = $scope.gt = {};	//活动
 	var fw = $scope.fw = {};	//获取服务说明
 
@@ -151,6 +151,8 @@ angular.module('com.wapapp.app',[])
 				sv.Min = parseInt(res.Body.Min,10);
 				sv.Max = parseInt(res.Body.Max,10);
 				sv.UnitName = res.Body.UnitName;
+				sv.PriceList = res.Body.PriceList;
+				sv.StartingPrice = "100";
 				$scope.$apply();
 			})
 	})
@@ -172,8 +174,7 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 
-	vm.submitOrder = function(){
-		$scope.loadingToast = true;
+	vm.submitOrder = function(){		
 		//数据缓存进sessionStroage
 		var stroage = {
 			ServiceTypeId: vm.ServiceTypeId,
@@ -182,6 +183,16 @@ angular.module('com.wapapp.app',[])
 			ServiceContent: vm.ServiceContent
 		}
 		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
+		if(vm.IsNegotiable == '0'){
+			$scope.loadingToast = true;
+			$scope.$broadcast("uploader-img-data");
+		}else if(vm.IsNegotiable == '1'){
+			vm.dialogInfoShow = true;
+		}
+	}
+
+	vm.submitOrderSure = function(){
+		vm.dialogInfoShow = false;
 		$scope.$broadcast("uploader-img-data");
 	}
 
@@ -193,6 +204,7 @@ angular.module('com.wapapp.app',[])
 		console.log("Total",vm.Total);
 		console.log("ServiceStartAt",vm.ServiceStartAtCut);
 		console.log("ServiceAddressId",vm.ServiceAddressId);
+		console.log("ServicePrice",vm.surePrice);
 
 		var Json_data = {
             "Token":$rootScope.token,
@@ -201,7 +213,8 @@ angular.module('com.wapapp.app',[])
             "Total": vm.Total,
             "OrderFrom": "1",
             "ServiceStartAt": vm.ServiceStartAtCut,
-            "ServiceAddressId": vm.ServiceAddressId
+            "ServiceAddressId": vm.ServiceAddressId,
+            "ServicePrice": vm.surePrice
         };
         Json_data = JSON.stringify(Json_data);
 
@@ -213,6 +226,8 @@ angular.module('com.wapapp.app',[])
         formdata.append("OrderForm", "1");   
         formdata.append("ServiceStartAt", vm.ServiceStartAtCut);  
         formdata.append("ServiceAddressId", vm.ServiceAddressId); 
+        formdata.append("ServicePrice", vm.surePrice); 
+
 
         for(var i=0,leng=img.length;i<leng;i++){
             formdata.append("img"+i,img[i]);

@@ -105,18 +105,7 @@ angular.module('com.wapapp.app',[])
 		}
 	})
 
-	//取出缓存数据
-	// var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
-	// console.log(_pointOrder);
-	// if(_pointOrder){
-	// 	vm.serviceTypeObj = _pointOrder.serviceTypeObj;
-	// 	vm.Total = _pointOrder.Total;
-	// 	vm.ServiceStartAt = _pointOrder.ServiceStartAt;
-	// 	vm.ServiceContent = _pointOrder.ServiceContent;
-	// }
-	
-
-	//拉取地址
+	//拉取服务地址
 	addrService.search($rootScope.token,$rootScope.addressId)
 		.success(function(res){
 			console.log("获取地址成功",res);
@@ -127,7 +116,6 @@ angular.module('com.wapapp.app',[])
 			}
 			$scope.$apply();
 		})
-
 	//拉取工人信息
 	markService.search($rootScope.token,$rootScope.ObjectType,$rootScope.ObjectId)
 		.success(function(res){
@@ -148,19 +136,6 @@ angular.module('com.wapapp.app',[])
 			.success(function(res){
 				console.log("获取服务类型",res);
 				if(res.Meta.ErrorCode === "0"){
-					// for(var i=0,len=res.Body.ServiceTypeList.length;i<len;i++){
-					// 	if(res.Body.ServiceTypeList[i].PriceType === '0'){
-					// 		res.Body.ServiceTypeList[i].Price = "面议";
-					// 		if(res.Body.ServiceTypeList[i].UnitName){
-					// 			res.Body.ServiceTypeList[i].UnitName = '/'+res.Body.ServiceTypeList[i].UnitName;
-					// 		}	
-					// 	}
-					// 	if(res.Body.ServiceTypeList[i].PriceType === '1'){
-					// 		if(res.Body.ServiceTypeList[i].UnitName){
-					// 			res.Body.ServiceTypeList[i].UnitName = '/'+res.Body.ServiceTypeList[i].UnitName;
-					// 		}
-					// 	}
-					// }
 					var serviceTypeList = [];
 					for(var i=0,len=res.Body.ServiceTypeList.length;i<len;i++){
 						if(res.Body.ServiceTypeList[i].ChildrenService.length>0){
@@ -172,11 +147,14 @@ angular.module('com.wapapp.app',[])
 							serviceTypeList.push(res.Body.ServiceTypeList[i]);
 						}
 					}
-					// console.log(serviceTypeList);
 					//PriceType  0 面议；  1 定价；
 					for(var j=0,leng=serviceTypeList.length;j<leng;j++){
 						if(serviceTypeList[j].PriceType === '0'){
-							serviceTypeList[j].Price = '面议';
+							// serviceTypeList[j].Price = '面议';
+							serviceTypeList[j].StartingPrice = "30.0";
+
+							serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
+							serviceTypeList[j].Price = serviceTypeList[j].StartingPrice+'起';
 							if(serviceTypeList[j].UnitName){
 								serviceTypeList[j].UnitName = '';
 							}
@@ -202,6 +180,7 @@ angular.module('com.wapapp.app',[])
 				$scope.$apply();
 			})
 	}	
+	// 根据服务类型，获取此类型的活动
 	$scope.$watch('vm.serviceTypeObj',function(){
 		if(vm.serviceTypeObj){
 			giftService.gift($rootScope.token,vm.serviceTypeObj.ServiceTypeId)
@@ -263,14 +242,23 @@ angular.module('com.wapapp.app',[])
 			ServiceContent: vm.ServiceContent
 		}
 		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
+		if(vm.serviceTypeObj == undefined){
+			vm.dialogshow = true;
+			vm.errorMsg = "请先选择服务类型";
+		}else if(vm.serviceTypeObj.PriceType === "0"){
+			vm.dialogInfoShow = true;
+		}else if(vm.serviceTypeObj.PriceType === "1"){
+			$scope.$broadcast("uploader-img-data");
+		}
+	}
+
+	vm.submitOrderSure = function(){
+		vm.dialogInfoShow = false;
 		$scope.$broadcast("uploader-img-data");
 	}
 
 	$scope.$on("uploader-form",function(event,img){
-		if(vm.serviceTypeObj == undefined){
-			vm.dialogshow = true;
-			vm.errorMsg = "请先选择服务类型";
-		}else{
+		
 			$scope.loadingToast = true; 
 			console.log("img",img);
 			console.log("Token",$rootScope.token);
@@ -325,7 +313,7 @@ angular.module('com.wapapp.app',[])
 					}
 					$scope.$apply();
 				})
-		}
+		
 		
 	})
 }])

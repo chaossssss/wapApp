@@ -577,3 +577,51 @@ textarea{resize: none;}
 .ac_list{
     float: left;
 }
+/*导航条样式*/
+.banner_cell_hd {
+    text-align:left;
+    color: #888;
+    flex: 1;
+}
+.banner_cell_hd:before {
+    content: " ";
+    position: relative;
+    display: inline-block;
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+    height: 6px;
+    width: 6px;
+    border-width: 0 0 2px 2px;
+    border-color:#c8c8cd;
+    border-style:solid;
+    top: -1px;
+    margin-left:1.2em;
+}
+.banner_cell_ft {
+    text-align:right;
+    color: #888;
+    flex: 1;
+}
+.banner_cell_ft:after {
+    content: " ";
+    position: relative;
+    display: inline-block;
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color:#c8c8cd;
+    border-style:solid;
+    top: -1px;
+    margin-right:1.2em;
+}
+
+
+
+
+
+
+
+
+

@@ -107,6 +107,9 @@ ul,li {
 .blpink {
 	border-left: 3px solid rgb(248,43,75);
 }
+.rtl {
+	direction: rtl;
+}
 /*Location*/
 /*块居中 block center*/
 .bc{margin-left: auto;margin-right: auto;}
