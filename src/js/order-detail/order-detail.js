@@ -349,16 +349,16 @@ $(function(){
       activity = data.Body.Activity;
       // activitySpecial = data.Body.Activity.SpecialTitle;
       if(data.Body.Activity){
-        var specialTitle = data.Body.Activity.SpecialTitle;
+        specialTitle = data.Body.Activity.SpecialTitle;
         $("#specialTitle").text(specialTitle);
         // $("#hourly").text("-￥" + activity);
         rules = data.Body.Activity.SpecialRule;
         if(rules){
           rulesNum = data.Body.Activity.SpecialRule.length;
-        }
-        if(rulesNum == 0){
-          $("#specialPrice").hide();
-          $("#waitOrder").hide();
+          if(rulesNum == 0){
+            $("#specialPrice").hide();
+            $("#waitOrder").hide();
+          }
         }
         if(rules == null){
           $("#specialPrice").hide();
@@ -438,10 +438,10 @@ console.log(orderState);
     $("#acceptTime").hide();
     $("#payTime").hide();
     $("#cancelTime").hide();
-    $("#specialPrice").hide();
+    // $("#specialPrice").hide();
     $("#finishTime").hide();
     $("#orderTime").css("marginBottom","0px");
-    $("#servicePrice").css("marginBottom","4px");
+    // $("#servicePrice").css("marginBottom","4px");
     // if(singlePrice == '面议'){
     //   $("#unit").hide();
     //   $("#multiple").hide();
@@ -458,12 +458,18 @@ console.log(orderState);
       $("#price").text(price);
       $("#price").addClass("actual");
       $("#servicePrice").css("marginBottom","12px");
-      $("#orderPrice").css("marginBottom","4px");
+      // $("#orderPrice").css("marginBottom","4px");
       $("#waitOrder").hide();
       $("#finishTime").hide();
       // if(activity != null){
       //   $("#orderPrice").css("marginBottom","12px");
       // }
+    }
+    if(activity != null){
+      $("#orderPrice").css("marginBottom","12px");
+    }
+    if(activity == null){
+      $("#specialPrice").hide();
     }
 
     $("#btnLeft").on("click",function(){
@@ -474,12 +480,7 @@ console.log(orderState);
         location.reload();
       })
     });
-    $("#btnRight").on("click",function(){
-      $("#pay-box").css("display","block");
-    });
-    $("#know").on("click",function(){
-      $("#pay-box").hide();
-    })
+
     if(isNegotiable == "0"){
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -494,6 +495,12 @@ console.log(orderState);
       $("#multiple").hide();
       $("#waitOrder").hide();
       $("#specialPrice").hide();
+      $("#btnRight").on("click",function(){
+        $("#pay-box").css("display","block");
+      });
+      $("#know").on("click",function(){
+        $("#pay-box").hide();
+      })
     }
     break;
     case "10":
@@ -512,7 +519,7 @@ console.log(orderState);
 
     $("#explanation").css("width","266px");
     $("#orderStatus").css("height","169px");
-    $("#waitOrder").css("marginBottom","4px");
+    // $("#waitOrder").css("marginBottom","4px");
 
     $("#tabSecond").addClass("processing");
     $("#roundFirst").addClass("round-complete");
@@ -734,7 +741,7 @@ console.log(orderState);
     if(isPayOff == "0"){
       console.log("订单状态：待付款");
       $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
-      $("#statusBg").css("background-image","url(../../images/order-detail/get-ordernew.png)");
+      $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
       $("#status").text('工人已接单');
       $("#explanation").text('请支付服务费用并等待工人上门服务');
       $("#tabFirst").text('订单已提交');
@@ -762,6 +769,10 @@ console.log(orderState);
       $("#finishTime").hide();
       $("#payTime").hide();
       if(activity == null){
+        $("#waitOrder").hide();
+        $("#price").addClass("actual");
+      }
+      if(specialTitle == null){
         $("#waitOrder").hide();
         $("#price").addClass("actual");
       }
@@ -985,7 +996,7 @@ console.log(orderState);
     $("#btnRight").addClass("confirm-btn");
 
     // $(".round").css("left","58px");  
-    $("#orderActual").css("marginBottom","0px");
+    // $("#orderActual").css("marginBottom","0px");
     $("#refundRecord").hide();
     $("#filling2").hide();
     $("#negotiable").hide();
@@ -1019,7 +1030,7 @@ console.log(orderState);
       $("#roundSecond").addClass("round-complete");
       $("#roundThird").addClass("round-processing");
       $("#btnRight").addClass("confirm-btn");
-      $("#orderActual").css("marginBottom","0px");
+      // $("#orderActual").css("marginBottom","0px");
       // $(".round").css("left","58px");  
 
       $("#proFourth").hide();
@@ -1053,7 +1064,7 @@ console.log(orderState);
       $("#btnRight").addClass("confirm-btn");
 
       // $(".round").css("left","58px");  
-      $("#orderActual").css("marginBottom","0px");
+      // $("#orderActual").css("marginBottom","0px");
 
       $("#proFourth").hide();
       $("#refundRecord").hide();
@@ -1134,6 +1145,7 @@ console.log(orderState);
      $("#payTime").hide();
      $("#finishTime").hide();
      $("#btnLeft").hide();
+     $("#specialPrice").hide();
      // $("#cancelTime").hide();
      if(singlePrice == '面议'){
        $("#unit").hide();
@@ -1216,7 +1228,7 @@ console.log(orderState);
       $("#status").css("paddingTop","90px");
       $("#cancelTime").css("marginBottom","0px");
       // $("#orderTime").css("marginBottom","4px");
-      $("#waitOrder").css("marginBottom","0px"); 
+      // $("#waitOrder").css("marginBottom","0px"); 
 
       $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
