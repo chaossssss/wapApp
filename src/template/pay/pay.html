@@ -42,7 +42,7 @@
 	</div> 
 	<div class="weui_cells mt10 weui_cells_access">
 		<div class="zj_cell">
-			<div class="webkit_box col100 pb15"  ng-if="(od.Price !== null || od.Price !== undefined)" ng-cloak>
+			<div class="webkit_box col100 pb15"  ng-if="od.IsNegotiable === '0'" ng-cloak>
 				<div class="weui_cell_bd weui_cell_primary">
 					<p>服务价格</p>
 				</div>
@@ -78,12 +78,12 @@
 				</span>
 			</div>
 		</div>	
-		<div class="weui_cell no_access" ng-if="od.TotalPrice !== '面议'" ng-cloak>
+		<div class="weui_cell no_access">
             <div class="weui_cell_bd weui_cell_primary">
                 <p>支付金额</p>
             </div>
-            <!-- 参加活动&没有使用优惠券 -->
-            <div class="zj_cell_ft pred f20" ng-show="od.Activity" ng-cloak>
+            <!-- 参加活动& 使用优惠券 -->
+            <div class="zj_cell_ft pred f20" ng-if="(od.Activity !== null || od.Activity !==undefined)" ng-cloak>
             	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
             </div>
             <!-- 没有参加活动&没有使用优惠券 -->
@@ -132,8 +132,11 @@
 		</label>
 	</div>
 	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()">
-			确认支付
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity !== null || od.Activity !==undefined)">
+			确认支付 <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span> 元
+		</a>
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity === null || od.Activity ===undefined)">
+			确认支付 <span ng-bind="od.TotalPrice"></span> 元
 		</a>
 		<!-- <a href="javascript:;" class="weui_btn weui_btn_plain_primary" ng-click="vm.hasPayOrder()">
 			我已现金支付

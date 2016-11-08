@@ -181,7 +181,7 @@
 				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
 			</div>	
 			<!-- 定价才显示待支付 定价情况-->
-			<div class="weui_cell no_access" style="padding:10px;font-size:15px;" ng-if="vm.IsNegotiable == '0' && (sv.Max ==sv.Min)">
+			<div class="weui_cell no_access" style="padding:10px 10px 10px 10px;font-size:15px;" ng-if="vm.IsNegotiable == '0' && (sv.Max ==sv.Min)">
 				<div class="weui_cell_bd flex2">
 					<p>订单总价&nbsp;¥
 						<span ng-bind="sv.Max * vm.Total"></span>
@@ -198,59 +198,12 @@
 					<span class="pred f20 pl5 f18" ng-if="sv.Max *vm.Total >= gt.SpecialRule[0].Upper">¥&nbsp;<span ng-bind="sv.Max *vm.Total-gt.SpecialRule[0].Minus | number:1"></span></span>
 				</div>
 			</div>
-			<div style="padding:0 10px 15px 10px;font-size:14px;" class="webkit_box" ng-if="vm.IsNegotiable == '0' && gt.SpecialRule.length > 0 && (sv.Max !=sv.Min)">
+			<div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="vm.IsNegotiable == '0' && gt.SpecialRule.length > 0 && (sv.Max !=sv.Min)">
 				<span class="pred" ng-bind="gt.SpecialAds"></span>
 				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;padding-left:5px;">
 			</div>
 		</div>	
 		<!-- 活动 满足条件 endind -->
-	<!-- 活动 满足条件 beginning -->
-	<!-- <div class="weui_cells weui_cells_access" ng-show="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1"> -->
-		<!-- 满减活动	 特价小时工 -->
-		<!-- <div class="weui_cell no_access" style="padding-bottom:0;" ng-if="vm.IsNegotiable == '0' && (sv.Max ==sv.Min) && (sv.Max * vm.Total >= gt.SpecialRule[0].Upper)">
-			<div class="weui_cell_hd">
-				<img src="/images/quick-order/i-gift.png" alt="" style="width:16px;margin-right:10px;display:block;">
-			</div>
-			<div class="weui_cell_bd weui_cell_primary">
-				<span class="pred">特价小时工</span>
-				<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
-			</div>
-			<div class="zj_cell_ft">
-				<p>-¥<span ng-bind="gt.SpecialRule[0].Minus | number:1"></span></p>
-			</div>
-		</div> -->
-		<!-- 满返活动 -->
-		<!-- <div class="weui_cell" ng-if="gt.PromotionRule.length > 0">
-			<div class="weui_cell_bd weui_cell_primary">
-				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
-				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:middle;padding-left:5px;">
-			</div>
-		</div> -->
-		<!-- 定价才显示待支付 定价情况-->
-		<!-- <div class="weui_cell no_access" style="padding:10px;font-size:15px;" ng-if="vm.IsNegotiable == '0' && (sv.Max ==sv.Min)">
-			<div class="weui_cell_bd flex2">
-				<p>订单总价&nbsp;¥
-					<span ng-bind="sv.Max * vm.Total"></span>
-					<span class="pl10 ml10" ng-if="sv.Max*vm.Total >= gt.SpecialRule[0].Upper">优惠&nbsp;¥<span ng-bind="gt.SpecialRule[0].Minus"></span></span>
-				</p>
-			</div>
-			<div class="zj_cell_right" style="color:#000" ng-if="gt.SpecialRule.length == 0">
-				<span>待支付</span>
-				<span class="pred f20 pl5 f18">¥&nbsp;<span ng-bind="sv.Max *vm.Total | number:1"></span></span>
-			</div>
-			<div class="zj_cell_right" style="color:#000" ng-if="gt.SpecialRule.length > 0">
-				<span>待支付</span>
-				<span class="pred f20 pl5 f18" ng-if="sv.Max *vm.Total < gt.SpecialRule[0].Upper">¥&nbsp;<span ng-bind="sv.Max *vm.Total | number:1"></span></span>
-				<span class="pred f20 pl5 f18" ng-if="sv.Max *vm.Total >= gt.SpecialRule[0].Upper">¥&nbsp;<span ng-bind="sv.Max *vm.Total-gt.SpecialRule[0].Minus | number:1"></span></span>
-			</div>
-		</div> -->
-		<!-- 满减活动 -->
-		<!-- <div style="padding:10px 10px 10px 10px;font-size:14px;" class="webkit_box" ng-if="gt.SpecialRule.length >0 && (sv.Max !=sv.Min) && (sv.Max * vm.Total >= gt.SpecialRule[0].Upper)">
-			<span class="pred" ng-bind="gt.SpecialAds"></span>
-			<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:18px;vertical-align:text-top;padding-left:5px;">
-		</div>	 -->
-	<!-- </div>	 -->
-	<!-- 活动 满足条件 ending -->
 	<!-- 备注 & 图片 begin-->
 	<div class="weui_cells weui_cells_access">
 		<div class="weui_cell no_access">
@@ -296,13 +249,13 @@
 	<!-- 服务说明 end-->
 	<div class="zj_foot webkit_box">
 		<div class="zj_foot_hd">
-			服务价格
+			待支付
 		</div>
 		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == null || vm.IsNegotiable == undefined" ng-cloak>
 			<span>--</span>
 		</div>
 		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == '0' && (vm.surePrice == null || vm.surePrice == undefined)" ng-cloak>
-			¥ <span ng-bind="sv.Min"></span>-<span ng-bind="sv.Max"></span>
+			¥ <span ng-bind="sv.Min*vm.Total"></span>-<span ng-bind="sv.Max*vm.Total"></span>
 		</div>
 		<!--IsNegotiable 0 无活动 -->
 		<div class="zj_foot_bd" ng-if="vm.IsNegotiable == '0' && vm.surePrice && gt && (gt.SpecialRule == null || gt.SpecialRule.length == 0) && (vm.surePrice != null || vm.surePrice != undefined)" ng-cloak>
