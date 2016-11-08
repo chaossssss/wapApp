@@ -300,16 +300,14 @@ $(function(){
       isNegotiable = data.Body.IsNegotiable;
       startingPrice = data.Body.StartingPrice;
       $("#toBePaid").text(totalPrice);
-      if( data.Body.DiscountAmount != null || data.Body.Activity.SpecialRule != null){
-        var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
-        $("#toBePaid").text(toBePaid);
-      }
+      // if( data.Body.DiscountAmount != null || data.Body.Activity.SpecialRule != null){
+      //   var toBePaid = data.Body.TotalPrice - data.Body.DiscountAmount - data.Body.Activity;
+      //   $("#toBePaid").text(toBePaid);
+      // }
       if(totalPrice == null){
         $("toBePaid").hide();
       }
-      if(data.Body.Activity.SpecialRule == null){
-        $("#specialPrice").hide();
-      }
+
 
       if(data.Body.DiscountAmount == ""){
         $("#orderDiscount").hide();
@@ -349,13 +347,15 @@ $(function(){
         $("#goToProvider").attr("href",href);
       }
       activity = data.Body.Activity;
-
+      // activitySpecial = data.Body.Activity.SpecialTitle;
       if(data.Body.Activity){
         var specialTitle = data.Body.Activity.SpecialTitle;
         $("#specialTitle").text(specialTitle);
         // $("#hourly").text("-￥" + activity);
         rules = data.Body.Activity.SpecialRule;
-        rulesNum = data.Body.Activity.SpecialRule.length;
+        if(rules){
+          rulesNum = data.Body.Activity.SpecialRule.length;
+        }
         if(rulesNum == 0){
           $("#specialPrice").hide();
           $("#waitOrder").hide();
@@ -363,6 +363,9 @@ $(function(){
         if(rules == null){
           $("#specialPrice").hide();
           $("#waitOrder").hide();
+        }
+        if(data.Body.Activity.SpecialRule == null){
+          $("#specialPrice").hide();
         }
         for(var i =0; i < rulesNum; i++){
           if(minPrice*total >= rules[i].Upper){
@@ -378,8 +381,9 @@ $(function(){
             $("#toBePaid").text(toBePaid);
             $("#toBePaid").addClass("actual");
           }
-
-          if(tp <= rules[i].Upper){
+          tpParse = parseFloat(tp);
+          upperParse = parseFloat(rules[i].Upper);
+          if(tpParse >= upperParse){
             var hourly = rules[i].Minus;
             $("#hourly").text("-￥" + hourly);
             var toBePaid = parseFloat(tp) - hourly;
@@ -403,7 +407,7 @@ console.log(orderState);
     case "1":
     console.log("待接单");
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
-
+    $("#statusBg").css("background-image","url(../../images/order-detail/ordernew-success.png)");
     $("#status").text('订单提交成功');
     $("#explanation").text('请耐心等待客服为您安排工人，并确定服务价格');
     $("#tabFirst").text('订单已提交');
@@ -495,7 +499,8 @@ console.log(orderState);
     case "10":
     console.log("待接单");
     $("#orderStatus").css("background-image","url(../../images/order-detail/order-success.png)");
-
+    $("#statusBg").css("background-image","url(../../images/order-detail/ordernew-success.png)");
+    $("#status").text('订单提交成功');
     $("#status").text('订单提交成功');
     $("#explanation").html('请耐心等待工人确认价格并接单<br>注意查收付款通知，您可以在服务开始前完成付款');
     $("#tabFirst").text('订单已提交');
@@ -729,7 +734,7 @@ console.log(orderState);
     if(isPayOff == "0"){
       console.log("订单状态：待付款");
       $("#orderStatus").css("background-image","url(../../images/order-detail/get-order.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/get-ordernew.png)");
       $("#status").text('工人已接单');
       $("#explanation").text('请支付服务费用并等待工人上门服务');
       $("#tabFirst").text('订单已提交');
@@ -803,7 +808,7 @@ console.log(orderState);
 
     if(isPayOff == "1"){
       $("#orderStatus").css("background-image","url(../../images/order-detail/worker-uncomfirm.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/newworker-uncomfirm.png)");
       $("#status").text('上门服务');
       $("#explanation").text('请耐心等待工人在约定时间上门服务哦');
       $("#tabFirst").text('订单已提交');
@@ -845,7 +850,7 @@ console.log(orderState);
     if(payLock == "1"){
       console.log("付款中");
       $("#orderStatus").css("background-image","url(../../images/order-detail/paying.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/newpaying.png)");
       $("#status").text('付款中');
       $("#explanation").text('等待支付结果');
       $("#tabFirst").text('订单已提交');
@@ -919,6 +924,7 @@ console.log(orderState);
     case "30":
     console.log("已完成");
     $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
+    $("#statusBg").css("background-image","url(../../images/order-detail/newawaiting-assessment.png)");
     $("#status").text('工人已完成服务');
     Date.prototype.Format = function (fmt) { //格式化时间
       var o = {
@@ -1000,7 +1006,7 @@ console.log(orderState);
     if(isEvaluated == "0"){
 
       $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/neworders_evaluate.png)");
       $("#status").text('服务已完成');
       $("#explanation").text('评价一下这次服务吧~');
       $("#tabFirst").text('订单已提交');
@@ -1032,7 +1038,7 @@ console.log(orderState);
 
     if(isEvaluated == "1"){
       $("#orderStatus").css("background-image","url(../../images/order-detail/awaiting-assessment.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/neworders_over.png)");
       $("#status").text('服务已完成');
       $("#explanation").text('');
       $("#tabFirst").text('订单已提交');
@@ -1102,7 +1108,7 @@ console.log(orderState);
     if(orderIsGeted == null){
       console.log("取消订单，工人没接单");
      $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
-
+     $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel1.png)");
      $("#status").text('订单已取消');
      $("#explanation").text('');
      $("#tabFirst").text('订单已提交');
@@ -1163,7 +1169,7 @@ console.log(orderState);
     if(orderIsGeted != null){
       console.log('取消订单，工人已经接单');
       $("#orderStatus").css("background-image","url(../../images/order-detail/canceled.png)");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel2.png)");
       $("#status").text('订单已取消');
       $("#explanation").text('工人已经接单啦，下次体谅下工人哦');
       $("#tabFirst").text('订单已提交');
@@ -1227,32 +1233,36 @@ console.log(orderState);
 
     /*--退款状态--*/
     if(refundIsFinshed == "1"){
-      console.log("退款中");
-      $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
-      $("#status").text('退款中');
-      $("#explanation").text('系统将于72小时内退款');
-      $("#tabFirst").text('订单已提交');
-      $("#tabSecond").text('工人已接单');
-      $("#tabThird").text('退款中');
-      $("#tabFourth").text('退款成功');
-      $("#refundStatus").text('退款中');
+      if(orderIsGeted != null){
+        console.log("退款中");
+        $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
+        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel4.png)");
+        $("#status").text('退款中');
+        $("#explanation").text('系统将于72小时内退款');
+        $("#tabFirst").text('订单已提交');
+        $("#tabSecond").text('工人已接单');
+        $("#tabThird").text('退款中');
+        $("#tabFourth").text('退款成功');
+        $("#refundStatus").text('退款中');
 
-      $("#tabThird").addClass("processing");
-      $("#roundFirst").addClass("round-complete");
-      $("#roundSecond").addClass("round-complete");
-      $("#roundThird").addClass("round-processing");
-      $("#roundFourth").addClass("round-undone");
+        $("#tabThird").addClass("processing");
+        $("#roundFirst").addClass("round-complete");
+        $("#roundSecond").addClass("round-complete");
+        $("#roundThird").addClass("round-processing");
+        $("#roundFourth").addClass("round-undone");
 
-      $("#optionFooter").hide();
-      $("#filling3").hide();
-      $("#negotiable").hide();
-      $("#cancelTime").hide();
+        $("#optionFooter").hide();
+        $("#filling3").hide();
+        $("#negotiable").hide();
+        $("#cancelTime").hide();
+      }
+      if(orderIsGeted == null){
 
-
+      }
     }
     if(refundIsFinshed == "2"){
       console.log("退款完成");
-
+      $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
       $("#status").text('订单已取消');
       $("#explanation").text('');
       $("#tabFirst").text('订单已提交');
