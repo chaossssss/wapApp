@@ -489,8 +489,7 @@ console.log(orderState);
     if(isNegotiable == '1'){
       $("#single").text("￥" + startingPrice);
       $("#single").addClass("actual");
-      $("#price").removeClass("actual");
-      $("#price").text("请与工人协商，并确定价格");
+      $("#price").hide();
       $("#unit").text("起");
       $("#multiple").hide();
       $("#waitOrder").hide();
@@ -590,7 +589,7 @@ console.log(orderState);
     if(isNegotiable == "1"){
       $("#single").text("￥" + startingPrice);
       $("#single").addClass("actual");
-      $("#price").text("请与工人协商，并确定价格");
+      $("#price").hide();
       $("#multiple").hide();
       $("#unit").text("起");
       $("#waitOrder").hide();
@@ -795,11 +794,16 @@ console.log(orderState);
       })
       if(isNegotiable == '0'){
         $("#toBePaid").addClass("actual");
+        $("#btnRight").on("click",function(){
+          window.location.href="../pay/pay.html?orderId=" + orderId;
+        })
       }
       if(isNegotiable == '1'){
+        $("#servicePrice").hide();
         $("#single").text("￥" + startingPrice);
         $("#single").addClass("actual");
         $("#price").removeClass("actual");
+        $("#toBePaid").addClass("actual");
         $("#price").text("请与工人协商，并确定价格");
         $("#unit").text("起");
         $("#multiple").hide();
@@ -812,9 +816,6 @@ console.log(orderState);
           })
         })
       }
-      $("#btnRight").on("click",function(){
-        window.location.href="../pay/pay.html?orderId=" + orderId;
-      })
     }
 
     if(isPayOff == "1"){
@@ -1151,10 +1152,6 @@ console.log(orderState);
        $("#unit").hide();
        $("#multiple").hide();
      }
-     if(isNegotiable == '1'){
-       $("#unit").hide();
-       $("#multiple").hide();
-     }
      if(noSinglePrice == null){
        var single = "￥" + minPrice + "-" + maxPrice;
        $("#single").text(single);
@@ -1164,6 +1161,16 @@ console.log(orderState);
        
        $("#servicePrice").css("marginBottom","12px");
        $("#orderPrice").css("marginBottom","4px");
+     }
+     if(isNegotiable == '1'){
+       $("#single").text("￥" + startingPrice);
+       $("#single").addClass("actual");
+       $("#price").hide();
+       $("#unit").text("起");
+       $("#multiple").hide();
+       $("#waitOrder").hide();
+       $("#orderPrice").hide();
+       $("#specialPrice").hide();
      }
      $("#status").css("paddingTop","90px");
      $("#cancelTime").css("marginBottom","0px");
@@ -1199,9 +1206,8 @@ console.log(orderState);
 
       // $("#proThird").hide();
       $("#proFourth").hide();
-      $("#zjWorker").hide();
+      // $("#zjWorker").hide();
       $("#addRemark").hide();
-      $("#refundRecord").hide();
       $("#filling2").hide();
       $("#orderPrice").hide();
       // $("#orderDiscount").hide();
