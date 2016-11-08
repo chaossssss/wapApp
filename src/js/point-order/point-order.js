@@ -151,7 +151,7 @@ angular.module('com.wapapp.app',[])
 					for(var j=0,leng=serviceTypeList.length;j<leng;j++){
 						if(serviceTypeList[j].PriceType === '0'){
 							// serviceTypeList[j].Price = '面议';
-							serviceTypeList[j].StartingPrice = "30.0";
+							// serviceTypeList[j].StartingPrice = ;
 
 							serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
 							serviceTypeList[j].Price = serviceTypeList[j].StartingPrice+'起';
@@ -323,22 +323,26 @@ angular.module('com.wapapp.app',[])
 	//获得天
 	dp.getdpDay = function(item){
 		// console.log(item.TimeRange);
-		dp.timeItem = item.TimeRange;
+		dp.timeItem = item.TimeRange2;
 		dp.serviceDay = item.Date;
 	}
 	//获得时间
 	dp.getdpTime = function(item){
 		// console.log(item);
-		dp.serviceTime = item;
-		console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
-		//选中
-		var serviceStartAt = dp.serviceDay +" "+ dp.serviceTime +"";
-		dp.show = false;
-		var tofather = {};
-		tofather.serviceStartAt = serviceStartAt;
-		tofather.serviceDay = dp.serviceDay;
-		tofather.serviceTime = dp.serviceTime;
-		$scope.$emit("service-time-date",tofather);
+		if(item.IsVacant === '0'){
+
+		}else{
+			dp.serviceTime = item.Time;
+			console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
+			//选中
+			var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
+			dp.show = false;
+			var tofather = {};
+			tofather.serviceStartAt = serviceStartAt;
+			tofather.serviceDay = dp.serviceDay;
+			tofather.serviceTime = dp.serviceTime;
+			$scope.$emit("service-time-date",tofather);
+		}
 	}
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;

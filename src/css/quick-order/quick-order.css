@@ -144,10 +144,14 @@ ul,li {
 .show {
 	opacity: 1;
 }
+.disnone {
+	display: none;
+}
 /*配色*/
 .sblue {
 	color: #3fbef9;
 }
+
 /*自定义样式*/
 /*.weui_cells.zj_local_image {
 	border-bottom: 1px solid transparent;
@@ -424,7 +428,17 @@ ul,li {
 .zj_tab_bd {
 	height: 275px;
 	overflow-y: auto;
+	background-color: #fff;
 }
+/*.zj_tab_bd .disVacant {
+	position: absolute;
+	background-color: red;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index:7000;
+}*/
 .zj_tab_bd li {
 	position: relative;
 	padding: 15px 0;

@@ -152,7 +152,7 @@ angular.module('com.wapapp.app',[])
 				sv.Max = parseInt(res.Body.Max,10);
 				sv.UnitName = res.Body.UnitName;
 				sv.PriceList = res.Body.PriceList;
-				sv.StartingPrice = "100";
+				sv.StartingPrice = res.Body.StartingPrice;
 				$scope.$apply();
 			})
 	})
@@ -254,21 +254,25 @@ angular.module('com.wapapp.app',[])
 
 	dp.getdpDay = function(item){
 		// console.log(item.TimeRange);
-		dp.timeItem = item.TimeRange;
+		dp.timeItem = item.TimeRange2;
 		dp.serviceDay = item.Date;
 	}
 	dp.getdpTime = function(item){
 		// console.log(item);
-		dp.serviceTime = item;
-		console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
-		//选中
-		var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
-		dp.show = false;
-		var tofather = {};
-		tofather.serviceStartAt = serviceStartAt;
-		tofather.serviceDay = dp.serviceDay;
-		tofather.serviceTime = dp.serviceTime;
-		$scope.$emit("service-time-date",tofather);
+		if(item.IsVacant === '0'){
+
+		}else{
+			dp.serviceTime = item.Time;
+			console.log("天：",dp.serviceDay,"小时",dp.serviceTime);
+			//选中
+			var serviceStartAt = dp.serviceDay + dp.serviceTime +"";
+			dp.show = false;
+			var tofather = {};
+			tofather.serviceStartAt = serviceStartAt;
+			tofather.serviceDay = dp.serviceDay;
+			tofather.serviceTime = dp.serviceTime;
+			$scope.$emit("service-time-date",tofather);
+		}
 	}
 	$scope.$on("service-time-show",function(event,id){
 		dp.show = true;
@@ -494,6 +498,7 @@ angular.module('com.wapapp.app',[])
 				$(this).siblings().find(".zj_icon").removeClass("show").addClass("hide");
 				$(this).find(".zj_icon").removeClass("hide").addClass("show");
 			});
+
 			// $zhDatePicker.on("click",".zj_ft",function(e){
 			// 	$(this).parent(".zj_actionsheet").removeClass("zj_actionsheet_toggle");
 			// 	$(this).parent(".zj_actionsheet").siblings(".zj_mask_transition").removeClass("zj_fade_toggle");

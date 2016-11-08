@@ -225,7 +225,7 @@
 		</div>
 		<!-- 面议 -->
 		<div class="zj_foot_bd" ng-if="vm.serviceTypeObj.PriceType == '0'" ng-cloak>
-			<span >30.0</span>
+			<span ng-bind="vm.serviceTypeObj.StartingPrice"></span>
 			<span class="f14 fc8">起</span>
 		</div>
 		<!-- 没有活动 -->
@@ -312,9 +312,10 @@
 				</li>
 			</ul>
 			<ul class="zj_tab_bd zj_flex_1">
-				<li class="zj_li"  ng-repeat="item in dp.timeItem" ng-click="dp.getdpTime(item)">
-					<span>{{item}}</span>
-					<i class="weui_icon_success zj_icon hide"></i>
+				<li class="zj_li"  ng-repeat="item in dp.timeItem" ng-click="dp.getdpTime(item)" ng-class="{'0':'fc8'}[item.IsVacant]">
+					<span>{{item.Time}}</span>
+					<span ng-if="item.IsVacant === '0'">约满</span>
+					<i class="weui_icon_success zj_icon hide" ng-class="{'0':'disnone'}[item.IsVacant]"></i>
 				</li>
 			</ul>
 		</div>
