@@ -3,11 +3,20 @@ a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,2
 body {
 	background-color: rgb(238,238,238);
 }
+.f14 {
+	font-size: 14px;
+}
 .f20 {
 	font-size: 20px;
 }
+.pblue{
+	color: #27b8f3;
+}
 .pred {
 	color: #f43530;
+}
+.pb15 {
+	padding-bottom: 15px;
 }
 .ml5 {
 	margin-left: 5px;
@@ -21,11 +30,28 @@ body {
 .mt20 {
 	margin-top: 20px;
 }
+.fc8 {
+	color: #888;
+}
+.col100 {
+	width: 100%;
+}
+.webkit_box{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-flex; 
+	display: flex; 
+	-webkit-box-orient: horizontal; 
+}
 /*自定义样式*/
+.zj_cell {
+	padding:15px 10px;
+	position: relative;
+}
 .foot {
 	margin-top: 30px;
 	margin-bottom: 30px;
-	width: 60%;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 }

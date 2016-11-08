@@ -112,6 +112,9 @@ ul,li {
 .show {
 	opacity: 1;
 }
+.disnone {
+	display: none;
+}
 /*自定义样式*/
 /*.weui_cells.zj_local_image {
 	border-bottom: 1px solid transparent;
@@ -340,6 +343,7 @@ ul,li {
 .zj_tab_bd {
 	height: 275px;
 	overflow-y: auto;
+	background-color: #fff;
 }
 .zj_tab_bd li {
 	position: relative;
