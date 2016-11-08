@@ -83,28 +83,30 @@
 					        	</div>
 					        	<div class="weui_cell_ft" style="max-width:230px;" ng-bind="item.ServiceAddress"></div>
 					        </div>
-					        <!-- 服务价格的显示 面议 -->
-					        <div class="zj_cell plr10" ng-if="item.Price === '面议'">
+					        <!-- 服务价格的显示 面议 1 IsNegotiable-->
+					        <div class="zj_cell plr10" ng-if="item.IsNegotiable === '1'">
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
-					        	<div class="weui_cell_ft" ng-bind="item.TotalPrice"></div>
+					        	<div class="weui_cell_ft">
+					        		<span ng-bind="item.StartingPrice"></span> 起
+					        	</div>
 					        </div>
-					        <!-- 服务价格的显示 定价 -->
-					        <div class="zj_cell plr10" ng-if="item.Price !== '面议'">
+					        <!-- 服务价格的显示 定价 0 IsNegotiable-->
+					        <div class="zj_cell plr10" ng-if="item.IsNegotiable === '0'">
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
 					        	<!-- 区间价格 -->
-								<div class="weui_cell_ft" ng-show="item.MinPrice">
+								<!-- <div class="weui_cell_ft" ng-show="item.MinPrice">
 					        		¥ <span ng-bind="item.MinPrice"></span>-<span ng-bind="item.MaxPrice"></span>/<span ng-bind="item.UnitName"></span>
 					        		<span class="ml30">
 					        			x
 					        			<span ng-bind="item.TotalCount"></span>
 					        		</span>
-					        	</div>
+					        	</div> -->
 					        	<!-- 定价价格 -->
-					        	<div class="weui_cell_ft" ng-hide="item.MinPrice">
+					        	<div class="weui_cell_ft">
 					        		¥ <span ng-bind="item.Price"></span>/<span ng-bind="item.UnitName"></span>
 					        		<span class="ml30">
 					        			x
@@ -113,28 +115,22 @@
 					        	</div>
 					        </div>
 					    </div>    
-					    <div class="zj_cell plr10 f17" ng-if="item.Price !== '面议' && (item.OrderStatus === '1' || item.OrderStatus === '10')">
+					    <div class="zj_cell plr10 f17" ng-if="item.IsNegotiable === '0'  && (item.OrderStatus === '1' || item.OrderStatus === '10')">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
 				        		<span>待支付：</span>
-				        		<!-- 区间价格 -->
-								<span class="pred" ng-if="item.MinPrice">
-				        			¥ <span ng-bind="item.MinPrice * item.TotalCount"></span> - 
-				        			<span ng-bind="item.MaxPrice * item.TotalCount"></span>
-				        		</span>
 				        		<!-- 定价价格 没有活动 -->
-				        		<span class="pred" ng-if="!item.MinPrice && item.Activity && (item.TotalPrice < item.Activity.SpecialRule[0].Upper)">
-				        			¥ <span ng-bind="item.TotalPrice"></span>
+				        		<span class="pred" ng-if="item.IsNegotiable ==='0' && (item.Activity && (item.TotalPrice < item.Activity.SpecialRule[0].Upper) || item.Activity === null)">
+				        			¥ <span ng-bind="item.TotalPrice | number:2"></span>
 				        		</span>
 			        		 	<!-- 定价价格 有活动 -->
-								<span class="pred" ng-if="!item.MinPrice && item.Activity && (item.TotalPrice >= item.Activity.SpecialRule[0].Upper)">
+								<span class="pred" ng-if="item.IsNegotiable ==='0' && item.Activity && (item.TotalPrice >= item.Activity.SpecialRule[0].Upper)">
 				        			¥ <span ng-bind="item.TotalPrice - item.Activity.SpecialRule[0].Minus"></span>
 				        		</span>
 				        	</div>
 				        </div>
 				        <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '20' || item.OrderStatus === '30' || item.OrderStatus === '40'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
-
 				        	<div class="weui_cell_ft">
 				        		<span>订单总价：</span>
 				        		<span class="pred">¥
@@ -142,10 +138,10 @@
 				        		</span>
 				        	</div>
 				        </div>
-				         <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '50' && item.TotalPrice !=='面议'">
+				         <div class="zj_cell plr10 f17" ng-if="item.OrderStatus === '50' && item.IsNegotiable ==='0'">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<span>实付：</span>
+				        		<span>订单总价：</span>
 				        		<span class="pred">¥
 				        			<span ng-bind="item.TotalPrice"></span>
 				        		</span>
@@ -158,12 +154,12 @@
 				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.cancel(item.OrderId)">
 				        			取消订单
 				        		</a>
-				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.dialogshow = true" >
+				        		<a href="javascript:;" ng-if="item.TotalPrice === null" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.dialogshow = true" >
 				        			支付
 				        		</a>
-				        		<!-- <a href="javascript:;" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)" >
+				        		<a href="javascript:;" ng-if="item.TotalPrice !== null" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)" >
 				        			支付
-				        		</a> -->
+				        		</a>
 				        	</div>
 				        </div>
 				        <div class="weui_cell" ng-if="item.OrderStatus === '20' && item.IsPayOff ==='0'">

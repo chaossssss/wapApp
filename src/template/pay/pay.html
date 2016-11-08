@@ -33,30 +33,40 @@
 				<span ng-if="od.ServiceProviderGender === '0'">师傅</span>
 				<span ng-if="od.ServiceProviderGender === '1'">阿姨</span>
 			</div>
+			<div class="weui_cell_ft">
+				<a ng-href="tel:od.PhoneNumber" href="javascript:;">
+					<img src="/images/pay/phone.png" alt="" style="width: 30px;">
+				</a>
+			</div>
 		</div>
 	</div> 
 	<div class="weui_cells mt10 weui_cells_access">
-		<div class="weui_cell">
-			<div class="weui_cell_bd weui_cell_primary">
-				<p>服务价格</p>
+		<div class="zj_cell">
+			<div class="webkit_box col100 pb15"  ng-if="(od.Price !== null || od.Price !== undefined)" ng-cloak>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>服务价格</p>
+				</div>
+				<div class="zj_cell_ft" >
+					<span>
+						x<span ng-bind="od.Total"></span>
+					</span>
+					<span class="ml20">
+						¥ <span ng-bind="od.Price | number:1"></span>
+						<!-- /<span ng-bind="od.UnitName"></span>	 -->
+					</span>
+				</div>
 			</div>
-			<!-- 服务价格非面议 -->
-			<div class="zj_cell_ft" ng-if="od.TotalPrice !== '面议'" ng-cloak>
-				<span>
-					¥ <span ng-bind="od.Price"></span>
-					/<span ng-bind="od.UnitName"></span>	
-				</span>
-				<span class="ml20">
-					x<span ng-bind="od.Total"></span>
-				</span>
-			</div>
-			<!-- 服务价格面议 -->
-			<div class="zj_cell_ft" ng-if="od.TotalPrice === '面议'" ng-cloak>
-				<span class="ml20">
-					<span ng-bind="od.TotalPrice"></span>
-				</span>
+			<div class="webkit_box col100">
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>订单总价</p>
+				</div>
+				<div class="zj_cell_ft" >
+					¥ <span ng-bind="od.TotalPrice | number:1"></span>
+				</div>
 			</div>
 		</div>
+	</div>
+	<div class="weui_cells mt10 weui_cells_access">
 		<!-- 满足活动情况 -->
 		<div class="weui_cell" ng-show="od.Activity && od.Activity.SpecialRule.length > 0" ng-cloak>
 			<div class="weui_cell_bd weui_cell_primary">
@@ -67,23 +77,10 @@
 					<span ng-bind="od.Activity.SpecialRule[0].Minus"></span>
 				</span>
 			</div>
-		</div>
-		<!-- <div class="weui_cell" ng-show="od.Activity && od.Activity.PromotionRule.length > 0" ng-cloak>
-			<div class="weui_cell_bd weui_cell_primary">
-				<p>优惠券</p>
-			</div>
-			<div class="zj_cell_ft" ng-bind="od.Activity.PromotionName"></div>
-		</div> -->
-		<!-- <a href="javascript:;" class="weui_cell">
-			<div class="weui_cell_bd weui_cell_primary">
-				<p>优惠券</p>
-			</div>
-			<div class="weui_cell_ft"></div>
-		</a> -->
-		
+		</div>	
 		<div class="weui_cell no_access" ng-if="od.TotalPrice !== '面议'" ng-cloak>
             <div class="weui_cell_bd weui_cell_primary">
-                <p>待支付</p>
+                <p>支付金额</p>
             </div>
             <!-- 参加活动&没有使用优惠券 -->
             <div class="zj_cell_ft pred f20" ng-show="od.Activity" ng-cloak>
@@ -99,7 +96,7 @@
 		<div class="weui_cell">请选择支付方式</div>
 		<label for='s11' class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
-				<img src="/images/pay/yue.png" alt="" style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/yue.png" alt="" style="width:30px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>账户余额支付 余额<span ng-bind="uc.Balance"></span>元</p>
@@ -111,7 +108,7 @@
 		</label>
 		<label for="s12" class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
-				<img src="/images/pay/zhifubao.png" alt=""  style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/zhifubao.png" alt=""  style="width:30px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>支付宝支付</p>
@@ -123,7 +120,7 @@
 		</label>
 		<label for="s13" class="weui_cell weui_check_label">
 			<div class="weui_cell_hd">
-				<img src="/images/pay/weixin.png" alt="" style="width:20px;display:block;margin-right:5px;">
+				<img src="/images/pay/weixin.png" alt="" style="width:30px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>微信支付</p>
@@ -141,8 +138,15 @@
 		<!-- <a href="javascript:;" class="weui_btn weui_btn_plain_primary" ng-click="vm.hasPayOrder()">
 			我已现金支付
 		</a> -->
+		<div class="fc8 mt10 f14">
+			<p>温馨提示:</p>
+			<p>1.在线支付才能享受特价等优惠活动哦</p>
+			<p>2.如有疑问请联系客服 <a ng-href="tel:4008-262-056" href="javascript:;"><span class="pblue">4008-262-056</span></a></p>
+		</div>
 	</div>
+	
 </form>
+
 
 <!-- loadingToast -->
 <div id="loadingToast" class="weui_loading_toast" ng-show="loadingToast === true" ng-cloak>
