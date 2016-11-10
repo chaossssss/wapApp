@@ -297,6 +297,15 @@ $(function(){
           $("#refundAmount").text(data.Body.TotalPrice);
         }
       }
+      if(data.Body.Refunds.RefundAt != null){
+        var refundAt = new Date(data.Body.Refunds.RefundAt);
+        $("#refundAt").text(refundAt.Format("yyyy-MM-dd hh:mm"));
+      }
+      refundAmount = data.Body.Refunds.RefundAmount;
+      refundAmountToBePaid = data.Body.Refunds.RefundAmountToBePaid;
+      couponAmount = data.Body.Refunds.CouponAmount;
+      refundIsFinshed = data.Body.Refunds.Status;
+      lostIncome = data.Body.Refunds.LostIncome;
       isNegotiable = data.Body.IsNegotiable;
       startingPrice = data.Body.StartingPrice;
       $("#toBePaid").text(totalPrice);
@@ -489,7 +498,7 @@ console.log(orderState);
     if(isNegotiable == '1'){
       $("#single").text("￥" + startingPrice);
       $("#single").addClass("actual");
-      $("#price").hide();
+      $("#orderPrice").hide();
       $("#unit").text("起");
       $("#multiple").hide();
       $("#waitOrder").hide();
@@ -499,6 +508,25 @@ console.log(orderState);
       });
       $("#know").on("click",function(){
         $("#pay-box").hide();
+      })
+    }
+    if(isPayOff == "0"){
+      $("#btnLeft").on("click",function(){
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").on("click",function(){
+          cancelOrder(token,orderId);
+          $("#cancelOrder1").hide();
+          location.reload();
+        })
+      });
+    }
+    if(isPayOff == "1"){
+      $("#btnLeft").on("click",function(){
+        $("#cancelOrder2").css("display","block");
+        $("#contactWorkerBtn").on("click",function(){
+          cancelOrder(token,orderId);
+          $("#cancelOrder2").hide();
+        })
       })
     }
     break;
@@ -572,15 +600,6 @@ console.log(orderState);
       $("#servicePrice").css("marginBottom","0px");
       $("#specialPrice").hide();
     }
-    $("#btnLeft").on("click",function(){
-      $("#cancelOrder1").css("display","block");
-      $("#cancelOrderBtn").on("click",function(){
-        cancelOrder(token,orderId);
-        $("#cancelOrder1").hide();
-        location.reload();
-      })
-    });
-
     if(isNegotiable == "0"){
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -591,6 +610,7 @@ console.log(orderState);
       $("#single").addClass("actual");
       $("#price").hide();
       $("#multiple").hide();
+      $("#orderPrice").hide();
       $("#unit").text("起");
       $("#waitOrder").hide();
       $("#specialPrice").hide();
@@ -598,6 +618,26 @@ console.log(orderState);
         $("#pay-box").show();
         $("#know").on("click",function(){
           $("#pay-box").hide();
+        })
+      })
+    }
+    if(isPayOff == "0"){
+      $("#btnLeft").on("click",function(){
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").on("click",function(){
+          cancelOrder(token,orderId);
+          $("#cancelOrder1").hide();
+          location.reload();
+        })
+      });
+    }
+    if(isPayOff == "1"){
+      $("#btnRight").on("click",function(){
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").on("click",function(){
+          cancelOrder(token,orderId);
+          $("#cancelOrder1").hide();
+          location.reload();
         })
       })
     }
@@ -788,8 +828,6 @@ console.log(orderState);
         $("#contactWorkerBtn").on("click",function(){
           cancelOrder(token,orderId);
           $("#cancelOrder2").hide();
-          // UpdataOrder(Token,OrderId);
-          // location.reload();
         })
       })
       if(isNegotiable == '0'){
@@ -799,7 +837,6 @@ console.log(orderState);
         })
       }
       if(isNegotiable == '1'){
-        $("#servicePrice").hide();
         $("#single").text("￥" + startingPrice);
         $("#single").addClass("actual");
         $("#price").removeClass("actual");
@@ -1007,7 +1044,7 @@ console.log(orderState);
     $("#waitOrder").hide();
     $("#btnRight").on("click",function(){
       completeOrder(token,orderId);
-      location.reload();
+      // location.reload();
     })
 
     break;
@@ -1135,7 +1172,7 @@ console.log(orderState);
 
      $("#proThird").hide();
      $("#proFourth").hide();
-     $("#zjWorker").hide();
+     // $("#zjWorker").hide();
      $("#addRemark").hide();
      $("#refundRecord").hide();
      $("#filling2").hide();
@@ -1269,6 +1306,7 @@ console.log(orderState);
         $("#roundThird").addClass("round-processing");
         $("#roundFourth").addClass("round-undone");
 
+        $("#addRemark").hide();
         $("#optionFooter").hide();
         $("#filling3").hide();
         $("#negotiable").hide();
@@ -1296,6 +1334,8 @@ console.log(orderState);
       $("#roundThird").addClass("round-undone");
       $("#roundFourth").addClass("round-undone");
       $("#btnRight").addClass("delete-btn");
+
+      $("#addRemark").hide();
       $("#btnRight").on("click",function(){
         $("#deleteOrder").css("display","block");
         $("#deleteBtn").on("click",function(){
@@ -1324,16 +1364,15 @@ console.log(orderState);
   }
 
       /*--添加备注--*/
-/*--
+
   $("#addRemark").click(function(){
-    console.log("显示弹窗");
     $("#userMemo").show();
   });
   $("#confirmBtn").click(function(){
     var memoText = $("#memoText").val();
     console.log(memoText);
     if(memoText != ""){
-      memo();
+      
     }else{
       console.log("不提交");
     }
@@ -1341,17 +1380,7 @@ console.log(orderState);
   $("#cancelBtn,#confirmBtn").click(function(){
     $("#userMemo").hide();
   });
-  // $("#addRemark").on("click",function(){
-  //   console.log("显示弹窗");
-  //   $("#userMemo").show();
-  // })
-  function memo(){
-    console.log("补充备注");
-    $.ajax({
 
-    })
-  }
-  --*/
   function updateOrder(token,orderId){
     console.log("更新订单");
     $.ajax({
@@ -1359,10 +1388,12 @@ console.log(orderState);
         url:"http://192.168.1.191:3003/api/v2/OrderInfo/UpdateOrderEx",
         data:{
           Token:token,
-          OrderId:orderId
+          OrderId:orderId,
+          Memo:""
         },
         success:function(data){
           console.log("更新订单成功");
+          location.reload();
         }     
     })
   }
@@ -1398,6 +1429,7 @@ console.log(orderState);
     console.log("完成订单");
     $.ajax({
       type:"POST",
+      async:"false",
       url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
       data:{
         Token:token,
@@ -1405,6 +1437,7 @@ console.log(orderState);
       },
       success:function(data){
         console.log(data);
+        location.reload();
       }
     })
   }
