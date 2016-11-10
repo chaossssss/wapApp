@@ -1,0 +1,81 @@
+/*支付成功页面*/
+a, a:link { color: #222; text-decoration: none; }
+a:active, a:hover { text-decoration: underline; }
+a:focus { outline: none; }
+.clean{clear:both;}
+a:link,a:visited{
+ text-decoration:none;  /*超链接无下划线*/
+}
+.clear{
+	clear: both;
+}
+.pay-top{
+	position: relative;
+	padding:10% 12%;
+}
+.pay-top:after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    left: 0;
+    bottom: 0;
+    border-bottom: 1px dashed #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.icon-img{
+	float: left;
+	width:40%;
+}
+.pay-notice{
+	float: left;
+	padding:5%;
+	line-height: 21px;
+}
+.orange{
+	color:#fd552e;
+	font-weight: bold;
+}
+.ser-info{
+	position: relative;
+	padding:5%;
+    line-height: 22px;
+}
+.ser-info:after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    left: 0;
+    bottom: 0;
+    border-bottom: 1px solid #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.de-info{
+	font-size: 14px;
+}
+.datas{
+	color:#666;
+}
+.two-link{
+	width: 88%;
+	margin: auto;
+	margin-top: 30px;
+}
+.two-link a{
+	display: inline-block;
+    color: #27b8f3;
+    border: 1px solid #27b8f3;
+    border-radius: 5px;
+    padding: 10px 12%;
+}
