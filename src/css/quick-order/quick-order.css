@@ -47,11 +47,17 @@ ul,li {
 .mt20 {
 	margin-top: 20px;
 }
+.f13 {
+	font-size: 13px;
+}
 .f15 {
 	font-size: 15px;
 }
 .f14 {
 	font-size: 14px;
+}
+.lh24 {
+	line-height: 24px;
 }
 .lh30 {
 	line-height: 30px;

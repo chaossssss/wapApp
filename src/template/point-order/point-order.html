@@ -210,7 +210,8 @@
 	<div class="weui_cell bgf mb49 fc8 lh30">
 		<div class="weui_cell_bd weui_cell_primary">
 			<p class="f15">服务说明</p>
-			<p class="f15" ng-bind="fw.Description"></p>
+			<!-- <p class="f15" ng-bind="fw.Description"></p> -->
+			<p class="f13 lh24" ng-repeat="item in fw">{{item}}</p>
 		</div>
 	</div>
 	<!-- 服务说明 end-->
