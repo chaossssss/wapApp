@@ -5,7 +5,7 @@ angular.module('com.wapapp.app',[])
 	$rootScope.url = "http://192.168.1.191:3003";
 	$rootScope.token = window.sessionStorage.getItem("Token");
 	// $rootScope.token = $.cookie("Token");
-
+ 
 	//获取url参数
     function getvl(name) {
         var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
@@ -20,6 +20,28 @@ angular.module('com.wapapp.app',[])
 	var od = $scope.od = {};
 
 	$scope.loadingToast = false;
+
+	//是否选中 余额&支付宝&微信支付
+	vm.yeIschecked = false;
+	vm.zfbIschecked = false;
+	vm.wxIschecked = false;
+	vm.zfbchecked = function(){
+		if(vm.zfbIschecked === false){
+			vm.zfbIschecked = true;
+			vm.wxIschecked = false;
+		}else{
+			vm.zfbIschecked = false;
+		}
+	}
+	vm.wxchecked = function(){
+		if(vm.wxIschecked === false){
+			vm.wxIschecked = true;
+			vm.zfbIschecked = false;
+		}else{
+			vm.wxIschecked = false;
+		}
+	}
+
 
 	getMyInfo.event($rootScope.token)
 		.success(function(res){
@@ -42,9 +64,9 @@ angular.module('com.wapapp.app',[])
  	vm.hasPayOrder = function(){
  		vm.dialogConfirm = true;
  	}
- 
+
  	vm.payOrder = function(){
- 		console.log("余额",vm.yeradio,"支付宝or微信",vm.wxOrzfb);
+ 		console.log("余额",vm.yeIschecked,"支付宝",vm.zfbIschecked,"微信",vm.wxIschecked);
  		//金额换算 od.TotalPrice 需付款
  		vm.Price = od.TotalPrice;
  		if(parseInt(vm.Price) < parseInt(uc.Balance)){
@@ -55,7 +77,7 @@ angular.module('com.wapapp.app',[])
  		console.log("另外需要付款:",vm.otherPrice);
 
  		// 余额＋支付宝
- 		if(vm.yeradio == true && vm.wxOrzfb === "zhifubao"){
+ 		if(vm.yeIschecked === true && vm.zfbIschecked === true && vm.wxIschecked === false){
  			$scope.loadingToast = true;
  			vm.Price = od.TotalPrice;
 			payForService.zhifubao({
@@ -78,7 +100,7 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		//余额＋微信
- 		if(vm.yeradio == true && vm.wxOrzfb === "weixin"){
+ 		if(vm.yeIschecked === true && vm.zfbIschecked === false && vm.wxIschecked === true){
  			$scope.loadingToast = true;
  			payForService.weixin({
  				Token: $rootScope.token,
@@ -100,7 +122,7 @@ angular.module('com.wapapp.app',[])
  		}
 
  		//余额
- 		if(vm.yeradio == true && (vm.wxOrzfb !=='zhifubao' && vm.wxOrzfb !=='weixin')){
+ 		if(vm.yeIschecked === true && vm.zfbIschecked === false && vm.wxIschecked === false){
  			$scope.loadingToast = true;
 			payForService.account({
 				Token: $rootScope.token,
@@ -120,7 +142,7 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		// 支付宝
- 		if(vm.wxOrzfb === "zhifubao" && (vm.yeradio === false ||  vm.yeradio === undefined)){
+ 		if(vm.yeIschecked === false && vm.zfbIschecked === true && vm.wxIschecked === false){
  			console.log("支付宝支付:");
  			console.log(vm.wxOrzfb === "zhifubao");
  			$scope.loadingToast = true;
@@ -144,7 +166,7 @@ angular.module('com.wapapp.app',[])
 			})
  		}
  		// 微信
- 		if(vm.wxOrzfb === "weixin" && (vm.yeradio === false ||  vm.yeradio === undefined)){
+ 		if(vm.yeIschecked === false && vm.zfbIschecked === false && vm.wxIschecked === true){
  			console.log("微信支付:");
  			console.log(vm.wxOrzfb === "weixin");
  			$scope.loadingToast = true;
@@ -166,7 +188,6 @@ angular.module('com.wapapp.app',[])
 				$scope.$apply();
 			})
  		}
- 			
  	}
 
  	//支付宝支付

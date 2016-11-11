@@ -118,7 +118,8 @@
 					    <div class="zj_cell plr10 f17" ng-if="item.IsNegotiable === '0'  && (item.OrderStatus === '1' || item.OrderStatus === '10')">
 				        	<div class="weui_cell_bd weui_cell_primary"></div>
 				        	<div class="weui_cell_ft">
-				        		<span>待支付：</span>
+				        		<span ng-if="item.IsPayOff === '0'">待支付：</span>
+				        		<span ng-if="item.IsPayOff === '1'">已付款：</span>
 				        		<!-- 定价价格 没有活动 -->
 				        		<span class="pred" ng-if="item.IsNegotiable ==='0' && (item.Activity && (item.TotalPrice < item.Activity.SpecialRule[0].Upper) || item.Activity === null)">
 				        			¥ <span ng-bind="item.TotalPrice | number:2"></span>
@@ -154,10 +155,10 @@
 				        		<a href="javascript:;" class="zj_btn weui_btn_plain_default" ng-click="vm.cancel(item.OrderId)">
 				        			取消订单
 				        		</a>
-				        		<a href="javascript:;" ng-if="item.TotalPrice === null" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.dialogshow = true" >
+				        		<a href="javascript:;" ng-if="item.TotalPrice === null && item.IsPayOff ==='0'" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.dialogshow = true" >
 				        			支付
 				        		</a>
-				        		<a href="javascript:;" ng-if="item.TotalPrice !== null" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)" >
+				        		<a href="javascript:;" ng-if="item.TotalPrice !== null && item.IsPayOff ==='0'" class="zj_btn weui_btn_plain_default list_orange" ng-click="vm.pay(item.OrderId)" >
 				        			支付
 				        		</a>
 				        	</div>

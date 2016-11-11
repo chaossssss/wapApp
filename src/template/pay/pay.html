@@ -83,11 +83,11 @@
                 <p>支付金额</p>
             </div>
             <!-- 参加活动& 使用优惠券 -->
-            <div class="zj_cell_ft pred f20" ng-if="(od.Activity !== null || od.Activity !==undefined)" ng-cloak>
+            <div class="zj_cell_ft pred f20" ng-if="od.Activity && od.Activity.SpecialRule.length > 0" ng-cloak>
             	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
             </div>
             <!-- 没有参加活动&没有使用优惠券 -->
-             <div class="zj_cell_ft pred f20" ng-hide="od.Activity" ng-cloak>
+             <div class="zj_cell_ft pred f20" ng-if="od.Activity === null || od.Activity.SpecialRule.length == 0" ng-cloak>
             	¥ <span ng-bind="od.TotalPrice"></span>
             </div>
         </div>
@@ -101,41 +101,41 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>账户余额支付 余额<span ng-bind="uc.Balance"></span>元</p>
 			</div>
-			<div class="weui_cell_ft">
-				<input type="checkbox" name="checkbox" id="s11" class="weui_check" ng-model="vm.yeradio">
+			<div class="weui_cell_ft" ng-click="vm.yeIschecked = !vm.yeIschecked">
+				<input type="checkbox" name="checkbox" id="s11" class="weui_check" ng-checked="vm.yeIschecked">
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
-		<label for="s12" class="weui_cell weui_check_label">
+		<label for="s12" class="weui_cell weui_check_label" id="zfb">
 			<div class="weui_cell_hd">
 				<img src="/images/pay/zhifubao.png" alt=""  style="width:30px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>支付宝支付</p>
 			</div>
-			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s12" class="weui_check" value="zhifubao" ng-model="vm.wxOrzfb"></input>
+			<div class="weui_cell_ft" ng-click="vm.zfbchecked()">
+				<input type="checkbox" name="checkbox1" id="s12" class="zj_check" ng-class="{true:'checked'}[vm.zfbIschecked]" ng-checked="vm.zfbIschecked"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
-		<label for="s13" class="weui_cell weui_check_label">
+		<label for="s13" class="weui_cell weui_check_label" id="wx">
 			<div class="weui_cell_hd">
 				<img src="/images/pay/weixin.png" alt="" style="width:30px;display:block;margin-right:5px;">
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>微信支付</p>
 			</div>
-			<div class="weui_cell_ft">
-				<input type="radio" name="checkbox1" id="s13" class="weui_check" value="weixin" ng-model="vm.wxOrzfb"></input>
+			<div class="weui_cell_ft" ng-click="vm.wxchecked()">
+				<input type="checkbox" name="checkbox1" id="s13" class="zj_check" ng-class="{true:'checked'}[vm.wxIschecked]" ng-checked="vm.wxIschecked"></input>
 				<i class="weui_icon_checked"></i>
 			</div>
 		</label>
 	</div>
 	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity !== null || od.Activity !==undefined)">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity && od.Activity.SpecialRule.length > 0">
 			确认支付 <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span> 元
 		</a>
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity === null || od.Activity ===undefined)">
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity === null || od.Activity.SpecialRule.length == 0">
 			确认支付 <span ng-bind="od.TotalPrice"></span> 元
 		</a>
 		<div class="fc8 mt10 f14">
