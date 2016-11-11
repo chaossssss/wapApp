@@ -23,7 +23,7 @@
 </head> 
 <body ng-controller="payCtrl">
 <form novalidate="novalidate" name="form">
-	<div class="weui_cells">
+	<div class="weui_cells mb10" ng-if="od.ServiceProviderId">
 		<div class="weui_cell" style="padding:10px;">
 			<div class="weui_cell_hd">
 				<img src="/images/emt.jpg" alt="" style="width:30px;margin-right:5px;display:block;border-radius:15px;">
@@ -40,7 +40,7 @@
 			</div>
 		</div>
 	</div> 
-	<div class="weui_cells mt10 weui_cells_access">
+	<div class="weui_cells weui_cells_access">
 		<div class="zj_cell">
 			<div class="webkit_box col100 pb15"  ng-if="od.IsNegotiable === '0'" ng-cloak>
 				<div class="weui_cell_bd weui_cell_primary">
