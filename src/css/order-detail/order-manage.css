@@ -40,7 +40,6 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 .order-detail .zj-cell-right{ color: #666; }
 .order-detail .contact{ height: 30px; width: 72px; padding-left: 5px; background: url(../../images/order-detail/newphone.png) no-repeat; background-size: 100% auto; }
 .order-detail .zj-worker{ padding-bottom: 4px; padding-top: 9px; }
-
 .order-detail .money{ float: right; color: #666; }
 .order-detail .multiple{ font-size: 14px; color: #999; margin-left: 26px; }
 .order-detail .actual{ color: #ff5000; font-size: 18px; }

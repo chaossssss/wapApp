@@ -292,9 +292,16 @@ $(function(){
       if(data.Body.Refunds){
         var refundsNum = data.Body.Refunds.length;
         for(var i = 0; i < refundsNum; i++){      
-          $("#refundAt").text(data.Body.Refunds[i].RefundTime);
+          var refundAt = getDatetime(data.Body.Refunds[i].RefundTime);
+          $("#refundAt").text(refundAt);
           $("#lostIncome").text(data.Body.Refunds[i].LostIncome);
-          $("#refundAmount").text(data.Body.TotalPrice);
+          $("#refundAmount").text("￥" + data.Body.Refunds[i].RefundAmount);
+          refundIsFinshed = data.Body.Refunds[i].Status;
+          if(data.Body.Refunds[i].CouponAmount){
+            $("#refundDiscount").text(data.Body.Refunds[i].CouponAmount);
+          }else{
+            $("#refundDisc").hide();
+          }
         }
       }
       if(data.Body.Refunds.RefundAt != null){
@@ -307,7 +314,7 @@ $(function(){
       $("#actualRefundMoney").text("￥" + refundAmountToBePaid);
       couponAmount = data.Body.Refunds.CouponAmount;
       $("#refundDiscount").text(couponAmount);
-      refundIsFinshed = data.Body.Refunds.Status;
+      
       lostIncome = data.Body.Refunds.LostIncome;
       isNegotiable = data.Body.IsNegotiable;
       startingPrice = data.Body.StartingPrice;
@@ -494,7 +501,7 @@ console.log(orderState);
     });
 
     if(isNegotiable == "0"){
-      $("#statusBg").css("background-image","url(../../images/order-detail/ordernew-commit.png)");
+      $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
@@ -611,26 +618,37 @@ console.log(orderState);
     }
     if(isNegotiable == "0"){
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
+      $("#toBePaid").addClass("actual");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
     }
     if(isNegotiable == "1"){
-      $("#statusBg").css("background-image","url(../../images/order-detail/ordernew-success2.png)");
-      $("#single").text("￥" + startingPrice);
-      $("#single").addClass("actual");
-      $("#price").hide();
-      $("#multiple").hide();
-      $("#orderPrice").hide();
-      $("#unit").text("起");
-      $("#waitOrder").hide();
-      $("#specialPrice").hide();
-      $("#btnRight").on("click",function(){
-        $("#pay-box").show();
-        $("#know").on("click",function(){
-          $("#pay-box").hide();
+      if(tp == null){
+        $("#statusBg").css("background-image","url(../../images/order-detail/ordernew-success2.png)");
+        $("#single").text("￥" + startingPrice);
+        $("#single").addClass("actual");
+        $("#price").hide();
+        $("#multiple").hide();
+        $("#orderPrice").hide();
+        $("#unit").text("起");
+        $("#waitOrder").hide();
+        $("#specialPrice").hide();
+        $("#btnRight").on("click",function(){
+          $("#pay-box").show();
+          $("#know").on("click",function(){
+            $("#pay-box").hide();
+          })
         })
-      })
+      }
+      if(startingPrice == null){
+        $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
+        $("#servicePrice").hide();
+        $("#toBePaid").addClass("actual");
+        $("#btnRight").on("click",function(){
+          window.location.href="../pay/pay.html?orderId=" + orderId;
+        })
+      }
     }
     if(isPayOff == "0"){
       $("#btnLeft").on("click",function(){
@@ -647,7 +665,7 @@ console.log(orderState);
       $("#btnRight").hide();
       $("#waitOrder").hide();
       $("#orderActual").show();
-      $("#btnRight").on("click",function(){
+      $("#btnLeft").on("click",function(){
         $("#cancelOrder1").css("display","block");
         $("#cancelOrderBtn").on("click",function(){
           cancelOrder(token,orderId);
@@ -851,22 +869,32 @@ console.log(orderState);
         })
       }
       if(isNegotiable == '1'){
-        $("#statusBg").css("background-image","url(../../images/order-detail/get-ordernew.png)");
-        $("#single").text("￥" + startingPrice);
-        $("#single").addClass("actual");
-        $("#price").removeClass("actual");
-        $("#toBePaid").addClass("actual");
-        $("#price").text("请与工人协商，并确定价格");
-        $("#unit").text("起");
-        $("#multiple").hide();
-        $("#waitOrder").hide();
-        $("#specialPrice").hide();
-        $("#btnRight").on("click",function(){
-          $("#pay-box").show();
-          $("#know").on("click",function(){
-            $("#pay-box").hide();
+        if(tp == null){
+          $("#statusBg").css("background-image","url(../../images/order-detail/get-ordernew.png)");
+          $("#single").text("￥" + startingPrice);
+          $("#single").addClass("actual");
+          $("#price").removeClass("actual");
+          $("#toBePaid").addClass("actual");
+          $("#price").text("请与工人协商，并确定价格");
+          $("#unit").text("起");
+          $("#multiple").hide();
+          $("#waitOrder").hide();
+          $("#specialPrice").hide();
+          $("#btnRight").on("click",function(){
+            $("#pay-box").show();
+            $("#know").on("click",function(){
+              $("#pay-box").hide();
+            })
           })
-        })
+        }
+        if(startingPrice == null){
+          $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
+          $("#servicePrice").hide();
+          $("#toBePaid").addClass("actual");
+          $("#btnRight").on("click",function(){
+            window.location.href="../pay/pay.html?orderId=" + orderId;
+          })
+        }
       }
     }
 
@@ -1201,10 +1229,6 @@ console.log(orderState);
      $("#btnLeft").hide();
      $("#specialPrice").hide();
      // $("#cancelTime").hide();
-     if(singlePrice == '面议'){
-       $("#unit").hide();
-       $("#multiple").hide();
-     }
      if(noSinglePrice == null){
        var single = "￥" + minPrice + "-" + maxPrice;
        $("#single").text(single);
@@ -1227,8 +1251,19 @@ console.log(orderState);
      }
      $("#status").css("paddingTop","90px");
      $("#cancelTime").css("marginBottom","0px");
-     // $("#servicePrice").css("marginBottom","4px"); 
 
+    if(refundIsFinshed == "1"){
+      $("#refundRecord").show();
+      $("#filling2").show();
+      $("#refundStatus").text('退款中');
+      if(isNegotiable == '0'){
+        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel6.png)");
+     }
+    }
+    if(refundIsFinshed == "2"){
+      $("#refundStatus").text('退款完成');
+      $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
+    }
     $("#btnRight").on("click",function(){
       $("#deleteOrder").css("display","block");
       $("#deleteBtn").on("click",function(){
@@ -1259,6 +1294,7 @@ console.log(orderState);
 
       // $("#proThird").hide();
       $("#proFourth").hide();
+
       // $("#zjWorker").hide();
       $("#addRemark").hide();
       $("#filling2").hide();
@@ -1278,11 +1314,45 @@ console.log(orderState);
         $("#waitOrder").hide();
         $("#servicePrice").css("marginBottom","4px");
       }
+      if(isNegotiable == '0'){
+        $("#refundRecord").show();
+        $("#filling2").show();
+        $("#servicePrice").show();
+        $("#orderActual").show();
+        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel4.png)");
+      }
       if(isNegotiable == '1'){
+        if(startingPrice == null){
+          $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
+        }
+        if(tp == null){
+          $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
+          $("#single").text("￥" + startingPrice);
+          $("#single").addClass("actual");
+          $("#price").hide();
+          $("#unit").text("起");
+        }
+        $("#zjWorker").show();
+        $("#refundRecord").show();
+        $("#filling2").show();
+        $("#waitOrder").hide();
+        $("#servicePrice").hide();
         $("#unit").hide();
         $("#multiple").hide();
         $("#waitOrder").hide();
-        $("#servicePrice").css("marginBottom","4px");
+        $("#price").addClass("actual");
+      }
+      if(refundIsFinshed == "1"){
+        $("#refundRecord").show();
+        $("#filling2").show();
+        $("#refundStatus").text('退款中');
+        if(isNegotiable == '0'){
+          $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel6.png)");
+       }
+      }
+      if(refundIsFinshed == "2"){
+        $("#refundStatus").text('退款完成');
+        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
       }
       $("#status").css("paddingTop","90px");
       $("#cancelTime").css("marginBottom","0px");
@@ -1303,65 +1373,64 @@ console.log(orderState);
     break;
 
     /*--退款状态--*/
-    if(refundIsFinshed == "1"){
-      if(orderIsGeted != null){
-        console.log("退款中");
-        $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
-        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel4.png)");
-        $("#status").text('退款中');
-        $("#explanation").text('系统将于72小时内退款');
-        $("#tabFirst").text('订单已提交');
-        $("#tabSecond").text('工人已接单');
-        $("#tabThird").text('退款中');
-        $("#tabFourth").text('退款成功');
-        $("#refundStatus").text('退款中');
+    // if(refundIsFinshed == "1"){
+    //   if(orderIsGeted != null){
+    //     console.log("退款中");
+    //     $("#orderStatus").css("background-image","url(../../images/order-detail/refund.png)");
+    //     $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel4.png)");
+    //     $("#status").text('退款中');
+    //     $("#explanation").text('系统将于72小时内退款');
+    //     $("#tabFirst").text('订单已提交');
+    //     $("#tabSecond").text('工人已接单');
+    //     $("#tabThird").text('退款中');
+    //     $("#tabFourth").text('退款成功');
+    //     $("#refundStatus").text('退款中');
 
-        $("#tabThird").addClass("processing");
-        $("#roundFirst").addClass("round-complete");
-        $("#roundSecond").addClass("round-complete");
-        $("#roundThird").addClass("round-processing");
-        $("#roundFourth").addClass("round-undone");
+    //     $("#tabThird").addClass("processing");
+    //     $("#roundFirst").addClass("round-complete");
+    //     $("#roundSecond").addClass("round-complete");
+    //     $("#roundThird").addClass("round-processing");
+    //     $("#roundFourth").addClass("round-undone");
 
-        $("#addRemark").hide();
-        $("#optionFooter").hide();
-        $("#filling3").hide();
-        $("#negotiable").hide();
-        $("#cancelTime").hide();
-      }
-      if(orderIsGeted == null){
-        $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel6.png)");
-      }
-    }
-    if(refundIsFinshed == "2"){
-      console.log("退款完成");
-      $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
-      $("#status").text('订单已取消');
-      $("#explanation").text('');
-      $("#tabFirst").text('订单已提交');
-      $("#tabSecond").text('工人已接单');
-      $("#tabThird").text('退款成功');
-      $("#tabFourth").text('订单已取消');
-      $("#refundStatus").text('退款完成');
-      $("#btnRight").text('删除订单');
+    //     $("#addRemark").hide();
+    //     $("#optionFooter").hide();
+    //     $("#filling3").hide();
+    //     $("#negotiable").hide();
+    //     $("#cancelTime").hide();
+    //   }
+    //   if(orderIsGeted == null){
+    //     $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel6.png)");
+    //   }
+    // }
+    // if(refundIsFinshed == "2"){
+    //   console.log("退款完成");
+    //   $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
+    //   $("#status").text('订单已取消');
+    //   $("#explanation").text('');
+    //   $("#tabFirst").text('订单已提交');
+    //   $("#tabSecond").text('工人已接单');
+    //   $("#tabThird").text('退款成功');
+    //   $("#tabFourth").text('订单已取消');
+    //   $("#refundStatus").text('退款完成');
+    //   $("#btnRight").text('删除订单');
 
-      // $("#tabThird").addClass("processing");
-      $("#roundFirst").addClass("round-undone");
-      $("#roundSecond").addClass("round-undone");
-      $("#roundThird").addClass("round-undone");
-      $("#roundFourth").addClass("round-undone");
-      $("#btnRight").addClass("delete-btn");
+    //   $("#roundFirst").addClass("round-undone");
+    //   $("#roundSecond").addClass("round-undone");
+    //   $("#roundThird").addClass("round-undone");
+    //   $("#roundFourth").addClass("round-undone");
+    //   $("#btnRight").addClass("delete-btn");
 
-      $("#addRemark").hide();
-      $("#btnRight").on("click",function(){
-        $("#deleteOrder").css("display","block");
-        $("#deleteBtn").on("click",function(){
-          removeOrder(token,orderId);
-          location.reload();
-          $("#deleteOrder").hide();
-          window.location.href="../my-order/my-order-new.html?flag=1";
-        })
-      })
-    }
+    //   $("#addRemark").hide();
+    //   $("#btnRight").on("click",function(){
+    //     $("#deleteOrder").css("display","block");
+    //     $("#deleteBtn").on("click",function(){
+    //       removeOrder(token,orderId);
+    //       location.reload();
+    //       $("#deleteOrder").hide();
+    //       window.location.href="../my-order/my-order-new.html?flag=1";
+    //     })
+    //   })
+    // }
   }
 
   function removeOrder(token,orderId){
@@ -1425,7 +1494,8 @@ console.log(orderState);
         },
         success:function(data){
           console.log(data);
-          location.reload();
+          alert(data.Meta.ErrorMsg);
+          // location.reload();
         }     
     })
   }
