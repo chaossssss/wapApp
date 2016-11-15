@@ -618,7 +618,7 @@ console.log(orderState);
     }
     if(isNegotiable == "0"){
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
-      $("#toBePaid").addClass("actual");
+      $("#price").addClass("actual");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
@@ -663,6 +663,7 @@ console.log(orderState);
     if(isPayOff == "1"){
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-success.png)");
       $("#btnRight").hide();
+      $("#price").removeClass("actual");
       $("#waitOrder").hide();
       $("#orderActual").show();
       $("#btnLeft").on("click",function(){
