@@ -501,6 +501,7 @@ console.log(orderState);
     });
 
     if(isNegotiable == "0"){
+      $("#orderPrice").show();
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -617,8 +618,9 @@ console.log(orderState);
       $("#specialPrice").hide();
     }
     if(isNegotiable == "0"){
+      $("#price").removeClass("actual");
+      $("#toBePaid").addClass("actual");
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
-      $("#price").addClass("actual");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
@@ -643,7 +645,7 @@ console.log(orderState);
       }
       if(startingPrice == null){
         $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
-        $("#servicePrice").hide();
+        // $("#servicePrice").hide();
         $("#toBePaid").addClass("actual");
         $("#btnRight").on("click",function(){
           window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -864,7 +866,9 @@ console.log(orderState);
         })
       })
       if(isNegotiable == '0'){
+        $("#price").removeClass("actual");
         $("#toBePaid").addClass("actual");
+        $("#waitOrder").show();
         $("#btnRight").on("click",function(){
           window.location.href="../pay/pay.html?orderId=" + orderId;
         })
@@ -889,6 +893,8 @@ console.log(orderState);
           })
         }
         if(startingPrice == null){
+          $("#waitOrder").show();
+          $("#price").removeClass("actual");
           $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
           $("#servicePrice").hide();
           $("#toBePaid").addClass("actual");
@@ -1325,6 +1331,9 @@ console.log(orderState);
       if(isNegotiable == '1'){
         if(startingPrice == null){
           $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
+          $("#servicePrice").hide();
+          $("#orderPrice").show();
+          $("#price").addClass("actual");
         }
         if(tp == null){
           $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
