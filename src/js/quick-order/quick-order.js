@@ -130,7 +130,8 @@ angular.module('com.wapapp.app',[])
 			.success(function(res){
 				console.log("获取服务说明",res);
 				if(res.Meta.ErrorCode === "0"){
-					// fw = $scope.fw = res.Body;
+					// fw = $scope.fw = res.Body;	
+					if(res.Body.Description && (res.Body.Description.indexOf("1") !== -1)){
 						var descriptionList = [];
 						descriptionList.push(res.Body.Description.slice(0,res.Body.Description.indexOf("2")));
 						descriptionList.push(res.Body.Description.slice(res.Body.Description.indexOf("2"),res.Body.Description.indexOf("3")));
@@ -139,6 +140,7 @@ angular.module('com.wapapp.app',[])
 						descriptionList.push(res.Body.Description.slice(res.Body.Description.indexOf("5"),res.Body.Description.indexOf("6")));
 						descriptionList.push(res.Body.Description.slice(res.Body.Description.indexOf("6"),res.Body.Description.indexOf("7")));
 						fw = $scope.fw = descriptionList;
+					}
 				}else{
 					fw = $scope.fw = null;
 				}	

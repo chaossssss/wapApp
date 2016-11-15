@@ -124,7 +124,7 @@
 		<!-- 活动 满足条件 beginning -->
 		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1" ng-cloak>
 			<!-- 满减活动	 -->
-			<div class="weui_cell no_access" style="padding-bottom:0;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
+			<div class="weui_cell no_access" style="padding:10px;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
 				<div class="weui_cell_hd">
 					<img src="/images/quick-order/i-gift.png" alt="" style="width:16px;margin-right:10px;display:block;">
 				</div>
@@ -137,7 +137,7 @@
 				</div>
 			</div>
 			<!-- 满返活动 无论是面议还是定价-->
-			<div style="padding:10px 10px;font-size:16px;" class="pred" ng-if="gt.PromotionRule.length>=1">
+			<div style="padding:10px;font-size:16px;" class="pred" ng-if="gt.PromotionRule.length>=1">
 				<span class="pro_box" ng-bind="gt.PromotionTitle"></span>
 			 	<span class="f15" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.PromotionRule[0].Upper" ng-bind="gt.PromotionName"></span>
 				<img ng-click="vm.dialogPexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
@@ -211,7 +211,9 @@
 		<div class="weui_cell_bd weui_cell_primary">
 			<p class="f15">服务说明</p>
 			<!-- <p class="f15" ng-bind="fw.Description"></p> -->
-			<p class="f13 lh24" ng-repeat="item in fw">{{item}}</p>
+			<p class="f13 lh24" ng-repeat="item in fw track by $index" ng-if="fw !== null" ng-cloak>
+				<span ng-bind="item"></span>
+			</p>
 		</div>
 	</div>
 	<!-- 服务说明 end-->

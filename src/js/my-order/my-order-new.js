@@ -68,6 +68,8 @@ angular.module('com.wapapp.app',['infinite-scroll'])
  				tip.toast = false;
  				if(res.Meta.ErrorCode === "0"){
 					window.location.reload();
+				}else{
+					
 				}
  				$scope.$apply();
  			})

@@ -29,23 +29,65 @@
 		<img src="/images/pay/icon_pay.png" alt="" class="icon-img">
 		<div class="pay-notice">
 			<p>支付成功</p>
-			<p>已支付 <span class="orange">￥80.0</span></p>
+			<p>已支付 <span class="orange">￥<span id="money"></span></span></p>
 		</div>
 		<div class="clear"></div>
 	</div>
 	<div class="ser-info">
 		<p>服务信息</p>
 		<div class="de-info">
-			<p>联 系 人：<span class="datas">王女士 13148366695</span></p>
-			<p>服务地址：<span class="datas">江干区迪凯国际中心2502</span></p>
-			<p>服务时间：<span class="datas">2016-08-18 15:15</span></p>
+			<p>联 系 人：<span class="datas"><span id="name"></span><span id="phone"></span></span></p>
+			<p>服务地址：<span class="datas" id="addr"></span></p>
+			<p>服务时间：<span class="datas" id="data"></span></p>
 		</div>	
 	</div>
 	<div class="two-link">
 		<div>
-			<a href="javascript:;" style="float:left;">查看订单</a>
-			<a href="javascript:;" style="float:right;">返回首页</a>
+			<a id="go-order-detail" href="javascript:;" style="float:left;">查看订单</a>
+			<a href="/template/map-index.html" style="float:right;">返回首页</a>
 		</div>
 	</div>
+
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>	
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>	
+<script>
+//获取url参数
+function getvl(name) {
+    var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+    if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
+    return "";
+} 
+$(function(){
+	var _getDetail = "http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx";
+	var token = window.sessionStorage.getItem("Token");
+	var id = getvl("orderId");
+	$.ajax({
+		method:"POST",
+		url: _getDetail,
+		data: {
+			Token:token,
+			OrderId: id 
+		}
+	}).success(function(res){
+		// console.log(res);
+		if(res.Meta.ErrorCode === "0"){
+			$("#money").text(res.Body.TotalPrice);
+			$("#name").text(res.Body.Service.AddressInfo.Contact);
+			$("#phone").text(res.Body.Service.AddressInfo.PhoneNumber);
+			$("#addr").text(res.Body.Service.AddressInfo.Address1+res.Body.Service.AddressInfo.Address2);
+			$("#data").text(res.Body.CreateTime);
+		}
+		if(res.Meta.ErrorCode === "2004"){
+			window.location.href = "/template/login/login.html";
+		}
+	}).error(function(res){
+		alert("服务器连接失败，请检查网络设置");
+	})
+
+	$("#go-order-detail").on("click",function(){
+		window.location.href = "/template/orderManage/order-detail.html?orderId="+id;
+	})
+})	
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// FastClick.attach(document.body);
+	FastClick.attach(document.body);
 	$rootScope.url = "http://192.168.1.191:3003";
 	$rootScope.token = window.sessionStorage.getItem("Token");
 	// $rootScope.token = $.cookie("Token");
@@ -133,7 +133,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					window.location.href = "/template/pay/success.html";
+					window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
