@@ -57,6 +57,33 @@ function getvl(name) {
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
 } 
+function getDatetime(tm){
+	var timestamp = tm;
+	var d = new Date(timestamp * 1000);    //根据时间戳生成的时间对象
+	var month = d.getMonth() + 1;
+	var date = d.getDate();
+	var hours = d.getHours();
+	var minutes = d.getMinutes();
+	var seconds = d.getSeconds()
+	if(month <= 9){
+	  month = "0" + month;
+	}
+	if(date <= 9){
+	  date = "0" + date;
+	}
+	if(hours <= 9){
+	  hours = "0" + hours;
+	}
+	if(minutes<= 9){
+	  minutes = "0" + minutes;
+	}
+	var date = (d.getFullYear()) + "-" + 
+	           month + "-" +
+	           date + " " + 
+	           hours + ":" + 
+	           minutes;
+	return date;
+}
 $(function(){
 	var _getDetail = "http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx";
 	var token = window.sessionStorage.getItem("Token");
@@ -69,13 +96,13 @@ $(function(){
 			OrderId: id 
 		}
 	}).success(function(res){
-		// console.log(res);
+		console.log(res);
 		if(res.Meta.ErrorCode === "0"){
 			$("#money").text(res.Body.TotalPrice);
 			$("#name").text(res.Body.Service.AddressInfo.Contact);
 			$("#phone").text(res.Body.Service.AddressInfo.PhoneNumber);
 			$("#addr").text(res.Body.Service.AddressInfo.Address1+res.Body.Service.AddressInfo.Address2);
-			$("#data").text(res.Body.CreateTime);
+			$("#data").text(getDatetime(res.Body.Service.ServiceStartAt));
 		}
 		if(res.Meta.ErrorCode === "2004"){
 			window.location.href = "/template/login/login.html";
