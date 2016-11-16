@@ -2,7 +2,9 @@ $(function(){
   var $contactWorker = $("#contactWorker");
   var $workerPhone = $("#workerPhone");
   var $cancelBtn = $("#cancelBtn");
-
+  $("#addRemark").on("click",function(){
+    window.location.href="order-remarks.html?orderId=" + orderId;
+  })
   function getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
       var r = window.location.search.substr(1).match(reg);
@@ -143,7 +145,6 @@ $(function(){
     $("#cancelOrderBtn").on("click",function(){
       cancelOrder(token,orderId);
       $("#cancelOrder1").hide();
-      location.reload();
     })
   })
   $("#orderDelete").on("click",function(){
@@ -491,16 +492,17 @@ console.log(orderState);
       $("#specialPrice").hide();
     }
 
-    $("#btnLeft").on("click",function(){
-      $("#cancelOrder1").css("display","block");
-      $("#cancelOrderBtn").on("click",function(){
-        cancelOrder(token,orderId);
-        $("#cancelOrder1").hide();
-        location.reload();
-      })
-    });
+    // $("#btnLeft").on("click",function(){
+    //   $("#cancelOrder1").css("display","block");
+    //   $("#cancelOrderBtn").on("click",function(){
+    //     cancelOrder(token,orderId);
+    //     $("#cancelOrder1").hide();
+    //     // location.reload();
+    //   })
+    // });
 
     if(isNegotiable == "0"){
+      $("#orderPrice").show();
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -528,7 +530,6 @@ console.log(orderState);
         $("#cancelOrderBtn").on("click",function(){
           cancelOrder(token,orderId);
           $("#cancelOrder1").hide();
-          location.reload();
         })
       });
     }
@@ -538,10 +539,10 @@ console.log(orderState);
       $("#orderActual").show();
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-success.png)");
       $("#btnLeft").on("click",function(){
-        $("#cancelOrder2").css("display","block");
-        $("#contactWorkerBtn").on("click",function(){
+        $("#cancelOrder1").css("display","block");
+        $("#cancelOrderBtn").on("click",function(){
           cancelOrder(token,orderId);
-          $("#cancelOrder2").hide();
+          $("#cancelOrder1").hide();
         })
       })
     }
@@ -617,8 +618,9 @@ console.log(orderState);
       $("#specialPrice").hide();
     }
     if(isNegotiable == "0"){
+      $("#price").removeClass("actual");
+      $("#toBePaid").addClass("actual");
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
-      $("#price").addClass("actual");
       $("#btnRight").on("click",function(){
         window.location.href="../pay/pay.html?orderId=" + orderId;
       })
@@ -643,7 +645,7 @@ console.log(orderState);
       }
       if(startingPrice == null){
         $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
-        $("#servicePrice").hide();
+        // $("#servicePrice").hide();
         $("#toBePaid").addClass("actual");
         $("#btnRight").on("click",function(){
           window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -864,7 +866,9 @@ console.log(orderState);
         })
       })
       if(isNegotiable == '0'){
+        $("#price").removeClass("actual");
         $("#toBePaid").addClass("actual");
+        $("#waitOrder").show();
         $("#btnRight").on("click",function(){
           window.location.href="../pay/pay.html?orderId=" + orderId;
         })
@@ -889,6 +893,8 @@ console.log(orderState);
           })
         }
         if(startingPrice == null){
+          $("#waitOrder").show();
+          $("#price").removeClass("actual");
           $("#statusBg").css("background-image","url(../../images/order-detail/neworders_added.png)");
           $("#servicePrice").hide();
           $("#toBePaid").addClass("actual");
@@ -1325,6 +1331,9 @@ console.log(orderState);
       if(isNegotiable == '1'){
         if(startingPrice == null){
           $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
+          $("#servicePrice").hide();
+          $("#orderPrice").show();
+          $("#price").addClass("actual");
         }
         if(tp == null){
           $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel3.png)");
@@ -1451,21 +1460,21 @@ console.log(orderState);
 
       /*--添加备注--*/
 
-  $("#addRemark").click(function(){
-    $("#userMemo").show();
-  });
-  $("#confirmBtn").click(function(){
-    var memoText = $("#memoText").val();
-    console.log(memoText);
-    if(memoText != ""){
+  // $("#addRemark").click(function(){
+  //   $("#userMemo").show();
+  // });
+  // $("#confirmBtn").click(function(){
+  //   var memoText = $("#memoText").val();
+  //   console.log(memoText);
+  //   if(memoText != ""){
       
-    }else{
-      console.log("不提交");
-    }
-  })
-  $("#cancelBtn,#confirmBtn").click(function(){
-    $("#userMemo").hide();
-  });
+  //   }else{
+  //     console.log("不提交");
+  //   }
+  // })
+  // $("#cancelBtn,#confirmBtn").click(function(){
+  //   $("#userMemo").hide();
+  // });
 
   function updateOrder(token,orderId){
     console.log("更新订单");
