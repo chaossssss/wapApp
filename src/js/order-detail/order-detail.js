@@ -277,6 +277,7 @@ $(function(){
       if(data.Body.PayOffTime != null){
         var payOffTime = getDatetime(data.Body.PayOffTime);
         $("#payOffTime").text(payOffTime);
+        payOffTimeElement = '<p class="weui_media_desc zj-fontsize order-time">付款时间:<span>' + payOffTime + '</span></p>';
       }
       $("#clinetPhone").text(data.Body.Service.AddressInfo.PhoneNumber);
 
@@ -460,7 +461,7 @@ console.log(orderState);
     $("#cancelTime").hide();
     // $("#specialPrice").hide();
     $("#finishTime").hide();
-    $("#orderTime").css("marginBottom","0px");
+    // $("#orderTime").css("marginBottom","0px");
     // $("#servicePrice").css("marginBottom","4px");
     // if(singlePrice == '面议'){
     //   $("#unit").hide();
@@ -537,6 +538,7 @@ console.log(orderState);
       $("#btnRight").hide();
       $("#waitOrder").hide();
       $("#orderActual").show();
+      $("#payTime").show();
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-success.png)");
       $("#btnLeft").on("click",function(){
         $("#cancelOrder1").css("display","block");
@@ -667,6 +669,7 @@ console.log(orderState);
       $("#btnRight").hide();
       $("#price").removeClass("actual");
       $("#waitOrder").hide();
+      $("#payTime").show();
       $("#orderActual").show();
       $("#btnLeft").on("click",function(){
         $("#cancelOrder1").css("display","block");
@@ -868,6 +871,7 @@ console.log(orderState);
       if(isNegotiable == '0'){
         $("#price").removeClass("actual");
         $("#toBePaid").addClass("actual");
+
         $("#waitOrder").show();
         $("#btnRight").on("click",function(){
           window.location.href="../pay/pay.html?orderId=" + orderId;
@@ -934,6 +938,13 @@ console.log(orderState);
       $("#cancelTime").hide();
       $("#finishTime").hide();
       $("#waitOrder").hide();
+      if(isNegotiable == "0"){
+        $("#payTime").hide();
+        $("#acceptTime").before(payOffTimeElement);
+      }
+      if(isNegotiable == "1"){
+        $("#statusBg").css("background-image","url(../../images/order-detail/newworker-uncomfirms.png)");
+      }
       if(activity == null){
         $("#waitOrder").hide();
         // $("#orderPrice").css("marginBottom","4px");
@@ -1093,6 +1104,10 @@ console.log(orderState);
     $("#cancelTime").hide();
     // $("#specialPrice").hide();
     $("#waitOrder").hide();
+    if(isNegotiable == "0"){
+      $("#payTime").hide();
+      $("#acceptTime").before(payOffTimeElement);
+    }
     $("#btnRight").on("click",function(){
       completeOrder(token,orderId);
       // location.reload();
@@ -1247,14 +1262,20 @@ console.log(orderState);
        $("#orderPrice").css("marginBottom","4px");
      }
      if(isNegotiable == '1'){
-       $("#single").text("￥" + startingPrice);
-       $("#single").addClass("actual");
-       $("#price").hide();
-       $("#unit").text("起");
-       $("#multiple").hide();
-       $("#waitOrder").hide();
-       $("#orderPrice").hide();
-       $("#specialPrice").hide();
+      if(tp == null){
+        $("#single").text("￥" + startingPrice);
+        $("#single").addClass("actual");
+        $("#price").hide();
+        $("#unit").text("起");
+        $("#multiple").hide();
+        $("#waitOrder").hide();
+        $("#orderPrice").hide();
+        $("#specialPrice").hide();
+      }
+       if(startingPrice == null){
+        $("#servicePrice").hide();
+        $("#orderPrice").show();
+       }
      }
      $("#status").css("paddingTop","90px");
      $("#cancelTime").css("marginBottom","0px");
@@ -1264,6 +1285,8 @@ console.log(orderState);
       $("#filling2").show();
       $("#refundStatus").text('退款中');
       if(isNegotiable == '0'){
+        $("#payTime").hide();
+        $("#acceptTime").before(payOffTimeElement);
         $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel6.png)");
      }
     }
