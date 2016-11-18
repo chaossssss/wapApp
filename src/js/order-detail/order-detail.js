@@ -5,6 +5,12 @@ $(function(){
   $("#addRemark").on("click",function(){
     window.location.href="order-remarks.html?orderId=" + orderId;
   })
+  $("#refreshBtn").on("click",function(){
+    location.reload();
+  })
+  $("#backhomeBtn").on("click",function(){
+    window.location.href="../my-order/my-order-new.html?flag=1";
+  })
   function getQueryString(name) {
       var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
       var r = window.location.search.substr(1).match(reg);
