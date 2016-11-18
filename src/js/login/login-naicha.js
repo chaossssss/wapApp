@@ -51,7 +51,7 @@ $(function(){
            InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
           $.ajax({
             method:"POST",
-            url:"http://192.168.1.191:3003/api/v1/ClientInfo/CheckPhone",
+            url: CONFIG.IP+"api/v1/ClientInfo/CheckPhone",
             data:{
               Phone:phone
             },
@@ -95,7 +95,7 @@ $(function(){
     console.log(vercode);
     $.ajax({
       method:"POST",
-      url:"http://192.168.1.191:3003/api/v1/ClientInfo/GetBenifit",
+      url: CONFIG.IP+"api/v1/ClientInfo/GetBenifit",
       data:{
         Phone:phone,
         Captcha:vercode,
@@ -127,7 +127,7 @@ $(function(){
     var password = $("#pwdNum").val();
     $.ajax({
       method:"POST",
-      url:"http://192.168.1.191:3003/api/v1/ClientInfo/NewUserGetBenifit",
+      url: CONFIG.IP+"api/v1/ClientInfo/NewUserGetBenifit",
       data:{
         LoginName:phone,
         Password:password,
