@@ -11,7 +11,9 @@ angular.module('com.wapapp.app',[])
         if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     } 
-    $rootScope.orderId = getvl("orderId");
+    // $rootScope.orderId = getvl("orderId");
+    $rootScope.orderId = getvl("state");
+    $rootScope.code = getvl("code");
 }])
 .controller('payCtrl',['$rootScope','$scope','getMyInfo','getOdetail','payForService',function($rootScope,$scope,getMyInfo,getOdetail,payForService){
 	var vm = $scope.vm = {};
@@ -41,7 +43,6 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 
-
 	getMyInfo.event($rootScope.token)
 		.success(function(res){
 			console.log("个人信息，获取余额",res);
@@ -50,7 +51,7 @@ angular.module('com.wapapp.app',[])
 			}
 			$scope.$apply();
 		})
- 
+
  	getOdetail.event($rootScope.token,$rootScope.orderId)
  		.success(function(res){
  			console.log("订单详情",res);
@@ -106,12 +107,40 @@ angular.module('com.wapapp.app',[])
 	            OrderId: $rootScope.orderId,
 	            CouponId: "",
 	            WxPay: vm.otherPrice,
-	            BalancePay: vm.Price
+	            BalancePay: vm.Price,
+	            Code: $rootScope.code
  			}).success(function(res){
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "/template/pay/success.html";
+					//微信支付
+				    function onBridgeReady(){
+					   WeixinJSBridge.invoke(
+					       'getBrandWCPayRequest', {
+					           "appId": res.Body.appId,     //公众号名称，由商户传入     
+					           "timeStamp":	res.Body.timeStamp,         //时间戳，自1970年以来的秒数     
+					           "nonceStr": res.Body.nonceStr, //随机串     
+					           "package": res.Body.package,     
+					           "signType": res.Body.signType,         //微信签名方式     
+					           "paySign": res.Body.paySign //微信签名 
+					       },
+					       function(res){     
+					           if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+					           		window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
+					           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+					       }
+					   ); 
+					}
+					if (typeof WeixinJSBridge == "undefined"){
+					   if( document.addEventListener ){
+					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+					   }else if (document.attachEvent){
+					       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+					       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+					   }
+					}else{
+					   onBridgeReady();
+					}
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -156,7 +185,7 @@ angular.module('com.wapapp.app',[])
 				$scope.loadingToast = false;
 				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
-					window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
+					// window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -166,7 +195,7 @@ angular.module('com.wapapp.app',[])
  		}
  		// 微信
  		if(vm.yeIschecked === false && vm.zfbIschecked === false && vm.wxIschecked === true){
- 			console.log("微信支付:");
+ 			console.log("微信支付");
  			console.log(vm.wxOrzfb === "weixin");
  			$scope.loadingToast = true;
  			payForService.weixin({
@@ -174,12 +203,40 @@ angular.module('com.wapapp.app',[])
 	            OrderId: $rootScope.orderId,
 	            CouponId: "",
 	            WxPay: vm.Price,
-	            BalancePay: 0
+	            BalancePay: 0,
+	            Code: $rootScope.code
  			}).success(function(res){
-				console.log(res);
+				console.log("微信支付：",res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
+					//微信支付
+				    function onBridgeReady(){
+					   WeixinJSBridge.invoke(
+					       'getBrandWCPayRequest', {
+					           "appId": res.Body.appId,     //公众号名称，由商户传入     
+					           "timeStamp":	res.Body.timeStamp,         //时间戳，自1970年以来的秒数     
+					           "nonceStr": res.Body.nonceStr, //随机串     
+					           "package": res.Body.package,     
+					           "signType": res.Body.signType,         //微信签名方式     
+					           "paySign": res.Body.paySign //微信签名 
+					       },
+					       function(res){     
+					           if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+					           	window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
+					           }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+					       }
+					   ); 
+					}
+					if (typeof WeixinJSBridge == "undefined"){
+					   if( document.addEventListener ){
+					       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+					   }else if (document.attachEvent){
+					       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+					       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+					   }
+					}else{
+					   onBridgeReady();
+					}
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -195,10 +252,11 @@ angular.module('com.wapapp.app',[])
 		window.sessionStorage.setItem("AlipayUrl",aplipayUrl);
         window.location.href= "/template/pay/alipay.html";
     }
+
 }])
 .factory('getMyInfo',['$rootScope',function($rootScope){
 	// 获取个人信息
-	var _getInfo = $rootScope.url+"/api/v1/ClientInfo/Index";
+	var _getInfo = $rootScope.url+"api/v1/ClientInfo/Index";
 	var getInfo = function(token){
 		return $.ajax({
 					method:"POST",
@@ -222,7 +280,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('getOdetail',['$rootScope',function($rootScope){
 	// 获取订单详情
-	var _getDetail = $rootScope.url+"/api/v2/OrderInfo/GetOrderInfoEx";
+	var _getDetail = $rootScope.url+"api/v2/OrderInfo/GetOrderInfoEx";
 	var getDetail = function(token,id){
 		return $.ajax({
 					method:"POST",
@@ -246,9 +304,9 @@ angular.module('com.wapapp.app',[])
 	};
 }])
 .factory('payForService',['$rootScope',function($rootScope){
-	var _accountPath = $rootScope.url+"/api/v2/orderinfo/BalancePay"; 
-	var _zhifubaoPath = $rootScope.url+"/api/v2/orderinfo/GetAlipaySign";
-	var _weixinPath = $rootScope.url+"/api/v2/orderinfo/GetWxpaySign"
+	var _accountPath = $rootScope.url+"api/v2/orderinfo/BalancePay"; 
+	var _zhifubaoPath = $rootScope.url+"api/v2/orderinfo/GetAlipaySign";
+	var _weixinPath = $rootScope.url+"api/v2/orderinfo/GetWxpaySign"
 
 	var accountPay = function(data){
 		return $.ajax({

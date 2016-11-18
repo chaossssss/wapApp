@@ -42,7 +42,13 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 	//支付订单
  	vm.pay = function(orderId){
  		console.log("订单id",orderId);
- 		window.location.href = "/template/pay/pay.html?orderId="+orderId;
+ 		// window.location.href = "/template/pay/pay.html?orderId="+orderId;
+ 		//判断是不是微信浏览器
+        if(/(micromessenger)/i.test(navigator.userAgent)){
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+        }else{
+          window.location.href="/template/pay/pay.html?state=" + orderId;
+        }
  	}
  	//确认订单完成
  	vm.confirm = function(orderId){

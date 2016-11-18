@@ -1,7 +1,7 @@
 'use strict'
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	FastClick.attach(document.body);
+	// FastClick.attach(document.body);
 	$rootScope.token = window.sessionStorage.getItem("Token");
 
 	//获取url参数
@@ -199,10 +199,10 @@ angular.module('com.wapapp.app',[])
 		switch ($rootScope.channel)
 		{
 			case "0":
-				window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
+				window.location.href = '/template/location/add-location.html'+$rootScope.search;
 				break;
 			case "1":
-				window.location.href = '/template/location/add-location.html?channel='+$rootScope.channel;
+				window.location.href = '/template/location/add-location.html'+$rootScope.search;
 				break;
 			default:
 				window.location.href = '/template/location/add-location.html';

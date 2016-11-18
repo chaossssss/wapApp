@@ -33,7 +33,7 @@
 				<span ng-if="od.ServiceProviderGender === '0'">师傅</span>
 				<span ng-if="od.ServiceProviderGender === '1'">阿姨</span>
 			</div>
-			<div class="weui_cell_ft">
+			<div class="weui_cell_ft" ng-if="od.PhoneNumber">
 				<a ng-href="tel:od.PhoneNumber" href="javascript:;">
 					<img src="/images/pay/phone.png" alt="" style="width: 30px;">
 				</a>
@@ -68,7 +68,7 @@
 	</div>
 	<div class="weui_cells mt10 weui_cells_access">
 		<!-- 满足活动情况 -->
-		<div class="weui_cell" ng-show="od.Activity && od.Activity.SpecialRule.length > 0" ng-cloak>
+		<div class="weui_cell" ng-show="(od.Activity && od.Activity.SpecialRule.length > 0) && (od.Activity.SpecialRule[0].Minus !== '0')" ng-cloak>
 			<div class="weui_cell_bd weui_cell_primary">
 				<p ng-bind="od.Activity.SpecialTitle"></p>
 			</div>
@@ -144,7 +144,6 @@
 			<p>2.如有疑问请联系客服 <a ng-href="tel:4008-262-056" href="javascript:;"><span class="pblue">4008-262-056</span></a></p>
 		</div>
 	</div>
-	
 </form>
 
 
@@ -198,7 +197,7 @@
 </div>
 
 
-
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"> </script>
 <script src="/js/common/config.min.js"></script>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="/js/common/jquery.cookie.min.js"></script>

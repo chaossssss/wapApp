@@ -83,7 +83,7 @@
 					        	<div class="weui_cell_ft" style="max-width:230px;" ng-bind="item.ServiceAddress"></div>
 					        </div>
 					        <!-- 服务价格的显示 面议 1 IsNegotiable-->
-					        <div class="zj_cell plr10" ng-if="item.IsNegotiable === '1'">
+					        <div class="zj_cell plr10" ng-if="item.IsNegotiable === '1' && item.StartingPrice">
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
@@ -96,14 +96,6 @@
 					        	<div class="weui_cell_bd weui_cell_primary">
 					        		<p class="fc8">服务价格</p>
 					        	</div>
-					        	<!-- 区间价格 -->
-								<!-- <div class="weui_cell_ft" ng-show="item.MinPrice">
-					        		¥ <span ng-bind="item.MinPrice"></span>-<span ng-bind="item.MaxPrice"></span>/<span ng-bind="item.UnitName"></span>
-					        		<span class="ml30">
-					        			x
-					        			<span ng-bind="item.TotalCount"></span>
-					        		</span>
-					        	</div> -->
 					        	<!-- 定价价格 -->
 					        	<div class="weui_cell_ft">
 					        		¥ <span ng-bind="item.Price"></span>/<span ng-bind="item.UnitName"></span>

@@ -91,6 +91,11 @@ angular.module('com.wapapp.app',[])
 				vm.errorMsg = "不能小于3小时";
 				vm.Total = 3;
 			}
+			if(vm.Total <= 0){
+				vm.dialogshow = true;
+				vm.errorMsg = "数量不能小于1";
+				vm.Total = 1;
+			}
 			// qtyService.event(vm.serviceTypeObj.ServiceTypeId)
 			// 	.success(function(res){
 			// 		console.log("服务数量",res);

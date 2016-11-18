@@ -512,7 +512,14 @@ console.log(orderState);
       $("#orderPrice").show();
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
       $("#btnRight").on("click",function(){
-        window.location.href="../pay/pay.html?orderId=" + orderId;
+        // window.location.href="../pay/pay.html?orderId=" + orderId;
+        //判断是不是微信浏览器
+        if(/(micromessenger)/i.test(navigator.userAgent)){
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+        }else{
+          window.location.href="../pay/pay.html?state=" + orderId;
+        }
+       
       })
     }
     if(isNegotiable == '1'){
@@ -630,7 +637,13 @@ console.log(orderState);
       $("#toBePaid").addClass("actual");
       $("#statusBg").css("background-image","url(../../images/order-detail/newpay-check.png)");
       $("#btnRight").on("click",function(){
-        window.location.href="../pay/pay.html?orderId=" + orderId;
+        // window.location.href="../pay/pay.html?orderId=" + orderId;
+        //判断是不是微信浏览器
+        if(/(micromessenger)/i.test(navigator.userAgent)){
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+        }else{
+          window.location.href="../pay/pay.html?state=" + orderId;
+        }
       })
     }
     if(isNegotiable == "1"){
@@ -656,7 +669,14 @@ console.log(orderState);
         // $("#servicePrice").hide();
         $("#toBePaid").addClass("actual");
         $("#btnRight").on("click",function(){
-          window.location.href="../pay/pay.html?orderId=" + orderId;
+          // window.location.href="../pay/pay.html?orderId=" + orderId;
+          
+            //判断是不是微信浏览器
+          if(/(micromessenger)/i.test(navigator.userAgent)){
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+          }else{
+            window.location.href="../pay/pay.html?state=" + orderId;
+          }
         })
       }
     }
@@ -880,7 +900,13 @@ console.log(orderState);
 
         $("#waitOrder").show();
         $("#btnRight").on("click",function(){
-          window.location.href="../pay/pay.html?orderId=" + orderId;
+          // window.location.href="../pay/pay.html?orderId=" + orderId;
+         //判断是不是微信浏览器
+        if(/(micromessenger)/i.test(navigator.userAgent)){
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+        }else{
+          window.location.href="../pay/pay.html?state=" + orderId;
+        }
         })
       }
       if(isNegotiable == '1'){
@@ -909,7 +935,14 @@ console.log(orderState);
           $("#servicePrice").hide();
           $("#toBePaid").addClass("actual");
           $("#btnRight").on("click",function(){
-            window.location.href="../pay/pay.html?orderId=" + orderId;
+            // window.location.href="../pay/pay.html?orderId=" + orderId;
+            //判断是不是微信浏览器
+        //判断是不是微信浏览器
+        if(/(micromessenger)/i.test(navigator.userAgent)){
+          window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+        }else{
+          window.location.href="../pay/pay.html?state=" + orderId;
+        }
           })
         }
       }
