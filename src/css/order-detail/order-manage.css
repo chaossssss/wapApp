@@ -162,15 +162,15 @@ div,li,a{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 /*--新增加的按钮--*/
 .refresh-btn{
   position: absolute;
-  top: 40px;
-  left: 315px;
-  width: 40px;
-  height: 40px;
+  top: 20px;
+  left: 330px;
+  width: 30px;
+  height: 30px;
 }
 .backhome-btn{
   position: absolute;
-  top: 40px;
-  left: 260px;
-  width: 40px;
-  height: 40px;
+  top: 60px;
+  left: 330px;
+  width: 30px;
+  height: 30px;
 }
