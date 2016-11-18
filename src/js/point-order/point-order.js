@@ -28,6 +28,8 @@ angular.module('com.wapapp.app',[])
 	
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
+	vm.showImage = false;	//是否显示上传图片
+
 	vm.sub = function(){
 		if(vm.Total >0){
 			vm.Total -= 1;
@@ -372,7 +374,7 @@ angular.module('com.wapapp.app',[])
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
             if (file.type.indexOf("image") == 0) {
-                if (file.size >= 5120000) {
+                if (file.size >= 5120000000) {
                     alert('您这张"'+ file.name +'"图片大小过大，应小于5000k');    
                 } else {
                     arrFiles.push(file);    

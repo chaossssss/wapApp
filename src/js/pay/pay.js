@@ -4,7 +4,6 @@ angular.module('com.wapapp.app',[])
 	FastClick.attach(document.body);
 	$rootScope.url = CONFIG.IP;
 	$rootScope.token = window.sessionStorage.getItem("Token");
-	// $rootScope.token = $.cookie("Token");
  
 	//获取url参数
     function getvl(name) {

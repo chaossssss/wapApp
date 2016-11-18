@@ -207,24 +207,26 @@
 		<!-- 活动 满足条件 endind -->
 	<!-- 备注 & 图片 begin-->
 	<div class="weui_cells weui_cells_access">
-		<div class="weui_cell no_access">
+		<div class="weui_cell no_access" style="padding:10px;">
 			<div class="weui_cell_bd weui_cell_primary">
 				<h4 class="fc8">备注</h4>
-				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea h50" ng-model="vm.ServiceContent" maxlength="200"></textarea>
+				<textarea name="" id="textarea" textarea-size cols="20" rows="4" placeholder="描述您的服务要求，例如服务总时间，对工人的要求等" class="weui_textarea h20" ng-model="vm.ServiceContent" maxlength="200"></textarea>
 				<div class="weui_textarea_counter">
 					<span ng-bind="textarea_size"></span>
 					/200
 				</div>
 			</div>
 		</div>
-		<div class="weui_cell weui_cells_form no_access" ng-controller="uploaderFileCtrl">
+		<div class="weui_cell weui_cells_form no_access" ng-controller="uploaderFileCtrl" style="padding:10px;">
 			<div class="weui_cell_bd weui_cell_primary no_access">
 				<div class="weui_uploader">
 					<div class="weui_uploader_hd weui_cell no_access">
 						<div class="weui_cell_bd weui_cell_primary">上传图片（供工人参考，最多8张）</div>
-						<!-- <div class="weui_cell_ft">0/2</div> -->
+						<div class="zj_cell_ft" ng-click="vm.showImage = !vm.showImage">
+							<img src="/images/quick-order/addition.png" alt="" style="width: 20px;vertical-align:middle;">
+						</div>
 					</div>
-					<div class="weui_uploader_bd">
+					<div class="weui_uploader_bd mt10" ng-show="vm.showImage">
 						<ul class="weui_uploader_files">
 							<!-- <li class="weui_uploader_file" style="background-image:url(http://shp.qpic.cn/weixinsrc_pic/pScBR7sbqjOBJomcuvVJ6iacVrbMJaoJZkFUIq4nzQZUIqzTKziam7ibg/);">
 								<i></i>

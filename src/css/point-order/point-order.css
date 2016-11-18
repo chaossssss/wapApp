@@ -35,6 +35,9 @@ ul,li {
 .ml10 {
 	margin-left: 10px;
 }
+.mt10 {
+	margin-top: 10px;
+}
 .mt20 {
 	margin-top: 20px;
 }
@@ -90,6 +93,9 @@ ul,li {
 .container {
 	margin-left: auto;
 	margin-right: auto;
+}
+.h20 {
+	height: 20px;
 }
 .h50 {
 	height: 50px;
@@ -479,6 +485,10 @@ ul,li {
 	font-size: 14px;
 	line-height: 20px;
 	padding:0 6px;
+}
+/*覆盖的样式*/
+.weui_uploader_hd {
+	padding: 0;
 }
 
 

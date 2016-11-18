@@ -23,6 +23,8 @@ angular.module('com.wapapp.app',[])
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
+
+
 	// 搜索服务类型，flag条显示更多按钮
 	vm.flag0 = true; 	//热门服务
 	vm.flag168 = true;	//安装 
@@ -32,8 +34,10 @@ angular.module('com.wapapp.app',[])
 	vm.flag172 = true;	//装修
 	// vm.dateTen = ["1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"];
 	// vm.unitPrice = 0;
+	
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
+	vm.showImage = false;	//是否显示上传图片
 
 	vm.sub = function(){
 		if(vm.Total >0){
@@ -365,8 +369,8 @@ angular.module('com.wapapp.app',[])
         var arrFiles = [];
         for (var i = 0, file; file = files[i]; i++) {
             if (file.type.indexOf("image") == 0) {
-                if (file.size >= 512000) {
-                    alert('您这张"'+ file.name +'"图片大小过大，应小于500k');    
+                if (file.size >= 5120000000) {
+                    alert('您这张"'+ file.name +'"图片大小过大，应小于50000k');    
                 } else {
                     arrFiles.push(file);    
                 }           
