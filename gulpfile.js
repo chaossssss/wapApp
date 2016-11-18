@@ -77,12 +77,12 @@ gulp.task('build:html',function(){
 //压缩js
 gulp.task('build:js',function(){
 	gulp.src(paths.js+'/**/*.js')
-		.pipe(sourcemaps.init())
+		// .pipe(sourcemaps.init())
 		.pipe(uglify())
 		.pipe(rename(function (path) {
             path.basename += '.min';
         }))
-        .pipe(sourcemaps.write('./'))
+        // .pipe(sourcemaps.write('./'))
     .pipe(replace({
             original : {
               resProxy : /\@{3}RESPREFIX\@{3}/g,
@@ -101,13 +101,13 @@ gulp.task('build:js',function(){
 //压缩css
 gulp.task('build:css',function(){
 	gulp.src(paths.css+'/**/*.css')
-		.pipe(sourcemaps.init())
+		// .pipe(sourcemaps.init())
 		.pipe(postcss([autoprefixer({browsers:['last 2 versions']})]))
 		.pipe(minifyCSS())
 		.pipe(rename(function (path) {
             path.basename += '.min';
         }))
-        .pipe(sourcemaps.write('./'))
+        // .pipe(sourcemaps.write('./'))
         .pipe(replace({
               original : {
                 resProxy : /\@{3}RESPREFIX\@{3}/g,
