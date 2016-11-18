@@ -117,7 +117,7 @@
 		<!-- 活动 满足条件 beginning -->
 		<div class="weui_cells weui_cells_access" ng-if="gt.PromotionRule.length>=1 || gt.SpecialRule.length>=1" ng-cloak>
 			<!-- 满减活动	 -->
-			<div class="weui_cell no_access" style="padding:10px;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
+			<div class="weui_cell no_access" style="padding:10px;" ng-if="(vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper) && (gt.SpecialRule[0].Upper !== '0')">
 				<div class="weui_cell_hd">
 					<img src="/images/quick-order/i-gift.png" alt="" style="width:16px;margin-right:10px;display:block;">
 				</div>
@@ -144,8 +144,9 @@
 			<div class="weui_cell no_access" style="padding:10px;font-size:15px;" ng-if="vm.serviceTypeObj.PriceType == '1'">
 				<div class="weui_cell_bd flex2">
 					<p>订单总价&nbsp;¥
-						<span ng-bind="vm.serviceTypeObj.Price*vm.Total"></span>
-						<span class="pl10 ml10" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">优惠&nbsp;¥<span ng-bind="gt.SpecialRule[0].Minus"></span></span>
+						<span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
+						<span class="pl10 ml10" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">
+						优惠&nbsp;¥<span ng-if="gt.SpecialRule[0].Minus !== '0'" ng-bind="gt.SpecialRule[0].Minus"></span></span>
 					</p>
 				</div>
 				<div class="zj_cell_right" style="color:#000" ng-if="gt.SpecialRule.length == 0">
