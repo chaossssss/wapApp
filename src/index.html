@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,53 +11,331 @@
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
-	<title>模版测试</title>
-	
-	<!-- link和script的引用后缀要加上min -->
-	<!-- <link type="text/css" rel="stylesheet" href="css/test.min.css"> -->
-	<link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+	<title>首页</title>
+  
+  <link rel="stylesheet" href="/css/style.min.css">
+  <link rel="stylesheet" href="/css/weui.min.css">
+  <link rel="stylesheet" href="/css/map/map-index.min.css">
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UvjqfTEqblSQuarwwxfObc5Zl6TK11HL"></script>
 </head>
 <body>
-	
-	<h1>各模块快速导航</h1>
+  <div id="wapper">
+    <div id="search_bar" class="weui_search_bar flexc">
+      <div class="tc" id="left">
+        <img id="leftImg" src="/images/map/btn_personal.png" alt="" style="width:25px;display:block;">
+      </div>
+      <form class="weui_search_outer flex3">
+        <div class="weui_search_inner">
+          <i class="weui_icon_search"></i>
+          <input type="search" id="search_input" placeholder="搜索" required="" class="weui_search_input">
+          <a href="javascript:;" id="search_clear" class="weui_icon_clear"></a>
+        </div>
+        <label for="search_input" id="search_text" class="weui_search_text">
+          <i class="weui_icon_search"></i>
+          <span>搜索</span>
+        </label>
+      </form>
+      <div class="tc" id="right">
+          <img src="/images/map/btn-information.png" alt="" style="width:25px;display:block;">
+      </div>
+      <a href="javascript:;" id="search_cancel" class="weui_search_cancel">取消</a>
+      <a href="javascript:;" id="search_btn" class="zj_search_btn">搜索</a>
+    </div>
+  </div>
+  <div id="container"></div>  
+  
+  <div id="result" style="display:none">
+    <div class="weui_cells_title">热门服务</div>
+    <ul class="hot-service">
+      <!-- <li class="fl">小时工0</li> -->
+    </ul>
+  </div>
 
-	<h2>地图首页模块</h2>
-	<h3><a href="/template/map-index.html">地图首页</a></h3>
-
-	<h2>一键下单&指定下单模块</h2>
-	<!-- channel=1 指定下单 -->
-	<h3><a href="/template/map/ser-location.html">服务地址小地图</a></h3>
-
-	<h3><a href="/template/location/mag-location.html">服务地址</a></h3>	
-	<h3><a href="/template/quick-order/quick-order.html?channel=1">一键下单</a></h3>	
-	<h3><a href="/template/point-order/point-order.html?channel=0&type=1&markid=5">指定下单</a></h3>	
-	
-	<h2>支付模块</h2>
-	<h3><a href="/template/pay/pay.html?orderId=5961598f-ed7b-e611-a80e-14dda950621b">支付</a></h3>
-	<h3><a href="/template/pay/error.html">支付失败</a></h3>	
-	<h3><a href="/template/pay/success.html">支付成功</a></h3>	
-
-	<h2>个人中心模块</h2>
-	<h3><a href="/template/my-home/my-home.html">个人中心</a></h3>
-	<h3><a href="/template/my-home/my-qrcode.html">我的二维码</a></h3>
-	<h3><a href="/template/">修改密码</a></h3>
-
-	<h2>工人商户信息模块</h2>
-	<h3><a href="/template/worker-detail/worker-info.html">工人信息</a></h3>
-	<h3><a href="/template/boss-detail/boss-info.html">商户信息</a></h3>
-
-	<h2>登录注册模块</h2>
-	<h3><a href="/template/login/login.html">登录</a></h3>
-	<h3><a href="/template/login/regist.html">注册</a></h3>
-	<h3><a href="/template/worker-detail/worker-info.html">忘记密码</a></h3>
-
-	<h2>订单</h2>
-	<h3><a href="/template/my-order/my-order.html">订单管理</a></h3>
-	<h3><a href="/template/orderManage/order-detail.html">订单详情</a></h3>
+  <div id="rightBox" style="">
+    
+  </div>  
+  
 
 
-<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
+<script src="/js/common/config.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="/js/common/jquery.cookie.min.js"></script>
+<script src="/js/map/map-index.min.js"></script>
+
+<script>
+  $(function(){
+    FastClick.attach(document.body);
+
+    var $height = $(window).height();
+    $("#container").height($height-44);
+
+    var token = window.sessionStorage.getItem("Token");
+    if(token){
+      $("#leftImg").attr("src","/images/map/btn_personal_active.png");
+    }
+    // $("#leftImg").on("click",function(){
+    //   alert("1");
+    //   var a = window.sessionStorage.getItem("Token");
+    //   if(a != undefined){
+    //     window.location.href = "/template/my-home/my-home.html";
+    //   }
+    // })
+    
+  })
+  $(function(){
+    $('#wapper').on('focus', '#search_input', function () {
+          // var $weuiSearchBar = $('#search_bar');
+          // $weuiSearchBar.addClass('weui_search_focusing');
+          $("#search_cancel").show();
+          $("#search_text").hide();
+
+          $("#left").hide();
+          $("#right").hide();
+          $("#container").hide();
+          $("#result").show();
+
+          if($(this).val()){
+            $("#search_cancel").hide();
+            $("#search_btn").show();
+          }else{
+            $("#search_cancel").show();
+            $("#search_btn").hide();
+          }
+      }).on('blur', '#search_input', function () {
+          // var $weuiSearchBar = $('#search_bar');
+          // $weuiSearchBar.removeClass('weui_search_focusing');
+          $("#search_cancel").hide();
+          $("#search_text").show();
+
+          if ($(this).val()) {
+              $('#search_text').hide();
+          } else {
+              $('#search_text').show();
+          }
+      }).on('input', '#search_input', function () {
+          var $search_cancel = $("#search_cancel");
+          var $search_btn = $("#search_btn");
+          if($(this).val()){
+            $search_cancel.hide();
+            $search_btn.show();
+          }else{
+            $search_cancel.show();
+            $search_btn.hide();
+          }
+          // var $searchShow = $("#search_show");
+          // if ($(this).val()) {
+          //     $searchShow.show();
+          // } else {
+          //     $searchShow.hide();
+          // }
+      }).on('touchend', '#search_cancel', function () {
+          // $("#search_show").hide();
+          $('#search_input').blur().val('');
+          $("#search_cancel").hide();
+
+          $("#left").show();
+          $("#right").show();
+          $("#container").show();
+          $("#result").hide();
+          
+      }).on('touchend', '#search_clear', function () {
+          // $("#search_show").hide();
+          $('#search_input').val('');
+
+          $("#search_cancel").show();
+          $("#search_btn").hide();
+      }).on('touchend','#search_btn',function(){
+
+          $("#container").show();
+          $("#left").show();
+          $("#right").show();
+          $("#search_btn").hide();
+          $("#search_clear").hide();
+          $("#result").hide();
+
+          //短暂显示效果
+          var $search_input = $("#search_input").val();
+          var point = mk.getPosition();
+          searchData(point.lng,point.lat);
+      });
+      $("#result").on('touchend','.hot-service li',function(){
+        var text = $(this).text();
+        $("#search_input").val(text);
+
+        $("#search_cancel").hide();
+        $("#search_btn").show();
+      })
+      //点击左侧图标
+      $("#left").on("click",function(){
+        var token = window.sessionStorage.getItem("Token");
+        if(token != undefined){
+          window.location.href = "/template/my-home/my-home.html";
+        }else{
+          window.location.href = "/template/login/login.html";
+        }
+      })
+      //点击右侧图标
+      $("#right").on("click",function(){
+
+      })
+  }) 
+</script>
+<script>
+var mk = null; //定位点
+var map = new BMap.Map("container");          // 创建地图实例  
+var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
+map.centerAndZoom(point, 15); 	
+
+var sessionStorage = window.sessionStorage;
+$("#search_input").val('');
+
+//移动地图事件
+map.addEventListener("moveend",function(){
+  console.log("地图移动结束时触发此事件");
+  var point_c = map.getCenter();
+  console.log("移动定位中点",point_c);
+  mk.setPosition(point_c);
+  searchData(point_c.lng,point_c.lat);
+
+  sessionStorage.setItem("Map_Lng",point_c.lng);
+  sessionStorage.setItem("Map_Lat",point_c.lat+0.019439); //加上百度坐标偏移
+
+  console.log("移动后定位点的坐标",mk.getPosition());
+})
+
+//数据筛选
+/**
+ * [searchData 数据筛选]
+ * QueryStr存在的情况下，QueryType为0,文字搜索。
+ * QueryStr不存在的情况下，QueryType为3，默认搜索
+ * @param  {[type]} lng [经度]
+ * @param  {[type]} lat [纬度]
+ * @return {[type]}     [null]
+ */
+function searchData(lng,lat){
+  var $input = $("#search_input").val();
+  var $worker = $("#worker").hasClass("active");
+  var $boss = $("#boss").hasClass("active");
+
+  if($input && $worker && $boss ){
+    var testData0 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "0",
+      QueryType: "0",
+      QueryStr: $input
+    }
+    getData(testData0);
+  }else if($input && $worker){
+    var testData1 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "1",
+      QueryType: "0",
+      QueryStr: $input
+    }
+    getData(testData1);
+  }else if($input && $boss){
+    var testData2 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "2",
+      QueryType: "0",
+      QueryStr: $input
+    }
+    getData(testData2);
+  }else if($worker && $boss){
+    var testData3 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "0",
+      QueryType: "3"
+    }
+    getData(testData3);
+  }else if($worker){
+    var testData4 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "1",
+      QueryType: "3"
+    }
+    getData(testData4);
+  }else if($boss){
+    var testData5 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "2",
+      QueryType: "3"
+    }
+    getData(testData5);
+  }else if($input && $worker==false && $boss==false){
+    var testData6 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "0",
+      QueryType: "0",
+      QueryStr: $input
+    }
+    getData(testData6);
+  }else{
+    var testData7 = {
+      Longitude: lng,
+      Latitude: lat,
+      Type: "0",
+      QueryType: "3"
+    }
+    getData(testData7);
+  }
+}
+
+// 创建商户控件
+var sosoBossControl = new bossControl();
+map.addControl(sosoBossControl);
+
+$("#boss").on("click",function(){
+  var point = mk.getPosition();
+  searchData(point.lng,point.lat);
+});
+
+// 创建工人控件
+var sosoWorkManControl = new workManControl();
+map.addControl(sosoWorkManControl);
+
+$("#worker").on("click",function(){
+  var point = mk.getPosition();
+  searchData(point.lng,point.lat);
+})
+
+//创建活动一键下单控件
+var sosoActivityControl  = new activityControl();
+map.addControl(sosoActivityControl);
+
+// 添加地图手动定位
+map.addControl(geolocationControl);
+
+// 浏览器自动定位
+if(sessionStorage.getItem("Map_Lng")){
+  //设置定位点样式
+  var _lng = sessionStorage.getItem("Map_Lng");
+  var _lat = sessionStorage.getItem("Map_Lat");
+
+  var session_point = new BMap.Point(_lng,_lat);
+  var myIcon = new BMap.Icon(Local_Img, new BMap.Size(22,22));
+  mk = new BMap.Marker(session_point,{icon:myIcon});
+  mk.setTop(true);
+  mk.setZIndex(10000);
+  mk.disableMassClear();
+
+  map.addOverlay(mk);
+  map.panTo(session_point); 
+  searchData(_lng,_lat);
+}else{
+  firstGeolocation();
+}
+
+
+
+</script>	
 </body> 
 </html>

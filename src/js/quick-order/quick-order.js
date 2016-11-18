@@ -1,7 +1,6 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// $rootScope.token = "b03bc01179920d87e8558e828acfa5a4";
 	FastClick.attach(document.body);
 	$rootScope.token = window.sessionStorage.getItem("Token");
  
@@ -693,7 +692,7 @@ angular.module('com.wapapp.app',[])
 	}
 }])
 .factory('urlService',[function(){
-	var testUrl = "http://192.168.1.191:3003/";
+	var testUrl = CONFIG.IP;
 	var inlineUrl = "";
 	return {
 		url : testUrl

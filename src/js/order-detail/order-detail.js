@@ -165,7 +165,7 @@ $(function(){
 /*--订单详情--*/
   $.ajax({
     method:"POST",
-    url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
+    url: CONFIG.IP+"api/v2/OrderInfo/GetOrderInfoEx",
     async:false,
     data:{
     Token:token,
@@ -1470,7 +1470,7 @@ console.log(orderState);
     console.log("删除订单");
     $.ajax({
       type:"POST",
-      url:"http://192.168.1.191:3003/api/v2/OrderInfo/RemoveOrderEx",
+      url: CONFIG.IP+"api/v2/OrderInfo/RemoveOrderEx",
       data:{
         Token:token,
         OrderId:orderId
@@ -1503,7 +1503,7 @@ console.log(orderState);
     console.log("更新订单");
     $.ajax({
         type:"POST",
-        url:"http://192.168.1.191:3003/api/v2/OrderInfo/UpdateOrderEx",
+        url: CONFIG.IP+"api/v2/OrderInfo/UpdateOrderEx",
         data:{
           Token:token,
           OrderId:orderId,
@@ -1520,7 +1520,7 @@ console.log(orderState);
     $.ajax({
         method:"POST",
         async:"flase",
-        url:"http://192.168.1.191:3003/api/v2/OrderInfo/CancelOrderEx",
+        url: CONFIG.IP+"api/v2/OrderInfo/CancelOrderEx",
         data:{
           Token:token,
           OrderId:orderId
@@ -1536,7 +1536,7 @@ console.log(orderState);
     console.log("确认订单");
     $.ajax({
       type:"POST",
-      url:"http://192.168.1.191:3003/api/v2/OrderInfo/ConfirmOrderEx",
+      url: CONFIG.IP+"api/v2/OrderInfo/ConfirmOrderEx",
       data:{
         Token:token,
         OrderId:orderId
@@ -1551,7 +1551,7 @@ console.log(orderState);
     $.ajax({
       type:"POST",
       async:"false",
-      url:"http://192.168.1.191:3003/api/v2/OrderInfo/CompleteOrderEx",
+      url: CONFIG.IP+"api/v2/OrderInfo/CompleteOrderEx",
       data:{
         Token:token,
         OrderId:orderId

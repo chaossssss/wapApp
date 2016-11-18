@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
 	$rootScope.token = window.sessionStorage.getItem("Token");
-	$rootScope.url = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
+	$rootScope.url = CONFIG.IP+"api/v2/orderinfo/GetOrderListEx";
 
 	//获取url参数
     function getvl(name) {
@@ -164,7 +164,7 @@ angular.module('com.wapapp.app',['infinite-scroll'])
 
 }]) 
 .factory('Reddit',[function(){
-	var _getPath = "http://192.168.1.191:3003/api/v2/orderinfo/GetOrderListEx";
+	var _getPath = CONFIG.IP+"api/v2/orderinfo/GetOrderListEx";
 	var token = window.sessionStorage.getItem("Token");
 
 	var Reddit = function() {
@@ -212,9 +212,9 @@ angular.module('com.wapapp.app',['infinite-scroll'])
     return Reddit;
 }])
 .factory('orderService',[function(){
-	var _confirmPath = "http://192.168.1.191:3003/api/v2/orderinfo/ConfirmOrderEx";
-	var _cancelPath = "http://192.168.1.191:3003/api/v2/orderinfo/CancelOrderEx";
-	var _deletePath = "http://192.168.1.191:3003/api/v2/orderinfo/RemoveOrderEx";
+	var _confirmPath = CONFIG.IP+"api/v2/orderinfo/ConfirmOrderEx";
+	var _cancelPath =  CONFIG.IP+"api/v2/orderinfo/CancelOrderEx";
+	var _deletePath =  CONFIG.IP+"api/v2/orderinfo/RemoveOrderEx";
 
 	var confirmOrder = function(token,id){
 		var formdata = {

@@ -2,7 +2,6 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-
 	$rootScope.token = window.sessionStorage.getItem("Token");
 
 	//获取url参数
@@ -220,7 +219,7 @@ angular.module('com.wapapp.app',[])
 
 }])
 .factory('addrService',[function(){
-	var PATH = "http://192.168.1.191:3003/";
+	var PATH = CONFIG.IP;
 	var _getpath = PATH+"api/v2/ClientInfo/GetAddress";
 	var _addpath = PATH+"api/v2/ClientInfo/AddAddress";
 	var _editpath = PATH+"api/v2/ClientInfo/EditAddress";

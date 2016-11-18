@@ -44,7 +44,7 @@ $(function(){
     var Id=getUrl('markid');
     $.ajax({
     	type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',
+        url: CONFIG.IP+'api/v2/Provider/Detail',
         dataType: 'json',
         data:{
             Type:Type,
@@ -92,7 +92,7 @@ $(function(){
     // 加载商户头像列表
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Provider/Avatar',
+        url: CONFIG.IP+'api/v2/Provider/Avatar',
         dataType: 'json',
         data:{
             Type:Type,
@@ -125,7 +125,7 @@ $(function(){
         loadDownFn : function(me){
             $.ajax({
                 type: 'POST',
-                url: 'http://192.168.1.191:3001/api/v2/ClientInfo/GetMerchantServiceListEx',
+                url: CONFIG.IP+'api/v2/ClientInfo/GetMerchantServiceListEx',
                 dataType: 'json',
                 data:{
                     MerchantId:Id
@@ -256,7 +256,7 @@ $(function(){
     //获取工人标签
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Business/GetMerchantTags',
+        url: CONFIG.IP+'api/v2/Business/GetMerchantTags',
         dataType: 'json',
         data:{
             BusinessId:Id

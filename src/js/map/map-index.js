@@ -1,5 +1,5 @@
 "use strict"
-var PATH = "http://192.168.1.191:3003/";
+var PATH = CONFIG.IP;
 var WORK_MAN = "/images/map/test1.png";
 var Local_Img = "/images/map/ic_coordinate.svg";
 
@@ -456,7 +456,7 @@ function getServiceList(data){
 function getHotList(){
     $.ajax({
         method:'POST',
-        url: "http://192.168.1.191:3003/api/v2/SystemService/InfoListEx",
+        url: CONFIG.IP+"api/v2/SystemService/InfoListEx",
     }).success(function(res){
         if(res.Meta.ErrorCode === "0"){
             console.log(res);

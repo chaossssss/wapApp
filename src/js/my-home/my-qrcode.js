@@ -1,8 +1,6 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// $rootScope.token = "d803769104f565854438336f131ca1d5";
-	// $rootScope.token = $.cookie("Token");
 	$rootScope.token = window.sessionStorage.getItem("Token");
 	
 }])
@@ -28,7 +26,7 @@ angular.module('com.wapapp.app',[])
 		})
 }])
 .factory('getMyInfo',[function(){
-	var _getInfo = "http://192.168.1.191:3003/api/v1/ClientInfo/Index";
+	var _getInfo = CONFIG.IP+"api/v1/ClientInfo/Index";
 	var getInfo = function(token){
 		return $.ajax({
 					method:"POST",

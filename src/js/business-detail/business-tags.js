@@ -4,7 +4,7 @@ $(function(){
     //获取商户标签
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3003/api/v2/Business/GetMerchantTags',
+        url: CONFIG.IP+'api/v2/Business/GetMerchantTags',
         dataType: 'json',
         data:{
             BusinessId:Id

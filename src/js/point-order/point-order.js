@@ -1,7 +1,6 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	// $rootScope.token = "8c03ea1b31cef926698d08c964f53302";
 	FastClick.attach(document.body);
 	$rootScope.token = window.sessionStorage.getItem("Token");
 
@@ -44,7 +43,7 @@ angular.module('com.wapapp.app',[])
  	*	数据初始化
  	 */
 	vm.ServiceContent = "";
-	vm.Total = 3;
+	vm.Total = 1;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
 	}else if(window.sessionStorage.getItem("_address")){
@@ -515,7 +514,7 @@ angular.module('com.wapapp.app',[])
 })
 .factory('orderService',[function(){
 	// 获取服务类型列表
-	var PATH = "http://192.168.1.191:3003/";
+	var PATH = CONFIG.IP;
 	var _postpath = PATH+"api/v2/OrderInfo/CreateOrderOneKey";
 
 	var uploaderService = function(formData){
@@ -544,7 +543,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('priceService',[function(){
 	// 获取服务价格
-	var PATH = "http://192.168.1.191:3003/";
+	var PATH = CONFIG.IP;
 	var _getpath = PATH+"api/v2/ClientInfo/GetServicePriceEx";
 
 	var getPrice = function(token,id,type){
@@ -573,8 +572,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('timeService',[function(){
 	// 获取服务时间
-	var PATH = "http://192.168.1.191:3003/";
-	var _getpath = PATH+"api/v2/SystemService/ServiceTimeStartAt";
+	var _getpath = CONFIG.IP+"api/v2/SystemService/ServiceTimeStartAt";
 
 	var getService = function(id){
 		var formData = {
@@ -601,7 +599,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('addrService',[function(){
 	// 根据工人id 查找已添加的地址
-	var _searchpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetAddress";
+	var _searchpath = CONFIG.IP+"api/v2/ClientInfo/GetAddress";
 	var searchAddr = function(token,id){
 		var formData = {
 			Token: token,
@@ -628,7 +626,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('markService',[function(){
 	// 根据类型和id查找工人
-	var _searchpath = "http://192.168.1.191:3003/api/v2/Provider/Detail";
+	var _searchpath = CONFIG.IP+"api/v2/Provider/Detail";
 	var searchMark = function(token,type,id){
 		var formData = {
 			Token:token,
@@ -655,8 +653,8 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('typeService',[function(){
 	// 根据工人，商户id获取服务列表
-	var _searchwpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetWorkerServiceListEx";
-	var _searchbpath = "http://192.168.1.191:3003/api/v2/ClientInfo/GetMerchantServiceListEx"
+	var _searchwpath = CONFIG.IP+"api/v2/ClientInfo/GetWorkerServiceListEx";
+	var _searchbpath = CONFIG.IP+"api/v2/ClientInfo/GetMerchantServiceListEx"
 	var searchWork = function(id){
 		var formData = {
 			WorkerId: id
@@ -700,7 +698,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('giftService',[function(){
 	// 根据服务类型，获取此类型的活动
-	var _giftPath = "http://192.168.1.191:3003/api/v2/SystemService/GetActivity";
+	var _giftPath = CONFIG.IP+"api/v2/SystemService/GetActivity";
 	var getGift = function(token,id){
 		var formData = {
 			Token: token,
@@ -726,7 +724,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('explainService',[function(){
 	// 根据服务类型，获取此类型的活动
-	var _getPath = "http://192.168.1.191:3003/api/v2/HelperInfo/GetAllDescription";
+	var _getPath = CONFIG.IP+"api/v2/HelperInfo/GetAllDescription";
 	var getExplain = function(id){
 		var formData = {
 			Code: "Code002",
@@ -752,7 +750,7 @@ angular.module('com.wapapp.app',[])
 }])
 .factory('qtyService',[function(){
 	//获取次服务类型可选的数量
-	var _getPath = "http://192.168.1.191:3003/api/v2/SystemService/GetServiceQty";
+	var _getPath = CONFIG.IP+"api/v2/SystemService/GetServiceQty";
 	var getQty = function(id){
 		return $.ajax({
 					method:"POST",

@@ -64,7 +64,7 @@ $(function(){
   })
   $.ajax({
     type:"POST",
-    url:"http://192.168.1.191:3001/api/v2/Provider/Detail",
+    url: CONFIG.IP+"api/v2/Provider/Detail",
     data:{
       Type:type,
       Id:id,
@@ -95,7 +95,7 @@ $(function(){
   })
   $.ajax({
     method:"POST",
-    url:"http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx",
+    url: CONFIG.IP+"api/v2/OrderInfo/GetOrderInfoEx",
     async:false,
     data:{
     Token:token,

@@ -37,7 +37,7 @@ $(function(){
 
 $.ajax({
   type:"POST",
-  url:"http://192.168.1.191:3001/api/v2/Provider/Detail",
+  url: CONFIG.IP+"api/v2/Provider/Detail",
   data:{
     Type:type,
     Id:id,
@@ -315,7 +315,7 @@ $("#submitBtn").on("click",function(){
   console.log(formData);
   $.ajax({
     type:"POST",
-    url:"http://192.168.1.191:3003/api/v2/Evaluation/EvaluateOrder",
+    url: CONFIG.IP+"api/v2/Evaluation/EvaluateOrder",
     data:formData,
     async:false,
     cache:false,

@@ -30,7 +30,7 @@ angular.module('com.wapapp.app',[])
 	}
 }])
 .factory('getMyInfo',[function(){
-	var _getInfo = "http://192.168.1.191:3003/api/v1/ClientInfo/Index";
+	var _getInfo = CONFIG.IP+"api/v1/ClientInfo/Index";
 	var getInfo = function(token){
 		return $.ajax({
 					method:"POST",
@@ -53,7 +53,7 @@ angular.module('com.wapapp.app',[])
 	};
 }])
 .factory('loginOut',[function(){
-	var _loginOut = "http://192.168.1.191:3003/api/v1/ClientInfo/LoginOut";
+	var _loginOut = CONFIG.IP+"api/v1/ClientInfo/LoginOut";
 	var loginOut = function(token){
 		return $.ajax({
 					method:"POST",

@@ -23,13 +23,6 @@
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
-	<!-- <div class="weui_cells">
-		<div class="weui_cell">
-			<p class="f14 fc8">可以联系客服直接电话下单哦
-				<a class="pblue" href="tel:4008-262-056">4008-262-056</a>
-			</p>
-		</div>
-	</div>  -->
 	<!-- 选择地址 begin -->
 	<div class="weui_cells weui_cells_access zj_local_image" >
 		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
@@ -129,7 +122,7 @@
 					<img src="/images/quick-order/i-gift.png" alt="" style="width:16px;margin-right:10px;display:block;">
 				</div>
 				<div class="weui_cell_bd weui_cell_primary">
-					<span class="pred">特价小时工</span>
+					<span class="pred" ng-bind="gt.SpecialTitle"></span>
 					<img ng-click="vm.dialogSexplain = true" src="/images/quick-order/i-help.png" alt="" style="width:16px;vertical-align:text-top;">
 				</div>
 				<div class="zj_cell_ft">
@@ -368,7 +361,7 @@
 
 
 
-
+<script src="/js/common/config.min.js"></script>
 <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
 <script src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>

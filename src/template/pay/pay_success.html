@@ -48,6 +48,7 @@
 		</div>
 	</div>
 
+<script src="/js/common/config.min.js"></script>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>	
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>	
 <script>
@@ -85,7 +86,7 @@ function getDatetime(tm){
 	return date;
 }
 $(function(){
-	var _getDetail = "http://192.168.1.191:3003/api/v2/OrderInfo/GetOrderInfoEx";
+	var _getDetail = CONFIG.IP+"api/v2/OrderInfo/GetOrderInfoEx";
 	var token = window.sessionStorage.getItem("Token");
 	var id = getvl("orderId");
 	$.ajax({
