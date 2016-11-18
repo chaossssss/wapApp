@@ -156,7 +156,7 @@ angular.module('com.wapapp.app',[])
 				$scope.loadingToast = false;
 				aplipayTradePay(res.Body.GATEWAY_NEW,res.Body.AlipaySign);
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "/template/pay/success.html";
+					window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;
@@ -179,7 +179,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				$scope.loadingToast = false;
 				if(res.Meta.ErrorCode === "0"){
-					// window.location.href = "/template/pay/success.html";
+					window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
 				}else{
 					vm.dialogshow = true;
 					vm.errorMsg = res.Meta.ErrorMsg;

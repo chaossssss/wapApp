@@ -99,7 +99,11 @@ $(function(){
 	}).success(function(res){
 		console.log(res);
 		if(res.Meta.ErrorCode === "0"){
-			$("#money").text(res.Body.TotalPrice);
+			if(res.Body.Activity && res.Body.Activity.SpecialRule.length>0){
+				$("#money").text(res.Body.TotalPrice-res.Body.Activity.SpecialRule[0].Minus);
+			}else{
+				$("#money").text(res.Body.TotalPrice);
+			}
 			$("#name").text(res.Body.Service.AddressInfo.Contact);
 			$("#phone").text(res.Body.Service.AddressInfo.PhoneNumber);
 			$("#addr").text(res.Body.Service.AddressInfo.Address1+res.Body.Service.AddressInfo.Address2);
