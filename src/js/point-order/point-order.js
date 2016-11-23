@@ -10,18 +10,20 @@ angular.module('com.wapapp.app',[])
         if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
         return "";
     } 
-    $rootScope.channel = getvl("channel");
-    $rootScope.ObjectType = getvl("type");
-    $rootScope.ObjectId = getvl("markid");
-    $rootScope.addressId = getvl("id");
+    $rootScope.resident = getvl("resident");
+    $rootScope.channel = getvl("channel");	//渠道 0 指定，1 一键
+    $rootScope.ObjectType = getvl("type");	//类型 1 工人，2 商户
+    $rootScope.ObjectId = getvl("markid");	//工人id
+    $rootScope.addressId = getvl("id");		//地址id
     $rootScope.search = window.location.search;
 }])
-.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService','explainService','qtyService',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService,explainService,qtyService){
+.controller('orderCtrl',['$rootScope','$scope','priceService','orderService','addrService','markService','typeService','giftService','explainService','qtyService','getMyInfo',function($rootScope,$scope,priceService,orderService,addrService,markService,typeService,giftService,explainService,qtyService,getMyInfo){
 	var vm = $scope.vm = {};		//订单
 	var addr = $scope.addr = {};	//地址
 	var uc = $scope.uc = {};	//工人，商户信息
 	var gt = $scope.gt = {};	//活动
 	var fw = $scope.fw = {};	//获取服务说明
+	var ct = $scope.ct = {};	//用户信息
 
 	$scope.textarea_size = 0;
 	$scope.loadingToast = false;
@@ -29,6 +31,7 @@ angular.module('com.wapapp.app',[])
 	vm.datePickerShow = false;
 	vm.serviceShow = false;
 	vm.showImage = false;	//是否显示上传图片
+	vm.Isresident = false; 	//是否到店服务
 
 	vm.sub = function(){
 		if(vm.Total >0){
@@ -41,9 +44,58 @@ angular.module('com.wapapp.app',[])
 		}
 	}
  
+	// 是否到店服务的地址配置&时间配置
+	if($rootScope.resident){
+		vm.Isresident = true;
+		//当前时间作为服务时间
+		var nowDate = new Date();
+		var myServiceDate = nowDate.getFullYear()+"/"+nowDate.getMonth()+"/"+nowDate.getDate()+" "+nowDate.getHours()+":"+nowDate.getMinutes();
+		vm.ServiceStartAtCut = myServiceDate;
+		// 取出用户信息
+		getMyInfo.event($rootScope.token)
+		.success(function(res){
+			console.log("个人信息，获取余额",res);
+			if(res.Meta.ErrorCode === "0"){
+				$scope.ct = res.Body.Info;
+				$scope.$apply();
+				// 用户是否有地址
+				addrService.get($rootScope.token)
+					.success(function(res){
+						console.log("用户地址列表",res);
+						if(res.Body.length > 0){
+							// 获取用户列表的第一个地址作为默认地址
+							vm.ServiceAddressId = res.Body[0].Id;
+						}else{
+							// 默认为用户新增一个地址
+							var addrformData = {
+								Contact: $scope.ct.NickName,
+								Gender: "0",
+								PhoneNumber: $scope.ct.PhoneNumber,
+								Tag: "",
+								Address1: "系统信息",
+								Address2: "到店服务配置地址"
+							};
+							console.log("新增的服务地址",addrformData);
+							addrService.add($rootScope.token,addrformData)
+								.success(function(res){
+									console.log("新增地址",res);
+									if(res.Meta.ErrorCode === "0"){
+										addrService.get($rootScope.token)
+										.success(function(res){
+											vm.ServiceAddressId = res.Body[0].Id;
+										})
+									}
+								})
+					}
+				})	
+			}
+			$scope.$apply();		
+		});		
+	}
+
  	/*
  	*	数据初始化
- 	 */
+ 	 */ 
 	vm.ServiceContent = "";
 	vm.Total = 1;
 	if($rootScope.addressId){
@@ -221,7 +273,7 @@ angular.module('com.wapapp.app',[])
 				})	
 		}
 	})
-	//流程流向判断并跳转
+	//流程流向判断并跳转到地址管理
 	vm.gotojudge = function(){
 		window.location.href = "/template/location/mag-location.html"+$rootScope.search;
 	}
@@ -240,6 +292,7 @@ angular.module('com.wapapp.app',[])
 		vm.ServiceStartAtCut = serviceDay.slice(0,10)+ " " +serviceTime;
 	}) 
 
+	//时间选择 选择了服务类型以后才能选择时间
 	vm.datePickerShow = function(){
 		if(vm.serviceTypeObj){
 			$scope.$broadcast("service-time-show",vm.serviceTypeObj.ServiceTypeId);
@@ -274,7 +327,6 @@ angular.module('com.wapapp.app',[])
 	}
 
 	$scope.$on("uploader-form",function(event,img){
-		
 			$scope.loadingToast = true; 
 			console.log("img",img);
 			console.log("Token",$rootScope.token);
@@ -329,8 +381,6 @@ angular.module('com.wapapp.app',[])
 					}
 					$scope.$apply();
 				})
-		
-		
 	})
 }])
 .controller('datePickerCtrl',['$scope','timeService',function($scope,timeService){
@@ -494,7 +544,6 @@ angular.module('com.wapapp.app',[])
 	$scope.$on("uploader-img-data",function(event,data){
 		funUploadFile();
 	})
-
 }])
 .directive('zhDatePicker',function(){
 	return {
@@ -605,8 +654,10 @@ angular.module('com.wapapp.app',[])
 	}
 }])
 .factory('addrService',[function(){
-	// 根据工人id 查找已添加的地址
+	// 根据用户id 查找已添加的地址
+	var _getpath = CONFIG.IP+"api/v2/ClientInfo/GetAddress";
 	var _searchpath = CONFIG.IP+"api/v2/ClientInfo/GetAddress";
+	var _addpath = CONFIG.IP+"api/v2/ClientInfo/AddAddress";
 	var searchAddr = function(token,id){
 		var formData = {
 			Token: token,
@@ -624,10 +675,53 @@ angular.module('com.wapapp.app',[])
 					// alert("服务器连接失败，请检查网络设置");
 				})
 	};
-
+	var addAddr = function(token,data){
+		var formData = {
+			Token: token,
+			Address: data
+		}
+		return $.ajax({
+					method:"POST",
+					url: _addpath,
+					data: formData
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+	var getAddr = function(token){
+		return $.ajax({
+					method:"POST",
+					url: _getpath,
+					data:{
+						Token:token
+					},
+				}).success(function(res){
+					if(res.Meta.ErrorCode !== "0"){
+						alert(res.Meta.ErrorMsg)
+					}
+					if(res.Meta.ErrorCode === "2004"){
+						window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
 	return {
+		get:function(token){
+			return getAddr(token);
+		},
 		search:function(token,id){
 			return searchAddr(token,id);
+		},
+		add:function(token,data){
+			return addAddr(token,data);
 		}
 	};
 }])
@@ -779,8 +873,30 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 }])
-
-
+.factory('getMyInfo',[function($rootScope){
+	// 获取个人信息
+	var _getInfo = CONFIG.IP+"api/v1/ClientInfo/Index";
+	var getInfo = function(token){
+		return $.ajax({
+					method:"POST",
+					url: _getInfo,
+					data: {
+						Token:token
+					}
+				}).success(function(res){
+					if(res.Meta.ErrorCode === "2004"){
+						// window.location.href = "/template/login/login.html";
+					}
+				}).error(function(res){
+					alert("服务器连接失败，请检查网络设置");
+				})
+	};
+	return {
+		event:function(token){
+			return getInfo(token);
+		}
+	};
+}])
 
 
 

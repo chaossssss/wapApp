@@ -106,7 +106,7 @@ $(function(){
         window.sessionStorage.setItem("Token",token);
 
         if(data.Meta.ErrorCode == 0){               
-          window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+          window.location.href = "/template/point-order/point-order.html"+location.search;
         }else{
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
@@ -115,7 +115,7 @@ $(function(){
         if(data.Meta.ErrorCode == 2019){
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
-          window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+          window.location.href = "/template/point-order/point-order.html"+location.search;
         }
       }
     })
@@ -139,7 +139,7 @@ $(function(){
         window.sessionStorage.setItem("Token",token);
 
         if(data.Meta.ErrorCode == 0){         
-          window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+          window.location.href = "/template/point-order/point-order.html"+location.search;
         }else{
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
@@ -147,7 +147,7 @@ $(function(){
         if(data.Meta.ErrorCode == 2019){
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
-          window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+          window.location.href = "/template/point-order/point-order.html"+location.search;
         }
       }
     })

@@ -143,7 +143,8 @@ angular.module('com.wapapp.app',[])
 					}
 				}else{
 					vm.dialogshow = true;
-					vm.errorMsg = res.Meta.ErrorMsg;
+					vm.errorMsg = "不好意思，出错了!";
+					vm.reload = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+$rootScope.orderId+"#wechat_redirect";
 				}
 				$scope.$apply();
 			})
@@ -239,7 +240,8 @@ angular.module('com.wapapp.app',[])
 					}
 				}else{
 					vm.dialogshow = true;
-					vm.errorMsg = res.Meta.ErrorMsg;
+					vm.errorMsg = "不好意思，出错了!";
+					vm.reload = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state="+$rootScope.orderId+"#wechat_redirect";
 				}
 				$scope.$apply();
 			})

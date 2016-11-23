@@ -23,8 +23,20 @@
 </head>
 <body ng-controller="orderCtrl">
 <form name="form" novalidate="novalidate" style="overflow-x:hidden;" enctype="multipart/form-data">
+	<!-- 到店服务 begin-->
+	<div class="weui_cells weui_cells_access zj_local_image" ng-show="vm.Isresident" ng-cloak>
+		<a href="javascript:;" class="weui_cell pb2 tc">
+			<div class="weui_cell_hd">
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<p class="pblue">到店服务</p>
+			</div>
+		</a>
+		<img  class="col100" src="/images/quick-order/local-border.png" alt="">
+	</div>	
+	<!-- 到店服务 end -->
 	<!-- 选择地址 begin -->
-	<div class="weui_cells weui_cells_access zj_local_image" >
+	<div class="weui_cells weui_cells_access zj_local_image" ng-hide="vm.Isresident" ng-cloak>
 		<a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/local.png" alt="" style="width:15px;margin-right:18px;display:block">
@@ -83,7 +95,7 @@
 		</a>
 		<!-- 服务类型 end -->
 		<!-- 服务数量 begin-->
-		<div class="weui_cell no_access" ng-show="vm.serviceTypeObj.PriceType == '1'">
+		<div class="weui_cell no_access" ng-show="vm.serviceTypeObj.PriceType == '1'" ng-cloak>
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-count.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>
@@ -101,7 +113,7 @@
 		</div>
 		<!-- 服务数量 end-->
 		<!-- 服务时间 begin -->
-		<a href="javascript:;" class="weui_cell"  ng-click="vm.datePickerShow()">
+		<a href="javascript:;" class="weui_cell"  ng-click="vm.datePickerShow()" ng-hide="vm.Isresident">
 			<div class="weui_cell_hd">
 				<img src="/images/quick-order/i-time.png" alt="" style="width:20px;margin-right:10px;display:block">
 			</div>

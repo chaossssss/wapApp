@@ -42,17 +42,17 @@
 			<div class="zj_cell_left">
 				<div class="weui_cell_hd">
 					<span ng-bind="item.Contact"></span>
-					<span class="pl10" ng-if="item.Gender == '0'">男</span>
-					<span class="pl10" ng-if="item.Gender == '1'">女</span>
+					<span class="pl10" ng-if="item.Gender == '0'" ng-cloak>男</span>
+					<span class="pl10" ng-if="item.Gender == '1'" ng-cloak>女</span>
 					<span class="pl10" ng-bind="item.PhoneNumber"></span>
 				</div>
 				<div class="weui_cell_bd">
-					<span class="tag" ng-bind="item.Tag" ng-if="item.Tag"></span>
+					<span class="tag" ng-bind="item.Tag" ng-if="item.Tag" ng-cloak></span>
 					<span class="f12 fc8" ng-bind="item.Address1"></span>
 					<span class="f12 fc8" ng-bind="item.Address2 | limitTo:9"></span>
 				</div>
 			</div>
-			<div class="zj_cell_right">
+			<div class="zj_cell_right" ng-cloak>
 				<p><img src="/images/location/edit.png" alt="" style="width:22px;"></p>
 			</div>
 		</a>
