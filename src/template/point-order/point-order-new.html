@@ -49,7 +49,7 @@
       <!-- 服务类型非面议 1 PriceType-->
       <div class="weui_cell_primary" style="text-align:right;">
         <span style="padding-right:30px;" ng-if="vm.serviceTypeObj.fatherTypeName" ng-bind="vm.serviceTypeObj.fatherTypeName" ng-cloak></span>
-        <select class=" weui_select rtl" name="" id="" ng-model="vm.serviceTypeObj" ng-options="(item.ServiceTypeName+' '+item.Price+' '+item.UnitName) for item in vm.serviceTypeList">
+        <select class=" weui_select rtl" name="" id="serviceChoose" ng-model="vm.serviceTypeObj" ng-options="(item.ServiceTypeName) for item in vm.serviceTypeList">
           <option value="">请选择您需要的服务</option>
         </select>
       </div>
@@ -61,6 +61,19 @@
   </div>
   <!-- 选择地址 end -->
   <div class="weui_cells weui_cells_access">
+    <!-- 服务价格 begin-->
+    <a href="javascript:;" class="weui_cell weui_cell_select" style="padding:15px 0 15px 10px;" ng-cloak>
+      <div class="weui_cell_hd">
+        <img src="/images/quick-order/new-price.png" alt="" style="width:20px;margin-right:10px;display:block">
+      </div>
+      <div class="weui_cell_bd">
+        <p>服务价格</p>
+      </div>
+      <div class="weui_cell_primary" style="text-align:right;">
+        <span style="padding-right:30px;" id="servicePrice" ></span>
+      </div>
+    </a>
+    <!-- 服务价格 end-->  
     <!-- 服务数量 begin-->
     <div class="weui_cell no_access" ng-show="vm.serviceTypeObj.PriceType == '1'">
       <div class="weui_cell_hd">
@@ -103,7 +116,7 @@
       </div> -->
       <span>服务地址</span>
       <div class="weui_cell_bd weui_cell_primary" ng-if="!vm.ServiceAddressId" ng-cloak>
-        <p class="pblue">请选择服务地址</p>
+        <p class="pblue" style="float:right;">请选择服务地址</p>
       </div>
       <div class="weui_cell_bd weui_cell_primary" ng-if="vm.ServiceAddressId" ng-cloak>
         <div class="zj_cell_hd" style="text-align:right;">
@@ -268,7 +281,7 @@
   <!-- 活动的显示的终结 -->
 
   <!-- 定价才显示待支付 定价情况-->
-  <div class="weui_panel weui_panel_access" style="margin-bottom:15px;" ng-if="vm.serviceTypeObj.PriceType == '1' && gt.SpecialTitle">
+  <div class="weui_panel weui_panel_access" style="margin-bottom:15px;" ng-if="vm.serviceTypeObj.PriceType == '1'">
     <div class="weui_panel_bd">
       <div class="weui_media_box weui_media_text" style="padding-bottom:4px;">
         <div class="weui_media_desc pb11" style="font-size:15px;color:#000;">
@@ -293,7 +306,7 @@
       <div class="weui_media_box weui_media_text">
         <div class="weui_media_desc" style="font-size:15px;color:#000;">
           订单总计
-          <div style="color:#000;float:right;" ng-if="gt.SpecialRule.length == 0">
+          <div style="color:#000;float:right;" ng-if="gt.SpecialRule.length == 0 || gt.SpecialRule.length == null">
             <span class="money_color f20 pl5 f18">¥&nbsp;<span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span></span>
           </div>
           <div style="color:#000;float:right;" ng-if="gt.SpecialRule.length > 0">
@@ -504,6 +517,6 @@
 <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/angular.js/1.3.20/angular.min.js"></script>
 <script src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
-<script src="/js/point-order/point-order.min.js"></script>
+<script src="/js/point-order/point-order-new.min.js"></script>
 </body>
 </html>
