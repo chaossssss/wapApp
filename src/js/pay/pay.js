@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
 	$rootScope.url = CONFIG.IP;
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
  
 	//获取url参数
     function getvl(name) {
@@ -23,7 +23,7 @@ angular.module('com.wapapp.app',[])
     }
     $(".my_red").attr("href","/template/red-packet/red-packet.html?state="+$rootScope.orderId);
 }])
-.controller('payCtrl',['$rootScope','$scope','getMyInfo','getOdetail','payForService',function($rootScope,$scope,getMyInfo,getOdetail,payForService){
+.controller('payCtrl',['$rootScope','$scope','getMyInfo','getOdetail','payForService','couponService',function($rootScope,$scope,getMyInfo,getOdetail,payForService,couponService){
 	var vm = $scope.vm = {};
 	var uc = $scope.uc = {};
 	var od = $scope.od = {};
@@ -51,6 +51,7 @@ angular.module('com.wapapp.app',[])
 		}
 	}
 
+	//获取个人信息
 	getMyInfo.event($rootScope.token)
 		.success(function(res){
 			console.log("个人信息，获取余额",res);
@@ -60,6 +61,7 @@ angular.module('com.wapapp.app',[])
 			$scope.$apply();
 		})
 
+	//获取订单详情
  	getOdetail.event($rootScope.token,$rootScope.orderId)
  		.success(function(res){
  			console.log("订单详情",res);
@@ -68,6 +70,15 @@ angular.module('com.wapapp.app',[])
  			}
  			$scope.$apply();
  		})
+
+ 	//获取红包
+ 	// couponService.event($rootScope.token)
+ 	// 	.success(function(res){
+ 	// 		console.log("红包",res);
+ 	// 		if(res.Meta.ErrorCode === "0"){
+ 				
+ 	// 		}
+ 	// 	})
 
  	vm.hasPayOrder = function(){
  		vm.dialogConfirm = true;
@@ -259,7 +270,7 @@ angular.module('com.wapapp.app',[])
  	//支付宝支付
     function aplipayTradePay(GATEWAY_NEW,aplipaySign){
         var aplipayUrl = GATEWAY_NEW + aplipaySign;
-		window.sessionStorage.setItem("AlipayUrl",aplipayUrl);
+		window.localStorage.setItem("AlipayUrl",aplipayUrl);
         window.location.href= "/template/pay/alipay.html";
     }
 
@@ -366,6 +377,29 @@ angular.module('com.wapapp.app',[])
 		},
 		weixin:function(data){
 			return weixinPay(data);
+		}
+	}
+}])
+.factory('couponService',['$rootScope',function($rootScope){
+	var _couponPath = $rootScope.url+"api/v2/Coupon/CouponList"; 
+	var coupon = function(token){
+		return $.ajax({
+				method:"POST",
+				url:_couponPath,
+				data:{
+					Token:token
+				}
+		}).success(function(res){
+			if(res.Meta.ErrorCode === "2004"){
+				// window.location.href = "/template/login/login.html";
+			}
+		}).error(function(res){
+			alert("服务器连接失败，请检查网络设置");
+		})
+	}
+	return {
+		event:function(token){
+			return coupon(token);
 		}
 	}
 }])

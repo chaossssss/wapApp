@@ -103,10 +103,10 @@ $(function(){
       },
       success:function(data){
         var token = data.Body.Token;
-        window.sessionStorage.setItem("Token",token);
+        window.localStorage.setItem("Token",token);
 
         if(data.Meta.ErrorCode == 0){               
-          window.location.href = "/template/point-order/point-order.html"+location.search;
+          window.location.href = "/template/point-order/point-order.html"+location.search+"&channel=0";
         }else{
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
@@ -115,7 +115,7 @@ $(function(){
         if(data.Meta.ErrorCode == 2019){
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
-          window.location.href = "/template/point-order/point-order.html"+location.search;
+          window.location.href = "/template/point-order/point-order.html"+location.search+"&channel=0";
         }
       }
     })
@@ -136,10 +136,10 @@ $(function(){
       },
       success:function(data){
         var token = data.Body.Token;
-        window.sessionStorage.setItem("Token",token);
+        window.localStorage.setItem("Token",token);
 
         if(data.Meta.ErrorCode == 0){         
-          window.location.href = "/template/point-order/point-order.html"+location.search;
+          window.location.href = "/template/point-order/point-order.html"+location.search+"&channel=0";
         }else{
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
@@ -147,7 +147,7 @@ $(function(){
         if(data.Meta.ErrorCode == 2019){
           $("#errorMess").show();
           $("#errorMess").text(data.Meta.ErrorMsg);
-          window.location.href = "/template/point-order/point-order.html"+location.search;
+          window.location.href = "/template/point-order/point-order.html"+location.search+"&channel=0";
         }
       }
     })
@@ -162,117 +162,4 @@ $(function(){
       $("#ac-rule").hide();
     });
   });
-
-
-
-  // 微信分享
-  // var url = location.href.split('#')[0];
-  // var wxbody={};
-  // $.ajax({
-  //     type: "POST",
-  //     url: "http://wapapi.zhujiash.com/api/v2/WxEvent/UserOauth",
-  //     data: {
-  //         "code": sharecode
-  //     },
-  //     success: function(a){
-  //         var urlKey=a.Body.openid;
-  //         $.ajax({
-  //             type: "POST",
-  //             url: "http://wapapi.zhujiash.com/api/v2/WxEvent/GetWeiXinTicket",
-  //             data: {
-  //                 "openid": urlKey,
-  //                 "url": url
-  //             },
-  //             success: function(b){
-  //                 wxbody=b.Body;wx.config({
-  //                     debug: false,
-  //                     appId: wxbody.appid,
-  //                     timestamp: wxbody.timestamp,
-  //                     nonceStr: wxbody.noncestr,
-  //                     signature: wxbody.sign,
-  //                     jsApiList: [
-  //                         "onMenuShareTimeline",
-  //                         "onMenuShareAppMessage"
-  //                     ]
-  //                 });wx.ready(function(){
-  //                     wx.onMenuShareTimeline({
-  //                         title: "Hi，朋友，邀请你一起来免费体验上门家庭服务",
-  //                         link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2fhtml%2flogin.html&response_type=code&scope=snsapi_base&state="+code+"#wechat_redirect",
-  //                         imgUrl: "http://wap.zhujiash.com/html/images/bg.png",
-  //                         success: function(){
-  //                             $.ajax({
-  //                                 type: "POST",
-  //                                 url: "http://wapapi.zhujiash.com/api/v2/WxEvent/ShareStatistics",
-  //                                 data: {
-  //                                     "openid": urlKey
-  //                                 },
-  //                             })
-  //                         },
-  //                         cancel: function(){
-                              
-  //                         }
-  //                     });wx.onMenuShareAppMessage({
-  //                         title: "Hi，朋友，邀请你一起来免费体验上门家庭服务",
-  //                         desc: "生活服务我一直用助家生活，寄快递、送水、保洁、维修。既经济又方便。首次服务有优惠！",
-  //                         link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2fhtml%2flogin.html&response_type=code&scope=snsapi_base&state="+code+"#wechat_redirect",
-  //                         imgUrl: "http://wap.zhujiash.com/html/images/bg.png",
-  //                         type: "link",
-  //                         success: function(){
-  //                             $.ajax({
-  //                                 type: "POST",
-  //                                 url: "http://wapapi.zhujiash.com/api/v2/WxEvent/ShareStatistics",
-  //                                 data: {
-  //                                     "openid": urlKey
-  //                                 },
-                                  
-  //                             })
-  //                         }
-  //                     });wx.onMenuShareQQ({
-  //                         title: "Hi，朋友，邀请你一起来免费体验上门家庭服务",
-  //                         desc: "生活服务我一直用助家生活，寄快递、送水、保洁、维修。既经济又方便。首次服务有优惠！",
-  //                         link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2fhtml%2flogin.html&response_type=code&scope=snsapi_base&state="+code+"#wechat_redirect",
-  //                         imgUrl: "http://wap.zhujiash.com/html/images/bg.png",
-  //                         success: function(){
-                              
-  //                         },
-  //                         cancel: function(){
-                              
-  //                         }
-  //                     });wx.onMenuShareWeibo({
-  //                         title: "Hi，朋友，邀请你一起来免费体验上门家庭服务",
-  //                         desc: "生活服务我一直用助家生活，寄快递、送水、保洁、维修。既经济又方便。首次服务有优惠！",
-  //                         link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2fhtml%2flogin.html&response_type=code&scope=snsapi_base&state="+code+"#wechat_redirect",
-  //                         imgUrl: "http://wap.zhujiash.com/html/images/bg.png",
-  //                         success: function(){
-                              
-  //                         },
-  //                         cancel: function(){
-                              
-  //                         }
-  //                     });wx.onMenuShareQZone({
-  //                         title: "Hi，朋友，邀请你一起来免费体验上门家庭服务",
-  //                         desc: "生活服务我一直用助家生活，寄快递、送水、保洁、维修。既经济又方便。首次服务有优惠！",
-  //                         link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2fhtml%2flogin.html&response_type=code&scope=snsapi_base&state="+code+"#wechat_redirect",
-  //                         imgUrl: "http://wap.zhujiash.com/html/images/bg.png",
-  //                         success: function(){
-                              
-  //                         },
-  //                         cancel: function(){
-                              
-  //                         }
-  //                     })
-  //                 });wx.error(function(c){
-  //                     // alert("wx.error: "+JSON.stringify(c))
-  //                 })
-  //             },
-  //             error: function(b){
-  //                 // alert("错误")
-  //             }
-  //         })
-  //     },
-  //     error: function(a){
-  //         alert("服务器连接失败，请检查您的网络设置")
-  //     }
-  // })
 })
-//# sourceMappingURL=login.min.js.map

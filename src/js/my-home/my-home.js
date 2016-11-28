@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
 	
 }])
 .controller('myHomeCtrl',['$rootScope','$scope','getMyInfo','loginOut',function($rootScope,$scope,getMyInfo,loginOut){
@@ -24,7 +24,7 @@ angular.module('com.wapapp.app',[])
 		loginOut.event()
 			.success(function(res){
 				console.log(res);
-				window.sessionStorage.removeItem("Token");
+				window.localStorage.removeItem("Token");
 				window.location.href = "/template/login/login.html";
 			})
 	}

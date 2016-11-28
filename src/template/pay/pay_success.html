@@ -87,7 +87,7 @@ function getDatetime(tm){
 }
 $(function(){
 	var _getDetail = CONFIG.IP+"api/v2/OrderInfo/GetOrderInfoEx";
-	var token = window.sessionStorage.getItem("Token");
+	var token = window.localStorage.getItem("Token");
 	var id = getvl("orderId");
 	$.ajax({
 		method:"POST",

@@ -13,7 +13,7 @@ angular.module('com.wapapp.app',[])
 				console.log(res);
 				if(res.Meta.ErrorCode === "0"){
 					$.cookie("Token",res.Body.Token);
-					window.sessionStorage.setItem("Token",res.Body.Token);
+					window.localStorage.setItem("Token",res.Body.Token);
 					window.location.href = "/template/map-index.html";
 				}else{
 					vm.dialogshow = true;

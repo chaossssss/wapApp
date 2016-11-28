@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {
@@ -100,9 +100,9 @@ angular.module('com.wapapp.app',[])
 	vm.Total = 1;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
-	}else if(window.sessionStorage.getItem("_address")){
+	}else if(window.localStorage.getItem("_address")){
 		//未选择过地址，取出上次缓存的地址	
-		var _address = JSON.parse(window.sessionStorage.getItem("_address"));
+		var _address = JSON.parse(window.localStorage.getItem("_address"));
 		vm.ServiceAddressId = _address.Id;
 		$scope.addr = _address;
 	}
@@ -143,11 +143,11 @@ angular.module('com.wapapp.app',[])
 				vm.errorMsg = "不能小于3小时";
 				vm.Total = 3;
 			}
-			if(vm.Total <= 0){
-				vm.dialogshow = true;
-				vm.errorMsg = "数量不能小于1";
-				vm.Total = 1;
-			}
+			// if(vm.Total <= 0){
+			// 	vm.dialogshow = true;
+			// 	vm.errorMsg = "数量不能小于1";
+			// 	vm.Total = 1;
+			// }
 			// qtyService.event(vm.serviceTypeObj.ServiceTypeId)
 			// 	.success(function(res){
 			// 		console.log("服务数量",res);
@@ -170,7 +170,7 @@ angular.module('com.wapapp.app',[])
 			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
 				//地址数据永久缓存
-				window.sessionStorage.setItem("_address",JSON.stringify(res.Body[0]));
+				window.localStorage.setItem("_address",JSON.stringify(res.Body[0]));
 			}
 			$scope.$apply();
 		})
@@ -219,9 +219,9 @@ angular.module('com.wapapp.app',[])
 						}
 						if(serviceTypeList[j].PriceType === '1'){
 							if(serviceTypeList[j].UnitName){
-								serviceTypeList[j].UnitName = '/'+serviceTypeList[j].UnitName;
+								serviceTypeList[j].UnitName = '元/'+serviceTypeList[j].UnitName;
 							}
-							serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
+							serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+' ¥';
 						}
 					}
 					vm.serviceTypeList = serviceTypeList;
@@ -310,7 +310,7 @@ angular.module('com.wapapp.app',[])
 			ServiceStartAt: vm.ServiceStartAt,
 			ServiceContent: vm.ServiceContent
 		}
-		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
+		window.localStorage.setItem("point-order",JSON.stringify(stroage)); 
 		if(vm.serviceTypeObj == undefined){
 			vm.dialogshow = true;
 			vm.errorMsg = "请先选择服务类型";
@@ -328,16 +328,16 @@ angular.module('com.wapapp.app',[])
 
 	$scope.$on("uploader-form",function(event,img){
 			$scope.loadingToast = true; 
-			console.log("img",img);
-			console.log("Token",$rootScope.token);
-			console.log("ObjectType",$rootScope.ObjectType);
-			console.log("ObjectId",$rootScope.ObjectId);
-			console.log("serviceTypeObj",vm.serviceTypeObj),
-			console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
-			console.log("ServiceContent",vm.ServiceContent);
-			console.log("Total",vm.Total);
-			console.log("ServiceStartAt",vm.ServiceStartAtCut);
-			console.log("ServiceAddressId",vm.ServiceAddressId);
+			// console.log("img",img);
+			// console.log("Token",$rootScope.token);
+			// console.log("ObjectType",$rootScope.ObjectType);
+			// console.log("ObjectId",$rootScope.ObjectId);
+			// console.log("serviceTypeObj",vm.serviceTypeObj),
+			// console.log("ServiceTypeId",vm.serviceTypeObj.ServiceTypeId);
+			// console.log("ServiceContent",vm.ServiceContent);
+			// console.log("Total",vm.Total);
+			// console.log("ServiceStartAt",vm.ServiceStartAtCut);
+			// console.log("ServiceAddressId",vm.ServiceAddressId);
 
 			var Json_data = {
 	            "Token":$rootScope.token,
@@ -373,7 +373,7 @@ angular.module('com.wapapp.app',[])
 					console.log(res);
 					$scope.loadingToast = false;
 					if(res.Meta.ErrorCode === "0"){
-						// window.sessionStorage.removeItem("point-order");
+						// window.localStorage.removeItem("point-order");
 						window.location.href = "/template/orderManage/order-detail.html?orderId="+res.Body.OrderId;
 					}else{
 						vm.dialogshow = true;

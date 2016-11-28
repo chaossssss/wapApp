@@ -37,7 +37,7 @@
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>  
 <script>
 $(function(){
-  var payUrl = window.sessionStorage.getItem("AlipayUrl");
+  var payUrl = window.localStorage.getItem("AlipayUrl");
   $("#loadUrl").attr("src",payUrl);
 })
 </script>

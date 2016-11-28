@@ -35,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/archerU/wapApp/issues"
   },
-  "homepage": "https://github.com/archerU/wapApp#readme"
+  "homepage": "https://github.com/archerU/wapApp#readme",
+  "dependencies": {
+    "gulp-connect": "^5.0.0"
+  }
 }

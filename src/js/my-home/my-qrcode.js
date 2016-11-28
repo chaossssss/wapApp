@@ -1,7 +1,7 @@
 "use strict"
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
 	
 }])
 .controller('qrCodeCtrl',['$rootScope','$scope','getMyInfo',function($rootScope,$scope,getMyInfo){

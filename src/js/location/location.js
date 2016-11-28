@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	// FastClick.attach(document.body);
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
 
 	//获取url参数
     function getvl(name) {
@@ -17,17 +17,17 @@ angular.module('com.wapapp.app',[])
 }])
 .controller('addLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
 
-	var sessionStorage = window.sessionStorage;
+	var localStorage = window.localStorage;
 	var vm = $scope.vm = {};
 
 	vm.error = "";
 	vm.isActive = false;
 
-	if(sessionStorage.LocalContent){
-		vm.Address2 = sessionStorage.LocalContent;
+	if(localStorage.LocalContent){
+		vm.Address2 = localStorage.LocalContent;
 	}
-	if(sessionStorage.LocalTitle){
-		vm.Address1 = sessionStorage.LocalTitle;
+	if(localStorage.LocalTitle){
+		vm.Address1 = localStorage.LocalTitle;
 	}
 
 	addrService.tag()
@@ -83,7 +83,7 @@ angular.module('com.wapapp.app',[])
 
 }])
 .controller('editLocationCtrl',['$rootScope','$scope','addrService',function($rootScope,$scope,addrService){
-	var sessionStorage = window.sessionStorage;
+	var localStorage = window.localStorage;
 
 	var vm = $scope.vm = {};
 	var hm = $scope.hm = {};
@@ -92,11 +92,11 @@ angular.module('com.wapapp.app',[])
 	vm.isActive = false;
 	vm.isDialog = false;
 
-	if(sessionStorage.LocalContent){
-		vm.Address2 = sessionStorage.LocalContent;
+	if(localStorage.LocalContent){
+		vm.Address2 = localStorage.LocalContent;
 	}
-	if(sessionStorage.LocalTitle){
-		vm.Address1 = sessionStorage.LocalTitle;
+	if(localStorage.LocalTitle){
+		vm.Address1 = localStorage.LocalTitle;
 	}
 
 	//获取url参数
@@ -183,10 +183,10 @@ angular.module('com.wapapp.app',[])
 		switch ($rootScope.channel)
 		{
 			case "0" :
-				window.location.href = '/template/point-order/point-order.html?channel=0&type='+$rootScope.type+'&markid='+$rootScope.markid+'&id='+item.Id;
+				window.location.href = '/template/point-order/point-order-new.html?channel=0&type='+$rootScope.type+'&markid='+$rootScope.markid+'&id='+item.Id;
 				break;
 			case "1" :
-				window.location.href = '/template/quick-order/quick-order.html?channel=1&id='+item.Id;
+				window.location.href = '/template/quick-order/quick-order-new.html?channel=1&id='+item.Id;
 				break;
 			default:
 				window.location.href = '/template/location/edit-location.html?id='+item.Id;

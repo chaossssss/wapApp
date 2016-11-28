@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
   FastClick.attach(document.body);
-  $rootScope.token = window.sessionStorage.getItem("Token");
+  $rootScope.token = window.localStorage.getItem("Token");
 
   //获取url参数
     function getvl(name) {
@@ -47,7 +47,7 @@ angular.module('com.wapapp.app',[])
     var sn = document.getElementById("serviceChoose").value;
     var sp = vm.serviceTypeList[sn].Price + vm.serviceTypeList[sn].UnitName;
     var servicePrice = document.getElementById('servicePrice');
-    servicePrice.innerText="￥"+sp;
+    servicePrice.innerText="¥"+sp;
   })
 
   // 是否到店服务的地址配置&时间配置
@@ -217,7 +217,7 @@ angular.module('com.wapapp.app',[])
               // serviceTypeList[j].Price = '面议';
               // serviceTypeList[j].StartingPrice = ;
 
-              serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
+              serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName;
               serviceTypeList[j].Price = serviceTypeList[j].StartingPrice+'起';
               if(serviceTypeList[j].UnitName){
                 serviceTypeList[j].UnitName = '';
@@ -227,7 +227,7 @@ angular.module('com.wapapp.app',[])
               if(serviceTypeList[j].UnitName){
                 serviceTypeList[j].UnitName = '/'+serviceTypeList[j].UnitName;
               }
-              serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName+'¥';
+              serviceTypeList[j].ServiceTypeName = serviceTypeList[j].ServiceTypeName;
             }
           }
           vm.serviceTypeList = serviceTypeList;
