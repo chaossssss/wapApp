@@ -1,5 +1,5 @@
 $(function(){
-	var token = window.sessionStorage.getItem("Token");
+	var token = window.localStorage.getItem("Token");
 	console.log(token);
 	var state=getvl("state");
 	console.log(state);
