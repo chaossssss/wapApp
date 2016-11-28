@@ -22,13 +22,34 @@ $(function(){
     		Token:token
         },
         success:function(data){
+            var abc = {
+                "start": "1970-01-01T08:00:00",
+                "Id": "350866ce-36ad-e611-a79a-008cfae40c0c",
+                "Title": null,
+                "CreateTime": "2016/11/18 10:29:26",
+                "StartTime": "2016/11/18 0:00:00",
+                "EndTime": "2016/12/18 0:00:00",
+                "IsUsed": "0",
+                "UserId": null,
+                "CouponDetails": [
+                    {
+                        "Amount": "80.00",
+                        "DiscountAmount": "8.00",
+                        "Discount": "0.00",
+                        "DiscountType": "0"
+                    }
+                ],
+                "PlatFormString": null,
+                "ServiceTypes": []
+            };
+            data.Body.CouponList.push(abc);
+            console.log(data);
         	var api=data.Body.CouponList;
         	res_0="";
         	res_1="";
         	res_2="";
         	var ServiceNames=""; //品类名称
         	for (var i=0;i<api.length;i++) {
-
         		if(api[i].ServiceTypes.length==0){
         			ServiceNames="全品类使用";
         		}else{
