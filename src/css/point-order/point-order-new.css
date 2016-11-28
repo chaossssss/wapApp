@@ -519,15 +519,18 @@ ul,li {
   padding-bottom: 11px;
 }
 .submit_btn {
-  width : 100px;
-  height : 50px;
-  background : #27b8f3;
-  color : #fff;
-  line-height : 50px;
-  text-align : center;
+  width: 100px;
+  height: 50px;
+  background: #27b8f3;
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
 }
 .money_color {
   color: #ef6f21;
+}
+.no_border:before {
+  border-top: none;
 }
 
 

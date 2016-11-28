@@ -183,10 +183,10 @@ angular.module('com.wapapp.app',[])
 		switch ($rootScope.channel)
 		{
 			case "0" :
-				window.location.href = '/template/point-order/point-order.html?channel=0&type='+$rootScope.type+'&markid='+$rootScope.markid+'&id='+item.Id;
+				window.location.href = '/template/point-order/point-order-new.html?channel=0&type='+$rootScope.type+'&markid='+$rootScope.markid+'&id='+item.Id;
 				break;
 			case "1" :
-				window.location.href = '/template/quick-order/quick-order.html?channel=1&id='+item.Id;
+				window.location.href = '/template/quick-order/quick-order-new.html?channel=1&id='+item.Id;
 				break;
 			default:
 				window.location.href = '/template/location/edit-location.html?id='+item.Id;

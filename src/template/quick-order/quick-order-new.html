@@ -313,18 +313,18 @@
         <div class="weui_media_desc pb11" style="font-size:15px;color:#000;">
           订单金额
           <p class="money">
-            <span>￥</span>
+            <span>¥</span>
             <span ng-bind="sv.Max"></span>
             <span>×</span>
             <span ng-bind="vm.Total" style="padding-right:22px;"></span>
-            <span>￥</span>
+            <span>¥</span>
             <span ng-bind="sv.Max * vm.Total | number:1"></span>
           </p>
         </div>
         <div class="weui_media_desc pb11" ng-if="gt.SpecialTitle" style="font-size:15px;color:#000;">
           <span ng-bind="gt.SpecialTitle"></span>
           <p class="money money_color">
-            <span>-￥</span>
+            <span>-¥</span>
             <span ng-bind="gt.SpecialRule[0].Minus"></span>
           </p>
         </div>
@@ -332,7 +332,7 @@
       <div class="weui_media_box weui_media_text">
         <div class="weui_media_desc" style="font-size:15px;color:#000;">
           订单总计
-            <div class="zj_cell_right money" style="color:#000" ng-if="gt.SpecialRule.length == 0">
+            <div class="zj_cell_right money" style="color:#000" ng-if="gt.SpecialRule.length == 0 || gt.SpecialRule.length == null">
               <span class="money_color f20 pl5 f18">¥&nbsp;<span ng-bind="sv.Max *vm.Total | number:1"></span></span>
             </div>
             <div class="zj_cell_right money" style="color:#000" ng-if="gt.SpecialRule.length > 0">
@@ -420,6 +420,7 @@
     </div>
     <!-- IsNegotiable 1 无价格(面议) -->
     <div class="zj_foot_bd" ng-show="vm.IsNegotiable == '1'">
+      <span>¥</span>
       <span ng-bind="sv.StartingPrice | number:1"></span>
       <span class="f14 fc8">起</span>
     </div>
