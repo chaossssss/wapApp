@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
   FastClick.attach(document.body);
-  $rootScope.token = window.sessionStorage.getItem("Token");
+  $rootScope.token = window.localStorage.getItem("Token");
 
   //获取url参数
     function getvl(name) {
