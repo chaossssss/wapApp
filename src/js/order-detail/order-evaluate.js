@@ -1,5 +1,5 @@
 $(function(){
-  var token = sessionStorage.getItem("Token");
+  var token = localStorage.getItem("Token");
   var orderId = getQueryString("orderId");
   var type = getQueryString("type");
   var id = getQueryString("markid");

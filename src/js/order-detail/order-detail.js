@@ -132,7 +132,7 @@ $(function(){
   };
   var orderId = getQueryString("orderId");
   console.log(orderId);
-  var token = window.sessionStorage.getItem("Token");
+  var token = window.localStorage.getItem("Token");
   console.log(token);
   $cancelBtn.on('click',function(){
     $workerPhone.hide();

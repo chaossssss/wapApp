@@ -70,13 +70,13 @@
     var $height = $(window).height();
     $("#container").height($height-44);
 
-    var token = window.sessionStorage.getItem("Token");
+    var token = window.localStorage.getItem("Token");
     if(token){
       $("#leftImg").attr("src","/images/map/btn_personal_active.png");
     }
     // $("#leftImg").on("click",function(){
     //   alert("1");
-    //   var a = window.sessionStorage.getItem("Token");
+    //   var a = window.localStorage.getItem("Token");
     //   if(a != undefined){
     //     window.location.href = "/template/my-home/my-home.html";
     //   }
@@ -168,7 +168,7 @@
       })
       //点击左侧图标
       $("#left").on("click",function(){
-        var token = window.sessionStorage.getItem("Token");
+        var token = window.localStorage.getItem("Token");
         if(token != undefined){
           window.location.href = "/template/my-home/my-home.html";
         }else{
@@ -187,7 +187,7 @@ var map = new BMap.Map("container");          // 创建地图实例
 var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
 map.centerAndZoom(point, 15); 	
 
-var sessionStorage = window.sessionStorage;
+var localStorage = window.localStorage;
 $("#search_input").val('');
 
 //移动地图事件
@@ -198,8 +198,8 @@ map.addEventListener("moveend",function(){
   mk.setPosition(point_c);
   searchData(point_c.lng,point_c.lat);
 
-  sessionStorage.setItem("Map_Lng",point_c.lng);
-  sessionStorage.setItem("Map_Lat",point_c.lat+0.019439); //加上百度坐标偏移
+  localStorage.setItem("Map_Lng",point_c.lng);
+  localStorage.setItem("Map_Lat",point_c.lat+0.019439); //加上百度坐标偏移
 
   console.log("移动后定位点的坐标",mk.getPosition());
 })
@@ -315,10 +315,10 @@ map.addControl(sosoActivityControl);
 map.addControl(geolocationControl);
 
 // 浏览器自动定位
-if(sessionStorage.getItem("Map_Lng")){
+if(localStorage.getItem("Map_Lng")){
   //设置定位点样式
-  var _lng = sessionStorage.getItem("Map_Lng");
-  var _lat = sessionStorage.getItem("Map_Lat");
+  var _lng = localStorage.getItem("Map_Lng");
+  var _lat = localStorage.getItem("Map_Lat");
 
   var session_point = new BMap.Point(_lng,_lat);
   var myIcon = new BMap.Icon(Local_Img, new BMap.Size(22,22));

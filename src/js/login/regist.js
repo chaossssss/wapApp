@@ -3,7 +3,7 @@ angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
 	$rootScope.url = CONFIG.IP;
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
 	
 }])
 .controller('registCtrl',['$scope','$timeout','registService','captchaService',function($scope,$timeout,registService,captchaService){

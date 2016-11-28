@@ -130,7 +130,7 @@
 
 <script>
 $(function(){
-	var sessionStorage = window.sessionStorage;
+	var localStorage = window.localStorage;
 	$('#container').on('focus', '#search_input', function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
@@ -171,8 +171,8 @@ $(function(){
     $('#wapper').on('click','.result',function(e){
     	var title = $(this).find('.title').text();
     	var content = $(this).find('.content').text();
-    	sessionStorage.setItem("LocalTitle",title);
-    	sessionStorage.setItem("LocalContent",content);
+    	localStorage.setItem("LocalTitle",title);
+    	localStorage.setItem("LocalContent",content);
     	// alert(content);
     	var search = window.location.search;
     	window.location.href = "/template/location/add-location.html"+search;

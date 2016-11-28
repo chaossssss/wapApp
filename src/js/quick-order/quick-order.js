@@ -2,7 +2,7 @@
 angular.module('com.wapapp.app',[])
 .run(['$rootScope',function($rootScope){
 	FastClick.attach(document.body);
-	$rootScope.token = window.sessionStorage.getItem("Token");
+	$rootScope.token = window.localStorage.getItem("Token");
  
 	//获取url参数 
     function getvl(name) {
@@ -57,9 +57,9 @@ angular.module('com.wapapp.app',[])
 	vm.Total = 3;
 	if($rootScope.addressId){
 		vm.ServiceAddressId = $rootScope.addressId;
-	}else if(window.sessionStorage.getItem("_address")){
+	}else if(window.localStorage.getItem("_address")){
 		//未选择过地址，取出上次缓存的地址
-		var _address = JSON.parse(window.sessionStorage.getItem("_address"));
+		var _address = JSON.parse(window.localStorage.getItem("_address"));
 		vm.ServiceAddressId = _address.Id;
 		$scope.addr = _address;
 	}
@@ -90,7 +90,7 @@ angular.module('com.wapapp.app',[])
 	})
 
 	//取出缓存数据
-	// var _pointOrder = JSON.parse(window.sessionStorage.getItem("point-order"));
+	// var _pointOrder = JSON.parse(window.localStorage.getItem("point-order"));
 	// console.log(_pointOrder);
 	// if(_pointOrder){
 	// 	vm.ServiceTypeId = _pointOrder.ServiceTypeId;
@@ -105,7 +105,7 @@ angular.module('com.wapapp.app',[])
 			if(res.Meta.ErrorCode === "0"){
 				$scope.addr = res.Body[0];
 				//地址数据永久缓存
-				window.sessionStorage.setItem("_address",JSON.stringify(res.Body[0]));
+				window.localStorage.setItem("_address",JSON.stringify(res.Body[0]));
 			}
 			$scope.$apply();
 		})
@@ -200,7 +200,7 @@ angular.module('com.wapapp.app',[])
 			ServiceStartAt: vm.ServiceStartAt,
 			ServiceContent: vm.ServiceContent
 		}
-		window.sessionStorage.setItem("point-order",JSON.stringify(stroage)); 
+		window.localStorage.setItem("point-order",JSON.stringify(stroage)); 
 		if(vm.IsNegotiable == '0'){
 			$scope.loadingToast = true;
 			$scope.$broadcast("uploader-img-data");
