@@ -554,7 +554,7 @@ activityControl.prototype.initialize = function(map){
     img.style.width = "60px";
 
     img.onclick = function(e){    
-        window.location.href = "/template/quick-order/quick-order.html?channel=1";     
+        window.location.href = "/template/quick-order/quick-order-new.html?channel=1";     
     }
     map.getContainer().appendChild(img);
     return img;

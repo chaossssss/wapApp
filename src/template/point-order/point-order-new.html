@@ -107,7 +107,7 @@
     </a>
     <!-- 服务时间 end -->
     <!-- 选择地址 begin -->
-    <a href="javascript:;" class="weui_cell pb2" ng-click="vm.gotojudge()">
+    <a href="javascript:;" class="weui_cell" ng-click="vm.gotojudge()">
       <div class="weui_cell_hd">
         <img src="/images/quick-order/new-local.png" alt="" style="width:20px;margin-right:10px;display:block">
       </div>
@@ -281,24 +281,24 @@
   <!-- 活动的显示的终结 -->
 
   <!-- 定价才显示待支付 定价情况-->
-  <div class="weui_panel weui_panel_access" style="margin-bottom:15px;" ng-if="vm.serviceTypeObj.PriceType == '1'">
+  <div class="weui_panel weui_panel_access" ng-if="vm.serviceTypeObj.PriceType == '1'">
     <div class="weui_panel_bd">
       <div class="weui_media_box weui_media_text" style="padding-bottom:4px;">
         <div class="weui_media_desc pb11" style="font-size:15px;color:#000;">
           订单金额
           <p class="money">
-            <span>￥</span>
+            <span>¥</span>
             <span ng-bind="vm.serviceTypeObj.Price"></span>
             <span>×</span>
             <span ng-bind="vm.Total" style="padding-right:22px;"></span>
-            <span>￥</span>
+            <span>¥</span>
             <span ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
           </p>
         </div>
         <div class="weui_media_desc pb11" ng-if="gt.SpecialTitle" style="font-size:15px;color:#000;">
           <span ng-bind="gt.SpecialTitle"></span>
           <p class="money money_color">
-            <span>-￥</span>
+            <span>-¥</span>
             <span ng-bind="gt.SpecialRule[0].Minus"></span>
           </p>
         </div>
@@ -349,7 +349,7 @@
     </div>
   </div> -->
   <!-- 服务说明 begin-->
-  <div class="weui_cell bgf mb49 fc8 lh30" style="background:#fbfbfb;">
+  <div class="weui_cell bgf mb49 fc8 lh30 no_border" style="background:#fbfbfb;">
     <div class="weui_cell_bd weui_cell_primary">
       <p class="f15">服务说明</p>
       <!-- <p class="f15" ng-bind="fw.Description"></p> -->
@@ -370,6 +370,7 @@
     </div>
     <!-- 面议 -->
     <div class="zj_foot_bd" ng-if="vm.serviceTypeObj.PriceType == '0'" ng-cloak>
+      <span>¥</span>
       <span ng-bind="vm.serviceTypeObj.StartingPrice"></span>
       <span class="f14 fc8">起</span>
     </div>
@@ -391,7 +392,7 @@
       <span ng-if="vm.serviceTypeObj.Price*vm.Total < gt.SpecialRule[0].Upper" ng-bind="vm.serviceTypeObj.Price*vm.Total | number:1"></span>
       <span ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="vm.serviceTypeObj.Price*vm.Total-gt.SpecialRule[0].Minus | number:1"></span>
       <span style="font-size:12px;color:#999;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">已优惠</span>
-      <span style="font-size:12px;color:#999;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">￥</span>
+      <span style="font-size:12px;color:#999;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper">¥</span>
       <span style="font-size:12px;color:#999;" ng-if="vm.serviceTypeObj.Price*vm.Total >= gt.SpecialRule[0].Upper" ng-bind="gt.SpecialRule[0].Minus"></span>
     </div>  
     <div class="submit_btn" ng-click="vm.submitOrder()">
