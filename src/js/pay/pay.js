@@ -14,6 +14,14 @@ angular.module('com.wapapp.app',[])
     // $rootScope.orderId = getvl("orderId");
     $rootScope.orderId = getvl("state");
     $rootScope.code = getvl("code");
+
+    var redinfo=getvl("redinfo");
+    if(redinfo>0){
+    	$(".red-info").text("-"+redinfo);
+    }else{
+    	$(".red-info").text("未选择");
+    }
+    $(".my_red").attr("href","/template/red-packet/red-packet.html?state="+$rootScope.orderId);
 }])
 .controller('payCtrl',['$rootScope','$scope','getMyInfo','getOdetail','payForService',function($rootScope,$scope,getMyInfo,getOdetail,payForService){
 	var vm = $scope.vm = {};
