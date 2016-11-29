@@ -116,18 +116,136 @@ body {
 	transform: translate(0);
 }
 /*红包*/
+.red-notice{
+    color: #666;
+    width: 92%;
+    margin: auto;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.red-nums{
+	color: #ff1b56;
+}
 .red-item {
     background: url(/images/red-packet/bg-y.png);
 }
-.red-item-n {
+.bg-no{
     background: url(/images/red-packet/bg-n.png);
 }
-.red-item,
-.red-item-n { 
+.red-item{ 
+	position: relative;
     height: 6rem;
     background-size: 100% 100%;
     width: 94%;
     margin: auto;
     margin-top: 10px;
 }
+.red-item:last-child{
+	margin-bottom: 10px;
+}
+.red-item-left{
+	position: relative;
+	float: left;
+	height: 79%;
+    width: 30%;  
+    margin-top: 4%;
+    color: #ff1b56;
+}
 
+.red-item-right{
+    float: left;
+    width: 55%;
+    height: 80%;
+    margin-top: 4%;
+    margin-left: 2%;
+    overflow: hidden;
+}
+.red-item-left:before {
+    content: '';
+    position: absolute;
+    height: 200%;
+    width: 1px;
+    right: 0;
+    border-right: 1px dashed #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.red-price,.Amount{
+	position: absolute;
+}
+.red-price{
+    top: -17%;
+    width: 100%;
+    margin-left: 27%;
+    text-align: center;   
+}
+
+.red-rmb{
+    float: left;
+    line-height: 5.4;
+}
+.DiscountAmount{
+	float: left;
+    font-size: 2.5rem;
+    margin-top: 5px;
+}
+.Amount{
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.red-name{
+	color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.red-rule{
+    color: #666;
+    font-size: 0.7rem;
+    margin-left: 8%;
+}
+.red-no{
+	color:#ccc;
+}
+.red-empty{
+	position: relative;
+	background: #fff;
+	padding: 4px;
+}
+.red-empty:before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 200%;
+    bottom: 0;
+    border-bottom: 1px dashed #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.red-empty span{
+	color:#666;
+}
+.red-cent{
+	width:94%;
+	margin:auto;
+}
+.red-img{
+    width: 6%;
+    float: right;
+    margin-top: 2px;
+}
+.red-list-img{
+    position: absolute;
+    top: 37%;
+    right: 5%;
+}

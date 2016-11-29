@@ -195,22 +195,70 @@
 <div ng-if="ac.IsUsePacket === true">
     <div class="red_mask_transition red_fade_toggle" style="display: block;"></div>
     <div class="red_actionsheet red_actionsheet_toggle">
+    	<div class="red-empty">
+    		<div class="red-cent">
+    			<span>不使用红包</span>
+    			<img src="/images/pay/no-sel.png" alt="" class="red-img noSel">
+    		</div>   		
+    	</div>
+    	<div class="red-notice">有<span class="red-nums">3</span>个红包可使用</div>
         <div class="red-list">
+        	<!-- 未使用状态 -->
         	<div class="red-item">
-        		<div class="item-left">
-        			<div class="price">
-        				<span class="rmb">￥</span>
-        				<span class="DiscountAmount">'+DiscountAmount+'</span>
+        		<div class="red-item-left">
+        			<div class="red-price">
+        				<span class="red-rmb">￥</span>
+        				<span class="DiscountAmount">8</span>
     				</div>
-    				<div class="Amount">满'+Amount+'可用</div>	
+    				<div class="Amount">满80可用</div>	
 				</div>
-				<div class="item-right">
+				<div class="red-item-right">
 					<div class="red-name">闪付红包</div>
 					<ul class="red-rule">
-						<li class="ServiceTypes">'+ServiceNames+'</li>
+						<li class="ServiceTypes">全品类使用</li>
 						<li>
-							<span class="StartTime">'+StartTime+'</span>
-							至<span class="EndTime">'+EndTime+'</span>
+							<span class="StartTime">2016/10/11</span>
+							至<span class="EndTime">2016/10/22</span>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="red-item">
+        		<div class="red-item-left">
+        			<div class="red-price">
+        				<span class="red-rmb">￥</span>
+        				<span class="DiscountAmount">8</span>
+    				</div>
+    				<div class="Amount">满80可用</div>	
+				</div>
+				<div class="red-item-right">
+					<div class="red-name">闪付红包</div>
+					<ul class="red-rule">
+						<li class="ServiceTypes">全品类使用</li>
+						<li>
+							<span class="StartTime">2016/10/11</span>
+							至<span class="EndTime">2016/10/22</span>
+						</li>
+					</ul>
+				</div>
+				<img src="/images/pay/yes-sel.png" alt="" class="red-img red-list-img">
+			</div>
+			<!-- 已使用已过期状态 -->
+			<div class="red-item bg-no">
+				<div class="red-item-left red-no">
+					<div class="red-price">
+						<span class="red-rmb">￥</span>
+						<span class="DiscountAmount">22</span>
+					</div>
+					<div class="Amount">满58可用</div>
+				</div>
+				<div class="red-item-right">
+					<div class="red-name red-no">闪付红包</div>
+					<ul class="red-rule red-no">
+						<li class="ServiceTypes">全品类使用</li>
+						<li>
+							<span class="StartTime">2016/12/11</span>至<span class="EndTime">2017/11/18</span>
 						</li>
 					</ul>
 				</div>
@@ -218,6 +266,7 @@
 		</div>
     </div>
 </div>
+
 <!-- 红包 End actionSheet -->
 
 
