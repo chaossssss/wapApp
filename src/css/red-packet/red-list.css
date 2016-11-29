@@ -1,0 +1,143 @@
+/*基础样式*/
+a,img,button,input,textarea,ul,li,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+body {
+	background-color: #fff;
+}
+.clear{
+	clear: both;
+}
+.red-state{
+	position: relative;
+	width: 89%;
+    margin: auto;
+}
+header{
+	position: relative;
+}
+
+header:before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    bottom: 0;
+    border-bottom: 1px solid #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.red-state>li{
+    display: inline-block;
+    width: 23%;
+    text-align: center;
+    padding: 10px 0;
+    color: #999;
+    margin-left: 6px;
+}
+.red-state>li:last-child{
+	float: right;
+}
+.active{
+    border-bottom: 2px solid #27b8f3;
+    color:#27b8f3;
+}
+
+.red-item{
+    background: url(/images/red-packet/bg-y.png);
+}
+.red-item-n{
+    background: url(/images/red-packet/bg-n.png);
+}
+.red-item,.red-item-n{ 
+    height: 6rem;
+    background-size: 100% 100%;
+    width: 94%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.item-left,.item-left-n{
+	position: relative;
+	float: left;
+	height: 79%;
+    width: 30%;  
+    margin-top: 4%;
+}
+.item-left{
+    color: #ff1b56;
+}
+.item-left-n{
+    color: #ccc;
+}
+.item-right{
+    float: right;
+    width: 66%;
+    height: 80%;
+    margin-top: 4%;
+}
+.item-left:before {
+    content: '';
+    position: absolute;
+    height: 200%;
+    width: 1px;
+    right: 0;
+    border-right: 1px dashed #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.price,.Amount{
+	position: absolute;
+}
+.price{
+    top: -17%;
+    width: 100%;
+    margin-left: 27%;
+    text-align: center;   
+}
+
+.rmb,.rmb-n{
+    float: left;
+    line-height: 5.4;
+}
+.rmb-n{
+    color: #ccc;
+}
+.DiscountAmount{
+	float: left;
+    font-size: 2.5rem;
+    margin-top: 5px;
+}
+.Amount{
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.red-name,.red-name-n{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.red-name{
+    color: #333;
+}
+.red-name-n{
+    color: #ccc;
+}
+.red-rule,.red-rule-n{
+    font-size: 0.9rem;
+    margin-left: 8%;
+}
+.red-rule{
+    color: #666;
+}
+.red-rule-n{
+    color: #ccc;
+}
