@@ -71,20 +71,16 @@ $(function(){
         }
 	});
 
-	GetRedInfo();
 	$("#unuse").click(function(){
 		$(".red-list").html(res_0);
-		GetRedInfo();
 	})
 	$("#used").click(function(){
 		$(".red-list").html(res_1);
-		GetRedInfo();
 		NoUse();
 
 	})
 	$("#delay").click(function(){
 		$(".red-list").html(res_2);
-		GetRedInfo();
 		NoUse();
 	})
 
@@ -99,20 +95,20 @@ function NoUse(){
 	$(".red-rule").css("color","#ccc");
 }
 
-// 获取红包信息
-function GetRedInfo(){
-    $(".red-item").each(function(){
-        $(this).click(function(){
-            var Id=$(this).attr("Id");
-            var DiscountAmount=$(this).attr("DiscountAmount");
-            var Amount=$(this).attr("Amount");
+// // 获取红包信息
+// function GetRedInfo(){
+//     $(".red-item").each(function(){
+//         $(this).click(function(){
+//             var Id=$(this).attr("Id");
+//             var DiscountAmount=$(this).attr("DiscountAmount");
+//             var Amount=$(this).attr("Amount");
 
-            var jsonstr={ "Id":Id, "DiscountAmount":DiscountAmount,"Amount":Amount};
+//             var jsonstr={ "Id":Id, "DiscountAmount":DiscountAmount,"Amount":Amount};
 
-            alert(jsonstr.Id);
-            alert(jsonstr.DiscountAmount);
-            alert(jsonstr.Amount);
+//             alert(jsonstr.Id);
+//             alert(jsonstr.DiscountAmount);
+//             alert(jsonstr.Amount);
 
-        })
-    }); 
-}
+//         })
+//     }); 
+// }
