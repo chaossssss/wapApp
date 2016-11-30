@@ -82,21 +82,27 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>红包</p>
 			</div>
-			<div class="weui_cell_ft">
-				
-			</div>
+			<div class="weui_cell_ft pred" ng-bind="vm.redpacketInfo"></div>
 		</a>
 		<div class="weui_cell no_access">
             <div class="weui_cell_bd weui_cell_primary">
                 <p>支付金额</p>
             </div>
-            <!-- 参加活动& 使用优惠券 -->
-            <div class="zj_cell_ft pred f20" ng-if="od.Activity && od.Activity.SpecialRule.length > 0" ng-cloak>
-            	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span>
+            <!-- 参加活动& 使用优惠券 && 不使用红包-->
+            <div class="zj_cell_ft pred f20" ng-if="od.Activity && (od.Activity.SpecialRule.length > 0) && ac.redChanged ==='1'" ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus | number:2"></span>
             </div>
-            <!-- 没有参加活动&没有使用优惠券 -->
-             <div class="zj_cell_ft pred f20" ng-if="od.Activity === null || od.Activity.SpecialRule.length == 0" ng-cloak>
-            	¥ <span ng-bind="od.TotalPrice"></span>
+            <!-- 参加活动& 使用优惠券 && 使用红包 -->
+            <div class="zj_cell_ft pred f20" ng-if="od.Activity && (od.Activity.SpecialRule.length > 0) && ac.redChanged !=='1'" ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus-ac.discountAmount | number:2"></span>
+            </div>
+            <!-- 没有参加活动&没有使用优惠券 && 不使用红包-->
+             <div class="zj_cell_ft pred f20" ng-if="(od.Activity === null || od.Activity.SpecialRule.length == 0) && ac.redChanged ==='1' " ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice | number:2"></span>
+            </div>
+			<!-- 没有参加活动&没有使用优惠券 && 使用红包-->
+             <div class="zj_cell_ft pred f20" ng-if="(od.Activity === null || od.Activity.SpecialRule.length == 0) && ac.redChanged !=='1' " ng-cloak>
+            	¥ <span ng-bind="od.TotalPrice-ac.discountAmount | number:2"></span>
             </div>
         </div>
 	</div>
@@ -140,11 +146,21 @@
 		</label>
 	</div>
 	<div class="foot">
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity && od.Activity.SpecialRule.length > 0">
-			确认支付 <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus"></span> 元
+		<!-- 参加活动& 使用优惠券 && 不使用红包-->
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity && (od.Activity.SpecialRule.length > 0) && ac.redChanged ==='1'">
+			确认支付 <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus | number:2"></span> 元
 		</a>
-		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity === null || od.Activity.SpecialRule.length == 0">
-			确认支付 <span ng-bind="od.TotalPrice"></span> 元
+		<!-- 参加活动& 使用优惠券 && 使用红包 -->
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="od.Activity && (od.Activity.SpecialRule.length > 0) && ac.redChanged !=='1'">
+			确认支付 <span ng-bind="od.TotalPrice-od.Activity.SpecialRule[0].Minus-ac.discountAmount | number:2"></span> 元
+		</a>
+		<!-- 没有参加活动&没有使用优惠券 && 不使用红包-->
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity === null || od.Activity.SpecialRule.length == 0) && ac.redChanged ==='1'">
+			确认支付 <span ng-bind="od.TotalPrice | number:2"></span> 元
+		</a>
+		<!-- 没有参加活动&没有使用优惠券 && 使用红包-->
+		<a href="javascript:;" class="weui_btn weui_btn_primary" ng-click="vm.payOrder()" ng-if="(od.Activity === null || od.Activity.SpecialRule.length == 0) && ac.redChanged !=='1'">
+			确认支付 <span ng-bind="od.TotalPrice-ac.discountAmount | number:2"></span> 元
 		</a>
 		<div class="fc8 mt10 f14">
 			<p>温馨提示:</p>
@@ -192,81 +208,45 @@
 </div>
 
 <!-- 红包 Begin actionSheet-->
-<div ng-if="ac.IsUsePacket === true">
+<div ng-if="ac.IsUsePacket === true" ng-cloak>
     <div class="red_mask_transition red_fade_toggle" style="display: block;"></div>
     <div class="red_actionsheet red_actionsheet_toggle">
-    	<div class="red-empty">
+    	<div class="red-empty" ng-click="ac.redChanged = '1';ac.IsUsePacket = false">
     		<div class="red-cent">
     			<span>不使用红包</span>
-    			<img src="/images/pay/no-sel.png" alt="" class="red-img noSel">
+    			<img ng-if="ac.redChanged !== '1'" src="/images/pay/no-sel.png" alt="" class="red-img noSel">
+    			<img ng-if="ac.redChanged === '1'" src="/images/pay/yes-sel.png" alt="" class="red-img">
     		</div>   		
     	</div>
-    	<div class="red-notice">有<span class="red-nums">3</span>个红包可使用</div>
+    	<div class="red-notice">
+    		有 <span class="red-nums" ng-bind="rp.CouponList.length"></span>
+    		个红包未使用
+		</div>
+		<!-- IsUsed 0 未使用，1 已使用 -->
         <div class="red-list">
-        	<!-- 未使用状态 -->
-        	<div class="red-item">
-        		<div class="red-item-left">
+			<div class="red-item" ng-class="{true:'bg-no'}[(item.IsUsed === '1' || (od.TotalPrice <= item.CouponDetails[0].Amount))]" ng-repeat="item in rp.CouponList" ng-click="vm.useRedPacket(item)">
+        		<div class="red-item-left" ng-class="{true:'red-no'}[(item.IsUsed === '1' || (od.TotalPrice <= item.CouponDetails[0].Amount))]">
         			<div class="red-price">
         				<span class="red-rmb">￥</span>
-        				<span class="DiscountAmount">8</span>
+        				<span class="DiscountAmount">{{item.CouponDetails[0].DiscountAmount | number:0}}</span>
     				</div>
-    				<div class="Amount">满80可用</div>	
+    				<div class="Amount">满{{item.CouponDetails[0].Amount | number:0}}可用</div>	
 				</div>
 				<div class="red-item-right">
-					<div class="red-name">闪付红包</div>
-					<ul class="red-rule">
+					<div class="red-name" ng-class="{true:'red-no'}[(item.IsUsed === '1' || (od.TotalPrice <= item.CouponDetails[0].Amount))]">闪付红包</div>
+					<ul class="red-rule" ng-class="{true:'red-no'}[(item.IsUsed === '1' || (od.TotalPrice <= item.CouponDetails[0].Amount))]">
 						<li class="ServiceTypes">全品类使用</li>
 						<li>
-							<span class="StartTime">2016/10/11</span>
-							至<span class="EndTime">2016/10/22</span>
+							<span class="StartTime">{{item.StartTime | limitTo:10}}</span>
+							至<span class="EndTime">{{item.EndTime | limitTo:10}}</span>
 						</li>
 					</ul>
 				</div>
-				
-			</div>
-			<div class="red-item">
-        		<div class="red-item-left">
-        			<div class="red-price">
-        				<span class="red-rmb">￥</span>
-        				<span class="DiscountAmount">8</span>
-    				</div>
-    				<div class="Amount">满80可用</div>	
-				</div>
-				<div class="red-item-right">
-					<div class="red-name">闪付红包</div>
-					<ul class="red-rule">
-						<li class="ServiceTypes">全品类使用</li>
-						<li>
-							<span class="StartTime">2016/10/11</span>
-							至<span class="EndTime">2016/10/22</span>
-						</li>
-					</ul>
-				</div>
-				<img src="/images/pay/yes-sel.png" alt="" class="red-img red-list-img">
-			</div>
-			<!-- 已使用已过期状态 -->
-			<div class="red-item bg-no">
-				<div class="red-item-left red-no">
-					<div class="red-price">
-						<span class="red-rmb">￥</span>
-						<span class="DiscountAmount">22</span>
-					</div>
-					<div class="Amount">满58可用</div>
-				</div>
-				<div class="red-item-right">
-					<div class="red-name red-no">闪付红包</div>
-					<ul class="red-rule red-no">
-						<li class="ServiceTypes">全品类使用</li>
-						<li>
-							<span class="StartTime">2016/12/11</span>至<span class="EndTime">2017/11/18</span>
-						</li>
-					</ul>
-				</div>
+				<img ng-if="item.IsUsed === '0' && (ac.redChanged === item.Id)" ng-src="/images/pay/yes-sel.png" alt="" class="red-img red-list-img">
 			</div>
 		</div>
     </div>
 </div>
-
 <!-- 红包 End actionSheet -->
 
 

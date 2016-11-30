@@ -20,9 +20,11 @@ angular.module('com.wapapp.app', [])
 		var uc = $scope.uc = {};
 		var od = $scope.od = {};
 		var ac = $scope.ac = {}; //状态对象: 是否升起红包
+		var rp = $scope.rp = {}; //红包
 
 		$scope.loadingToast = false;
-		ac.IsUsePacket = false;
+		ac.IsUsePacket = false; //是否使用红包
+		ac.redChanged = "1"; //红包是否被选中
 
 		//是否选中 余额&支付宝&微信支付
 		vm.yeIschecked = false;
@@ -50,9 +52,15 @@ angular.module('com.wapapp.app', [])
 			.success(function(res) {
 				console.log("获取红包", res);
 				if (res.Meta.ErrorCode === "0") {
-
-
-
+					res.Body.CouponList.forEach(function(item, index, arry) {
+						item.CouponDetails.forEach(function(item, index, arry) {
+							item.Amount = parseFloat(item.Amount);
+							item.Discount = parseFloat(item.Discount);
+							item.DiscountAmount = parseFloat(item.DiscountAmount);
+							item.DiscountType = parseFloat(item.DiscountType);
+						})
+					})
+					rp = $scope.rp = res.Body;
 				}
 				$scope.$apply();
 			})
@@ -77,6 +85,23 @@ angular.module('com.wapapp.app', [])
 				$scope.$apply();
 			})
 
+		//使用红包
+		if (sessionStorage.getItem("RedPacketChoose")) {
+			ac.redChanged = sessionStorage.getItem("RedPacketChoose");
+		};
+		vm.useRedPacket = function(item) {
+			// console.log("使用哪个红包", item);
+			if (item.IsUsed === '0' && od.TotalPrice >= item.CouponDetails[0].Amount) {
+				sessionStorage.setItem("RedPacketChoose", item.Id);
+				ac.redChanged = item.Id;
+				vm.redpacketInfo = "满" + item.CouponDetails[0].Amount + "减" + item.CouponDetails[0].DiscountAmount + "元";
+				ac.IsUsePacket = false; //关闭红包窗口
+				ac.Id = item.Id;
+				ac.amount = item.CouponDetails[0].Amount;
+				ac.discountAmount = item.CouponDetails[0].DiscountAmount;
+			}
+		}
+
 		vm.hasPayOrder = function() {
 			vm.dialogConfirm = true;
 		}
@@ -85,10 +110,10 @@ angular.module('com.wapapp.app', [])
 			console.log("余额", vm.yeIschecked, "支付宝", vm.zfbIschecked, "微信", vm.wxIschecked);
 			//金额换算 od.TotalPrice 需付款
 			vm.Price = od.TotalPrice;
-			if (parseInt(vm.Price) < parseInt(uc.Balance)) {
+			if (parseFloat(vm.Price) < parseFloat(uc.Balance)) {
 				vm.otherPrice = 0;
 			} else {
-				vm.otherPrice = Math.abs(parseInt(vm.Price) - parseInt(uc.Balance));
+				vm.otherPrice = Math.abs(parseFloat(vm.Price) - parseFloat(uc.Balance));
 			}
 			console.log("另外需要付款:", vm.otherPrice);
 
@@ -99,7 +124,7 @@ angular.module('com.wapapp.app', [])
 				payForService.zhifubao({
 					Token: $rootScope.token,
 					OrderId: $rootScope.orderId,
-					CouponId: "",
+					CouponId: ac.Id,
 					Alipay: vm.otherPrice,
 					BalancePay: vm.Price
 				}).success(function(res) {
@@ -121,7 +146,7 @@ angular.module('com.wapapp.app', [])
 				payForService.weixin({
 					Token: $rootScope.token,
 					OrderId: $rootScope.orderId,
-					CouponId: "",
+					CouponId: ac.Id,
 					WxPay: vm.otherPrice,
 					BalancePay: vm.Price,
 					Code: $rootScope.code
@@ -172,7 +197,7 @@ angular.module('com.wapapp.app', [])
 				payForService.account({
 					Token: $rootScope.token,
 					OrderId: $rootScope.orderId,
-					CouponId: "",
+					CouponId: ac.Id,
 					BalancePay: vm.Price
 				}).success(function(res) {
 					console.log(res);
@@ -194,7 +219,7 @@ angular.module('com.wapapp.app', [])
 				payForService.zhifubao({
 					Token: $rootScope.token,
 					OrderId: $rootScope.orderId,
-					CouponId: "",
+					CouponId: ac.Id,
 					Alipay: vm.Price,
 					BalancePay: 0
 				}).success(function(res) {
@@ -218,7 +243,7 @@ angular.module('com.wapapp.app', [])
 				payForService.weixin({
 					Token: $rootScope.token,
 					OrderId: $rootScope.orderId,
-					CouponId: "",
+					CouponId: ac.Id,
 					WxPay: vm.Price,
 					BalancePay: 0,
 					Code: $rootScope.code
