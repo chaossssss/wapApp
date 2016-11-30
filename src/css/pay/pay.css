@@ -237,6 +237,9 @@ body {
 	width:94%;
 	margin:auto;
 }
+.red-list {
+    overflow: auto;
+}
 .red-img{
     width: 6%;
     float: right;

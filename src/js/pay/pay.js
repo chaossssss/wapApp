@@ -5,6 +5,9 @@ angular.module('com.wapapp.app', [])
 		$rootScope.url = CONFIG.IP;
 		$rootScope.token = window.localStorage.getItem("Token");
 
+		//设置红包弹窗的高度
+		$(".red-list").height($(window).height() - 67);
+
 		//获取url参数
 		function getvl(name) {
 			var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
@@ -109,12 +112,24 @@ angular.module('com.wapapp.app', [])
 		vm.payOrder = function() {
 			console.log("余额", vm.yeIschecked, "支付宝", vm.zfbIschecked, "微信", vm.wxIschecked);
 			//金额换算 od.TotalPrice 需付款
+			//vm.Price 应付金额
 			vm.Price = od.TotalPrice;
-			if (parseFloat(vm.Price) < parseFloat(uc.Balance)) {
-				vm.otherPrice = 0;
+			if (ac.redChanged === '1') {
+				if (parseFloat(od.TotalPrice) < parseFloat(uc.Balance)) {
+					vm.otherPrice = 0;
+				} else {
+					vm.otherPrice = Math.abs(parseFloat(od.TotalPrice) - parseFloat(uc.Balance));
+				}
 			} else {
-				vm.otherPrice = Math.abs(parseFloat(vm.Price) - parseFloat(uc.Balance));
+				if ((parseFloat(od.TotalPrice) - ac.discountAmount) < parseFloat(uc.Balance)) {
+					vm.otherPrice = 0;
+					vm.Price = parseFloat(od.TotalPrice) - ac.discountAmount;
+				} else {
+					vm.otherPrice = Math.abs((parseFloat(vm.Price) - ac.discountAmount) - parseFloat(uc.Balance));
+					vm.Price = parseFloat(od.TotalPrice) - ac.discountAmount
+				}
 			}
+
 			console.log("另外需要付款:", vm.otherPrice);
 
 			// 余额＋支付宝
@@ -167,7 +182,7 @@ angular.module('com.wapapp.app', [])
 								},
 								function(res) {
 									if (res.err_msg == "get_brand_wcpay_request：ok") {
-										window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId;
+										window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId + "&price=" + vm.Price;
 									} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 								}
 							);
@@ -203,10 +218,11 @@ angular.module('com.wapapp.app', [])
 					console.log(res);
 					$scope.loadingToast = false;
 					if (res.Meta.ErrorCode === "0") {
-						window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId;
+						window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId + "&price=" + vm.Price;
 					} else {
 						vm.dialogshow = true;
 						vm.errorMsg = res.Meta.ErrorMsg;
+						vm.reload = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fpay.html&response_type=code&scope=snsapi_base&state=" + $rootScope.orderId + "#wechat_redirect";
 					}
 					$scope.$apply();
 				})
@@ -264,7 +280,7 @@ angular.module('com.wapapp.app', [])
 								},
 								function(res) {
 									if (res.err_msg == "get_brand_wcpay_request：ok") {
-										window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId;
+										window.location.href = "/template/pay/pay_success.html?orderId=" + $rootScope.orderId + "&price=" + vm.Price;
 									} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
 								}
 							);

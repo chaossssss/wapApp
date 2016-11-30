@@ -58,6 +58,7 @@ function getvl(name) {
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
 } 
+var price = getvl("price");
 function getDatetime(tm){
 	var timestamp = tm;
 	var d = new Date(timestamp * 1000);    //根据时间戳生成的时间对象
@@ -100,9 +101,9 @@ $(function(){
 		console.log(res);
 		if(res.Meta.ErrorCode === "0"){
 			if(res.Body.Activity && res.Body.Activity.SpecialRule.length>0){
-				$("#money").text(res.Body.TotalPrice-res.Body.Activity.SpecialRule[0].Minus);
+				$("#money").text(price-res.Body.Activity.SpecialRule[0].Minus);
 			}else{
-				$("#money").text(res.Body.TotalPrice);
+				$("#money").text(price);
 			}
 			$("#name").text(res.Body.Service.AddressInfo.Contact);
 			$("#phone").text(res.Body.Service.AddressInfo.PhoneNumber);
