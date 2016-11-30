@@ -182,17 +182,14 @@ body {
 .red-price{
     top: -17%;
     width: 100%;
-    margin-left: 27%;
     text-align: center;   
 }
 
 .red-rmb{
-    float: left;
     line-height: 5.4;
 }
 .DiscountAmount{
-	float: left;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     margin-top: 5px;
 }
 .Amount{
