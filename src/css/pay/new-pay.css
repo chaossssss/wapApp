@@ -1,0 +1,146 @@
+@charset "utf-8";
+/*公共样式*/
+* {margin:0; padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0); 
+  -webkit-tap-highlight-color: transparent;box-sizing:border-box;}
+body {font-family:"Microsoft YaHei";background-color: #eeeeee; color: #303030; }
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
+input, select {vertical-align:middle;}
+textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;outline: none;}
+li {list-style-type:none;}
+img {border:0 none;width:100%;display: block;}
+a {color:#000; text-decoration:none;-webkit-tap-highlight-color: rgba(0,0,0,0); 
+  -webkit-tap-highlight-color: transparent;}
+a:hover {color:#000;}
+a {outline:none; star:expression_r(this.onFocus=this.blur());}
+button{outline: none;cursor: pointer;border:none;}
+.clear{clear:both;}
+/*--支付页面--*/
+.no-border:before{ border-top: 0; }
+.weui_panel .nobackground:active{ background: #fff; }
+.weui_panel_access .arrow-down:after{
+  content: " ";
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 6px;
+  width: 6px;
+  border-width: 0px 2px 2px 0;
+  border-color: #C7C7CC;
+  border-style: solid;
+  position: absolute;
+  right: 114px;
+  top: 50%;
+  margin-top: -4px;
+}
+.submit-btn{ width: 100%; height: 50px; color: #fff; font-size: 18px; line-height: 50px; text-align: center; background: #51d862; position: fixed; bottom: 0; }
+.pblue{ color: #27b8f3; }
+.cl
+{
+  animation: tolong 3s;
+  -moz-animation: tolong 3s;
+  -webkit-animation: tolong 3s;
+  -o-animation: tolong 3s;
+}
+@keyframes tolong
+{
+  from{ height: 128px; }
+  to{ height: 188px; }
+}
+@-moz-keyframes tolong
+{
+  from{ height: 128px; }
+  to{ height: 188px; }
+}
+@-webkit-keyframes tolong
+{
+  from{ height: 128px; }
+  to{ height: 188px; }
+}
+@-o-keyframes tolong
+{
+  from{ height: 128px; }
+  to{ height: 188px; }  
+}
+.cs
+{
+  animation: toshort 3s;
+  -moz-animation: toshort 3s;
+  -webkit-animation: toshort 3s;
+  -o-animation: toshort 3s;
+}
+@keyframes toshort
+{
+  from{ height: 188px; }
+  to{ height: 128px; }
+}
+@-moz-keyframes tolong
+{
+  from{ height: 188px; }
+  to{ height: 128px; }
+}
+@-webkit-keyframes tolong
+{
+  from{ height: 188px; }
+  to{ height: 128px; }
+}
+@-o-keyframes tolong
+{
+  from{ height: 188px; }
+  to{ height: 128px; }  
+}
+/*checkbox*/
+input[type=checkbox]{
+  -webkit-appearance:none;
+  appearance:none;
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: bottom;
+  background: url(../../images/pay/unselected.png);
+  background-size: 21px 21px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+/*input[type=checkbox]:checked+label:active{
+  -webkit-appearance:none;
+  appearance:none;
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: bottom;
+  background: url(../../images/pay/selecte.png) #3ebefb;
+  border: 1px #fff solid;
+  background-size: 21px 21px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}*/
+input[type=checkbox]:checked{
+  -webkit-appearance:none;
+  appearance:none;
+  width: 21px;
+  height: 21px;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: bottom;
+  background: url(../../images/pay/select.png);
+  border: none;
+  background-size: 21px 21px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}

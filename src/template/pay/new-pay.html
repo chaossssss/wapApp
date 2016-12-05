@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- 为移动设备添加 viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+  <!--禁止电话，邮件识别-->
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="description" content="助家生活">
+    <meta name="keywords" content="助家生活">
+    <meta name="author" content="zxh">
+  <title>支付订单</title>
+  
+  <!-- link和script的引用后缀要加上min -->
+  <!-- <link type="text/css" rel="stylesheet" href="css/test.min.css"> -->
+  <link href="/css/weui.min.css" rel="stylesheet">
+  <link href="/css/pay/new-pay.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/common/swiper.min.css">
+</head>
+<body>
+<div class="weui_cells no-border">
+  <div class="weui_cell">
+    <div class="weui_cell_bd weui_cell_primary">
+      <p>支付金额</p>
+    </div>
+    <div class="weui_cell_ft">￥20</div>
+  </div>
+</div>
+<div class="weui_panel weui_panel_access">
+  <div class="weui_panel_hd">选择支付方式</div>
+  <div id="payPanel" class="weui_panel_bd" style="height:128px;">
+    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg nobackground">
+      <div class="weui_media_hd" style="width:30px;height:30px;">
+        <img class="weui_media_appmsg_thumb" src="../../images/pay/yue.png" alt="">
+      </div>
+      <div class="weui_media_bd">
+        <label for="pay1">
+          <h4 class="weui_media_title" style="font-size:15px;">账户余额</h4>
+        </label>
+      </div>
+      <div class="weui_cell_ft" style="color:#676767;font-size:12px;padding-right:19px;">
+        <div>可用余额30元</div>
+        <div>不足部分可用微信或支付宝支付</div>
+      </div>
+      <input id="pay1" type="checkbox" name="balance" value="yue">
+    </a>
+    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg nobackground">
+      <div class="weui_media_hd" style="width:30px;height:30px;">
+        <img class="weui_media_appmsg_thumb" src="../../images/pay/weixin.png" alt="">
+      </div>
+      <div class="weui_media_bd">
+        <label for="pay2">
+          <h4 class="weui_media_title" style="font-size:15px;">微信支付<span style="background:#ea0010;color:#fff;font-size:12px;border-radius:2px;padding:0 4px;margin-left:9px;">推荐</span></h4>
+        </label>
+      </div>
+      <input id="pay2" type="checkbox" name="balance" value="weixin">
+    </a>
+    <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg nobackground">
+      <div class="weui_media_hd" style="width:30px;height:30px;">
+        <img class="weui_media_appmsg_thumb" src="../../images/pay/zhifubao.png" alt="">
+      </div>
+      <div class="weui_media_bd">
+        <label for="pay3">
+          <h4 class="weui_media_title" style="font-size:15px;">支付宝支付</h4>
+        </label>
+      </div>
+      <input id="pay3" type="checkbox" name="balance" value="zhifubao">
+    </a>
+  </div>
+  <a id="showMore" class="weui_panel_ft arrow-down" style="text-align:center;color:#9a9a9a;background:#fff;" href="javascript:void(0);">查看更多支付方式</a>
+</div>
+<div style="margin-top:25px;margin-left:14px;font-size:14px;color:#888;">
+  <p>温馨提示:</p>
+  <p>1.在线支付才能享受特价等优惠活动哦</p>
+  <p>2.如有疑问请联系客服 <a href="tel:4008-262-056"><span class="pblue">4008-262-056</span></a></p>
+</div>
+<a id="goPayment" href="javascript:void(0);">
+  <div id="submitBtn" class="submit-btn">确认支付</div>
+</a>
+<script src="/js/common/config.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="/js/common/jquery.cookie.min.js"></script>
+<script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+<script src="/js/pay/new-pay.min.js"></script>
+<script src="/js/common/swiper.min.js"></script>
+</body>
+</html>
