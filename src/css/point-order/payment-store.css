@@ -15,6 +15,8 @@ a {outline:none; star:expression_r(this.onFocus=this.blur());}
 button{outline: none;cursor: pointer;border:none;}
 .clear{clear:both;}
 /*到店支付*/
+select{ direction: rtl; color: #333; }
+select option{ direction: ltr; }
 .bus_photo{ border-radius: 50%; width: 60px; height: 60px; }
 .no-border:before{ border-top: 0; }
 .no-border:after{ border-bottom: 0; }

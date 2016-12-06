@@ -26,7 +26,7 @@
     <div class="weui_cell_bd weui_cell_primary">
       <p>支付金额</p>
     </div>
-    <div class="weui_cell_ft">￥20</div>
+    <div class="weui_cell_ft">￥<span id="needToPay"></span></div>
   </div>
 </div>
 <div class="weui_panel weui_panel_access">
@@ -42,7 +42,7 @@
         </label>
       </div>
       <div class="weui_cell_ft" style="color:#676767;font-size:12px;padding-right:19px;">
-        <div>可用余额30元</div>
+        <div>可用余额<span id="accountBalance"></span>元</div>
         <div>不足部分可用微信或支付宝支付</div>
       </div>
       <input id="pay1" type="checkbox" name="balance" value="yue">

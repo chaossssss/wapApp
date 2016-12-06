@@ -11,6 +11,8 @@ $(function(){
   $("#toDetail").attr("href","../worker/worker-info.html?type=" + Type + "&markid=" + Id);
   var stId = $("#serviceType option:selected").val();
   $("#totalPrice").bind("keydown keyup",function(){
+    $("#submitBtn").removeClass();
+    $("#submitBtn").addClass('submit-btn');
     totalPrice = $("#totalPrice").val();
     totalPriceNum = parseFloat($("#totalPrice").val());
     tpLength = totalPrice.length;
@@ -39,6 +41,8 @@ $(function(){
       for(var i = 0; i < pr.length; i++){
         var prMinus = pr[i].Minus;
         var prUpper = pr[i].Upper;
+        var prMinus = parseFloat(pr[i].Minus);
+        var prUpper = parseFloat(pr[i].Upper);
         if(totalPrice >= prUpper){
           $("#promotionChoose").attr("src","../../images/quick-order/new-choose.png");
         }
@@ -77,7 +81,9 @@ $(function(){
   })
   $("#serviceType").on("change",function(){
     stId = $(this).children('option:selected').val();
-    var activityMess = getActivity(token,stId).done(function(response){return response});
+    if(stId != "-1"){
+      activityMess = getActivity(token,stId).done(function(response){return response});
+    }
     var activity = activityMess.responseJSON;
     console.log("活动",activity);
     if(activity != null){
@@ -117,25 +123,30 @@ $(function(){
   $("#busName").text(api.Name);
   $("#busAddr").text(api.Address);
   var serviceType = api.Services;
-  var sn = "<option></option>";
+  var sn = "<option value='-1'>请选择服务类型</option>";
   for (var i = 0; i < serviceType.length; i++) {
     sn += '<option value="' + serviceType[i].Id + '">' + serviceType[i].Name + '</option>';
   }
-  $("#serviceType").html(sn);
-  if(actualMoney != "" && stId != ""){
-    $("#submitBtn").removeClass();
-    $("#submitBtn").addClass('submit-btn');
-    $("#submitBtn").on("click",function(){
-      var data = {
-        Token:token,
-        ServiceTypeId:stId,
-        ServicePrice:totalPrice,
-        ServcieProviderId:Id,
-        ServiceProviderType:1
-      }
-      // createOrder(msg);
-    })
-  }
+  $("#serviceType").html(sn); 
+  $("#submitBtn").on("click",function(){
+    var actualMoney = $("#actualMoney").text();
+    var actualMoneyNum = actualMoney.slice(1);
+    sessionStorage.setItem("needToPay",actualMoneyNum);
+    console.log(actualMoneyNum);
+    var data = {
+      Token:token,
+      ServiceTypeId:stId,
+      ServicePrice:totalPrice,
+      ServcieProviderId:Id,
+      ServiceProviderType:1
+    }
+    if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
+      console.log('成功');
+      window.location.href="../pay/new-pay.html";
+    }
+    // createOrder(msg);
+  })
+
   /*查找工人信息方法*/
   function getDetail(type,id){
     return $.ajax({
@@ -170,6 +181,7 @@ $(function(){
       data:msg,
       success:function(data){
         console.log(data);
+        window.location.href="../../pay/new-pay.html";
       }
     })
   }
