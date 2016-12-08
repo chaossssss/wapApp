@@ -8,6 +8,7 @@ $(function(){
   var orderId = getvl("state");
   var token = window.localStorage.getItem("Token");
   var needToPay = sessionStorage.getItem("needToPay");
+  var totalPriceNum = sessionStorage.getItem("totalPriceNum");
   $("#needToPay").text(needToPay);
   $("#showMore").on("click",function(){
     var height = $("#payPanel").height();
@@ -93,7 +94,7 @@ $(function(){
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://192.168.1.191:3003/api/v1/ClientInfo/Index',
+    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
     data:{
       Token:token
     },

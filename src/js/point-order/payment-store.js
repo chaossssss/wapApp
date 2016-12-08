@@ -11,11 +11,12 @@ $(function(){
   $("#toDetail").attr("href","../worker/worker-info.html?type=" + Type + "&markid=" + Id);
   var stId = $("#serviceType option:selected").val();
   $("#totalPrice").bind("keydown keyup",function(){
-    $("#submitBtn").removeClass();
-    $("#submitBtn").addClass('submit-btn');
+    $("#submitBtn").removeClass().addClass('submit-btn');
+    $("#moneySymbol").show();
     totalPrice = $("#totalPrice").val();
     totalPriceNum = parseFloat($("#totalPrice").val());
     tpLength = totalPrice.length;
+    $("#actualMoney").text("￥" + totalPrice);
     if(sr){
       for(var i = 0; i < sr.length; i++){
         var srMinus = parseFloat(sr[i].Minus);
@@ -81,6 +82,9 @@ $(function(){
   })
   $("#serviceType").on("change",function(){
     stId = $(this).children('option:selected').val();
+    $("#totalPrice").val('').css("width","120px");
+    $("#moneySymbol").hide();
+    $("#actualMoney").text('');
     if(stId != "-1"){
       activityMess = getActivity(token,stId).done(function(response){return response});
     }
@@ -104,6 +108,8 @@ $(function(){
     $("#promotionImg").click(function(){
       alert(activity.Body.PromotionTitle);
     })
+    $("#special").show();
+    $("#promotion").show();
     if(specialHelp == null){
       $("#special").hide();
     }
@@ -132,6 +138,7 @@ $(function(){
     var actualMoney = $("#actualMoney").text();
     var actualMoneyNum = actualMoney.slice(1);
     sessionStorage.setItem("needToPay",actualMoneyNum);
+    sessionStorage.setItem("totalPriceNum",totalPriceNum);
     console.log(actualMoneyNum);
     var data = {
       Token:token,
@@ -144,7 +151,6 @@ $(function(){
       console.log('成功');
       window.location.href="../pay/new-pay.html";
     }
-    // createOrder(msg);
   })
 
   /*查找工人信息方法*/
@@ -164,7 +170,7 @@ $(function(){
   function getActivity(token,serviceTypeId){
     return $.ajax({
       type: 'POST',
-      url: 'http://192.168.1.191:3001/api/v2/SystemService/GetActivity',
+      url: 'http://wapapi.zhujiash.com/api/v2/SystemService/GetActivity',
       async:false,
       data:{
         Token: token,
@@ -173,16 +179,16 @@ $(function(){
     })
   }
   /*下单方法*/
-  function createOrder(msg){
-    $.ajax({
-      type:'POST',
-      url:'http://192.168.1.191:3001/api/v2/SystemService/',
-      async:false,
-      data:msg,
-      success:function(data){
-        console.log(data);
-        window.location.href="../../pay/new-pay.html";
-      }
-    })
-  }
+  // function createOrder(msg){
+  //   $.ajax({
+  //     type:'POST',
+  //     url:'http://192.168.1.191:3001/api/v2/SystemService/',
+  //     async:false,
+  //     data:msg,
+  //     success:function(data){
+  //       console.log(data);
+  //       window.location.href="../../pay/new-pay.html";
+  //     }
+  //   })
+  // }
 })
