@@ -23,6 +23,7 @@ $(function(){
         },
         success:function(data){
         	var api=data.Body.CouponList;
+
             if(api.length>0){
                 res_0="";
                 res_1="";

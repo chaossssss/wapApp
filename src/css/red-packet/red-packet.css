@@ -47,6 +47,13 @@ header:before {
     border-bottom: 2px solid #27b8f3;
     color:#27b8f3;
 }
+
+.sysm a{
+    float:right;
+    padding-right: 8%;
+    margin-top: 10px;
+    color: #27b7f3;
+}
 .red-item{
     background: url(/images/red-packet/bg-y.png);
     height: 6rem;
