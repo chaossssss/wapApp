@@ -5,7 +5,7 @@
 body {font-family:"Microsoft YaHei";background-color: #fff3a6;/*background: url(/images/login/login-naicha/bg-naicha.png)*/;}
 body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, tr {margin:0; padding:0;}
 input, select {vertical-align:middle;}
-textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
+textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;font-size: 14px;color:#29150c;  }
 li {list-style-type:none;}
 img {border:0 none;width:100%;display: block;}
 a {color:#000; text-decoration:none;-webkit-tap-highlight-color: rgba(0,0,0,0); 
@@ -16,10 +16,14 @@ button{outline: none;cursor: pointer;border:none;}
 input:focus{ outline: none; }
 .clear{clear:both;}
 input[type="button"], input[type="submit"], input[type="reset"] {
-
--webkit-appearance: none;
-
+    -webkit-appearance: none; 
 }
+
+::-webkit-input-placeholder { /* WebKit browsers */  
+    color:#29150c;  
+    font-size: 14px;
+    line-height: 1.2rem;
+}   
 .header{
   margin-top: 10px;
 }
@@ -40,38 +44,38 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 }
 
 .login-phone{
-    width: 63%;
+    width: 65%;
     border: 1px solid #702d1d;
-    border-radius: 18px;
+    border-radius: 30px;
     display: inline-block;
     background: url(/images/login/login-naicha/ic_phone.png) no-repeat #fff;
     background-size: 8%;
     padding-left: 35px;
-    background-position: 10px;
-    height: 37px;
-    padding-left: 31px;
+    background-position: 15px;
+    height: 44px;
+    padding-left: 15%;
 }
 .login-phoneNum{ width: 73%; height: 37px; padding-left: 16px; border-radius: 1px solid #d1d1d1; border-radius: 18px; margin: 10px auto 0; border:1px solid #d1d1d1; display: block; }
 .ver-code{
     border: 0;
     width: 85px;
-    height: 36px;
+    height: 44px;
     background: #f6e00f;
     font-size: 12px;
     line-height: 30px;
     color: #934501;
-    border-radius: 28px;
-    display: inline-block;
+    border-radius: 30px;
+    float:right;
 }
 .error-message{ font-size: 12px; color: #ff5d1d; margin-left: 18%; margin-top: 8px; }
 .error-mess{ font-size: 12px; color: #ff5d1d; margin-left: 10px; margin-top: 8px; }
 .fill-vercode,.fill-pwd{
- width: 86%; height: 37px; padding-left: 16px; border-radius: 1px solid #d1d1d1; border-radius: 18px; margin: 10px auto 0; border:1px solid #702d1d; display: block; }
+ width: 86%; height: 44px; padding-left: 16px; border-radius: 1px solid #d1d1d1; border-radius: 30px; margin: 10px auto 0; border:1px solid #702d1d; display: block; }
  .fill-vercode{
     background: url(/images/login/login-naicha/ic_key.png) no-repeat #fff;
     background-size: 6%;
-    padding-left: 35px;
-    background-position: 10px;
+     padding-left: 15%;
+    background-position: 15px;
  }
  .fill-pwd{
     background: url(/images/login/login-naicha/ic_code.png) no-repeat #fff;
