@@ -5,9 +5,11 @@ $(function(){
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
   }
-  var orderId = getvl("state");
+  var markId = getvl("markid");
+  var stId = getvl("stId");
   var token = window.localStorage.getItem("Token");
   var needToPay = sessionStorage.getItem("needToPay");
+  var needToPayNum = parseFloat(needToPay);
   var totalPriceNum = sessionStorage.getItem("totalPriceNum");
   $("#needToPay").text(needToPay);
   $("#showMore").on("click",function(){
@@ -32,69 +34,83 @@ $(function(){
     var isWeixin = $("#pay2").is(":checked");
     var isAli = $("#pay3").is(":checked");
     var accountBalance = $("#accountBalance").text();
+    var accountBalanceNum = parseFloat(accountBalance);
     console.log(accountBalance);
     if(isBalance && !isWeixin && !isAli){   //余额
-      if(accountBalance < needToPay){
+      if(accountBalanceNum < needToPayNum){
         alert("余额不足");
       }
       var paymentMode = 8;
       var data = {
-        Token:token,
-        OrderId:orderId,
-        couponId:'',
-        BalancePay:balancePay
+        'Token':token,
+        'ServiceTypeId':stId,
+        'ServicePrice':totalPriceNum,
+        'ServiceProviderId':markId,
+        'ServiceProviderType':'2',
+        'PaymentMode':paymentMode
       }
+      createOrderPayAtStore(data);
     }
     if(isBalance && isWeixin){              //余额+微信
-      var paymentMode = 2;
+      var paymentMode = 3;
+      var wxPayNum = totalPriceNum - accountBalanceNum;
       var data = {
-        Token:token,
-        OrderId:orderId,
-        RedEnvelopeIds:'',
-        IsBalancePay:'1',
-        NeedPay:needPay,
-        TotalMoney:totalMoney
+        'Token':token,
+        'ServiceTypeId':stId,
+        'ServicePrice':totalPriceNum,
+        'BalancePay':balancePay,
+        'WxPay':wxPayNum,
+        'ServiceProviderId':markId,
+        'ServiceProviderType':'2',
+        'PaymentMode':paymentMode
       }
+      createOrderPayAtStore(data);
     }
     if(isBalance && isAli){                 //余额+支付宝
-      var paymentMode = 1;
+      var paymentMode = 0;
+      var alipayNum = totalPriceNum - accountBalanceNum;
       var data = {
-        Token:token,
-        OrderId:orderId,
-        RedEnvelopeIds:'',
-        IsBalancePay:'1',
-        NeedPay:needPay,
-        TotalMoney:totalMoney        
+        'Token':token,
+        'ServiceTypeId':stId,
+        'ServicePrice':totalPriceNum,
+        'BalancePay':accountBalance,
+        'Alipay':alipayNum,
+        'ServiceProviderId':markId,
+        'ServiceProviderType':'2',
+        'PaymentMode':paymentMode
       }
+      createOrderPayAtStore(data); 
     }
     if(!isBalance && isWeixin){             //微信
       var paymentMode = 3;
       var data = {
-        Token:token,
-        OrderId:orderId,
-        RedEnvelopeIds:'',
-        IsBalancePay:'0',
-        NeedPay:needPay,
-        TotalMoney:totalMoney        
-      }      
+        'Token':token,
+        'ServiceTypeId':stId,
+        'ServicePrice':totalPriceNum,
+        'ServiceProviderId':markId,
+        'ServiceProviderType':'2',
+        'PaymentMode':paymentMode
+      }
+      createOrderPayAtStore(data);     
     }
     if(!isBalance && isAli){                //支付宝
       var paymentMode = 0;
       var data = {
-        Token:token,
-        OrderId:orderId,
-        RedEnvelopeIds:'',
-        IsBalancePay:'0',
-        NeedPay:needPay,
-        TotalMoney:totalMoney        
-      }      
+        'Token':token,
+        'ServiceTypeId':stId,
+        'ServicePrice':totalPriceNum,
+        'ServiceProviderId':markId,
+        'ServiceProviderType':'2',
+        'PaymentMode':paymentMode
+      }
+      createOrderPayAtStore(data);      
     }
   })
 
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
+    url:'http://192.168.1.191:3003/api/v1/ClientInfo/Index',
     data:{
       Token:token
     },
@@ -104,59 +120,16 @@ $(function(){
       $("#accountBalance").text(balance);
     }
   })
-  /*--支付宝+余额--*/
-  function aliWithBalance(msg){
+  /*--CreateOrderPayAtStore--*/
+  function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'',
+      url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
-
-      }
+        console.log(data);
+      }      
     })
   }
-  /*--微信+余额--*/
-  function weixinWithBalance(msg){
-    $.ajax({
-      type:'POST',
-      url:'',
-      data:msg,
-      success:function(data){
 
-      }
-    })
-  }
-  /*--支付宝--*/
-  function aliPay(msg){
-    $.ajax({
-      type:'POST',
-      url:'',
-      data:msg,
-      success:function(data){
-
-      }
-    })
-  }
-  /*--微信--*/
-  function weixinPay(msg){
-    $.ajax({
-      type:'POST',
-      url:'',
-      data:msg,
-      success:function(data){
-
-      }
-    })
-  }
-  /*--余额--*/
-  function balancePay(msg){
-    $.ajax({
-      type:'POST',
-      url:'',
-      data:msg,
-      success:function(data){
-
-      }
-    })
-  }
 })

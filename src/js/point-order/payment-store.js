@@ -149,7 +149,7 @@ $(function(){
     }
     if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      window.location.href="../pay/new-pay.html";
+      window.location.href="../pay/new-pay.html?markid=" + Id + "&stId=" + stId;
     }
   })
 
@@ -170,7 +170,7 @@ $(function(){
   function getActivity(token,serviceTypeId){
     return $.ajax({
       type: 'POST',
-      url: 'http://wapapi.zhujiash.com/api/v2/SystemService/GetActivity',
+      url: 'http://192.168.1.191:3003/api/v2/SystemService/GetActivity',
       async:false,
       data:{
         Token: token,
