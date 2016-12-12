@@ -79,7 +79,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -133,7 +133,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -171,7 +171,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -224,7 +224,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -261,7 +261,7 @@ $(function(){
   function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'http://192.168.1.78:8006/api/v2/OrderInfo/CreateOrderPayAtStore',
+      url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
         console.log(data);
