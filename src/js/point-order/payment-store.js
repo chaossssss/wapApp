@@ -7,6 +7,8 @@ $(function(){
   }
   var Type = getvl("type");
   var Id = getvl("markid");
+  var orderMsg = getvl("state");
+  
   var token = window.localStorage.getItem("Token");
   $("#toDetail").attr("href","../worker/worker-info.html?type=" + Type + "&markid=" + Id);
   var stId = $("#serviceType option:selected").val();
