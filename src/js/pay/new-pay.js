@@ -16,7 +16,7 @@ $(function(){
   // var orderMsg = encodeURIComponent(orderMsgPara);
   var om = getvl("state");
   var orderMsgPara = decodeURIComponent(om);
-  var state = JSON.parse(getvl("orderMsgPara"));
+  var state = JSON.parse(orderMsgPara);
   var stId = state.stId;
   var markId = state.markId;
   console.log(orderMsg);

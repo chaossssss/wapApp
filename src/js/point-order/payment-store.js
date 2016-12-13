@@ -14,23 +14,20 @@ $(function(){
   var ss = JSON.parse(os);
   var stype = ss.type;
   var smarkId = ss.markId;
-  console.log('{"stId":'+stype+',markId:'+smarkId+"}");
-  console.log(oMsg);
+  console.log('s参数：{"type":'+stype+',"markId":'+smarkId+"}");
+  console.log("s转码:"+oMsg);
   /*--   自己定义数据   --*/
-  /*--拼跳转页面的url--*/
+  
   var token = window.localStorage.getItem("Token");
   var om = getvl("state");
   var orderMsgPara = decodeURIComponent(om);
   var state = JSON.parse(orderMsgPara);
-  var type = state.Type;
+  var type = state.type;
   var markId = state.markId;
   var stId = $("#serviceType option:selected").val();
-  var orderMsgParameter = '{"stId":'+stId+',"markId":'+markId+'}';
-  var orderMsg = encodeURIComponent(orderMsgParameter);
-  console.log(orderMsg);
-  /*--拼跳转页面的url--*/
   
-  $("#toDetail").attr("href","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect");
+  
+  $("#toDetail").attr("href","../worker/worker-info.html?type="+Type+"&markid="+Id);
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();
@@ -161,6 +158,11 @@ $(function(){
     sessionStorage.setItem("needToPay",actualMoneyNum);
     sessionStorage.setItem("totalPriceNum",totalPriceNum);
     console.log(actualMoneyNum);
+    /*--拼跳转页面的url--*/
+    var orderMsgParameter = '{"stId":'+stId+',"markId":'+markId+'}';
+    var orderMsg = encodeURIComponent(orderMsgParameter);
+    console.log("调到下个页面:"+orderMsg);
+    /*--拼跳转页面的url--*/
     var data = {
       Token:token,
       ServiceTypeId:stId,
@@ -170,7 +172,7 @@ $(function(){
     }
     if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      window.location.href="../pay/new-pay.html?markid=" + Id + "&stId=" + stId;
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect";
     }
   })
 
