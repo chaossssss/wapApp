@@ -2,7 +2,11 @@
 angular.module('com.wapapp.app', [])
 	.run(['$rootScope', function($rootScope) {
 		FastClick.attach(document.body);
-		$rootScope.token = window.localStorage.getItem("Token");
+		if (window.localStorage) {
+			$rootScope.token = window.localStorage.getItem("Token");
+		} else {
+			alert('您的浏览器版本过低，请升级后重新下单!');
+		}
 
 		//获取url参数
 		function getvl(name) {
@@ -10,11 +14,11 @@ angular.module('com.wapapp.app', [])
 			if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
 			return "";
 		}
-		$rootScope.resident = getvl("resident");
-		$rootScope.channel = getvl("channel"); //渠道 0 指定，1 一键
-		$rootScope.ObjectType = getvl("type"); //类型 1 工人，2 商户
-		$rootScope.ObjectId = getvl("markid"); //工人id
-		$rootScope.addressId = getvl("id"); //地址id
+		$rootScope.resident = getvl("resident") || '0';
+		$rootScope.channel = getvl("channel") || null; //渠道 0 指定，1 一键
+		$rootScope.ObjectType = getvl("type") || null; //类型 1 工人，2 商户
+		$rootScope.ObjectId = getvl("markid") || null; //工人id
+		$rootScope.addressId = getvl("id") || null; //地址id
 		$rootScope.search = window.location.search;
 	}])
 	.controller('orderCtrl', ['$rootScope', '$scope', 'priceService', 'orderService', 'addrService', 'markService', 'typeService', 'giftService', 'explainService', 'qtyService', 'getMyInfo', function($rootScope, $scope, priceService, orderService, addrService, markService, typeService, giftService, explainService, qtyService, getMyInfo) {
@@ -102,9 +106,9 @@ angular.module('com.wapapp.app', [])
 			vm.ServiceAddressId = $rootScope.addressId;
 		} else if (window.localStorage.getItem("_address")) {
 			//未选择过地址，取出上次缓存的地址	
-			var _address = JSON.parse(window.localStorage.getItem("_address"));
-			vm.ServiceAddressId = _address.Id;
-			$scope.addr = _address;
+			// var _address = JSON.parse(window.localStorage.getItem("_address"));
+			// vm.ServiceAddressId = _address.Id;
+			// $scope.addr = _address;
 		}
 
 		//小时工服务数量不能小于3小时
@@ -114,24 +118,6 @@ angular.module('com.wapapp.app', [])
 					vm.Total = 3;
 				}
 			}
-			// if(vm.serviceTypeObj){
-			// 	console.log("服务类型id",vm.serviceTypeObj.ServiceTypeId);
-
-			// 	qtyService.event(vm.serviceTypeObj.ServiceTypeId)
-			// 		.success(function(res){
-			// 			console.log("服务数量",res);
-			// 			if(res.Meta.ErrorCode === "0"){
-			// 				if(res.Body){
-			// 					if(vm.Total < 3){
-			// 						vm.Total = 3;
-			// 					}else{
-			// 						vm.Total = 1;
-			// 					}
-			// 				}
-			// 			}
-			// 			$scope.$apply();
-			// 		})
-			// }
 		})
 
 		//小时工服务数量不能小于3小时
@@ -143,23 +129,6 @@ angular.module('com.wapapp.app', [])
 					vm.errorMsg = "不能小于3小时";
 					vm.Total = 3;
 				}
-				// if(vm.Total <= 0){
-				// 	vm.dialogshow = true;
-				// 	vm.errorMsg = "数量不能小于1";
-				// 	vm.Total = 1;
-				// }
-				// qtyService.event(vm.serviceTypeObj.ServiceTypeId)
-				// 	.success(function(res){
-				// 		console.log("服务数量",res);
-				// 		if(res.Meta.ErrorCode === "0"){
-				// 			if(vm.Total < 3){
-				// 				vm.Total = 3;
-				// 			}else{
-				// 				vm.Total = 1;
-				// 			}
-				// 		}
-				// 		$scope.$apply();
-				// 	})
 			}
 		})
 
@@ -170,7 +139,7 @@ angular.module('com.wapapp.app', [])
 				if (res.Meta.ErrorCode === "0") {
 					$scope.addr = res.Body[0];
 					//地址数据永久缓存
-					window.localStorage.setItem("_address", JSON.stringify(res.Body[0]));
+					// window.localStorage.setItem("_address", JSON.stringify(res.Body[0]));
 				}
 				$scope.$apply();
 			})
@@ -304,13 +273,13 @@ angular.module('com.wapapp.app', [])
 
 		vm.submitOrder = function() {
 			//数据缓存进sessionStroage
-			var stroage = {
-				serviceTypeObj: vm.serviceTypeObj,
-				Total: vm.Total,
-				ServiceStartAt: vm.ServiceStartAt,
-				ServiceContent: vm.ServiceContent
-			}
-			window.localStorage.setItem("point-order", JSON.stringify(stroage));
+			// var stroage = {
+			// 	serviceTypeObj: vm.serviceTypeObj,
+			// 	Total: vm.Total,
+			// 	ServiceStartAt: vm.ServiceStartAt,
+			// 	ServiceContent: vm.ServiceContent
+			// }
+			// window.localStorage.setItem("point-order", JSON.stringify(stroage));
 			if (vm.serviceTypeObj == undefined) {
 				vm.dialogshow = true;
 				vm.errorMsg = "请先选择服务类型";
