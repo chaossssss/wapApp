@@ -5,11 +5,32 @@ $(function(){
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
   }
-  var Type = getvl("type");
-  var Id = getvl("markid");
+  // var Type = getvl("type");
+  // var Id = getvl("markid");
+  /*--   自己定义数据   --*/
+  var omp = '{"type":1,"markId":1413}';
+  var oMsg = encodeURIComponent(omp);
+  var os = decodeURIComponent(oMsg);
+  var ss = JSON.parse(os);
+  var stype = ss.type;
+  var smarkId = ss.markId;
+  console.log('{"stId":'+stype+',markId:'+smarkId+"}");
+  console.log(oMsg);
+  /*--   自己定义数据   --*/
+  /*--拼跳转页面的url--*/
   var token = window.localStorage.getItem("Token");
-  $("#toDetail").attr("href","../worker/worker-info.html?type=" + Type + "&markid=" + Id);
+  var om = getvl("state");
+  var orderMsgPara = decodeURIComponent(om);
+  var state = JSON.parse(orderMsgPara);
+  var type = state.Type;
+  var markId = state.markId;
   var stId = $("#serviceType option:selected").val();
+  var orderMsgParameter = '{"stId":'+stId+',"markId":'+markId+'}';
+  var orderMsg = encodeURIComponent(orderMsgParameter);
+  console.log(orderMsg);
+  /*--拼跳转页面的url--*/
+  
+  $("#toDetail").attr("href","https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect");
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();

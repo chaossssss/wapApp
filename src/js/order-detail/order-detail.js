@@ -1318,7 +1318,14 @@ console.log(orderState);
      }
      $("#status").css("paddingTop","90px");
      $("#cancelTime").css("marginBottom","0px");
-
+    $("#btnRight").on("click",function(){
+      $("#deleteOrder").show();
+      $("#deleteBtn").on("click",function(){
+        $("#deleteOrder").hide();
+        removeOrder(token,orderId);
+        window.location.href="../my-order/my-order-new.html?flag=1";
+      })
+    })
     if(refundIsFinshed == "1"){
       $("#refundRecord").show();
       $("#filling2").show();
@@ -1333,14 +1340,7 @@ console.log(orderState);
       $("#refundStatus").text('退款完成');
       $("#statusBg").css("background-image","url(../../images/order-detail/orders_cancel5.png)");
     }
-    $("#btnRight").on("click",function(){
-      $("#deleteOrder").css("display","block");
-      $("#deleteBtn").on("click",function(){
-        $("#deleteOrder").hide();
-        removeOrder(token,orderId);
-        window.location.href="../my-order/my-order-new.html?flag=1";
-      })
-    })
+
     }
     if(orderIsGeted != null){
       console.log('取消订单，工人已经接单');
@@ -1414,6 +1414,15 @@ console.log(orderState);
         $("#waitOrder").hide();
         $("#price").addClass("actual");
       }
+      $("#btnRight").on("click",function(){
+        $("#deleteOrder").show();
+        $("#deleteBtn").on("click",function(){
+          removeOrder(token,orderId);
+          // location.reload();
+          $("#deleteOrder").hide();
+          window.location.href="../my-order/my-order-new.html?flag=1";
+        })
+      })
       if(refundIsFinshed == "1"){
         $("#refundRecord").show();
         $("#filling2").show();
@@ -1430,16 +1439,6 @@ console.log(orderState);
       $("#cancelTime").css("marginBottom","0px");
       // $("#orderTime").css("marginBottom","4px");
       // $("#waitOrder").css("marginBottom","0px"); 
-
-      $("#btnRight").on("click",function(){
-        $("#deleteOrder").css("display","block");
-        $("#deleteBtn").on("click",function(){
-          removeOrder(token,orderId);
-          // location.reload();
-          $("#deleteOrder").hide();
-          window.location.href="../my-order/my-order-new.html?flag=1";
-        })
-      })
     };
 
     break;

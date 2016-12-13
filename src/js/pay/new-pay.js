@@ -5,14 +5,20 @@ $(function(){
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
   }
-  var markId = getvl("markid");
-  var stId = getvl("stId");
+  // var markId = getvl("markid");
+  // var stId = getvl("stId");
   var wxCode = getvl("code");
   var token = window.localStorage.getItem("Token");
   var needToPay = sessionStorage.getItem("needToPay");
   var needToPayNum = parseFloat(needToPay);
   var totalPriceNum = sessionStorage.getItem("totalPriceNum");
-  var orderMsg = '{"stId":'+stId+',"markId":'+markId+'}';
+  // var orderMsgPara = '{"stId":'+stId+',"markId":'+markId+'}';
+  // var orderMsg = encodeURIComponent(orderMsgPara);
+  var om = getvl("state");
+  var orderMsgPara = decodeURIComponent(om);
+  var state = JSON.parse(getvl("orderMsgPara"));
+  var stId = state.stId;
+  var markId = state.markId;
   console.log(orderMsg);
   $("#needToPay").text(needToPay);
   $("#showMore").on("click",function(){
@@ -59,11 +65,11 @@ $(function(){
       }
     }
     if(isBalance && isWeixin){              //余额+微信
-      if(getvl("state")){
-        var state = JSON.parse(getvl("state"));
-        stId = state.stId;
-        markId = state.markId;
-      }
+      // if(getvl("state")){
+      //   var state = JSON.parse(getvl("state"));
+      //   stId = state.stId;
+      //   markId = state.markId;
+      // }
       var paymentMode = 3;
       var wxPayNum = totalPriceNum - accountBalanceNum;
       var data = {
@@ -113,7 +119,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + om + "#wechat_redirect";
           }
         }
       })
@@ -152,11 +158,6 @@ $(function(){
       })
     }
     if(!isBalance && isWeixin){             //微信
-      if(getvl("state")){
-        var state = JSON.parse(getvl("state"));
-        stId = state.stId;
-        markId = state.markId;
-      }
       var paymentMode = 3;
       var data = {
         'Token':token,
@@ -205,7 +206,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + om + "#wechat_redirect";
           }
         } 
       })  
