@@ -104,6 +104,18 @@ angular.module('com.wapapp.app', [])
 		vm.Total = 1;
 		if ($rootScope.addressId) {
 			vm.ServiceAddressId = $rootScope.addressId;
+
+			//拉取服务地址
+			addrService.search($rootScope.token, $rootScope.addressId)
+				.success(function(res) {
+					console.log("获取地址成功", res);
+					if (res.Meta.ErrorCode === "0") {
+						$scope.addr = res.Body[0];
+						//地址数据永久缓存
+						// window.localStorage.setItem("_address", JSON.stringify(res.Body[0]));
+					}
+					$scope.$apply();
+				})
 		} else if (window.localStorage.getItem("_address")) {
 			//未选择过地址，取出上次缓存的地址	
 			// var _address = JSON.parse(window.localStorage.getItem("_address"));
@@ -132,32 +144,24 @@ angular.module('com.wapapp.app', [])
 			}
 		})
 
-		//拉取服务地址
-		addrService.search($rootScope.token, $rootScope.addressId)
-			.success(function(res) {
-				console.log("获取地址成功", res);
-				if (res.Meta.ErrorCode === "0") {
-					$scope.addr = res.Body[0];
-					//地址数据永久缓存
-					// window.localStorage.setItem("_address", JSON.stringify(res.Body[0]));
-				}
-				$scope.$apply();
-			})
+		if ($rootScope.ObjectType && $rootScope.ObjectId) {
 			//拉取工人信息
-		markService.search($rootScope.token, $rootScope.ObjectType, $rootScope.ObjectId)
-			.success(function(res) {
-				console.log("获取工人信息", res);
-				if (res.Meta.ErrorCode === "0") {
-					if (res.Body.Worker) {
-						uc = $scope.uc = res.Body.Worker;
+			markService.search($rootScope.token, $rootScope.ObjectType, $rootScope.ObjectId)
+				.success(function(res) {
+					console.log("获取工人信息", res);
+					if (res.Meta.ErrorCode === "0") {
+						if (res.Body.Worker) {
+							uc = $scope.uc = res.Body.Worker;
+						}
+						if (res.Body.Business) {
+							uc = $scope.uc = res.Body.Business;
+						}
 					}
-					if (res.Body.Business) {
-						uc = $scope.uc = res.Body.Business;
-					}
-				}
-				$scope.$apply();
-			})
-			//获取服务类型
+					$scope.$apply();
+				})
+		}
+
+		//获取服务类型
 		if ($rootScope.ObjectType == "1") {
 			typeService.searchWorkList($rootScope.ObjectId)
 				.success(function(res) {
