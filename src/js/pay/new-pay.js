@@ -85,7 +85,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -139,7 +139,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -172,7 +172,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -225,7 +225,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -248,7 +248,7 @@ $(function(){
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://192.168.1.191:3003/api/v1/ClientInfo/Index',
+    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
     data:{
       Token:token
     },
@@ -262,7 +262,7 @@ $(function(){
   function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+      url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
         console.log(data);

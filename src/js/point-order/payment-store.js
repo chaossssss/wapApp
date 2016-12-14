@@ -182,7 +182,7 @@ $(function(){
   function getDetail(type,id){
     return $.ajax({
       type: 'POST',
-      url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',
+      url: 'http://wapapi.zhujiash.com/api/v2/Provider/Detail',
       dataType: 'json',
       async:false,
       data: {
@@ -195,7 +195,7 @@ $(function(){
   function getActivity(token,serviceTypeId){
     return $.ajax({
       type: 'POST',
-      url: 'http://192.168.1.191:3003/api/v2/SystemService/GetActivity',
+      url: 'http://wapapi.zhujiash.com/api/v2/SystemService/GetActivity',
       async:false,
       data:{
         Token: token,
