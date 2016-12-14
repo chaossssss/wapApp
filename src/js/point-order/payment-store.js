@@ -10,8 +10,8 @@ $(function(){
   /*--   自己定义数据   --*/
   var omp = {"type":1,"markId":1413};
   var ompstr = JSON.stringify(omp);
-  var oMsg = encodeURIComponent(ompstr);
-  var os = decodeURIComponent(oMsg);
+  var oMsg = encodeURI(ompstr);
+  var os = decodeURI(oMsg);
   var ss = JSON.parse(os);
   var stype = ss.type;
   var smarkId = ss.markId;
@@ -21,7 +21,7 @@ $(function(){
   
   var token = window.localStorage.getItem("Token");
   var om = getvl("state");
-  var orderMsgPara = decodeURIComponent(om);
+  var orderMsgPara = decodeURI(om);
   var state = JSON.parse(orderMsgPara);
   var type = state.type;
   var markId = state.markId;
@@ -162,7 +162,7 @@ $(function(){
     /*--拼跳转页面的url--*/
     var orderMsgParameter = {"stId":stId,"markId":markId};
     var orderMsgParameterStr = JSON.stringify(orderMsgParameterStr);
-    var orderMsg = encodeURIComponent(orderMsgParameterStr);
+    var orderMsg = encodeURI(orderMsgParameterStr);
     console.log("调到下个页面:"+orderMsg);
     /*--拼跳转页面的url--*/
     var data = {
