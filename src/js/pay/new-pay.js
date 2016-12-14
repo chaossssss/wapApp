@@ -14,12 +14,17 @@ $(function(){
   var totalPriceNum = sessionStorage.getItem("totalPriceNum");
   // var orderMsgPara = '{"stId":'+stId+',"markId":'+markId+'}';
   // var orderMsg = encodeURIComponent(orderMsgPara);
-  var om = getvl("state");
-  var orderMsgPara = decodeURI(om);
-  var state = JSON.parse(orderMsgPara);
-  var stId = state.stId;
-  var markId = state.markId;
-  console.log(orderMsg);
+  /*--从url中获取参数--*/
+  // var om = getvl("state");
+  // var orderMsgPara = decodeURI(om);
+  // var state = JSON.parse(orderMsgPara);
+  // var stId = state.stId;
+  // var markId = state.markId;
+  /*--从url中获取参数--*/
+  /*--从session中获取参数--*/
+  var stId = window.sessionStorage.getItem("stId");
+  var markId = window.sessionStorage.getItem("markId");
+  /*--从session中获取参数--*/
   $("#needToPay").text(needToPay);
   $("#showMore").on("click",function(){
     var height = $("#payPanel").height();

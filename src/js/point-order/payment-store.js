@@ -5,30 +5,32 @@ $(function(){
     if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " "));
     return "";
   }
+  var token = window.localStorage.getItem("Token");
   // var Type = getvl("type");
   // var Id = getvl("markid");
   /*--   自己定义数据   --*/
-  var omp = {"type":1,"markId":1413};
-  var ompstr = JSON.stringify(omp);
-  var oMsg = encodeURI(ompstr);
-  var os = decodeURI(oMsg);
-  var ss = JSON.parse(os);
-  var stype = ss.type;
-  var smarkId = ss.markId;
-  console.log('s参数：{"type":'+stype+',"markId":'+smarkId+"}");
-  console.log("s编码:"+oMsg);
+  // var omp = {"type":1,"markId":1413};
+  // var ompstr = JSON.stringify(omp);
+  // var oMsg = encodeURI(ompstr);
+  // var os = decodeURI(oMsg);
+  // var ss = JSON.parse(os);
+  // var stype = ss.type;
+  // var smarkId = ss.markId;
+  // console.log('s参数：{"type":'+stype+',"markId":'+smarkId+"}");
+  // console.log("s编码:"+oMsg);
   /*--   自己定义数据   --*/
-  
-  var token = window.localStorage.getItem("Token");
-  var om = getvl("state");
-  var orderMsgPara = decodeURI(om);
-  var state = JSON.parse(orderMsgPara);
-  var type = state.type;
-  var markId = state.markId;
-  var stId = $("#serviceType option:selected").val();
-  
-  
-  $("#toDetail").attr("href","../worker/worker-info.html?type="+type+"&markid="+markId);
+  /*--   弄成json格式的参数   --*/
+  // var om = getvl("state");
+  // var orderMsgPara = decodeURI(om);
+  // var state = JSON.parse(orderMsgPara);
+  // var type = state.type;
+  // var markId = state.markId;
+  // var stId = $("#serviceType option:selected").val();
+  /*--   弄成json格式的参数   --*/
+  /*--   就拿一个markId参数   --*/
+  var markId = getvl("state");
+  /*--   就拿一个markId参数   --*/
+  $("#toDetail").attr("href","../worker/worker-info.html?type=1&markid="+markId);
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();
@@ -140,7 +142,7 @@ $(function(){
     }
   })
   
-  var detail = getDetail(type,markId).done(function(response){return response;});
+  var detail = getDetail(markId).done(function(response){return response;});
   var data = detail.responseJSON;
   console.log(data);
   var api = data.Body.Worker;
@@ -160,10 +162,12 @@ $(function(){
     sessionStorage.setItem("totalPriceNum",totalPriceNum);
     console.log(actualMoneyNum);
     /*--拼跳转页面的url--*/
-    var orderMsgParameter = {"stId":stId,"markId":markId};
-    var orderMsgParameterStr = JSON.stringify(orderMsgParameterStr);
-    var orderMsg = encodeURI(orderMsgParameterStr);
-    console.log("调到下个页面:"+orderMsg);
+    // var orderMsgParameter = {"stId":stId,"markId":markId};
+    // var orderMsgParameterStr = JSON.stringify(orderMsgParameterStr);
+    // var orderMsg = encodeURI(orderMsgParameterStr);
+    // console.log("调到下个页面:"+orderMsg);
+    window.sessionStorage.setItem("stId",stId);
+    window.sessionStorage.setItem("markId",markId);
     /*--拼跳转页面的url--*/
     var data = {
       Token:token,
@@ -174,19 +178,19 @@ $(function(){
     }
     if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + orderMsg + "#wechat_redirect";
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
     }
   })
 
   /*查找工人信息方法*/
-  function getDetail(type,id){
+  function getDetail(id){
     return $.ajax({
       type: 'POST',
       url: 'http://wapapi.zhujiash.com/api/v2/Provider/Detail',
       dataType: 'json',
       async:false,
       data: {
-        Type: type,
+        Type: '1',
         Id: id
       }
     });
