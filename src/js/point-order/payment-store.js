@@ -16,7 +16,7 @@ $(function(){
   var stype = ss.type;
   var smarkId = ss.markId;
   console.log('s参数：{"type":'+stype+',"markId":'+smarkId+"}");
-  console.log("s转码:"+oMsg);
+  console.log("s编码:"+oMsg);
   /*--   自己定义数据   --*/
   
   var token = window.localStorage.getItem("Token");
@@ -28,7 +28,7 @@ $(function(){
   var stId = $("#serviceType option:selected").val();
   
   
-  $("#toDetail").attr("href","../worker/worker-info.html?type="+Type+"&markid="+Id);
+  $("#toDetail").attr("href","../worker/worker-info.html?type="+type+"&markid="+markId);
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();
@@ -140,7 +140,7 @@ $(function(){
     }
   })
   
-  var detail = getDetail(Type,Id).done(function(response){return response;});
+  var detail = getDetail(type,markId).done(function(response){return response;});
   var data = detail.responseJSON;
   console.log(data);
   var api = data.Body.Worker;
@@ -169,7 +169,7 @@ $(function(){
       Token:token,
       ServiceTypeId:stId,
       ServicePrice:totalPrice,
-      ServcieProviderId:Id,
+      ServcieProviderId:markId,
       ServiceProviderType:1
     }
     if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
@@ -186,8 +186,8 @@ $(function(){
       dataType: 'json',
       async:false,
       data: {
-        Type: Type,
-        Id: Id
+        Type: type,
+        Id: id
       }
     });
   }
