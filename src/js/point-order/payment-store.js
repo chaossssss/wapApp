@@ -8,8 +8,9 @@ $(function(){
   // var Type = getvl("type");
   // var Id = getvl("markid");
   /*--   自己定义数据   --*/
-  var omp = '{"type":1,"markId":1413}';
-  var oMsg = encodeURIComponent(omp);
+  var omp = {"type":1,"markId":1413};
+  var ompstr = JSON.stringify(omp);
+  var oMsg = encodeURIComponent(ompstr);
   var os = decodeURIComponent(oMsg);
   var ss = JSON.parse(os);
   var stype = ss.type;
@@ -159,8 +160,9 @@ $(function(){
     sessionStorage.setItem("totalPriceNum",totalPriceNum);
     console.log(actualMoneyNum);
     /*--拼跳转页面的url--*/
-    var orderMsgParameter = '{"stId":'+stId+',"markId":'+markId+'}';
-    var orderMsg = encodeURIComponent(orderMsgParameter);
+    var orderMsgParameter = {"stId":stId,"markId":markId};
+    var orderMsgParameterStr = JSON.stringify(orderMsgParameterStr);
+    var orderMsg = encodeURIComponent(orderMsgParameterStr);
     console.log("调到下个页面:"+orderMsg);
     /*--拼跳转页面的url--*/
     var data = {
