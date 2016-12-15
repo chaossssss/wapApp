@@ -234,7 +234,7 @@ $(function(){
         data:data,
         success:function(data){
           console.log(data);
-          aplipayTradePay(data.Body.GATEWAY_NEW, data.Body.AlipaySign);
+          aplipayTradePay(data.Body.AliPaySign.GATEWAY_NEW, data.Body.AliPaySign.AlipaySign);
           if (data.Meta.ErrorCode === "0") {
             // window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
           } else {
@@ -272,7 +272,7 @@ $(function(){
       success:function(data){
         console.log(data);
         if(data.Meta.ErrorCode == "0"){
-          window.location.href = "/template/pay/success.html";
+          window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId;
         }
       }      
     })
