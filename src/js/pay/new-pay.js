@@ -243,7 +243,7 @@ $(function(){
           function aplipayTradePay(GATEWAY_NEW, aplipaySign) {
             var aplipayUrl = GATEWAY_NEW + aplipaySign;
             window.sessionStorage.setItem("AlipayUrl", aplipayUrl);
-            // window.location.href = "/template/pay/alipay.html";
+            window.location.href = "/template/pay/alipay.html";
           }
         }
       })
