@@ -124,7 +124,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + om + "#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         }
       })
@@ -144,7 +144,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -211,7 +211,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=" + om + "#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         } 
       })  
@@ -230,7 +230,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -243,7 +243,7 @@ $(function(){
           function aplipayTradePay(GATEWAY_NEW, aplipaySign) {
             var aplipayUrl = GATEWAY_NEW + aplipaySign;
             window.sessionStorage.setItem("AlipayUrl", aplipayUrl);
-            window.location.href = "/template/pay/alipay.html";
+            // window.location.href = "/template/pay/alipay.html";
           }
         }
       })
@@ -253,7 +253,7 @@ $(function(){
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
+    url:'http://192.168.1.191:3003/api/v1/ClientInfo/Index',
     data:{
       Token:token
     },
@@ -267,7 +267,7 @@ $(function(){
   function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+      url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
         console.log(data);
