@@ -11,12 +11,63 @@
     <meta name="description" content="助家生活">
     <meta name="keywords" content="助家生活">
     <meta name="author" content="zxh">
-    <title>双十二特价洋牡丹</title>
+    <title>圣诞花礼套装</title>
     <link rel="stylesheet" href="/css/login/login-naicha.min.css">
+    <style>
+     .login-box{
+        width: 86%;
+        background: #fff;
+        margin-top: 10px;
+        padding-bottom: 25%;
+     }
+     ::-webkit-input-placeholder { /* WebKit browsers */  
+        color:#cfcfcf;  
+        font-size: 14px;
+        line-height: 1.2rem;
+    } 
+    .login-phone,.fill-vercode,.fill-pwd{
+      background:url();
+      border-color:#cfcfcf;
+      height: 35px;
+      padding-left: 5%;
+    }
+    .fill-vercode,.fill-pwd{
+      width: 92%;
+    }
+    .ver-code{
+      height: 35px;
+      width: 100px;
+      background: #f40c5e;
+      font-size: 15px;
+      color: #fff;
+    }
+    .fill-phone{
+      padding: 55px 0 0px;
+      width: 92%;
+      margin: auto;
+    }
+    .login-phone{
+      width: 60%;
+    }
+    .login-get{
+      width: 92%;
+      background: url(/images/login/login-naicha/login-get-huajiM.png) no-repeat;
+      background-size: 100% 100%;
+      height: 35px;
+      margin: 16px auto 0;
+    }
+    .flag-banner{
+        position: absolute;
+        width: 64%;
+        top: 10px;
+        left: -10px;
+    }
+    </style>
 </head>
-<body style="background:#f8d2c1">
-  <div class=""><img src="/images/login/login-naicha/top-huaji-1212.jpg" alt=""></div>
+<body style="background:#cf0d3f">
+  <div class=""><img src="/images/login/login-naicha/top-huajiM.png" alt=""></div>
   <div class="login-box"> 
+    <img src="/images/login/login-naicha/flag-huajiM.png" alt="" class="flag-banner">
     <form id="" action="" method="">
       <div class="fill-phone">
         <input id="phoneNum" type="text" name="phoneNumber" placeholder="请输入手机号" maxlength="11" class="login-phone"/>
@@ -32,13 +83,15 @@
     </form>  
   </div>
 
-  <p class="law">助家生活保留法律范围内允许的对活动的解释权</p>
-  <br>
-  
   <script src="/js/common/config.min.js"></script>
   <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
   <script src="http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"> </script>
   <script src="/js/login/login-naicha.min.js"></script>
+  <script>
+    $("#getCode").click(function(){
+       $(".login-box").css("padding-bottom","20px");
+    });
+  </script>
 </body>
 </html>
