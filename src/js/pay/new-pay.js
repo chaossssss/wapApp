@@ -7,7 +7,7 @@ $(function(){
   }
   // var markId = getvl("markid");
   // var stId = getvl("stId");
-  var wxCode = getvl("Code");
+  var wxCode = getvl("code");
   var token = window.localStorage.getItem("Token");
   var needToPay = sessionStorage.getItem("needToPay");
   var needToPayNum = parseFloat(needToPay);
@@ -96,7 +96,7 @@ $(function(){
         'WxPay':wxPayNum,
         'ServiceProviderId':markId,
         'ServiceProviderType':'2',
-        'Code':wxCode,
+        'code':wxCode,
         'PaymentMode':paymentMode
       };
       $.ajax({
@@ -135,7 +135,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         }
       })
@@ -183,7 +183,7 @@ $(function(){
         'BalancePay':'0',
         'ServiceProviderId':markId,
         'ServiceProviderType':'2',
-        'Code':wxCode,
+        'code':wxCode,
         'PaymentMode':paymentMode
       };
       $.ajax({
@@ -222,7 +222,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         } 
       })  
