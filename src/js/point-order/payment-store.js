@@ -178,8 +178,8 @@ $(function(){
     }
     if(stId != "-1" && actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
-      window.location.href="../pay/new-pay.html";
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+      // window.location.href="../pay/new-pay.html";
     }
   })
 
@@ -187,7 +187,7 @@ $(function(){
   function getDetail(id){
     return $.ajax({
       type: 'POST',
-      url: 'http://192.168.1.191:3003/api/v2/Provider/Detail',
+      url: 'http://wapapi.zhujiash.com/api/v2/Provider/Detail',
       dataType: 'json',
       async:false,
       data: {
@@ -200,7 +200,7 @@ $(function(){
   function getActivity(token,serviceTypeId){
     return $.ajax({
       type: 'POST',
-      url: 'http://192.168.1.191:3003/api/v2/SystemService/GetActivity',
+      url: 'http://wapapi.zhujiash.com/api/v2/SystemService/GetActivity',
       async:false,
       data:{
         Token: token,

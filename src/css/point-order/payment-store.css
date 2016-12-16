@@ -15,7 +15,7 @@ a {outline:none; star:expression_r(this.onFocus=this.blur());}
 button{outline: none;cursor: pointer;border:none;}
 .clear{clear:both;}
 /*到店支付*/
-select{ direction: rtl; color: #333; }
+select{ direction: rtl; color: #333; background: #fff; }
 select option{ direction: ltr; }
 .bus_photo{ border-radius: 50%; width: 60px; height: 60px; }
 .no-border:before{ border-top: 0; }
@@ -65,3 +65,4 @@ select::-ms-expand { display: none; }
 .act-logo{ width: 20px; height: 17px; padding-top: 3px; padding-right: 6px; display: block; float: left; }
 .act-money{ font-size: 15px; color: #fd552e; }
 .bus-addr{ background: url(../../images/quick-order/new-addr.png) no-repeat 0 1px; background-size: 12px 12px; padding-left: 18px; }
+#submitBtn{ overflow: scroll; }

@@ -49,6 +49,7 @@ $(function(){
     var isAli = $("#pay3").is(":checked");
     var accountBalance = $("#accountBalance").text();
     var accountBalanceNum = parseFloat(accountBalance);
+    $("#shadow").show();
     if(isBalance && !isWeixin && !isAli){   //余额
       if(accountBalanceNum < needToPayNum){
         alert("余额不足");
@@ -67,6 +68,7 @@ $(function(){
           'PaymentMode':paymentMode
         };
         createOrderPayAtStore(data);
+        $("#shadow").hide();
       }
     }
     if(isBalance && isWeixin){              //余额+微信
@@ -144,7 +146,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -230,7 +232,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -253,7 +255,7 @@ $(function(){
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://192.168.1.191:3003/api/v1/ClientInfo/Index',
+    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
     data:{
       Token:token
     },
@@ -267,7 +269,7 @@ $(function(){
   function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'http://192.168.1.191:3003/api/v2/OrderInfo/CreateOrderPayAtStore',
+      url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
         console.log(data);
