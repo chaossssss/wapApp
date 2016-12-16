@@ -6,6 +6,8 @@ $(function(){
     return "";
   }
   var token = window.localStorage.getItem("Token");
+  var urlIp = "http://wapapi.zhujiash.com/";
+  // var urlIp = "http://192.168.1.191:3003/";
   // var Type = getvl("type");
   // var Id = getvl("markid");
   /*--   自己定义数据   --*/
@@ -187,7 +189,7 @@ $(function(){
   function getDetail(id){
     return $.ajax({
       type: 'POST',
-      url: 'http://wapapi.zhujiash.com/api/v2/Provider/Detail',
+      url: urlIp+'api/v2/Provider/Detail',
       dataType: 'json',
       async:false,
       data: {
@@ -200,7 +202,7 @@ $(function(){
   function getActivity(token,serviceTypeId){
     return $.ajax({
       type: 'POST',
-      url: 'http://wapapi.zhujiash.com/api/v2/SystemService/GetActivity',
+      url: urlIp+'api/v2/SystemService/GetActivity',
       async:false,
       data:{
         Token: token,

@@ -7,11 +7,20 @@ $(function(){
   }
   // var markId = getvl("markid");
   // var stId = getvl("stId");
-  var wxCode = getvl("code");
+  var wxCode = getvl("Code");
   var token = window.localStorage.getItem("Token");
   var needToPay = sessionStorage.getItem("needToPay");
   var needToPayNum = parseFloat(needToPay);
   var totalPriceNum = sessionStorage.getItem("totalPriceNum");
+
+
+
+
+  var urlIp = "http://wapapi.zhujiash.com/";
+  // var urlIp = "http://192.168.1.191:3003/";
+
+
+  
   // var orderMsgPara = '{"stId":'+stId+',"markId":'+markId+'}';
   // var orderMsg = encodeURIComponent(orderMsgPara);
   /*--从url中获取参数--*/
@@ -92,7 +101,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:urlIp+'api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -126,7 +135,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         }
       })
@@ -146,11 +155,11 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:urlIp+'api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
-          aplipayTradePay(data.Body.GATEWAY_NEW, data.Body.AlipaySign);
+          aplipayTradePay(data.Body.AliPaySign.GATEWAY_NEW, data.Body.AliPaySign.AlipaySign);
           if (data.Meta.ErrorCode === "0") {
             // window.location.href = "/template/pay/pay_success.html?orderId="+$rootScope.orderId;
           } else {
@@ -179,7 +188,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:urlIp+'api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -213,7 +222,7 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
           }
         } 
       })  
@@ -232,7 +241,7 @@ $(function(){
       };
       $.ajax({
         type:'POST',
-        url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+        url:urlIp+'api/v2/OrderInfo/CreateOrderPayAtStore',
         data:data,
         success:function(data){
           console.log(data);
@@ -255,7 +264,7 @@ $(function(){
   /*--账户余额--*/
   $.ajax({
     type:'POST',
-    url:'http://wapapi.zhujiash.com/api/v1/ClientInfo/Index',
+    url:urlIp+'api/v1/ClientInfo/Index',
     data:{
       Token:token
     },
@@ -269,7 +278,7 @@ $(function(){
   function createOrderPayAtStore(msg){
     $.ajax({
       type:'POST',
-      url:'http://wapapi.zhujiash.com/api/v2/OrderInfo/CreateOrderPayAtStore',
+      url:urlIp+'api/v2/OrderInfo/CreateOrderPayAtStore',
       data:msg,
       success:function(data){
         console.log(data);
