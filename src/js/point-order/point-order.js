@@ -49,7 +49,7 @@ angular.module('com.wapapp.app', [])
 		}
 
 		// 是否到店服务的地址配置&时间配置
-		if ($rootScope.resident) {
+		if ($rootScope.resident === '1') {
 			vm.Isresident = true;
 			//当前时间作为服务时间
 			var nowDate = new Date();
