@@ -16,8 +16,8 @@ $(function(){
 
 
 
-  // var urlIp = "http://wapapi.zhujiash.com/";
-  var urlIp = "http://192.168.1.191:3003/";
+  var urlIp = "http://wapapi.zhujiash.com/";
+  // var urlIp = "http://192.168.1.191:3003/";
 
 
   
@@ -63,7 +63,6 @@ $(function(){
       if(accountBalanceNum < needToPayNum){
         alert("余额不足");
       }
-      console.log(stId);
       if(accountBalanceNum >= needToPayNum){
         var paymentMode = 8;
         var data = {
@@ -283,7 +282,7 @@ $(function(){
       success:function(data){
         console.log(data);
         if(data.Meta.ErrorCode == "0"){
-          // window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId;
+          window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId+"&price="+totalPriceNum;
         }
       }      
     })

@@ -41,6 +41,7 @@ $(function(){
     },
     success:function(data){
       console.log("活动",data);
+      $("#serviceName").text(data.Body.Title);
       list = data.Body.List;
     }
   })
@@ -200,8 +201,8 @@ $(function(){
   $("#busName").text(api.Name);
   $("#busAddr").text(api.Address);
   var serviceType = api.Services;
-  var serviceName = serviceType[0].Name;
-  $("#serviceName").text(serviceName);
+  // var serviceName = serviceType[0].Name;
+  // $("#serviceName").text(serviceName);
   // var sn = "<option value='-1'>请选择服务类型</option>";
   // for (var i = 0; i < serviceType.length; i++) {
   //   sn += '<option value="' + serviceType[i].Id + '">' + serviceType[i].Name + '</option>';
