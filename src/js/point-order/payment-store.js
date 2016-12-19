@@ -6,8 +6,8 @@ $(function(){
     return "";
   }
   var token = window.localStorage.getItem("Token");
-  // var urlIp = "http://wapapi.zhujiash.com/";
-  var urlIp = "http://192.168.1.191:3003/";
+  var urlIp = "http://wapapi.zhujiash.com/";
+  // var urlIp = "http://192.168.1.191:3003/";
   // var Type = getvl("type");
   // var Id = getvl("markid");
   /*--   自己定义数据   --*/
@@ -231,8 +231,8 @@ $(function(){
     }
     if(actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
-      window.location.href="../pay/new-pay.html";
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+      // window.location.href="../pay/new-pay.html";
     }
   })
 
