@@ -16,8 +16,8 @@ $(function(){
 
 
 
-  var urlIp = "http://wapapi.zhujiash.com/";
-  // var urlIp = "http://192.168.1.191:3003/";
+  // var urlIp = "http://wapapi.zhujiash.com/";
+  var urlIp = "http://192.168.1.191:3003/";
 
 
   
@@ -31,7 +31,7 @@ $(function(){
   // var markId = state.markId;
   /*--从url中获取参数--*/
   /*--从session中获取参数--*/
-  var stId = window.sessionStorage.getItem("stId");
+  // var stId = window.sessionStorage.getItem("stId");
   var markId = window.sessionStorage.getItem("markId");
   /*--从session中获取参数--*/
   $("#needToPay").text(needToPay);
@@ -68,7 +68,7 @@ $(function(){
         var paymentMode = 8;
         var data = {
           'Token':token,
-          'ServiceTypeId':stId,
+          // 'ServiceTypeId':stId,
           'ServicePrice':totalPriceNum,
           // 'WxPay':'0',
           // 'Alipay':'0',
@@ -90,7 +90,7 @@ $(function(){
       var wxPayNum = totalPriceNum - accountBalanceNum;
       var data = {
         'Token':token,
-        'ServiceTypeId':stId,
+        // 'ServiceTypeId':stId,
         'ServicePrice':totalPriceNum,
         'BalancePay':accountBalanceNum,
         'WxPay':wxPayNum,
@@ -145,7 +145,7 @@ $(function(){
       var alipayNum = totalPriceNum - accountBalanceNum;
       var data = {
         'Token':token,
-        'ServiceTypeId':stId,
+        // 'ServiceTypeId':stId,
         'ServicePrice':totalPriceNum,
         'BalancePay':accountBalanceNum,
         'Alipay':alipayNum,
@@ -177,7 +177,7 @@ $(function(){
       var paymentMode = 3;
       var data = {
         'Token':token,
-        'ServiceTypeId':stId,
+        // 'ServiceTypeId':stId,
         'ServicePrice':totalPriceNum,
         'WxPay':totalPriceNum,
         'BalancePay':'0',
@@ -197,12 +197,12 @@ $(function(){
             function onBridgeReady() {
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {
-                  "appId": data.Body.appId, //公众号名称，由商户传入     
-                  "timeStamp": data.Body.timeStamp, //时间戳，自1970年以来的秒数     
-                  "nonceStr": data.Body.nonceStr, //随机串     
-                  "package": data.Body.package,
-                  "signType": data.Body.signType, //微信签名方式     
-                  "paySign": data.Body.paySign //微信签名 
+                  "appId": data.Body.WxPayParam.appId, //公众号名称，由商户传入     
+                  "timeStamp": data.Body.WxPayParam.timeStamp, //时间戳，自1970年以来的秒数     
+                  "nonceStr": data.Body.WxPayParam.nonceStr, //随机串     
+                  "package": data.Body.WxPayParam.package,
+                  "signType": data.Body.WxPayParam.signType, //微信签名方式     
+                  "paySign": data.Body.WxPayParam.paySign //微信签名 
                 },
                 function(data) {
                   if (data.err_msg == "get_brand_wcpay_request：ok") {
@@ -231,7 +231,7 @@ $(function(){
       var paymentMode = 0;
       var data = {
         'Token':token,
-        'ServiceTypeId':stId,
+        // 'ServiceTypeId':stId,
         'ServicePrice':totalPriceNum,
         'Alipay':totalPriceNum,
         'BalancePay':'0',
@@ -283,7 +283,7 @@ $(function(){
       success:function(data){
         console.log(data);
         if(data.Meta.ErrorCode == "0"){
-          window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId;
+          // window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId;
         }
       }      
     })
