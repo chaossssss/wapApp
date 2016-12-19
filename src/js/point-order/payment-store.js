@@ -6,8 +6,8 @@ $(function(){
     return "";
   }
   var token = window.localStorage.getItem("Token");
-  // var urlIp = "http://wapapi.zhujiash.com/";
-  var urlIp = "http://192.168.1.191:3003/";
+  var urlIp = "http://wapapi.zhujiash.com/";
+  // var urlIp = "http://192.168.1.191:3003/";
   // var Type = getvl("type");
   // var Id = getvl("markid");
   /*--   自己定义数据   --*/
@@ -41,6 +41,7 @@ $(function(){
     },
     success:function(data){
       console.log("活动",data);
+      $("#serviceName").text(data.Body.Title);
       list = data.Body.List;
     }
   })
@@ -200,8 +201,8 @@ $(function(){
   $("#busName").text(api.Name);
   $("#busAddr").text(api.Address);
   var serviceType = api.Services;
-  var serviceName = serviceType[0].Name;
-  $("#serviceName").text(serviceName);
+  // var serviceName = serviceType[0].Name;
+  // $("#serviceName").text(serviceName);
   // var sn = "<option value='-1'>请选择服务类型</option>";
   // for (var i = 0; i < serviceType.length; i++) {
   //   sn += '<option value="' + serviceType[i].Id + '">' + serviceType[i].Name + '</option>';
@@ -230,8 +231,8 @@ $(function(){
     }
     if(actualMoneyNum != null && actualMoneyNum != ""){
       console.log('成功');
-      // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
-      window.location.href="../pay/new-pay.html";
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+      // window.location.href="../pay/new-pay.html";
     }
   })
 
