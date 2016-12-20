@@ -78,14 +78,14 @@ $(function(){
           // }
           $("#activity").show();
           // $("#specialTitle").text(list[i].Ads);
-          console.log("实际价格"+actualMoney);
+          // console.log("实际价格"+actualMoney);
           $("#specialChoose").attr("str","../../images/quick-order/new-choose.png");
           $("#specialMoney").text("-￥" + returnMoney);
           $("#actualMoney").text("￥" + actualMoney);
         }
         if(totalPriceNum < list[0].TotalPriceCondition){
-          console.log("输入总价"+totalPriceNum);
-          console.log("最低活动价格"+list[0].TotalPriceCondition);
+          // console.log("输入总价"+totalPriceNum);
+          // console.log("最低活动价格"+list[0].TotalPriceCondition);
           $("#activity").hide();
           $("#actualMoney").text("￥" + totalPriceNum);
         }
@@ -234,7 +234,7 @@ $(function(){
     var actualMoneyNum = actualMoney.slice(1);
     sessionStorage.setItem("needToPay",actualMoneyNum);
     sessionStorage.setItem("totalPriceNum",totalPriceNum);
-    console.log("实际价格"+actualMoneyNum);
+    // console.log("实际价格"+actualMoneyNum);
     /*--拼跳转页面的url--*/
     // var orderMsgParameter = {"stId":stId,"markId":markId};
     // var orderMsgParameterStr = JSON.stringify(orderMsgParameterStr);
@@ -251,8 +251,8 @@ $(function(){
       ServiceProviderType:1
     }
     if(actualMoneyNum != null && actualMoneyNum != ""){
-      console.log('成功');
-      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+      // console.log('成功');
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
       // window.location.href="../pay/new-pay.html";
     }
   })

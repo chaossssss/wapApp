@@ -60,9 +60,9 @@ $(function(){
     var accountBalanceNum = parseFloat(accountBalance);
     $("#shadow").show();
     if(isBalance && !isWeixin && !isAli){   //余额
-      if(accountBalanceNum < needToPayNum){
-        alert("余额不足");
-      }
+      // if(accountBalanceNum < needToPayNum){
+      //   alert("余额不足");
+      // }
       if(accountBalanceNum >= needToPayNum){
         var paymentMode = 8;
         var data = {
@@ -134,7 +134,13 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            // var errorMsg = data.Meta.ErrorMsg;
+            // $("#tipDialog").show();
+            // $("#response").text(errorMsg);
+            // $("#confirmDialog").on("click",function(){
+            //   $("#tipDialog").hide();
+            // })
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
           }
         }
       })
@@ -221,7 +227,13 @@ $(function(){
               onBridgeReady();
             }
           } else {
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_userinfo&state=123456#wechat_redirect";
+            // var errorMsg = data.Meta.ErrorMsg;
+            // $("#tipDialog").show();
+            // $("#response").text(errorMsg);
+            // $("#confirmDialog").on("click",function(){
+            //   $("#tipDialog").hide();
+            // })
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
           }
         } 
       })  
@@ -283,6 +295,13 @@ $(function(){
         console.log(data);
         if(data.Meta.ErrorCode == "0"){
           window.location.href = "/template/pay/pay_success.html?orderId="+data.Body.OrderId+"&price="+totalPriceNum;
+        }else{
+          var errorMsg = data.Meta.ErrorMsg;
+          $("#tipDialog").show();
+          $("#response").text(errorMsg);
+          $("#confirmDialog").on("click",function(){
+            $("#tipDialog").hide();
+          })
         }
       }      
     })
