@@ -12,6 +12,13 @@ $(function(){
   var Type=getvl('type');
   var Id=getvl('markid');
 
+  // 判断是否有token.session
+  var n_token=getvl('token');
+  if(n_token){
+    window.location.href = "/template/point-order/payment-store.html"+location.search+"&channel=0&token="+n_token;
+  }
+  var n_session=getvl('Session');
+
   $("#getCode").removeAttr("disabled");
 
   var InterValObj; //timer变量，控制时间
@@ -132,7 +139,8 @@ $(function(){
         LoginName:phone,
         Password:password,
         Captcha:vercode,
-        Code:code
+        Code:code,
+        Session:n_session
       },
       success:function(data){
         var token = data.Body.Token;
