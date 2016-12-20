@@ -8,8 +8,9 @@ $(function(){
   var token = window.localStorage.getItem("Token");
   var urlIp = "http://wapapi.zhujiash.com/";
   // var urlIp = "http://192.168.1.191:3003/";
-  // var Type = getvl("type");
-  // var Id = getvl("markid");
+  var Type = getvl("type");
+  var markId = getvl("markid");
+  window.sessionStorage.setItem("markId",markId);
   /*--   自己定义数据   --*/
   // var omp = {"type":1,"markId":1413};
   // var ompstr = JSON.stringify(omp);
@@ -30,7 +31,7 @@ $(function(){
   // var stId = $("#serviceType option:selected").val();
   /*--   弄成json格式的参数   --*/
   /*--   就拿一个markId参数   --*/
-  var markId = getvl("state");
+  // var markId = getvl("state");
   /*最新查找活动信息方法*/
   $.ajax({
     type:"POST",
@@ -47,7 +48,7 @@ $(function(){
   })
   $("#activity").hide();
   /*--   就拿一个markId参数   --*/
-  $("#toDetail").attr("href","../worker/worker-info.html?type=1&markid="+markId);
+  
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();
@@ -192,15 +193,29 @@ $(function(){
   //   }
   // })
   /*--下拉选框代码--*/
+  if(Type == 1){
+    var detail = getDetail(Type,markId).done(function(response){return response;});
+    var data = detail.responseJSON;
+    console.log(data);
+    var api = data.Body.Worker;
+    $("#busPhoto").attr("src", api.Photo);
+    $("#busName").text(api.Name);
+    $("#busAddr").text(api.Address);
+    var serviceType = api.Services;  
+    $("#toDetail").attr("href","../worker/worker-info.html?type=1&markid="+markId);  
+  }
+  if(Type == 2){
+    var detail = getDetail(Type,markId).done(function(response){return response;});
+    var data = detail.responseJSON;
+    console.log(data);
+    var api = data.Body.Business;
+    $("#busPhoto").attr("src", api.Photo);
+    $("#busName").text(api.Name);
+    $("#busAddr").text(api.Address);
+    var serviceType = api.Services;
+    $("#toDetail").attr("href","../business-detail/business-detail.html?type=1&markid="+markId);
+  }
 
-  var detail = getDetail(markId).done(function(response){return response;});
-  var data = detail.responseJSON;
-  console.log(data);
-  var api = data.Body.Worker;
-  $("#busPhoto").attr("src", api.Photo);
-  $("#busName").text(api.Name);
-  $("#busAddr").text(api.Address);
-  var serviceType = api.Services;
   // var serviceName = serviceType[0].Name;
   // $("#serviceName").text(serviceName);
   // var sn = "<option value='-1'>请选择服务类型</option>";
@@ -220,7 +235,7 @@ $(function(){
     // var orderMsg = encodeURI(orderMsgParameterStr);
     // console.log("调到下个页面:"+orderMsg);
     // window.sessionStorage.setItem("stId",stId);
-    window.sessionStorage.setItem("markId",markId);
+    // window.sessionStorage.setItem("markId",markId);
     /*--拼跳转页面的url--*/
     var data = {
       Token:token,
@@ -236,15 +251,15 @@ $(function(){
     }
   })
 
-  /*查找工人信息方法*/
-  function getDetail(id){
+  /*查找相关信息方法*/
+  function getDetail(type,id){
     return $.ajax({
       type: 'POST',
       url: urlIp+'api/v2/Provider/Detail',
       dataType: 'json',
       async:false,
       data: {
-        Type: 1,
+        Type: type,
         Id: id
       }
     });
