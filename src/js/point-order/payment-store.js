@@ -44,6 +44,9 @@ $(function(){
       console.log("活动",data);
       $("#serviceName").text(data.Body.Title);
       list = data.Body.List;
+      if(list == null){
+        $("#activity").hide();
+      }
     }
   })
   $("#activity").hide();
