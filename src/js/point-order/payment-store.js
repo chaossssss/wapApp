@@ -56,7 +56,10 @@ $(function(){
     totalPriceNum = parseFloat($("#totalPrice").val());
     tpLength = totalPrice.length;
     $("#actualMoney").text('');
-
+    if(list == null){
+      $("#activity").hide();
+      $("#actualMoney").text("￥" + totalPriceNum);
+    }
     if(list){
       for(var i = 0; i < list.length; i++){
         var totalPriceCondition = parseFloat(list[i].TotalPriceCondition);
