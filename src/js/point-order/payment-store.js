@@ -202,7 +202,7 @@ $(function(){
     $("#busName").text(api.Name);
     $("#busAddr").text(api.Address);
     var serviceType = api.Services;  
-    $("#toDetail").attr("href","../worker/worker-info.html?type=1&markid="+markId);  
+    // $("#toDetail").attr("href","../worker/worker-info.html?type=1&markid="+markId);  
   }
   if(Type == 2){
     var detail = getDetail(Type,markId).done(function(response){return response;});
@@ -213,7 +213,7 @@ $(function(){
     $("#busName").text(api.Name);
     $("#busAddr").text(api.Address);
     var serviceType = api.Services;
-    $("#toDetail").attr("href","../business-detail/business-detail.html?type=1&markid="+markId);
+    // $("#toDetail").attr("href","../business-detail/business-detail.html?type=1&markid="+markId);
   }
 
   // var serviceName = serviceType[0].Name;
