@@ -102,11 +102,12 @@ $(function(){
     console.log(vercode);
     $.ajax({
       method:"POST",
-      url: CONFIG.IP+"api/v1/ClientInfo/GetBenifit",
+      url: CONFIG.IP+"api/v1/ClientInfo/GetBenifitAtStore",
       data:{
         Phone:phone,
         Captcha:vercode,
-        Code:code
+        Code:code,
+        Session:n_session
       },
       success:function(data){
         var token = data.Body.Token;
@@ -134,7 +135,7 @@ $(function(){
     var password = $("#pwdNum").val();
     $.ajax({
       method:"POST",
-      url: CONFIG.IP+"api/v1/ClientInfo/NewUserGetBenifit",
+      url: CONFIG.IP+"api/v1/ClientInfo/NewUserGetBenifitAtStore",
       data:{
         LoginName:phone,
         Password:password,
