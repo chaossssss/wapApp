@@ -60,9 +60,15 @@ $(function(){
     var accountBalanceNum = parseFloat(accountBalance);
     $("#shadow").show();
     if(isBalance && !isWeixin && !isAli){   //余额
-      // if(accountBalanceNum < needToPayNum){
-      //   alert("余额不足");
-      // }
+      if(accountBalanceNum < needToPayNum){
+        // alert("余额不足");
+        $("#tipDialog").show();
+        $("#response").text("余额不足");
+        $("#confirmDialog").on("click",function(){
+          $("#tipDialog").hide();
+        })
+
+      }
       if(accountBalanceNum >= needToPayNum){
         var paymentMode = 8;
         var data = {
