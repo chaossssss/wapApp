@@ -76,7 +76,6 @@ $(function(){
           'PaymentMode':paymentMode
         };
         createOrderPayAtStore(data);
-        $("#shadow").hide();
       }
     }
     if(isBalance && isWeixin){              //余额+微信
