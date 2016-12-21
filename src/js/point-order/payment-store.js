@@ -14,7 +14,7 @@ $(function(){
   // console.log(typeof(tokenUrl));
 
   window.sessionStorage.setItem("markId",markId);
-  if(tokenUrl != null){
+  if(tokenUrl != ''){
     window.localStorage.setItem("Token",tokenUrl);
   }
   /*--   自己定义数据   --*/
