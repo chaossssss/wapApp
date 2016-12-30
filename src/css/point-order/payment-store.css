@@ -66,3 +66,114 @@ select::-ms-expand { display: none; }
 .act-money{ font-size: 15px; color: #fd552e; }
 .bus-addr{ background: url(../../images/quick-order/new-addr.png) no-repeat 0 1px; background-size: 12px 12px; padding-left: 18px; }
 #submitBtn{ overflow: scroll; }
+
+/*红包*/
+.red-state>li{
+    display: inline-block;
+    width: 23%;
+    text-align: center;
+    padding: 10px 0;
+    color: #999;
+    margin-left: 6px;
+}
+.red-state>li:last-child{
+  float: right;
+}
+.active{
+    border-bottom: 2px solid #27b8f3;
+    color:#27b8f3;
+}
+
+.sysm a{
+    float:right;
+    padding-right: 8%;
+    margin-top: 10px;
+    color: #27b7f3;
+}
+.red-item{
+    background: url(/images/red-packet/bg-y.png);
+    height: 6rem;
+    background-size: 100% 100%;
+    width: 94%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.item-left{
+  position: relative;
+  float: left;
+  height: 79%;
+    width: 30%;  
+    margin-top: 4%;
+    color: #ff1b56;
+}
+
+.item-right{
+    float: right;
+    width: 66%;
+    height: 80%;
+    margin-top: 4%;
+}
+.item-left:before {
+    content: '';
+    position: absolute;
+    height: 200%;
+    width: 1px;
+    right: 0;
+    border-right: 1px dashed #ccc;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(.5,.5);
+    transform: scale(.5,.5);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.price,.Amount{
+  position: absolute;
+}
+.price{
+    top: -17%;
+    width: 100%;
+    margin-left: 27%;
+    text-align: center;   
+}
+
+.rmb{
+    float: left;
+    line-height: 5.4;
+}
+.DiscountAmount{
+  float: left;
+    font-size: 2.5rem;
+    margin-top: 5px;
+}
+.Amount{
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+.red-name{
+  color: #333;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.red-rule{
+    color: #666;
+    font-size: 0.9rem;
+    margin-left: 8%;
+}
+.no-hb{
+    display: none;
+    width: 35%;
+    margin: auto;
+    margin-top: 30%;
+}
+.red-list{
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  top: 10px;
+  overflow: auto;
+}

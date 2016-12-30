@@ -11,11 +11,21 @@ $(function(){
   var Type = getvl("type");
   var markId = getvl("markid");
   var tokenUrl = getvl("token");
+  var couponId = '';
+  var actualMoney = 0;
+  var actualMoneyNum = '';
+  window.sessionStorage.setItem("couponId",couponId);
   // console.log(typeof(tokenUrl));
 
   window.sessionStorage.setItem("markId",markId);
   if(tokenUrl != ''){
     window.localStorage.setItem("Token",tokenUrl);
+  }
+  Array.prototype.min = function(){
+    return Math.min.apply({},this);
+  }
+  Array.prototype.max = function(){
+    return Math.max.apply({},this);
   }
   /*--   自己定义数据   --*/
   // var omp = {"type":1,"markId":1413};
@@ -56,20 +66,48 @@ $(function(){
     }
   })
   $("#activity").hide();
+  /*最新满返红包信息方法*/
+    $.ajax({
+      type: 'POST',
+      url: urlIp+'api/v2/Coupon/CouponList',
+      dataType: 'json',
+      async: false,
+      data: {
+        Token: token
+      },
+      success: function(data) {
+        console.log("红包",data);
+        redList = data.Body.CouponList;
+      }
+    });
+
+
+  
+  $("#redWindow").on("click",function(){
+    $("#redWindow").hide();
+    // couponId = '';
+    // $("#redTip").text("不使用红包");
+  })
   /*--   就拿一个markId参数   --*/
   
   $("#totalPrice").bind("keydown keyup",function(){
     $("#submitBtn").removeClass().addClass('submit-btn');
     $("#moneySymbol").show();
+    $("#promotionTitle").text('');
+    $("#promotion").hide();
+    window.sessionStorage.setItem("couponId",'');
     totalPrice = $("#totalPrice").val();
     totalPriceNum = parseFloat($("#totalPrice").val());
     tpLength = totalPrice.length;
     $("#actualMoney").text('');
-    if(list == null){
+    if(list == null && redList.length == 0){
       $("#activity").hide();
       $("#actualMoney").text("￥" + totalPriceNum);
     }
     if(list){
+      var arr1 = new Array();//减价最大值
+      var arr2 = new Array();//n的值
+      var arr3 = new Array();//满的最小值
       for(var i = 0; i < list.length; i++){
         var totalPriceCondition = parseFloat(list[i].TotalPriceCondition);
         var returnMoney = parseFloat(list[i].ReturnMoney);
@@ -80,7 +118,7 @@ $(function(){
             var n = i;
             $("#activity").show();
             $("#specialTitle").text(list[n].Ads); 
-            var actualMoney = totalPriceNum - list[n].ReturnMoney;
+            actualMoney = totalPriceNum - list[n].ReturnMoney;
           // }
           $("#activity").show();
           // $("#specialTitle").text(list[i].Ads);
@@ -92,12 +130,88 @@ $(function(){
         if(totalPriceNum < list[0].TotalPriceCondition){
           // console.log("输入总价"+totalPriceNum);
           // console.log("最低活动价格"+list[0].TotalPriceCondition);
+          actualMoney = parseFloat(totalPriceNum);
           $("#activity").hide();
           $("#actualMoney").text("￥" + totalPriceNum);
         }
       }
     }
+    if (redList.length>0) {
+      res_0 = "";
+      res_1 = "";
+      res_2 = "";
+      var ServiceNames = ""; //品类名称
+      for (var i = 0; i < redList.length; i++) {
+        if (redList[i].ServiceTypes.length == 0) {
+          ServiceNames = "全品类使用";
+        } else {
+          for (var j = 0; j < redList[i].ServiceTypes.length; j++) {
+            ServiceNames += redList[i].ServiceTypes[j].ServiceName;
+          }
+        }
+        var IsUsed = redList[i].IsUsed; //是否可用
+        var Id = redList[i].Id;
+        var DiscountAmount = parseFloat(redList[i].CouponDetails[0].DiscountAmount); // 红包金额
+        var Amount = parseFloat(redList[i].CouponDetails[0].Amount); //满减金额
+        var StartTime = redList[i].StartTime.substr(0, 10); //起始时间
+        var EndTime = redList[i].EndTime.substr(0, 10); //结束时间
+        var CreateTime = redList[i].CreateTime.substr(0,10);
+        var now_time = Date.parse(new Date()); //当前时间的时间戳
+        var end_time = Date.parse(EndTime); //结束时间时间戳
+        var create_time = Date.parse(CreateTime);
+        var start_time = Date.parse(StartTime);
+        var flag = (now_time < end_time && start_time < now_time) ? true: false; //true是未使用  false是已过期
+        // 未使用
+        if (IsUsed == 0 && flag) {
+          // $("#promotion").hide();
+          // var z = i;
+          arr3.push(redList[i].CouponDetails[0].Amount);
+          // console.log(arr3);
+          var amount_max = arr3.max();
+          // console.log(amount_min);
+          // res_0 += '<div class="red-item" Id=' + Id + ' DiscountAmount=' + DiscountAmount + ' Amount=' + Amount + '><div class="item-left"><div class="price"><span class="rmb">￥</span><span class="DiscountAmount">' + DiscountAmount + '</span></div><div class="Amount">满' + Amount + '可用</div></div><div class="item-right"><div class="red-name">闪付红包</div><ul class="red-rule"><li class="ServiceTypes">' + ServiceNames + '</li><li><span class="StartTime">' + StartTime + '</span>至<span class="EndTime">' + EndTime + '</span></li></ul></div></div>';
+          // $(".red-list").html(res_0);
+          if(actualMoney>=redList[i].CouponDetails[0].Amount){
+            console.log(actualMoney);
+            $("#promotion").show();
+            var n = i;
+            
 
+            arr1.push(redList[n].CouponDetails[0].DiscountAmount);
+            arr2.push(n);
+            var max = arr1.max();
+            // var max = arr1[0];
+            // var arr1_index = 0;
+            // console.log("减少最大值"+max);
+            for(var a = 0; a < arr1.length; a++){
+              if(max == arr1[a]){
+                arr1_index = a;
+              }
+            }
+            var ri = arr2[arr1_index];
+            // var hm = redList[ri].CouponDetails[0].Amount;
+            // var cb = redList[ri].CouponDetails[0].DiscountAmount;
+            // console.log("红包列表"+ri);
+
+            var AmountNum = parseFloat(redList[ri].CouponDetails[0].Amount);
+            var DiscountAmountNum = parseFloat(redList[ri].CouponDetails[0].DiscountAmount);
+            var couponId = redList[ri].Id;
+            window.sessionStorage.setItem("couponId",couponId);
+            $("#promotionTitle").text("满"+AmountNum+"减"+DiscountAmountNum+"红包");
+            actualMoneys = parseFloat(actualMoney) - DiscountAmountNum;
+            $("#actualMoney").text("￥" + actualMoneys);
+          }else{
+            // console.log("最大值"+amount_max);
+            // window.sessionStorage.setItem("couponId",'');
+            // $("#promotion").hide();
+          }
+        }
+      };
+    } else {
+      $("#promotion").hide();
+      $("#redWindow").hide();
+      $(".no-hb").css("display", "block");
+    }
 
 
     // if(sr){
@@ -163,6 +277,7 @@ $(function(){
         break;
     }
   })
+
   /*--下拉选框代码--*/
   // $("#serviceType").on("change",function(){
   //   stId = $(this).children('option:selected').val();
@@ -236,10 +351,11 @@ $(function(){
   // }
   // $("#serviceType").html(sn); 
   $("#submitBtn").on("click",function(){
-    var actualMoney = $("#actualMoney").text();
-    var actualMoneyNum = actualMoney.slice(1);
-    sessionStorage.setItem("needToPay",actualMoneyNum);
+    var actualMoneyf = $("#actualMoney").text();
+    var actualMoneyNumf = actualMoneyf.slice(1);
+    sessionStorage.setItem("needToPay",actualMoneyNumf);
     sessionStorage.setItem("totalPriceNum",totalPriceNum);
+    // sessionStorage.setItem("couponId",couponId);
     // console.log("实际价格"+actualMoneyNum);
     /*--拼跳转页面的url--*/
     // var orderMsgParameter = {"stId":stId,"markId":markId};
@@ -256,11 +372,91 @@ $(function(){
       ServcieProviderId:markId,
       ServiceProviderType:1
     }
-    if(actualMoneyNum != null && actualMoneyNum != ""){
+    if(actualMoneyNumf != null && actualMoneyNumf != ""){
       // console.log('成功');
-      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
-      // window.location.href="../pay/new-pay.html";
+      // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
+      window.location.href="../pay/new-pay.html";
     }
+  })
+
+  $("#promotion").on("click",function(){
+    $("#redWindow").show();
+    $.ajax({
+      type: 'POST',
+      url: urlIp+'api/v2/Coupon/CouponList',
+      dataType: 'json',
+      async: false,
+      data: {
+        Token: token
+      },
+      success: function(data) {
+        // console.log("红包",data);
+        var api = data.Body.CouponList;
+        if (api.length > 0) {
+          res_0 = "";
+          res_1 = "";
+          res_2 = "";
+          var ServiceNames = ""; //品类名称
+          for (var i = 0; i < api.length; i++) {
+            if (api[i].ServiceTypes.length == 0) {
+              ServiceNames = "全品类使用";
+            } else {
+              for (var j = 0; j < api[i].ServiceTypes.length; j++) {
+                ServiceNames += api[i].ServiceTypes[j].ServiceName;
+              }
+            }
+            var IsUsed = api[i].IsUsed; //是否可用
+            var Id = api[i].Id;
+            var DiscountAmount = parseInt(api[i].CouponDetails[0].DiscountAmount); // 红包金额
+            var Amount = parseInt(api[i].CouponDetails[0].Amount); //满减金额
+            var StartTime = api[i].StartTime.substr(0, 10); //起始时间
+            var EndTime = api[i].EndTime.substr(0, 10); //结束时间
+            var CreateTime = api[i].CreateTime.substr(0,10);
+            var now_time = Date.parse(new Date()); //当前时间的时间戳
+            var end_time = Date.parse(EndTime); //结束时间时间戳
+            var create_time = Date.parse(CreateTime);
+            var start_time = Date.parse(StartTime);
+            var flag = (now_time < end_time && start_time < now_time) ? true: false; //true是未使用  false是已过期
+            // 未使用
+            if (IsUsed == 0 && flag) {
+              res_0 += '<div class="red-item" Id=' + Id + ' DiscountAmount=' + DiscountAmount + ' Amount=' + Amount + '><div class="item-left"><div class="price"><span class="rmb">￥</span><span class="DiscountAmount">' + DiscountAmount + '</span></div><div class="Amount">满' + Amount + '可用</div></div><div class="item-right"><div class="red-name">闪付红包</div><ul class="red-rule"><li class="ServiceTypes">' + ServiceNames + '</li><li><span class="StartTime">' + StartTime + '</span>至<span class="EndTime">' + EndTime + '</span></li></ul></div></div>';
+              $(".red-list").html(res_0);
+            }
+          };
+          $(".red-item").on("click",function(){
+            var redAmounts = $(this).attr("Amount");
+            var redDiscounts = $(this).attr("DiscountAmount");
+            var redAmountNums = parseFloat(redAmounts);
+            var redDiscountNums = parseFloat(redDiscounts);
+
+            console.log(redAmountNums);
+            console.log(redDiscountNums);
+            if(actualMoney>=redAmountNums){
+              console.log("实际支付的钱"+actualMoney);
+              couponId = $(this).attr("Id");
+              window.sessionStorage.setItem("couponId",couponId);
+              console.log(couponId);
+              money = actualMoney - redDiscountNums;
+              $("#actualMoney").text("￥"+money);
+              $("#promotionTitle").text("满"+redAmountNums+"返"+redDiscountNums+"红包");
+              $("#redWindow").hide();
+            }
+            else{
+              console.log("实际支付的钱"+actualMoney);
+              $("#tipDialog").show();
+              $("#response").text("无法使用该红包");
+              $("#confirmDialog").on("click",function(){
+                $("#tipDialog").hide();
+              })
+            }
+          })
+        } else {
+          $("#redWindow").hide();
+          $(".no-hb").css("display", "block");
+        }
+      },
+      error: function(xhr, type) {}
+    });
   })
 
   /*查找相关信息方法*/

@@ -13,14 +13,96 @@ $(function(){
   var needToPayNum = parseFloat(needToPay);
   var totalPriceNum = sessionStorage.getItem("totalPriceNum");
 
-
-
+  var couponId = sessionStorage.getItem("couponId");
+  var money = needToPayNum;
 
   var urlIp = "http://wapapi.zhujiash.com/";
   // var urlIp = "http://192.168.1.191:3003/";
 
 
+  // $("#redPacket").on("click",function(){
+  //   $("#redWindow").show();
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: urlIp+'api/v2/Coupon/CouponList',
+  //     dataType: 'json',
+  //     async: false,
+  //     data: {
+  //       Token: token
+  //     },
+  //     success: function(data) {
+  //       console.log("红包",data);
+  //       var api = data.Body.CouponList;
+  //       if (api.length > 0) {
+  //         res_0 = "";
+  //         res_1 = "";
+  //         res_2 = "";
+  //         var ServiceNames = ""; //品类名称
+  //         for (var i = 0; i < api.length; i++) {
+  //           if (api[i].ServiceTypes.length == 0) {
+  //             ServiceNames = "全品类使用";
+  //           } else {
+  //             for (var j = 0; j < api[i].ServiceTypes.length; j++) {
+  //               ServiceNames += api[i].ServiceTypes[j].ServiceName;
+  //             }
+  //           }
+  //           var IsUsed = api[i].IsUsed; //是否可用
+  //           var Id = api[i].Id;
+  //           var DiscountAmount = parseInt(api[i].CouponDetails[0].DiscountAmount); // 红包金额
+  //           var Amount = parseInt(api[i].CouponDetails[0].Amount); //满减金额
+  //           var StartTime = api[i].StartTime.substr(0, 10); //起始时间
+  //           var EndTime = api[i].EndTime.substr(0, 10); //结束时间
+  //           var CreateTime = api[i].CreateTime.substr(0,10);
+  //           var now_time = Date.parse(new Date()); //当前时间的时间戳
+  //           var end_time = Date.parse(EndTime); //结束时间时间戳
+  //           var create_time = Date.parse(CreateTime);
+  //           var start_time = Date.parse(StartTime);
+  //           var flag = (now_time < end_time && start_time < now_time) ? true: false; //true是未使用  false是已过期
+  //           // 未使用
+  //           if (IsUsed == 0 && flag) {
+  //             res_0 += '<div class="red-item" Id=' + Id + ' DiscountAmount=' + DiscountAmount + ' Amount=' + Amount + '><div class="item-left"><div class="price"><span class="rmb">￥</span><span class="DiscountAmount">' + DiscountAmount + '</span></div><div class="Amount">满' + Amount + '可用</div></div><div class="item-right"><div class="red-name">闪付红包</div><ul class="red-rule"><li class="ServiceTypes">' + ServiceNames + '</li><li><span class="StartTime">' + StartTime + '</span>至<span class="EndTime">' + EndTime + '</span></li></ul></div></div>';
+  //             $(".red-list").html(res_0);
+  //           }
+  //         };
+  //         $(".red-item").on("click",function(){
+  //           var redAmount = $(this).attr("Amount");
+  //           var redDiscount = $(this).attr("DiscountAmount");
+  //           var redAmountNum = parseFloat(redAmount);
+  //           var redDiscountNum = parseFloat(redDiscount);
+  //           console.log(redAmountNum);
+  //           console.log(redDiscountNum);
+  //           if(needToPayNum>redAmountNum){
+  //             couponId = $(this).attr("Id");
+  //             console.log(couponId);
+  //             money = needToPayNum - redAmountNum;
+  //             $("#redWindow").hide();
+  //             $("#redTip").text("满"+redAmountNum+"减"+redDiscountNum);
+  //           }else{
+  //             $("#tipDialog").show();
+  //             $("#response").text("无法使用该红包");
+  //             $("#confirmDialog").on("click",function(){
+  //               $("#tipDialog").hide();
+  //             })
+  //           }
+  //         })
+  //       } else {
+  //         $("#redWindow").hide();
+  //         $(".no-hb").css("display", "block");
+  //       }
+  //     },
+  //     error: function(xhr, type) {}
+  //   });
+  // })
+
   
+  $("#redWindow").on("click",function(){
+    $("#redWindow").hide();
+    // couponId = '';
+    // $("#redTip").text("不使用红包");
+  })
+  // $("#redPacket").click(function(){
+  //   window.location.href="../red-packet/red-packet.html";
+  // })
   // var orderMsgPara = '{"stId":'+stId+',"markId":'+markId+'}';
   // var orderMsg = encodeURIComponent(orderMsgPara);
   /*--从url中获取参数--*/
@@ -52,7 +134,10 @@ $(function(){
   $("#pay3").on("click",function(){
     $("#pay2").attr("checked",false);
   });
+
   $("#submitBtn").on("click",function(){
+    console.log(couponId);
+    window.sessionStorage.setItem("money",money);
     var isBalance = $("#pay1").is(":checked"); 
     var isWeixin = $("#pay2").is(":checked");
     var isAli = $("#pay3").is(":checked");
@@ -79,6 +164,7 @@ $(function(){
           // 'Alipay':'0',
           'ServiceProviderId':markId,
           'ServiceProviderType':'2',
+          'CouponId':couponId,
           'PaymentMode':paymentMode
         };
         createOrderPayAtStore(data);
@@ -101,6 +187,7 @@ $(function(){
         'ServiceProviderId':markId,
         'ServiceProviderType':'2',
         'code':wxCode,
+        'CouponId':couponId,
         'PaymentMode':paymentMode
       };
       $.ajax({
@@ -194,6 +281,7 @@ $(function(){
         'ServiceProviderId':markId,
         'ServiceProviderType':'2',
         'code':wxCode,
+        'CouponId':couponId,
         'PaymentMode':paymentMode
       };
       $.ajax({

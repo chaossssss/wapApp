@@ -122,5 +122,11 @@ $(function(){
 	})
 })	
 </script>
+<script>
+$(function(){
+	var needToPay = window.sessionStorage.getItem('couponId');
+	$("#money").text(needToPay);
+})
+</script>
 </body>
 </html>

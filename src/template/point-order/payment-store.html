@@ -21,6 +21,10 @@
   <link rel="stylesheet" href="/css/common/swiper.min.css">
 </head>
 <body>
+<div class="weui_dialog_confirm" id="redWindow" style="display:none;overflow:auto;">
+  <div class="red-list"></div>
+  <div class="weui_mask" id="dark_bg" style="background:rgba(0,0,0,0.7)"></div>
+</div> 
 <div class="weui_panel weui_panel_access no-border" style="margin:0">
   <div class="weui_panel_bd">
     <a id="toDetail" href="javascript:void(0);" class="weui_media_box weui_media_appmsg" style="padding:12px">
@@ -59,6 +63,14 @@
     </div>
     </div>
   </div>
+<!--   <div id="redPacket" class="weui_cells mt10 mb10">
+    <div class="weui_cell" style="padding:12px 16px;">
+      <p>红包</p>
+    </div>
+    <div id="" class="weui_cell_ft fc30">
+    </div>
+    <div id="redTip" class="weui_cell_ft"></div>
+  </div> -->
   <div id="activity" class="weui_cells mt10 mb10" style="padding:12px 16px 0;">
     <div id="special" class="weui_cell no-border pb12">
       <div class="weui_cell_bd weui_cell_primary">
@@ -71,15 +83,16 @@
         <img id="specialChoose" class="choose-btn" src="../../images/quick-order/new-choose.png">
       </div>
     </div>
-    <div id="promotion" class="weui_cell no-border pb12" style="display:none;">
+    <div id="promotion" class="weui_cell no-border pb12" style="">
       <div class="weui_cell_bd weui_cell_primary">
         <img class="act-logo" src="../../images/quick-order/orange-back.png">
         <p id="promotionTitle" class="act"></p>
+
         <!-- <img id="promotionImg" class="question" src="../../images/quick-order/i-help.png"> -->
       </div>
       <div class="weui_cell_ft fc30">
         <span></span>
-        <img id="promotionChoose" class="choose-btn" src="../../images/quick-order/new-unchoose.png">
+        <img id="promotionChoose" class="choose-btn" src="../../images/quick-order/new-choose.png">
       </div>
     </div>
   </div>
@@ -91,12 +104,22 @@
       <div id="actualMoney" class="weui_cell_ft fc30" style="color:#fc542d;"></div>
     </div>
   </div>
+  <div class="weui_dialog_alert" id="tipDialog" style="display:none">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+      <div class="weui_dialog_hd"><strong class="weui_dialog_title">提示信息</strong></div>
+      <div class="weui_dialog_bd" id="response"></div>
+      <div class="weui_dialog_ft">
+        <a href="javascript:;" id="confirmDialog" class="weui_btn_dialog primary">确定</a>
+      </div>
+    </div>
+  </div>
   <a id="goPayment" href="javascript:void(0);">
     <div id="submitBtn" class="unsubmit-btn">确认支付</div>
   </a>
 </form>
 <script src="/js/common/config.min.js"></script>
-<script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="/js/common/jquery.cookie.min.js"></script>
 <script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 <script src="/js/point-order/payment-store.min.js"></script>

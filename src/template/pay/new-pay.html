@@ -22,6 +22,10 @@
 </head>
 <body>
 <!-- <div id="shadow" style="display:none;"></div> -->
+<div class="weui_dialog_confirm" id="redWindow" style="display:none;overflow:auto;">
+  <div class="red-list"></div>
+  <div class="weui_mask" id="dark_bg"></div>
+</div> 
 <div class="weui_cells no-border">
   <div class="weui_cell">
     <div class="weui_cell_bd weui_cell_primary">
@@ -70,6 +74,16 @@
       </div>
       <input id="pay3" type="checkbox" name="balance" value="zhifubao">
     </a>
+<!--     <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg nobackground" style="">
+      <div class="weui_media_hd" style="width:30px;height:30px;">
+      </div>
+      <div id="redPacket" class="weui_media_bd">
+        <label for="pay4">
+          <h4 class="weui_media_title" style="font-size:15px;">红包</h4>
+        </label>
+      </div>
+      <div id="redTip" class="weui_cell_ft"></div>
+    </a> -->
   </div>
   <a id="showMore" class="weui_panel_ft arrow-down" style="text-align:center;color:#9a9a9a;background:#fff;display:none" href="javascript:void(0);">查看更多支付方式</a>
 </div>
@@ -91,6 +105,7 @@
     </div>
   </div>
 </div>
+
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"> </script>
 <script src="/js/common/config.min.js"></script>
 <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
