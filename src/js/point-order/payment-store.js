@@ -374,8 +374,8 @@ $(function(){
     }
     if(actualMoneyNumf != null && actualMoneyNumf != ""){
       // console.log('成功');
-      // window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
-      window.location.href="../pay/new-pay.html";
+      window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf88cbf4dba349e56&redirect_uri=http%3a%2f%2fwap.zhujiash.com%2ftemplate%2fpay%2fnew-pay.html&response_type=code&scope=snsapi_base&state=123456#wechat_redirect";
+      // window.location.href="../pay/new-pay.html";
     }
   })
 
