@@ -1,4 +1,7 @@
 $(function(){
+    var token = window.localStorage.getItem("Token");
+    var urlIp = "http://wapapi.zhujiash.com/";
+    // var urlIp = "http://192.168.1.191:3003/";
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");
@@ -44,17 +47,19 @@ $(function(){
     var Id=getUrl('markid');
     $.ajax({
     	type: 'POST',
-        url: CONFIG.IP+'api/v2/Provider/Detail',
-        dataType: 'json',
+        url: urlIp+'api/v2/Provider/Detail',
+        // dataType: 'json',
         data:{
+            Token:token,
             Type:Type,
             Id:Id
         },
     	success:function(data){
+            console.log("商户信息",data);
             if(data.Body){
                 var api=data.Body.Business;
                 $(".bus-img").attr("src",api.Photo);
-                $(".bus-name").text(api.DefaultService.Name);
+                $(".bus-name").text(api.Name);
                 $(".PraiseCount").text(api.PraiseCount);
                 $(".FavoriteCount").text(api.FavoriteCount);
                 $(".wk-list").text(api.Intro);
@@ -92,8 +97,8 @@ $(function(){
     // 加载商户头像列表
     $.ajax({
         type: 'POST',
-        url: CONFIG.IP+'api/v2/Provider/Avatar',
-        dataType: 'json',
+        url: urlIp+'api/v2/Provider/Avatar',
+        // dataType: 'json',
         data:{
             Type:Type,
             Id:Id
@@ -125,13 +130,12 @@ $(function(){
         loadDownFn : function(me){
             $.ajax({
                 type: 'POST',
-                url: CONFIG.IP+'api/v2/ClientInfo/GetMerchantServiceListEx',
-                dataType: 'json',
+                url: urlIp+'api/v2/ClientInfo/GetMerchantServiceListEx',
+                // dataType: 'json',
                 data:{
                     MerchantId:Id
                 },
                 success: function(data){ 
-
                     if(data.Body){
                         var ser_api=data.Body.ServiceTypeList;
                         if(ser_api.length){
@@ -256,8 +260,8 @@ $(function(){
     //获取工人标签
     $.ajax({
         type: 'POST',
-        url: CONFIG.IP+'api/v2/Business/GetMerchantTags',
-        dataType: 'json',
+        url: urlIp+'api/v2/Business/GetMerchantTags',
+        // dataType: 'json',
         data:{
             BusinessId:Id
         },

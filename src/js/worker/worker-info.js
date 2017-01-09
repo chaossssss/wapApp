@@ -1,6 +1,15 @@
 $(function(){
     var token = window.localStorage.getItem("Token");
-
+    var Type=getUrl('type');
+    var Id=getUrl('markid');
+    var urlIp = "http://wapapi.zhujiash.com/";
+    // var urlIp = "http://192.168.1.191:3003/";
+    // $("#quick-order").on("click",function(){
+    //     window.location.href = "/template/quick-order/quick-order.html?channel=1";
+    // })
+    $("#point-order").on("click",function(){
+        window.location.href = "/template/point-order/point-order.html?channel=0&type="+Type+"&markid="+Id;
+    })
 	$(".fuwu-cont").click(function(){
 		$(".kehu-pingjia").removeClass("active");
 		$(this).addClass("active");
@@ -46,14 +55,15 @@ $(function(){
     var Id=getUrl('markid');
     $.ajax({
     	type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Provider/Detail',
-        dataType: 'json',
+        url: urlIp+'api/v2/Provider/Detail',
+        // dataType: 'json',
         data:{
         	Token:token,
             Type:Type,
             Id:Id
         },
     	success:function(data){
+            console.log("工人信息",data);
             if(data.Body){
                 var api=data.Body.Worker;
                 $(".bus-img").attr("src",api.Photo);
@@ -108,8 +118,8 @@ $(function(){
     // 加载工人头像列表
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Provider/Avatar',
-        dataType: 'json',
+        url: urlIp+'api/v2/Provider/Avatar',
+        // dataType: 'json',
         data:{
             Type:Type,
             Id:Id
@@ -142,8 +152,8 @@ $(function(){
         loadDownFn : function(me){
             $.ajax({
                 type: 'POST',
-                url: 'http://192.168.1.191:3003/api/v2/Evaluation/GetWorkerEvaluationList',
-                dataType: 'json',
+                url: urlIp+'api/v2/Evaluation/GetWorkerEvaluationList',
+                // dataType: 'json',
                 data:{
                     ID:Id
                 },
@@ -216,8 +226,8 @@ $(function(){
     //获取工人标签
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3001/api/v2/Worker/GetWorkerTags',
-        dataType: 'json',
+        url: urlIp+'api/v2/Worker/GetWorkerTags',
+        // dataType: 'json',
         data:{
             WorkerId: Id
         },
@@ -250,8 +260,8 @@ $(function(){
     //获取工人活动
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.1.191:3003/api/v2/SystemService/GetActivity',
-        dataType: 'json',
+        url: urlIp+'api/v2/SystemService/GetActivity',
+        // dataType: 'json',
         data:{
             Token:token,
             ServiceTypeId:"45"
