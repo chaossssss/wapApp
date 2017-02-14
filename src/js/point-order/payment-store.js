@@ -14,6 +14,7 @@ $(function(){
   var couponId = '';
   var actualMoney = 0;
   var actualMoneyNum = '';
+  var ServiceTypeId = getvl("ServiceTypeId");
   window.sessionStorage.setItem("couponId",couponId);
   // console.log(typeof(tokenUrl));
 
@@ -81,7 +82,25 @@ $(function(){
       }
     });
 
-
+    // 专属按摩项目
+    $.ajax({
+      type:"POST",
+      url:urlIp+'api/v2/OrderInfo/GetMasajiActivityAtStoreNgs',
+      async:false,
+      data:{
+        Token:token,
+        UserId:markId,
+        ServiceTypeId:ServiceTypeId
+      },
+      success:function(data){
+        console.log("活动",data);
+        $("#serviceName").text(data.Body.Title);
+        list = data.Body.List;
+        if(list == null){
+          $("#activity").hide();
+        }
+      }
+    })
   
   $("#redWindow").on("click",function(){
     $("#redWindow").hide();

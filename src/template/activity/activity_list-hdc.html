@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <title>iPhone换电池</title>
+    <link rel="stylesheet" href="/css/activity/activity.min.css">
+    <script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+</head>
+<body>
+	<div class="contain">
+        <img src="/images/activity/hdc20170214/1.jpg" alt="" class="lb_items" typeid="795">
+        <img src="/images/activity/hdc20170214/2.jpg" alt="" class="mgtop-1 lb_items" typeid="796">
+        <img src="/images/activity/hdc20170214/3.jpg" alt="" class="mgtop-1 lb_items" typeid="797">
+        <img src="/images/activity/hdc20170214/4.jpg" alt="" class="mgtop-1 lb_items" typeid="798">    
+        <img src="/images/activity/hdc20170214/5.jpg" alt="">     
+	</div>
+</body>
+</html>
+<script>
+
+$(function(){   
+                
+    //IOS一键下单按钮跳到对应服务类型.
+    var TypeId="";
+    $(".lb_items").each(function(){
+        $(this).click(function(){
+            TypeId=$(this).attr("typeid");
+             window.location.href = "/template/login/login-hdc20170214.html?type=1&markid=6036&state=6sqb";
+
+        })
+    })
+
+})
+
+
+</script>
